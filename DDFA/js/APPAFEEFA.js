@@ -14,7 +14,8 @@ qx.Class.define("APPAFEEFA", {
 
 		that.setConfig(
 			{
-				apiUrl: 'http://api.afeefa.fx/',
+				// apiUrl: 'http://api.afeefa.fx/',
+				apiUrl: 'https://neos.afeefa.de/',
 				includePathForHtmlFiles: 'DDFA/inc/',
 				languages: [
 					'de',
