@@ -47,8 +47,13 @@
 	<link href='https://api.mapbox.com/mapbox.js/v3.1.0/mapbox.css' rel='stylesheet' />
 
 	<!-- requirejs (module loader) handles all further js includes -->
-	<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
-	<!-- <script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script> -->
+	<?php 
+	# check if calling dev or production version to load raw or built frontend
+	if (strpos($_SERVER['HTTP_HOST'], 'dev') !== true) { ?>
+		<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
+	<?php } else { ?>
+		<script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
+	<?php } ?>
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
