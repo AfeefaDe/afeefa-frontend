@@ -5,6 +5,8 @@ The main web app of Afeefa.de
 
 ### set API source
 change path in *APPAFEEFA.js*:
+
+~~~~
 `
 ...
 that.setConfig(
@@ -13,7 +15,8 @@ that.setConfig(
 		...
 	}
 ...
-`
+~~~~
+
 ### Run the app
-- set up a virtual host or something, which points at the root folder
-- open your virtual host's domain and it should run
+- set up a local virtual host or something, which points at the root folder (index.html)
+- open your virtual host's URL and it should run
