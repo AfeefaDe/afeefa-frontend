@@ -1,0 +1,44 @@
+@import "compass/css3";
+
+/* jquery plugins */
+@import 'https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/css/perfect-scrollbar.min.css';
+@import '../../chosen/chosen.min.css';
+
+/* leaflet plugins */
+@import '../../leafletPlugins/MarkerCluster.css';
+@import '../../leafletPlugins/MarkerCluster.Default.css';
+
+/* materialize */
+@import "../../../materialize/sass/materialize";
+/*@import "../../../materialize/sass/components/mixins";*/
+/*@import "../../../materialize/sass/components/color";*/
+/*@import "../../../materialize/sass/components/variables";*/
+/*@import "../../../materialize/sass/components/normalize";*/
+/*@import "../../../materialize/sass/components/global";*/
+/*@import "../../../materialize/sass/components/typography";*/
+/*@import "../../../materialize/sass/components/forms/forms";*/
+/*@import "../../../materialize/sass/components/buttons";*/
+/*@import "../../../materialize/sass/components/dropdown";*/
+
+@import 'colors';
+@import 'fonts';
+@import 'normalize';
+@import 'main';
+@import 'afeefa-styles';
+@import 'popper';
+@import 'infoVisSystem';
+@import 'goBackLayout';
+@import 'mapView';
+@import 'searchView';
+@import 'detailView';
+@import 'menuView';
+@import 'legendView';
+@import 'plusView';
+@import 'languageView';
+@import 'formView';
+@import 'includeView';
+@import 'messageView';
+@import 'introView';
+@import 'footerView';
+@import 'mobileAdaptions';
+@import 'languageAdaptions';

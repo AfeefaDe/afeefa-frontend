@@ -1,0 +1,29 @@
+#plusView {
+	
+	position: absolute;
+	right: 6em;
+	bottom: 3em;
+
+	.button {
+		@include circleBtn;
+		
+		background-color: $black_alpha;
+
+		&.locateBtn {
+			width: 3.5em;
+			height: 3.5em;
+			@include border-radius(2em);
+
+			background-image: url("../img/btn-locate-white.svg");
+			@include background-size(60%);
+		}
+	}
+}
+
+.phone {
+	#plusView{
+		right: 2em !important;
+		bottom: 1.5em !important;
+	}
+
+}
