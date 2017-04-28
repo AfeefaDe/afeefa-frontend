@@ -7,7 +7,6 @@ The main web app of Afeefa.de
 change path in *APPAFEEFA.js*:
 
 ~~~~
-`
 ...
 that.setConfig(
 	{
