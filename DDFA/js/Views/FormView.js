@@ -18,7 +18,7 @@ qx.Class.define("FormView", {
 
         that.setViewId('formView');
         that.setLoadable(true);
-        that.setBaseUrl('_Resources/Static/Packages/DDFA.dresdenfueralleDe/DDFA/inc/');
+        that.setBaseUrl(APP.getConfig().includePathForHtmlFiles);
 
         that.setFormTypes({
             feedback: {

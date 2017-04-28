@@ -12,7 +12,7 @@ qx.Class.define("IncludeView", {
 	construct: function(){
 		var that = this;
 
-		that.setBaseUrl( '_Resources/Static/Packages/DDFA.dresdenfueralleDe/DDFA/inc/' );
+		that.setBaseUrl( APP.getConfig().includePathForHtmlFiles );
 		
 		that.setIncludes({
 			refugeeGuide: {
