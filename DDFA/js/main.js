@@ -12,11 +12,11 @@ require.config({
         qx: '../../qooxdoo/qx-oo-4.1.min',
         underscore: '../../underscore/underscore-min',
         hammerjs: '../../hammerjs/hammer.min',
-        mapbox: 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox',
+        mapbox: 'https://api.mapbox.com/mapbox.js/v3.1.0/mapbox',
         mc: '../../leafletPlugins/leaflet.markercluster',
         popper: '../../popperjs/popper.min',
         d3: 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3',
-        materialize: '../../materialize/js/materialize'
+        materialize: '../../materialize/js/materialize.min'
     },
 
     // define dependencies via shim because of use of old javascript libs, which do not define a module and therefore do not define their dependencies themselves (defined modules in javascript define other dependencies)
