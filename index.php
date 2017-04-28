@@ -49,7 +49,8 @@
 	<!-- requirejs (module loader) handles all further js includes -->
 	<?php 
 	# check if calling dev or production version to load raw or built frontend
-	if (strpos($_SERVER['HTTP_HOST'], 'dev') !== true) { ?>
+	echo $_SERVER['HTTP_HOST'];
+	if (strpos($_SERVER['HTTP_HOST'], 'dev.afeefa.fx') !== false) { ?>
 		<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
 	<?php } else { ?>
 		<script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
