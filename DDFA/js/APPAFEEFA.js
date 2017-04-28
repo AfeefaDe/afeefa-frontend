@@ -14,6 +14,7 @@ qx.Class.define("APPAFEEFA", {
 
 		that.setConfig(
 			{
+				apiUrl: 'http://api.afeefa.fx/',
 				languages: [
 					'de',
 					'en',

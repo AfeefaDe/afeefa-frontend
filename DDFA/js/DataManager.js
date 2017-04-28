@@ -7,10 +7,6 @@ qx.Class.define("DataManager", {
         var that = this;
 
         // that.addEvents();
-
-        that.config = {
-            apiUrl: 'http://api.afeefa.fx/'
-        }
     },
 
     members: {
@@ -71,7 +67,7 @@ qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: that.config.apiUrl + "api/categories",
+                url: APP.getConfig().apiUrl + "api/categories",
                 type: 'GET',
                 dataType: 'json'
             })
@@ -108,7 +104,7 @@ qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: that.config.apiUrl + "api/marketentries?locale=" + APP.getLM().getCurrentLang(),
+                url: APP.getConfig().apiUrl + "api/marketentries?locale=" + APP.getLM().getCurrentLang(),
                 type: 'GET',
                 dataType: 'json'
             })
@@ -176,7 +172,7 @@ qx.Class.define("DataManager", {
 
             var sources = {
                 freifunk: {
-                    sourceUrl: that.config.apiUrl + 'externalDataFiles/freifunk-nodes.json',
+                    sourceUrl: APP.getConfig().apiUrl + 'externalDataFiles/freifunk-nodes.json',
                     mapping: {
                         name: function(record){
                             return "Wifi Hotspot (Freifunk)";
@@ -417,10 +413,10 @@ qx.Class.define("DataManager", {
         addMarketEntry: function (data, cb) {
             var that = this;
 
-            // console.debug('POST ' + that.config.apiUrl + 'api/marketentries', data);
+            // console.debug('POST ' + APP.getConfig().apiUrl + 'api/marketentries', data);
 
             $.ajax({
-                url: that.config.apiUrl + "api/marketentries",
+                url: APP.getConfig().apiUrl + "api/marketentries",
                 type: 'POST',
                 data: data,
                 cache: false,
@@ -440,10 +436,10 @@ qx.Class.define("DataManager", {
         addLocation: function (data, cb) {
             var that = this;
 
-            // console.debug('POST ' + that.config.apiUrl + 'api/locations', data);
+            // console.debug('POST ' + APP.getConfig().apiUrl + 'api/locations', data);
 
             $.ajax({
-                url: that.config.apiUrl + "api/locations",
+                url: APP.getConfig().apiUrl + "api/locations",
                 type: 'POST',
                 data: data,
                 cache: false,
@@ -492,7 +488,7 @@ qx.Class.define("DataManager", {
             $.ajax({
                 // url: "_Resources/Static/Packages/DDFA.dresdenfueralleDe/githubAPI/",
                 // url: "http://afeefa.hejn.de/githubAPI/",
-                url: that.config.apiUrl + "messageAPI/",
+                url: APP.getConfig().apiUrl + "messageAPI/",
                 // crossDomain: true,
                 type: 'POST',
                 data: data,
@@ -514,7 +510,7 @@ qx.Class.define("DataManager", {
             data.action = 'mail';
 
             $.ajax({
-                url: that.config.apiUrl + "messageAPI/",
+                url: APP.getConfig().apiUrl + "messageAPI/",
                 // crossDomain: true,
                 type: 'POST',
                 data: data,
@@ -894,7 +890,7 @@ qx.Class.define("DataManager", {
 
             function createInitiative(data, i, cb) {
                 $.ajax({
-                    url: that.config.apiUrl + "api/initiatives",
+                    url: APP.getConfig().apiUrl + "api/initiatives",
                     type: 'POST',
                     data: data,
                     cache: false,
@@ -912,7 +908,7 @@ qx.Class.define("DataManager", {
 
             function createLocation(data, i, cb) {
                 $.ajax({
-                    url: that.config.apiUrl + "api/locations",
+                    url: APP.getConfig().apiUrl + "api/locations",
                     type: 'POST',
                     data: data,
                     cache: false,
