@@ -7,10 +7,6 @@ qx.Class.define("FormView", {
         baseUrl: {},
         formTypes: {},
         currentForm: {}
-        // currentFormType: {init: null},
-        // entryTypeEnum: {},
-        // properties: {},
-        // html5InputTypes: {}
     },
 
     construct: function () {
