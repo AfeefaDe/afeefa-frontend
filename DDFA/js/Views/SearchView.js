@@ -155,7 +155,7 @@ qx.Class.define("SearchView", {
       //   APP.getLegendView().setFilter( {tags: 'iwgr'} );
       //   window.location.hash = 'iwgr';
       // };
-      // that.createResult('iwgr', that.getWording('search.label.iwgr'), that.getWording('search.sublabel.iwgr'), action );
+      // that.createListResult('iwgr', that.getWording('search.label.iwgr'), that.getWording('search.sublabel.iwgr'), action );
 
       // upcoming events
       that.createSectionHeader( that.getWording('search.label.upcomingevents'), function(){
@@ -182,25 +182,57 @@ qx.Class.define("SearchView", {
       var action = function(){
         that.inputField.val('support wanted').trigger( "input" );
       };
-      that.createResult('support-wanted', that.getWording('search.label.supportwanted'), that.getWording('search.sublabel.supportwanted'), action );
+      that.createListResult(
+        {
+          iconClass: 'support-wanted',
+          label: that.getWording('search.label.supportwanted'),
+          subLabel: that.getWording('search.sublabel.supportwanted'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
 
       // for children
       var action = function(){
         that.inputField.val(that.getWording('prop.forChildren')).trigger( "input" );
       };
-      that.createResult('for-children', that.getWording('search.label.forchildren'), that.getWording('search.sublabel.forchildren'), action );
+      that.createListResult(
+        {
+          iconClass: 'for-children',
+          label: that.getWording('search.label.forchildren'),
+          subLabel: that.getWording('search.sublabel.forchildren'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
 
       // for women
       var action = function(){
         that.inputField.val('#frauen').trigger( "input" );
       };
-      that.createResult('for-women', that.getWording('search.label.forwomen'), that.getWording('search.sublabel.forwomen'), action );
+      that.createListResult(
+        {
+          iconClass: 'for-women',
+          label: that.getWording('search.label.forwomen'),
+          subLabel: that.getWording('search.sublabel.forwomen'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
 
       // certified by SFR
       var action = function(){
         that.inputField.val('certified').trigger( "input" );
       };
-      that.createResult('certified', that.getWording('search.label.certified'), that.getWording('search.sublabel.certified'), action );
+      that.createListResult(
+        {
+          iconClass: 'certified',
+          label: that.getWording('search.label.certified'),
+          subLabel: that.getWording('search.sublabel.certified'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
 
       that.createSectionHeader( that.getWording('search.label.activity') );
      
@@ -208,12 +240,28 @@ qx.Class.define("SearchView", {
       var action = function(){
         APP.getFormView().load( 'newEntry' );
       };
-      that.createResult('add-entry', that.getWording('search.label.addentry'), that.getWording('search.sublabel.addentry'), action );
+      that.createListResult(
+        {
+          iconClass: 'add-entry',
+          label: that.getWording('search.label.addentry'),
+          subLabel: that.getWording('search.sublabel.addentry'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
 
       var action = function(){
         APP.getFormView().load( 'feedback' );
       };
-      that.createResult('feedback', that.getWording('form.heading.feedback'), that.getWording('search.sublabel.feedback'), action );
+      that.createListResult(
+        {
+          iconClass: 'feedback',
+          label: that.getWording('search.label.feedback'),
+          subLabel: that.getWording('search.sublabel.feedback'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
 
       that.createSectionHeader( that.getWording('search.label.help') );
       
@@ -221,13 +269,29 @@ qx.Class.define("SearchView", {
       var action = function(){
         APP.getIntroView().start();
       };
-      that.createResult('start-intro', that.getWording('search.label.intro'), that.getWording('search.sublabel.intro'), action );
+      that.createListResult(
+        {
+          iconClass: 'start-intro',
+          label: that.getWording('search.label.intro'),
+          subLabel: that.getWording('search.sublabel.intro'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
 
       // about afeefa
       var action = function(){
         APP.getIncludeView().load('about');
       };
-      that.createResult('about', that.getWording('search.label.about'), that.getWording('search.sublabel.about'), action );
+      that.createListResult(
+        {
+          iconClass: 'about',
+          label: that.getWording('search.label.about'),
+          subLabel: that.getWording('search.sublabel.about'),
+          action: action,
+          targetContainertEl: that.results
+        }
+      );
     },
 
     loadResults: function( query ) {
@@ -375,7 +439,17 @@ qx.Class.define("SearchView", {
       var action = function(){
         that.close();
       };
-      if(!entriesFiltered.length) that.createResult(null, that.getWording('search.label.nothingfound'), that.getWording('search.sublabel.nothingfound'), action );
+      if(!entriesFiltered.length) {
+        that.createListResult(
+          {
+            iconClass: null,
+            label: that.getWording('search.label.nothingfound'),
+            subLabel: that.getWording('search.sublabel.nothingfound'),
+            action: action,
+            targetContainertEl: that.results
+          }
+        );
+      }
     },
 
     // generic function to create a single entry result
@@ -421,7 +495,18 @@ qx.Class.define("SearchView", {
       // if(!tooltip && entry.description) tooltip = entry.description;
       if(tooltip) tooltip = tooltip.substring(0,150) + '...';
 
-      that.createResult( iconClass, label, subLabel, action, (entry.location.length > 0), tooltip, action_secondary );
+      that.createListResult(
+          {
+            iconClass: iconClass,
+            label: label,
+            subLabel: subLabel,
+            action: action,
+            action_secondary: action_secondary,
+            tooltip: tooltip,
+            locationSymbol: (entry.location.length > 0),
+            targetContainertEl: that.results
+          }
+        );
     },
 
     // generic function to create a section header
