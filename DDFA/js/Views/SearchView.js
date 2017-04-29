@@ -76,12 +76,12 @@ qx.Class.define("SearchView", {
       that.searchBar.append(that.searchTag);      
 
       // results area
-      that.results = $("<div />")
-        .attr('id', 'results');
+      that.scrollContainer = $("<div />")
+        .addClass('scroll-container list-results');
 
-      if( APP.getUserDevice() == 'desktop') that.results.perfectScrollbar();
+      if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar();
 
-      that.view.append(that.results);
+      that.view.append(that.scrollContainer);
 
       // map area on mobile
       if( APP.getUserDevice() == 'mobile'){
@@ -103,7 +103,7 @@ qx.Class.define("SearchView", {
         query = query.toLowerCase();
         
         if(query){
-          that.results.empty();
+          that.scrollContainer.empty();
           that.loadResults(query);
         } else {
           that.reset();
@@ -158,12 +158,13 @@ qx.Class.define("SearchView", {
       // that.createListResult('iwgr', that.getWording('search.label.iwgr'), that.getWording('search.sublabel.iwgr'), action );
 
       // upcoming events
-      that.createSectionHeader( that.getWording('search.label.upcomingevents'), function(){
-        that.inputField.val('events').trigger( "input" );
-      });
+      // that.createSectionHeader( that.getWording('search.label.eventstoday'), function(){
+      //   that.inputField.val('events').trigger( "input" );
+      // });
+      that.createSectionHeader( that.getWording('search.label.eventstoday') );
       
-      _.each(APP.getDataManager().getAllEvents( {mustHaveDate: true} ).slice(0, 3), function(entry) {
-        that.createEntryResult(entry);
+      _.each(APP.getDataManager().getAllEvents( {timeSpan: 'today'} ).slice(0, 3), function(entry) {
+        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
               
       that.createButton(
@@ -188,7 +189,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.supportwanted'),
           subLabel: that.getWording('search.sublabel.supportwanted'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
 
@@ -202,7 +203,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.forchildren'),
           subLabel: that.getWording('search.sublabel.forchildren'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
 
@@ -216,7 +217,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.forwomen'),
           subLabel: that.getWording('search.sublabel.forwomen'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
 
@@ -230,7 +231,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.certified'),
           subLabel: that.getWording('search.sublabel.certified'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
 
@@ -246,7 +247,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.addentry'),
           subLabel: that.getWording('search.sublabel.addentry'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
 
@@ -259,7 +260,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.feedback'),
           subLabel: that.getWording('search.sublabel.feedback'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
 
@@ -275,7 +276,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.intro'),
           subLabel: that.getWording('search.sublabel.intro'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
 
@@ -289,7 +290,7 @@ qx.Class.define("SearchView", {
           label: that.getWording('search.label.about'),
           subLabel: that.getWording('search.sublabel.about'),
           action: action,
-          targetContainertEl: that.results
+          targetContainertEl: that.scrollContainer
         }
       );
     },
@@ -432,7 +433,7 @@ qx.Class.define("SearchView", {
       }
 
       _.each(entriesFiltered, function(entry) {
-        that.createEntryResult(entry);
+        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
       
       // nothing found info
@@ -446,67 +447,10 @@ qx.Class.define("SearchView", {
             label: that.getWording('search.label.nothingfound'),
             subLabel: that.getWording('search.sublabel.nothingfound'),
             action: action,
-            targetContainertEl: that.results
+            targetContainertEl: that.scrollContainer
           }
         );
       }
-    },
-
-    // generic function to create a single entry result
-    createEntryResult: function( entry ) {
-      var that = this;
-
-      var categoryName = entry.category ? entry.category.name : null;
-      
-      // icon
-      var iconClass = 'cat-' + categoryName;
-      iconClass += ' type-' + entry.type;
-      if( entry.subCategory ) iconClass += ' subcat-' + entry.subCategory;
-      
-      // title
-      var label = entry.name;
-      // sub category
-      var subLabel = entry.subCategory ? that.getWording('cat.' + entry.subCategory) : that.getWording('cat.' + categoryName);
-      // time
-      if( entry.type == 2 && entry.dateFrom ) subLabel += ' | ' + APP.getUtility().buildTimeString(entry, {short: true});
-      // place
-      if( entry.location.length > 0 && entry.location[0].placename ){
-        var placename = entry.location[0].placename;
-        if(placename.length > 50) placename = placename.substring(0,50) + '...';
-        subLabel += ' | @' + placename;
-      }
-      
-      // action
-      var action = function(){
-        if( entry.location.length > 0 && entry.location[0].lat )
-          APP.getMapView().selectMarkerFromLink(entry.entryId);
-        else
-          APP.getDetailView().load(entry);
-      };
-
-      var action_secondary = function(){
-        if( entry.location.length > 0 && entry.location[0].lat )
-          APP.getMapView().selectMarkerFromLink(entry.entryId, {preventDetailView: true});
-      };
-
-      // create entry
-      var tooltip;
-      if(entry.descriptionShort) tooltip = entry.descriptionShort;
-      // if(!tooltip && entry.description) tooltip = entry.description;
-      if(tooltip) tooltip = tooltip.substring(0,150) + '...';
-
-      that.createListResult(
-          {
-            iconClass: iconClass,
-            label: label,
-            subLabel: subLabel,
-            action: action,
-            action_secondary: action_secondary,
-            tooltip: tooltip,
-            locationSymbol: (entry.location.length > 0),
-            targetContainertEl: that.results
-          }
-        );
     },
 
     // generic function to create a section header
@@ -521,7 +465,7 @@ qx.Class.define("SearchView", {
         .addClass('with-action')
         .click(function(){ action(); });
       
-      that.results.append(sectionHeader);
+      that.scrollContainer.append(sectionHeader);
     },
 
     // generic function to create a section header
@@ -543,7 +487,7 @@ qx.Class.define("SearchView", {
         .addClass('with-action')
         .click(function(){ options.action(); });
       
-      that.results.append(btn);
+      that.scrollContainer.append(btn);
     },
 
     setSearchTag: function(cssClass, wording){
@@ -638,7 +582,7 @@ qx.Class.define("SearchView", {
         that.show();
         that.maximize();
 
-        that.results.scrollTop(0);
+        that.scrollContainer.scrollTop(0);
 
         that.inputField
           .val(null)
@@ -651,11 +595,11 @@ qx.Class.define("SearchView", {
           })
           .empty();
 
-        that.results.empty();
+        that.scrollContainer.empty();
         
         that.view.removeClass('active-search');
         
-        if( APP.getUserDevice() == 'desktop') that.results.perfectScrollbar('update');
+        if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar('update');
     },
 
     close: function(){

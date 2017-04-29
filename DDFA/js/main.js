@@ -38,7 +38,7 @@ require.config({
         "materialize": ["hammerjs"],
 
         // app files
-        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'hammerjs', 'modernizr', 'popper', 'materialize'],
+        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'hammerjs', 'modernizr', 'popper', 'materialize', 'momentjs'],
         'APPAFEEFA': ['Daddy'],
         'DataManager': ['APPAFEEFA'],
         'Router': ['APPAFEEFA'],
@@ -91,6 +91,7 @@ require.config({
         // if dependencies don't become available everywhere within the app, then define them here again as global var
         Hammer = require('hammerjs');
         Popper = require('popper');
+        moment = require('momentjs');
         // d3 = require('d3');
         
         domReady(function () {

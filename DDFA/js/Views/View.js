@@ -192,6 +192,63 @@ qx.Class.define("View", {
           }
         },
 
+        // generic function to create a single entry result
+        createEntryResult: function( options ) {
+          var that = this;
+
+          var entry = options.entry;
+          var categoryName = entry.category ? entry.category.name : null;
+          
+          // icon
+          var iconClass = 'cat-' + categoryName;
+          iconClass += ' type-' + entry.type;
+          if( entry.subCategory ) iconClass += ' subcat-' + entry.subCategory;
+          
+          // title
+          var label = entry.name;
+          // sub category
+          var subLabel = entry.subCategory ? that.getWording('cat.' + entry.subCategory) : that.getWording('cat.' + categoryName);
+          // time
+          if( entry.type == 2 && entry.dateFrom ) subLabel += ' | ' + APP.getUtility().buildTimeString(entry, {short: true});
+          // place
+          if( entry.location.length > 0 && entry.location[0].placename ){
+            var placename = entry.location[0].placename;
+            if(placename.length > 50) placename = placename.substring(0,50) + '...';
+            subLabel += ' | @' + placename;
+          }
+          
+          // action
+          var action = function(){
+            if( entry.location.length > 0 && entry.location[0].lat )
+              APP.getMapView().selectMarkerFromLink(entry.entryId);
+            else
+              APP.getDetailView().load(entry);
+          };
+
+          var action_secondary = function(){
+            if( entry.location.length > 0 && entry.location[0].lat )
+              APP.getMapView().selectMarkerFromLink(entry.entryId, {preventDetailView: true});
+          };
+
+          // create entry
+          var tooltip;
+          if(entry.descriptionShort) tooltip = entry.descriptionShort;
+          // if(!tooltip && entry.description) tooltip = entry.description;
+          if(tooltip) tooltip = tooltip.substring(0,150) + '...';
+
+          that.createListResult(
+              {
+                iconClass: iconClass,
+                label: label,
+                subLabel: subLabel,
+                action: action,
+                action_secondary: action_secondary,
+                tooltip: tooltip,
+                locationSymbol: (entry.location.length > 0),
+                targetContainertEl: options.targetContainertEl
+              }
+            );
+        },
 
         createBackBtn: function(action){
           var that = this;

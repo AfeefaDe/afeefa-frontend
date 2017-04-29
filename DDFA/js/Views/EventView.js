@@ -34,7 +34,7 @@ qx.Class.define("EventView", {
 
       // form container
       that.scrollContainer = $("<div />")
-          .addClass('scroll-container');
+          .addClass('scroll-container list-results');
       if (APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar();
       that.view.append(that.scrollContainer);     
 
@@ -47,6 +47,10 @@ qx.Class.define("EventView", {
         that.heading.empty().append('Veranstaltungen');
 
         that.createSectionHeader('heute');
+
+        _.each(APP.getDataManager().getAllEvents( {timeSpan: 'today'} ).slice(0, 3), function(entry) {
+          that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+        });
 
         that.view.addClass('active');
         that.isActive(true);
