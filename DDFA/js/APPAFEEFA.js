@@ -15,6 +15,7 @@ qx.Class.define("APPAFEEFA", {
 		that.setConfig(
 			{
 				// apiUrl: 'http://api.afeefa.fx/',
+				// apiUrl: 'http://backend.afeefa.dev:3001/',
 				apiUrl: 'https://neos.afeefa.de/',
 				includePathForHtmlFiles: 'DDFA/inc/',
 				languages: [
@@ -191,11 +192,12 @@ qx.Class.define("APPAFEEFA", {
 	},
 
 	members : {
-		
+
 
 		init: function( cb ){
 			var that = this;
-			
+
+      
 			// load city config
 			that.detectAfeefaArea();
 
@@ -213,11 +215,12 @@ qx.Class.define("APPAFEEFA", {
 			// fetch only necessary data for app startup
 			that.getDataManager().fetchInitialData(function(){
 				cb();
+      	that.loading(true);
 			});
 
 			// fetch other data (e.g. that takes a long time loading)
 			that.getDataManager().fetchAllData();
-			
+
 			that.addEvents();
 		},
 
@@ -225,12 +228,12 @@ qx.Class.define("APPAFEEFA", {
             var that = this;
 
             that.listen('languageChanged', function(){
-                that.loading(true);
+              that.loading(true);
             });
 
             that.listen('fetchedNewData', function(){
-				that.loading(false);
-			});
+							that.loading(false);
+						});
         },
 
 		loading: function( bool ){
@@ -283,7 +286,7 @@ qx.Class.define("APPAFEEFA", {
 			APP.setUserDevice('desktop');
 			if( $('body').hasClass('mobi') || $('body').hasClass('phone') ) APP.setUserDevice('mobile');
 			if( $('body').hasClass('tablet') ) APP.setUserDevice('tablet');
-			
+
 			$('body').addClass( APP.getUserDevice() );
 		},
 
@@ -316,7 +319,7 @@ qx.Class.define("APPAFEEFA", {
 
 		setPageTitle: function(title) {
 			var that = this;
-			
+
 			$('head title').empty().append(title);
 
 		}

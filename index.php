@@ -35,7 +35,6 @@
 	<meta name="msapplication-TileImage" content="/mstile-144x144.png?v=2bbvyE2wzd">
 	<meta name="theme-color" content="#41829e">
 
-
 	<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
 	<link rel="stylesheet" href="DDFA/css/afeefa.css" />
 
@@ -44,9 +43,9 @@
 	<link href='https://api.mapbox.com/mapbox.js/v3.1.0/mapbox.css' rel='stylesheet' />
 
 	<!-- requirejs (module loader) handles all further js includes -->
-	<?php 
+	<?php
 	# check if calling dev or production version to load raw or built frontend
-	if (strpos($_SERVER['HTTP_HOST'], 'dev.afeefa.fx') !== false) { ?>
+	if (preg_match("/(dev\.afeefa\.fx|localhost)/", $_SERVER['HTTP_HOST'])) { ?>
 		<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
 	<?php } else { ?>
 		<script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>

@@ -13,7 +13,7 @@ qx.Class.define("LanguageManager", {
     },
 
     members : {
-        
+
 
         init: function( cb ){
             var that = this;
@@ -33,7 +33,7 @@ qx.Class.define("LanguageManager", {
             var that = this;
 
             var wording = that.getBib()[ key ];
-            if( wording === undefined ) return undefined;
+            if( wording === undefined ) return key + ' not translated';
             return wording.message;
         },
 
@@ -41,7 +41,7 @@ qx.Class.define("LanguageManager", {
             var that = this;
 
             that.setCurrentLang( locale );
-            
+
             _.each(APP.getConfig().languages, function(lang){
                 $('body').removeClass(lang);
             });
@@ -60,9 +60,9 @@ qx.Class.define("LanguageManager", {
             var that = this;
 
             that.listen('languageChanged', function(e){
-                
+
                 that.setLanguage( e.customData );
-                
+
                 APP.getDataManager().fetchAllData(function( data ){
                   that.say('fetchedNewData');
                 });
