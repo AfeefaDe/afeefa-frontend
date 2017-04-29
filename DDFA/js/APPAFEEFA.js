@@ -216,10 +216,10 @@ qx.Class.define("APPAFEEFA", {
 			that.getDataManager().fetchInitialData(function(){
 				cb();
       	that.loading(true);
-			});
 
-			// fetch other data (e.g. that takes a long time loading)
-			that.getDataManager().fetchAllData();
+				// fetch other data (e.g. that takes a long time loading)
+				that.getDataManager().fetchAllData();
+			});
 
 			that.addEvents();
 		},

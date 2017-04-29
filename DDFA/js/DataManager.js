@@ -32,7 +32,7 @@ qx.Class.define("DataManager", {
 
         },
 
-        fetchAllData: function (cb) {
+        fetchAllData: function () {
             var that = this;
 
             var currentAppData = APP.getData();
@@ -49,10 +49,10 @@ qx.Class.define("DataManager", {
 
                 that.fetchExternalData('freifunk', function(){
                     that.say('fetchedNewData');
-                    that.say('fetchedAllData');
+                    // that.say('fetchedAllData');
 
                     console.debug('fetchedAllData in ' + APP.getLM().getCurrentLang(), data);
-                    if(cb) cb();  // finished, so callback
+                    // if(cb) cb();  // finished, so callback
 
                     // that.fetchExternalData('facebookEvents', function(){
                     //  that.say('fetchedNewData');
@@ -110,17 +110,40 @@ qx.Class.define("DataManager", {
                 dataType: 'json'
             })
                 .done(function (data) {
-                    var entries = _.filter(data.marketentries, function (entry) {
+                    // var entries = _.filter(data.marketentries, function (entry) {
+                    //     return true;
+                    // });
 
-                        // filter out owner-less entries
-                        // TODO: there shouldn't be any owner-less entries coming from the API
-                        if (!entry) return false;
+                    var entries = data.marketentries;
+                    _.each(entries, function (entry) {
+                        
+                        // convert start date and start time into one date object
+                        if(entry.dateFrom && entry.timeFrom){
+                            entry.dateFrom = new Date(entry.dateFrom + ' ' + entry.timeFrom);
+                            entry.has_time_start = true;
+                        }
+                        else if(entry.dateFrom){
+                            entry.dateFrom = new Date(entry.dateFrom);
+                            entry.has_time_start = false;
+                        }
+                        else {
+                            entry.dateFrom = null;
+                            entry.has_time_start = false;
+                        }
 
-                        // filter out category-less entries
-                        // TODO: there shouldn't be any category-less entries coming from the API
-                        // if(!entry.marketEntry.category) return false;
-
-                        return true;
+                        // convert end date and start time into one date object
+                        if(entry.dateTo && entry.timeTo){
+                            entry.dateTo = new Date(entry.dateTo + ' ' + entry.timeTo);
+                            entry.has_time_end = true;
+                        }
+                        else if(entry.dateTo){
+                            entry.dateTo = new Date(entry.dateTo);
+                            entry.has_time_end = false;
+                        }
+                        else {
+                            entry.dateTo = null;
+                            entry.has_time_end = false;
+                        }
                     });
 
                     data.marketentries = entries;
@@ -144,12 +167,32 @@ qx.Class.define("DataManager", {
         },
 
         getAllEvents: function (options) {
+
+
+            // extract events from all the data
             var events = APP.getData().entries.filter(function (entry) {
                 if (entry.type != 2) return false;
-                if (options && options.mustHaveDate && !entry.dateFrom) return false;
+                if (!entry.dateFrom) return false;
                 return true;
             });
 
+            if(options.timeSpan){
+                
+                // today means only today or if it ends today
+                if( options.timeSpan == 'today' ){
+                    var eventsFiltered = events.filter(function(entry){
+                        var endsToday;
+                        endsToday = ( entry.dateTo && moment().isSame(entry.dateTo, 'd') )? true : false;
+                        
+                        var isOnlyToday;
+                        isOnlyToday = ( !entry.dateTo && moment().isSame(entry.dateFrom, 'd') )? true : false;
+                        
+                        return (isOnlyToday || endsToday);
+                    });
+                }
+                return _.sortBy(eventsFiltered, 'dateFrom');
+            }
+            
             return _.sortBy(events, 'dateFrom');
         },
 
