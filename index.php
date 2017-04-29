@@ -44,10 +44,13 @@
 
 	<!-- requirejs (module loader) handles all further js includes -->
 	<?php
+		$apiUrl = include 'config.php';
 	# check if calling dev or production version to load raw or built frontend
 	if (preg_match("/(dev\.afeefa\.fx|localhost)/", $_SERVER['HTTP_HOST'])) { ?>
+		<script>window.apiurl = '<?= $apiUrl ?>'</script>
 		<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
 	<?php } else { ?>
+		<script>window.apiurl = '<?= $apiUrl ?>'</script>
 		<script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
 	<?php } ?>
 
