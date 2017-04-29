@@ -121,6 +121,7 @@
         'Views/View': ['DataManager', 'Router', 'LanguageManager', 'Utility'],
         'Views/MapView': ['Views/View'],
         'Views/SearchView': ['Views/View'],
+        'Views/EventView': ['Views/View'],
         'Views/DetailView': ['Views/View'],
         'Views/MenuView': ['Views/View'],
         'Views/LegendView': ['Views/View'],

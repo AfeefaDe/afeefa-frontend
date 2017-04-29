@@ -3,6 +3,7 @@
 	/* orga */
 	&.type-0 {
 		@include border-radius(3px);
+		background-color: rgba($turquoise,1);
 	}
 
 	/* market entry */
@@ -16,6 +17,7 @@
 		/*position: relative;*/
 		/*overflow: hidden;*/
 		@include transform(rotate(45deg));
+		background-color: rgba($violet,1);
 
 		/*&::before {
 		    content: "";
@@ -44,7 +46,7 @@
 
 	/* Main categories */
 	
-	&.cat-general	{ 
+	/*&.cat-general	{ 
 		background-color: rgba($gray50, $alpha_background);
 		border-color: rgba($gray50, $alpha_border);
 	}
@@ -92,7 +94,7 @@
 	&.cat-external-event {
 		background-color: rgba($black,$alpha_background);
 		border-color: rgba($black, $alpha_border);
-	}
+	}*/
 }
 
 @mixin categorySymbols {
@@ -103,7 +105,7 @@
 
 	/* Main categories */
 
-	&.cat-general	{ background-image: url("../img/icon_174.svg"); }
+	/*&.cat-general	{ background-image: url("../img/icon_174.svg"); }
 	&.cat-language	{ background-image: url("../img/icon_06.svg"); }
 	&.cat-medic { background-image: url("../img/icon_04.svg"); }
 	&.cat-jobs { background-image: url("../img/icon_76.svg"); }
@@ -112,11 +114,11 @@
 	&.cat-community { background-image: url("../img/icon_02.svg"); @include background-size(85%); }
 	&.cat-donation { background-image: url("../img/icon_12.svg"); }
 	&.cat-eventseries { background-image: url("../img/icon_192.svg"); }
-	&.cat-external-event { background-image: url("../img/icon_192.svg"); }
+	&.cat-external-event { background-image: url("../img/icon_192.svg"); }*/
 	
 	/* Sub categories */
 
-	&.subcat-wifi { background-image: url("../img/icon_148.svg"); }
+	/*&.subcat-wifi { background-image: url("../img/icon_148.svg"); }
 	&.subcat-jewish { background-image: url("../img/icon_22.svg"); }
 	&.subcat-christian { background-image: url("../img/icon_60.svg"); }
 	&.subcat-islam { background-image: url("../img/icon_62.svg"); }
@@ -176,12 +178,12 @@
 	&.subcat-furniture { background-image: url("../img/icon_144.svg"); }
 	
 	&.subcat-iwgr { background-image: url("../img/icon_194.svg"); @include background-size(85%); }
-	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); @include background-size(85%); }
+	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); @include background-size(85%); }*/
 
 	
 	/* POIs */
 
-	&.cat-housing { background-image: url("../img/icon_19.svg"); }
+	/*&.cat-housing { background-image: url("../img/icon_19.svg"); }*/
 
-	&.cat-other { background-image: url("../img/icon_32.svg"); @include background-size(50%); }
+	/*&.cat-other { background-image: url("../img/icon_32.svg"); @include background-size(50%); }*/
 }

@@ -175,6 +175,7 @@ qx.Class.define("APPAFEEFA", {
 		curtain: {},
 		mapView: {},
 		searchView: {},
+		eventView: {},
 		detailView: {},
 		menuView: {},
 		legendView: {},

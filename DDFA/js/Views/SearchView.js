@@ -157,7 +157,6 @@ qx.Class.define("SearchView", {
       // };
       // that.createResult('iwgr', that.getWording('search.label.iwgr'), that.getWording('search.sublabel.iwgr'), action );
 
-
       // upcoming events
       that.createSectionHeader( that.getWording('search.label.upcomingevents'), function(){
         that.inputField.val('events').trigger( "input" );
@@ -167,6 +166,16 @@ qx.Class.define("SearchView", {
         that.createEntryResult(entry);
       });
               
+      that.createButton(
+        {
+          label: 'Veranstaltungskalender',
+          iconName: 'today',
+          action: function(){
+            APP.getEventView().load();
+          }
+        }
+      );
+
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
@@ -369,76 +378,6 @@ qx.Class.define("SearchView", {
       if(!entriesFiltered.length) that.createResult(null, that.getWording('search.label.nothingfound'), that.getWording('search.sublabel.nothingfound'), action );
     },
 
-    // generic function to create a single result
-    createResult: function( iconClass, label, subLabel, action, locationSymbol, tooltip, action_secondary ) {
-      var that = this;
-      
-      const resultEl = $("<div />")
-        .addClass('result')
-        .click(function(){
-          action();
-        })
-        .on('contextmenu', function(e){
-          if(action_secondary) {
-            e.preventDefault();
-            action_secondary();
-          }
-        });
-      that.results.append(resultEl);
-
-      // tooltip
-      if(tooltip){
-        that.createTooltip(
-          resultEl,
-          tooltip,
-          'hover',
-          'right',
-          'desktop',
-          ['search-result-tooltip']
-        );
-      }
-      
-      // icon
-      const iconEl = $("<div />")
-        .addClass('icon')
-        .addClass(iconClass);
-      resultEl.append(iconEl)
-
-      // labels
-      const labelsEl = $("<div />")
-        .addClass('labels');
-      resultEl.append(labelsEl)
-      
-      const mainLabelEl = $("<span />")
-        .append(label);
-      labelsEl.append(mainLabelEl);
-      
-      if( subLabel ) {
-        const subLabelEl = $("<span />")
-          .addClass('sub-label')
-          .append(subLabel);
-        // show location symbol?
-        if(locationSymbol)
-          subLabelEl.append('&nbsp;&nbsp;&nbsp;&nbsp;').append( $("<span />").addClass('glyphicon glyphicon-map-marker') );
-        labelsEl.append(subLabelEl);
-      }
-    },
-
-    // generic function to create a section header
-    createSectionHeader: function( label, action ) {
-      var that = this;
-      
-      const sectionHeader = $("<div />")
-        .addClass('section-header')
-        .append(label);
-      
-      if(action) sectionHeader
-        .addClass('with-action')
-        .click(function(){ action(); });
-      
-      that.results.append(sectionHeader);
-    },
-
     // generic function to create a single entry result
     createEntryResult: function( entry ) {
       var that = this;
@@ -483,6 +422,43 @@ qx.Class.define("SearchView", {
       if(tooltip) tooltip = tooltip.substring(0,150) + '...';
 
       that.createResult( iconClass, label, subLabel, action, (entry.location.length > 0), tooltip, action_secondary );
+    },
+
+    // generic function to create a section header
+    createSectionHeader: function( label, action ) {
+      var that = this;
+      
+      const sectionHeader = $("<div />")
+        .addClass('section-header')
+        .append(label);
+      
+      if(action) sectionHeader
+        .addClass('with-action')
+        .click(function(){ action(); });
+      
+      that.results.append(sectionHeader);
+    },
+
+    // generic function to create a section header
+    createButton: function( options ) {
+      var that = this;
+      
+      const btn = $("<button />")
+        .addClass('btn btn-center')
+        .append(options.label);
+
+      if(options.iconName) {
+        const icon = $("<i />")
+          .addClass('material-icons ' + (options.iconPosition? options.iconPosition : 'left') )
+          .append(options.iconName);
+        btn.append(icon);
+      };
+      
+      if(options.action) btn
+        .addClass('with-action')
+        .click(function(){ options.action(); });
+      
+      that.results.append(btn);
     },
 
     setSearchTag: function(cssClass, wording){

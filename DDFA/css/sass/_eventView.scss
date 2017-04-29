@@ -1,0 +1,53 @@
+#eventView {
+	
+	@include goBackLayout;
+
+	background-color: $black;
+
+	@include box-sizing(border-box);
+
+	@include display-flex;
+	@include flex-direction(column);
+
+	z-index: 30;
+
+	/* HEADING */
+	.heading {
+		@include box-shadow(0px 2px 5px #000);
+	}
+
+	.section-header {
+		text-transform: uppercase;
+		text-align: center;
+		font-weight: bold;
+		color: $gray50;
+		margin: 2em 0.8em 1em;
+	}
+
+	.section-header:first-child{
+		margin: 0 1em 1em;
+	}
+
+	h3 {
+		font-size: 1.5rem;
+		color: $gray50;
+    margin: 2rem 0 1rem 0;
+	}
+
+	.button-container {
+		padding: 0 3rem;
+		background-color: $gray20;
+		@include box-shadow($gray20 0 0 15px);
+	}
+
+	&.active {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+.mobile {
+}
+
+.tablet {
+}

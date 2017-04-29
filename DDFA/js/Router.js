@@ -57,6 +57,7 @@ qx.Class.define("Router", {
 			APP.setLanguageView( new LanguageView() );
 			APP.setMapView( new MapView() );
 			APP.setSearchView( new SearchView() );
+			APP.setEventView( new EventView() );
 			APP.setMenuView( new MenuView() );
 			APP.setLegendView( new LegendView() );
 			APP.setPlusView( new PlusView() );
@@ -68,6 +69,7 @@ qx.Class.define("Router", {
 			// render the views
 			APP.getMapView().render();
 			APP.getSearchView().render();
+			APP.getEventView().render();
 			APP.getDetailView().render();
 			APP.getPlusView().render();
 			APP.getLanguageView().render();

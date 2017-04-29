@@ -36,9 +36,6 @@
 	<meta name="theme-color" content="#41829e">
 
 
-	<!-- Google fonts -->
-	<link href='https://fonts.googleapis.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400&subset=latin,cyrillic-ext,greek-ext,greek,vietnamese,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
-	
 	<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
 	<link rel="stylesheet" href="DDFA/css/afeefa.css" />
 
@@ -49,7 +46,6 @@
 	<!-- requirejs (module loader) handles all further js includes -->
 	<?php 
 	# check if calling dev or production version to load raw or built frontend
-	echo $_SERVER['HTTP_HOST'];
 	if (strpos($_SERVER['HTTP_HOST'], 'dev.afeefa.fx') !== false) { ?>
 		<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
 	<?php } else { ?>

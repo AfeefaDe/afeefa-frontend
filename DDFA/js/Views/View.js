@@ -136,6 +136,63 @@ qx.Class.define("View", {
             return html;
         },
 
+        // generic function to create a single result
+    // createListResult: function( iconClass, label, subLabel, action, locationSymbol, tooltip, action_secondary ) {
+    createListResult: function( options ) {
+      var that = this;
+      
+      const resultEl = $("<div />")
+        .addClass('result')
+        .click(function(){
+          action();
+        })
+        .on('contextmenu', function(e){
+          if(action_secondary) {
+            e.preventDefault();
+            action_secondary();
+          }
+        });
+      that.results.append(resultEl);
+
+      // tooltip
+      if(tooltip){
+        that.createTooltip(
+          resultEl,
+          tooltip,
+          'hover',
+          'right',
+          'desktop',
+          ['search-result-tooltip']
+        );
+      }
+      
+      // icon
+      const iconEl = $("<div />")
+        .addClass('icon')
+        .addClass(iconClass);
+      resultEl.append(iconEl)
+
+      // labels
+      const labelsEl = $("<div />")
+        .addClass('labels');
+      resultEl.append(labelsEl)
+      
+      const mainLabelEl = $("<span />")
+        .append(label);
+      labelsEl.append(mainLabelEl);
+      
+      if( subLabel ) {
+        const subLabelEl = $("<span />")
+          .addClass('sub-label')
+          .append(subLabel);
+        // show location symbol?
+        if(locationSymbol)
+          subLabelEl.append('&nbsp;&nbsp;&nbsp;&nbsp;').append( $("<span />").addClass('glyphicon glyphicon-map-marker') );
+        labelsEl.append(subLabelEl);
+      }
+    },
+
+
         createBackBtn: function(action){
           var that = this;
 
