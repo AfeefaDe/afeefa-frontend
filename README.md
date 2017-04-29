@@ -3,9 +3,9 @@ The main web app of Afeefa.de
 
 ## Setup
 
-### set API source
-change path in *APPAFEEFA.js*:
-
+1. Ensure you are running a frontend api: https://github.com/AfeefaDe/afeefa-frontend-api
+2. Checkout this repository
+3. Customize you frontend API url at: DDFA/js/APPAFEEFA.js
 ~~~~
 ...
 that.setConfig(
@@ -15,7 +15,6 @@ that.setConfig(
 	}
 ...
 ~~~~
+4. setup a local virtual host or something phply, which points at the root folder (index.html)
 
-### Run the app
-- set up a local virtual host or something, which points at the root folder (index.html)
-- open your virtual host's URL and it should run
+	or simply command `php -S localhost:8000` from source folder
