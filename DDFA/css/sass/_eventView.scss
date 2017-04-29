@@ -2,7 +2,7 @@
 	
 	@include goBackLayout;
 
-	background-color: $black;
+	background-color: $gray95;
 
 	@include box-sizing(border-box);
 
@@ -10,6 +10,8 @@
 	@include flex-direction(column);
 
 	z-index: 30;
+
+	color: $white;
 
 	/* HEADING */
 	.heading {
@@ -22,10 +24,32 @@
 		font-weight: bold;
 		color: $gray50;
 		margin: 2em 0.8em 1em;
+		
+		&:first-child{
+			margin: 0 1em 1em;
+		}
 	}
 
-	.section-header:first-child{
-		margin: 0 1em 1em;
+	.filters {
+		.event-filter {
+			@include display-flex;
+			@include justify-content(space-around);
+	    margin: 2rem 1rem;
+
+	    .option-value {
+	    	text-transform: uppercase;
+	    	color: $gray50;
+  			padding: .3rem;
+		    cursor: pointer;
+		    @include transition(background 200ms);
+
+	    	&.active, &:hover {
+	    		background-color: $gray20;
+	    		color: $black;
+    			@include border-radius(4px);
+	    	}
+	    }
+		}
 	}
 
 	h3 {

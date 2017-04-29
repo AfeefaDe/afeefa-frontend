@@ -168,6 +168,7 @@ qx.Class.define("DataManager", {
 
         getAllEvents: function (options) {
 
+            if(options === undefined) options = {};
 
             // extract events from all the data
             var events = APP.getData().entries.filter(function (entry) {
@@ -178,9 +179,11 @@ qx.Class.define("DataManager", {
 
             if(options.timeSpan){
                 
+                var eventsFiltered = [];
+
                 // today means only today or if it ends today
                 if( options.timeSpan == 'today' ){
-                    var eventsFiltered = events.filter(function(entry){
+                    eventsFiltered = events.filter(function(entry){
                         var endsToday;
                         endsToday = ( entry.dateTo && moment().isSame(entry.dateTo, 'd') )? true : false;
                         
@@ -189,8 +192,42 @@ qx.Class.define("DataManager", {
                         
                         return (isOnlyToday || endsToday);
                     });
+                    
+                    return _.sortBy(eventsFiltered, 'dateFrom');
                 }
-                return _.sortBy(eventsFiltered, 'dateFrom');
+                
+                // this week
+                if( options.timeSpan == 'thisWeek' ){
+                    eventsFiltered = events.filter(function(entry){
+                        var isThisWeek;
+                        isThisWeek = ( 
+                            // dateFrom < nextMonday
+                            ( moment(entry.dateFrom).isBefore(moment().day(1), 'd') )
+                        )? true : false;
+                        
+                        return (isThisWeek);
+                    });   
+                    
+                    return _.sortBy(eventsFiltered, 'dateTo');
+                }
+
+                // next week
+                if( options.timeSpan == 'nextWeek' ){
+                    eventsFiltered = events.filter(function(entry){
+                        var isNextWeek;
+                        isNextWeek = ( 
+                            // dateFrom > nextSunday && dateFrom < secondNextMonday
+                            ( moment(entry.dateFrom).isAfter(moment().day(0), 'd') ) &&
+                            ( moment(entry.dateFrom).isBefore(moment().day(8), 'd') )
+                        )? true : false;
+                        
+                        return (isNextWeek);
+                    });   
+                    
+                    return _.sortBy(eventsFiltered, 'dateTo');
+                }
+                
+                return eventsFiltered;
             }
             
             return _.sortBy(events, 'dateFrom');

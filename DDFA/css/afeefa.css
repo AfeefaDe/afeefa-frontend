@@ -11795,7 +11795,7 @@ body.phone #mapView.shy {
   -webkit-transition: opacity 200ms;
   transition: opacity 200ms;
   /* HEADING */
-  background-color: #333333;
+  background-color: #222222;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -11804,6 +11804,7 @@ body.phone #mapView.shy {
   -webkit-flex-direction: column;
   flex-direction: column;
   z-index: 30;
+  color: #f2f2f2;
   /* HEADING */
 }
 /* line 19, sass/_goBackLayout.scss */
@@ -11817,7 +11818,7 @@ body.phone #mapView.shy {
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   color: #f2f2f2;
-  background-color: #333333;
+  background-color: #222222;
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
@@ -11916,13 +11917,13 @@ body.phone #mapView.shy {
 #eventView .back-btn:hover {
   opacity: 1;
 }
-/* line 15, sass/_eventView.scss */
+/* line 17, sass/_eventView.scss */
 #eventView .heading {
   -moz-box-shadow: 0px 2px 5px #000;
   -webkit-box-shadow: 0px 2px 5px #000;
   box-shadow: 0px 2px 5px #000;
 }
-/* line 19, sass/_eventView.scss */
+/* line 21, sass/_eventView.scss */
 #eventView .section-header {
   text-transform: uppercase;
   text-align: center;
@@ -11930,17 +11931,44 @@ body.phone #mapView.shy {
   color: #999999;
   margin: 2em 0.8em 1em;
 }
-/* line 27, sass/_eventView.scss */
+/* line 28, sass/_eventView.scss */
 #eventView .section-header:first-child {
   margin: 0 1em 1em;
 }
-/* line 31, sass/_eventView.scss */
+/* line 34, sass/_eventView.scss */
+#eventView .filters .event-filter {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  margin: 2rem 1rem;
+}
+/* line 39, sass/_eventView.scss */
+#eventView .filters .event-filter .option-value {
+  text-transform: uppercase;
+  color: #999999;
+  padding: .3rem;
+  cursor: pointer;
+  -moz-transition: background 200ms;
+  -o-transition: background 200ms;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+/* line 46, sass/_eventView.scss */
+#eventView .filters .event-filter .option-value.active, #eventView .filters .event-filter .option-value:hover {
+  background-color: #DDDDDD;
+  color: #333333;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 55, sass/_eventView.scss */
 #eventView h3 {
   font-size: 1.5rem;
   color: #999999;
   margin: 2rem 0 1rem 0;
 }
-/* line 37, sass/_eventView.scss */
+/* line 61, sass/_eventView.scss */
 #eventView .button-container {
   padding: 0 3rem;
   background-color: #DDDDDD;
@@ -11948,7 +11976,7 @@ body.phone #mapView.shy {
   -webkit-box-shadow: #DDDDDD 0 0 15px;
   box-shadow: #DDDDDD 0 0 15px;
 }
-/* line 43, sass/_eventView.scss */
+/* line 67, sass/_eventView.scss */
 #eventView.active {
   visibility: visible;
   opacity: 1;
@@ -11992,7 +12020,7 @@ body.phone #mapView.shy {
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   color: #f2f2f2;
-  background-color: #333333;
+  background-color: #222222;
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
@@ -12563,7 +12591,7 @@ body.phone #mapView.shy {
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   color: #f2f2f2;
-  background-color: #333333;
+  background-color: #222222;
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
@@ -14316,7 +14344,7 @@ body.phone #menuView .menu-btn {
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   color: #f2f2f2;
-  background-color: #333333;
+  background-color: #222222;
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
@@ -14629,7 +14657,7 @@ body.phone #menuView .menu-btn {
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
   color: #f2f2f2;
-  background-color: #333333;
+  background-color: #222222;
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */

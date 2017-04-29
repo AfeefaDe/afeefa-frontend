@@ -32,23 +32,73 @@ qx.Class.define("EventView", {
       // back button
       that.createBackBtn(function(){that.close();});
 
+      // FILTERS
+      that.createFilters();
+
       // form container
       that.scrollContainer = $("<div />")
           .addClass('scroll-container list-results');
       if (APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar();
-      that.view.append(that.scrollContainer);     
+      that.view.append(that.scrollContainer);
 
       this.base(arguments);
     },
 
-    load: function(query){
-        var that = this;
+    createFilters: function(query){
+      var that = this;
 
+      that.filters = $("<div />")
+        .addClass('filters');
+      that.view.append(that.filters);
+
+      that.eventFilter = $("<div />")
+        .addClass('event-filter');
+      that.filters.append(that.eventFilter);
+
+      _.each(['today', 'thisWeek', 'nextWeek'], function(optionValue){
+        var optionEl = $("<div />")
+          .addClass('option-value')
+          .append(optionValue)
+          .click(function(){
+            that.load( {filter: {timeSpan: optionValue}} );
+          });
+        that.eventFilter.append(optionEl);
+      });
+    },
+
+    setFilter: function(options){
+      var that = this;
+
+      if(options === undefined) options = {};
+      
+      var events = [];
+
+      // APP.getDataManager().getAllEvents( {timeSpan: 'today'} )
+      if(options.timeSpan){
+        events = APP.getDataManager().getAllEvents( {timeSpan: options.timeSpan} );
+      }
+      else {
+        // events = APP.getDataManager().getAllEvents();
+      }
+
+      return events;
+    },
+
+    load: function( options ){
+        var that = this;
+        
+        if(options === undefined) options = {};
+        if(options.filter === undefined) options.filter = {timeSpan: 'today'};
+
+        that.reset();
         that.heading.empty().append('Veranstaltungen');
 
-        that.createSectionHeader('heute');
+        // that.createSectionHeader('heute');
+        
+        var events = [];
+        events = that.setFilter( options.filter );
 
-        _.each(APP.getDataManager().getAllEvents( {timeSpan: 'today'} ).slice(0, 3), function(entry) {
+        _.each(events, function(entry) {
           that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
         });
 
