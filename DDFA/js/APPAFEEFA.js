@@ -196,6 +196,7 @@ qx.Class.define("APPAFEEFA", {
 		init: function( cb ){
 			var that = this;
 
+      
 			// load city config
 			that.detectAfeefaArea();
 
@@ -213,6 +214,7 @@ qx.Class.define("APPAFEEFA", {
 			// fetch only necessary data for app startup
 			that.getDataManager().fetchInitialData(function(){
 				cb();
+      	that.loading(true);
 			});
 
 			// fetch other data (e.g. that takes a long time loading)
@@ -225,12 +227,12 @@ qx.Class.define("APPAFEEFA", {
             var that = this;
 
             that.listen('languageChanged', function(){
-                that.loading(true);
+              that.loading(true);
             });
 
             that.listen('fetchedNewData', function(){
-				that.loading(false);
-			});
+							that.loading(false);
+						});
         },
 
 		loading: function( bool ){
