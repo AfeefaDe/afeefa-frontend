@@ -53,7 +53,7 @@ qx.Class.define("DataManager", {
 
                     console.debug('fetchedAllData in ' + APP.getLM().getCurrentLang(), data);
                     if(cb) cb();  // finished, so callback
-                    
+
                     // that.fetchExternalData('facebookEvents', function(){
                     //  that.say('fetchedNewData');
                     //  that.say('fetchedAllData');
@@ -76,6 +76,7 @@ qx.Class.define("DataManager", {
                 })
                 .fail(function (a) {
                     console.debug(a);
+                    cb(a);
                 });
 
         },
@@ -86,7 +87,7 @@ qx.Class.define("DataManager", {
                 url: 'https://api.phraseapp.com/api/v2/projects/15466a179c265396774350db18745f34/locales/' +APP.getConfig().phraseapp.localeId[lang]+ '/download?file_format=json&fallback_locale_id=german&include_empty_translations=true',
                 type: 'GET',
                 dataType: 'text',
-                headers: { 
+                headers: {
                     'Authorization': 'token a9d97a31787c37d64ce0200e8cfdf2c95c01bddf9960999ea601a487e0a386a4'
                     // 'User-Agent': 'Afeefa.de Frontend (team@afeefa.de)'
                 }
@@ -309,10 +310,10 @@ qx.Class.define("DataManager", {
                 dataType: 'json'
             })
             .done(function (dataFromServer) {
-                
+
                 var data;
                 if( sourceKey == 'freifunk' ) {
-                    
+
                     // filter
                     data = _.filter(dataFromServer.nodes, function (record) {
                         // filter out dead access points
@@ -323,7 +324,7 @@ qx.Class.define("DataManager", {
                 else if( sourceKey == 'facebookEvents' ){
                     data = dataFromServer;
                 }
-                
+
                 that.integrateExternalData(data, sources[sourceKey].mapping);
                 cb();
             })
@@ -337,7 +338,7 @@ qx.Class.define("DataManager", {
             var that = this;
 
             var currentAppData = APP.getData();
-                    
+
             var rows = [];
             _.each(data, function(record, i){
                 var newEntry = {
@@ -373,7 +374,7 @@ qx.Class.define("DataManager", {
             // store data in APP
             var newData = _.union(currentAppData.entries, rows)
             currentAppData.entries = newData;
-            
+
             APP.setData(currentAppData);
         },
 
@@ -586,7 +587,7 @@ qx.Class.define("DataManager", {
 
             // SETUP ---
             var languages = config[importKey].languages;
-            
+
             var baseLang = 'de';
             var otherLanguages = _.without(languages, baseLang);
             var inis = {};
@@ -643,7 +644,7 @@ qx.Class.define("DataManager", {
                         "timeTo",
                         "tags"
                     ];
-                    
+
                     _.each(entryAttributes, function(attr){
                         // take custom mapping function if available
                         if(config[importKey].mapping[attr]){

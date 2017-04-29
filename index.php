@@ -38,7 +38,7 @@
 
 	<!-- Google fonts -->
 	<link href='https://fonts.googleapis.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400&subset=latin,cyrillic-ext,greek-ext,greek,vietnamese,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
-	
+
 	<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
 	<link rel="stylesheet" href="DDFA/css/afeefa.css" />
 
@@ -47,10 +47,9 @@
 	<link href='https://api.mapbox.com/mapbox.js/v3.1.0/mapbox.css' rel='stylesheet' />
 
 	<!-- requirejs (module loader) handles all further js includes -->
-	<?php 
+	<?php
 	# check if calling dev or production version to load raw or built frontend
-	echo $_SERVER['HTTP_HOST'];
-	if (strpos($_SERVER['HTTP_HOST'], 'dev.afeefa.fx') !== false) { ?>
+	if (preg_match("/(dev\.afeefa\.fx|localhost)/", $_SERVER['HTTP_HOST'])) { ?>
 		<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
 	<?php } else { ?>
 		<script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
