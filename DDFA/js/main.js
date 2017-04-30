@@ -7,7 +7,8 @@ require.config({
         domReady: '../../requirejs/domReady',
         jquery: '../../jquery/jquery-2.2.2.min',
         perfectScrollbarJQuery: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min',
-        momentjs: '../../momentjs/moment.min',
+        // momentjs: '../../momentjs/moment.min',
+        momentjs: '../../momentjs/moment-with-locales.min',
         restive: '../../restive/restive.min',
         qx: '../../qooxdoo/qx-oo-4.1.min',
         underscore: '../../underscore/underscore-min',
@@ -92,6 +93,7 @@ require.config({
         Hammer = require('hammerjs');
         Popper = require('popper');
         moment = require('momentjs');
+        moment.locale('de');
         // d3 = require('d3');
         
         domReady(function () {

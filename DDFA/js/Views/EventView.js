@@ -55,51 +55,84 @@ qx.Class.define("EventView", {
         .addClass('event-filter');
       that.filters.append(that.eventFilter);
 
-      _.each(['today', 'thisWeek', 'nextWeek'], function(optionValue){
+      that.filterOptions = ['today', 'thisWeek', 'nextWeek'];
+      
+      _.each(that.filterOptions, function(optionValue){
+        
         var optionEl = $("<div />")
           .addClass('option-value')
           .append(optionValue)
           .click(function(){
-            that.load( {filter: {timeSpan: optionValue}} );
+            that.load( {filter: optionValue} );
+            // $(this).addClass('active');
           });
+        
         that.eventFilter.append(optionEl);
+        that['optionEl-'+optionValue] = optionEl;
       });
     },
 
-    setFilter: function(options){
+    setFilter: function( options ){
       var that = this;
 
-      if(options === undefined) options = {};
+      if(options === undefined) options = null;
       
-      var events = [];
+      var eventSets = [];
 
       // APP.getDataManager().getAllEvents( {timeSpan: 'today'} )
-      if(options.timeSpan){
-        events = APP.getDataManager().getAllEvents( {timeSpan: options.timeSpan} );
+      if(options === 'today'){
+        var eventsOnlyToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyToday'} );
+        var eventsAlsoToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday'} );
+        eventSets = [
+          {
+            heading: null,
+            events: eventsOnlyToday
+          },
+          {
+            heading: 'ebenfalls heute',
+            events: eventsAlsoToday
+          }
+        ];
+      }
+      else if(options === 'thisWeek'){
+        var eventsOnlyThisWeek = APP.getDataManager().getAllEvents( {timeSpan: 'onlyThisWeek'} );
+        var eventsAlsoThisWeek = APP.getDataManager().getAllEvents( {timeSpan: 'alsoThisWeek'} );
+        eventSets = [
+          {
+            heading: null,
+            events: eventsOnlyThisWeek
+          },
+          {
+            heading: 'ebenfalls diese Woche',
+            events: eventsAlsoThisWeek
+          }
+        ];
       }
       else {
         // events = APP.getDataManager().getAllEvents();
       }
 
-      return events;
+      that['optionEl-'+options].addClass('active');
+
+      return eventSets;
     },
 
     load: function( options ){
         var that = this;
         
-        if(options === undefined) options = {};
-        if(options.filter === undefined) options.filter = {timeSpan: 'today'};
+        if(options === undefined) options = { filter: 'today' };
 
         that.reset();
         that.heading.empty().append('Veranstaltungen');
 
-        // that.createSectionHeader('heute');
-        
-        var events = [];
-        events = that.setFilter( options.filter );
+        var eventSets = that.setFilter( options.filter );
 
-        _.each(events, function(entry) {
-          that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+        _.each(eventSets, function(set) {
+          if(set.heading) that.createSectionHeader(set.heading);
+          
+          _.each(set.events, function(entry) {
+            that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+          });
         });
 
         that.view.addClass('active');
@@ -224,6 +257,10 @@ qx.Class.define("EventView", {
 
     reset: function(){
         var that = this;
+
+        _.each(that.filterOptions, function(optionValue){
+          that['optionEl-'+optionValue].removeClass('active');
+        });
 
         // that.show();
         // that.maximize();

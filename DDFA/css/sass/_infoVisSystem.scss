@@ -46,7 +46,7 @@
 
 	/* Main categories */
 	
-	/*&.cat-general	{ 
+	&.cat-general	{ 
 		background-color: rgba($gray50, $alpha_background);
 		border-color: rgba($gray50, $alpha_border);
 	}
@@ -94,7 +94,7 @@
 	&.cat-external-event {
 		background-color: rgba($black,$alpha_background);
 		border-color: rgba($black, $alpha_border);
-	}*/
+	}
 }
 
 @mixin categorySymbols {

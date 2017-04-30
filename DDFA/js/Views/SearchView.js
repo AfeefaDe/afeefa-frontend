@@ -163,7 +163,7 @@ qx.Class.define("SearchView", {
       // });
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
       
-      _.each(APP.getDataManager().getAllEvents( {timeSpan: 'today'} ).slice(0, 3), function(entry) {
+      _.each(APP.getDataManager().getAllEvents( {timeSpan: 'onlyToday'} ).slice(0, 3), function(entry) {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
               

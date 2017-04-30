@@ -10438,55 +10438,6 @@ button.btn-center {
   /* POI */
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   -moz-background-size: 72%;
   -o-background-size: 72%;
   -webkit-background-size: 72%;
@@ -10618,6 +10569,56 @@ button.btn-center {
   /*@include box-shadow(0px 0px 2px #555);*/
   background-color: #999999 !important;
 }
+/* line 49, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+.list-results .result .icon.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
+}
 /* line 106, sass/_afeefa-styles.scss */
 .list-results .result .icon.add-entry {
   background-image: url("../img/icon_34.svg");
@@ -10680,16 +10681,16 @@ button.btn-center {
   margin: 2em 0.8em 1em;
 }
 /* line 155, sass/_afeefa-styles.scss */
+.list-results .section-header:first-child {
+  margin: 0 1em 1em;
+}
+/* line 159, sass/_afeefa-styles.scss */
 .list-results .section-header.with-action {
   cursor: pointer;
 }
-/* line 158, sass/_afeefa-styles.scss */
+/* line 162, sass/_afeefa-styles.scss */
 .list-results .section-header.with-action:hover {
   color: #DDDDDD;
-}
-/* line 163, sass/_afeefa-styles.scss */
-.list-results .section-header:first-child {
-  margin: 0 1em 1em;
 }
 
 /* line 169, sass/_afeefa-styles.scss */
@@ -10982,55 +10983,6 @@ body.loading #curtain {
   /* POI */
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   -moz-background-size: 72%;
   -o-background-size: 72%;
   -webkit-background-size: 72%;
@@ -11159,6 +11111,56 @@ body.loading #curtain {
   /*@include box-shadow(0px 0px 2px #555);*/
   background-color: #999999 !important;
 }
+/* line 49, sass/_infoVisSystem.scss */
+#mapView div.location.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#mapView div.location.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#mapView div.location.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#mapView div.location.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#mapView div.location.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#mapView div.location.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#mapView div.location.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#mapView div.location.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#mapView div.location.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#mapView div.location.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
+}
 /* line 24, sass/_mapView.scss */
 #mapView div.location.marker-cluster {
   background-color: #f2f2f2;
@@ -11200,55 +11202,6 @@ body.loading #curtain {
   /* POI */
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
 }
 /* line 4, sass/_infoVisSystem.scss */
 #mapView div.location.type-2 span.event-shape.type-0 {
@@ -11294,6 +11247,56 @@ body.loading #curtain {
   border-radius: 20px;
   /*@include box-shadow(0px 0px 2px #555);*/
   background-color: #999999 !important;
+}
+/* line 49, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#mapView div.location.type-2 span.event-shape.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 55, sass/_mapView.scss */
 #mapView div.location.type-2 span.event-icon {
@@ -11548,16 +11551,19 @@ body.phone #mapView.shy {
   width: calc(100% - 6em);
   height: 2.5rem;
   line-height: 2.5rem;
-  color: #999999;
   background: none;
   border: none;
+  color: #f2f2f2;
 }
 /* line 79, sass/_searchView.scss */
+#searchView #search-bar input::placeholder {
+  color: #666666;
+}
+/* line 83, sass/_searchView.scss */
 #searchView #search-bar input:focus {
-  color: #f2f2f2;
   outline-color: transparent !important;
 }
-/* line 85, sass/_searchView.scss */
+/* line 88, sass/_searchView.scss */
 #searchView #search-bar .search-tag {
   height: 1.5em;
   width: calc(100% - 6em);
@@ -11572,98 +11578,99 @@ body.phone #mapView.shy {
   color: #f2f2f2;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   overflow: hidden;
   text-overflow: ellipsis;
   -moz-border-radius: 0.1em;
   -webkit-border-radius: 0.1em;
   border-radius: 0.1em;
 }
-/* line 98, sass/_searchView.scss */
+/* line 49, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#searchView #search-bar .search-tag.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
+}
+/* line 101, sass/_searchView.scss */
 #searchView #search-bar .search-tag.active {
   display: inline-block;
 }
-/* line 103, sass/_searchView.scss */
+/* line 106, sass/_searchView.scss */
 #searchView #search-bar .search-tag[class*="cat"] {
   color: #f2f2f2;
 }
-/* line 109, sass/_searchView.scss */
+/* line 112, sass/_searchView.scss */
 #searchView .list-results {
   top: 5rem;
 }
-/* line 114, sass/_searchView.scss */
+/* line 117, sass/_searchView.scss */
 #searchView.active-search #search-bar input {
   width: calc(100% - 6em);
 }
-/* line 118, sass/_searchView.scss */
+/* line 121, sass/_searchView.scss */
 #searchView.active-search .cancel-btn {
   display: block !important;
 }
-/* line 122, sass/_searchView.scss */
+/* line 125, sass/_searchView.scss */
 #searchView.active-search .refugee-btn {
   display: none;
 }
 
-/* line 132, sass/_searchView.scss */
+/* line 135, sass/_searchView.scss */
 .tablet #searchView.active #results {
   overflow: scroll;
 }
 
-/* line 144, sass/_searchView.scss */
+/* line 147, sass/_searchView.scss */
 .mobile #searchView {
   width: 100%;
   background: none;
   height: 3rem;
 }
-/* line 150, sass/_searchView.scss */
+/* line 153, sass/_searchView.scss */
 .mobile #searchView #search-bar {
   width: 100%;
   top: 0;
@@ -11673,39 +11680,39 @@ body.phone #mapView.shy {
   border-radius: 0;
   height: 3rem !important;
 }
-/* line 158, sass/_searchView.scss */
+/* line 161, sass/_searchView.scss */
 .mobile #searchView #search-bar input {
   left: 4rem;
   width: calc(100% - 10rem);
 }
-/* line 163, sass/_searchView.scss */
+/* line 166, sass/_searchView.scss */
 .mobile #searchView #search-bar .search-tag {
   left: 4em;
   top: calc( (3em - 1.5em) / 2 );
   width: calc(100% - 10rem);
 }
-/* line 169, sass/_searchView.scss */
+/* line 172, sass/_searchView.scss */
 .mobile #searchView #search-bar .btn, .mobile #searchView #search-bar .btn-large {
   height: 3rem;
 }
-/* line 173, sass/_searchView.scss */
+/* line 176, sass/_searchView.scss */
 .mobile #searchView #search-bar .menu-btn {
   top: 0;
   left: 1rem;
   background-image: url("../img/icon_38.svg");
 }
-/* line 179, sass/_searchView.scss */
+/* line 182, sass/_searchView.scss */
 .mobile #searchView #search-bar .refugee-btn {
   right: 4rem;
 }
-/* line 183, sass/_searchView.scss */
+/* line 186, sass/_searchView.scss */
 .mobile #searchView #search-bar .filter-btn {
   display: block;
   top: 0;
   right: 1rem;
   background-image: url("../img/icon_94.svg");
 }
-/* line 191, sass/_searchView.scss */
+/* line 194, sass/_searchView.scss */
 .mobile #searchView #results {
   top: 3rem;
   left: 0;
@@ -11713,24 +11720,24 @@ body.phone #mapView.shy {
   width: 100%;
   height: calc(100% - 3rem);
 }
-/* line 199, sass/_searchView.scss */
+/* line 202, sass/_searchView.scss */
 .mobile #searchView input {
   height: 3rem !important;
   line-height: 3rem !important;
 }
-/* line 204, sass/_searchView.scss */
+/* line 207, sass/_searchView.scss */
 .mobile #searchView .cancel-btn {
   right: 3em !important;
 }
-/* line 208, sass/_searchView.scss */
+/* line 211, sass/_searchView.scss */
 .mobile #searchView.active {
   height: 100%;
 }
-/* line 211, sass/_searchView.scss */
+/* line 214, sass/_searchView.scss */
 .mobile #searchView.active #search-bar {
   background-color: #222222;
 }
-/* line 215, sass/_searchView.scss */
+/* line 218, sass/_searchView.scss */
 .mobile #searchView.active #results {
   background-color: #222222;
   height: calc(100vh - 6rem);
@@ -11739,7 +11746,7 @@ body.phone #mapView.shy {
   -webkit-box-shadow: 0px 0px 2px #000;
   box-shadow: 0px 0px 2px #000;
 }
-/* line 222, sass/_searchView.scss */
+/* line 225, sass/_searchView.scss */
 .mobile #searchView.active #map-area {
   height: 3rem;
   position: absolute;
@@ -11747,26 +11754,26 @@ body.phone #mapView.shy {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 }
-/* line 231, sass/_searchView.scss */
+/* line 234, sass/_searchView.scss */
 .mobile #searchView.minimized {
   height: 3em;
 }
-/* line 233, sass/_searchView.scss */
+/* line 236, sass/_searchView.scss */
 .mobile #searchView.minimized #results {
   display: none;
 }
-/* line 234, sass/_searchView.scss */
+/* line 237, sass/_searchView.scss */
 .mobile #searchView.minimized #map-area {
   display: none;
 }
 
-/* line 241, sass/_searchView.scss */
+/* line 244, sass/_searchView.scss */
 .rtl #searchView .labels {
   padding-right: 0 !important;
   padding-left: 1em !important;
 }
 
-/* line 249, sass/_searchView.scss */
+/* line 252, sass/_searchView.scss */
 .desktop #search-bar {
   left: 0;
   right: 2rem;
@@ -11822,55 +11829,56 @@ body.phone #mapView.shy {
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
+}
+/* line 49, sass/_infoVisSystem.scss */
+#eventView .heading.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#eventView .heading.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#eventView .heading.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#eventView .heading.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#eventView .heading.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#eventView .heading.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#eventView .heading.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#eventView .heading.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#eventView .heading.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#eventView .heading.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 34, sass/_goBackLayout.scss */
 #eventView .heading.cat-general {
@@ -11925,17 +11933,10 @@ body.phone #mapView.shy {
 }
 /* line 21, sass/_eventView.scss */
 #eventView .section-header {
-  text-transform: uppercase;
   text-align: center;
   font-weight: bold;
-  color: #999999;
-  margin: 2em 0.8em 1em;
 }
-/* line 28, sass/_eventView.scss */
-#eventView .section-header:first-child {
-  margin: 0 1em 1em;
-}
-/* line 34, sass/_eventView.scss */
+/* line 27, sass/_eventView.scss */
 #eventView .filters .event-filter {
   display: -webkit-flex;
   display: flex;
@@ -11943,7 +11944,7 @@ body.phone #mapView.shy {
   justify-content: space-around;
   margin: 2rem 1rem;
 }
-/* line 39, sass/_eventView.scss */
+/* line 32, sass/_eventView.scss */
 #eventView .filters .event-filter .option-value {
   text-transform: uppercase;
   color: #999999;
@@ -11954,7 +11955,7 @@ body.phone #mapView.shy {
   -webkit-transition: background 200ms;
   transition: background 200ms;
 }
-/* line 46, sass/_eventView.scss */
+/* line 39, sass/_eventView.scss */
 #eventView .filters .event-filter .option-value.active, #eventView .filters .event-filter .option-value:hover {
   background-color: #DDDDDD;
   color: #333333;
@@ -11962,13 +11963,13 @@ body.phone #mapView.shy {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 55, sass/_eventView.scss */
+/* line 48, sass/_eventView.scss */
 #eventView h3 {
   font-size: 1.5rem;
   color: #999999;
   margin: 2rem 0 1rem 0;
 }
-/* line 61, sass/_eventView.scss */
+/* line 54, sass/_eventView.scss */
 #eventView .button-container {
   padding: 0 3rem;
   background-color: #DDDDDD;
@@ -11976,7 +11977,7 @@ body.phone #mapView.shy {
   -webkit-box-shadow: #DDDDDD 0 0 15px;
   box-shadow: #DDDDDD 0 0 15px;
 }
-/* line 67, sass/_eventView.scss */
+/* line 60, sass/_eventView.scss */
 #eventView.active {
   visibility: visible;
   opacity: 1;
@@ -12024,55 +12025,56 @@ body.phone #mapView.shy {
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
+}
+/* line 49, sass/_infoVisSystem.scss */
+#detailView .heading.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#detailView .heading.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#detailView .heading.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#detailView .heading.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#detailView .heading.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#detailView .heading.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#detailView .heading.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#detailView .heading.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#detailView .heading.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#detailView .heading.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 34, sass/_goBackLayout.scss */
 #detailView .heading.cat-general {
@@ -12207,55 +12209,6 @@ body.phone #mapView.shy {
   /* POI */
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   -moz-background-size: 72%;
   -o-background-size: 72%;
   -webkit-background-size: 72%;
@@ -12383,6 +12336,56 @@ body.phone #mapView.shy {
   border-radius: 20px;
   /*@include box-shadow(0px 0px 2px #555);*/
   background-color: #999999 !important;
+}
+/* line 49, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#detailView .property.category .property-icon.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 68, sass/_detailView.scss */
 #detailView .property.category .property-value {
@@ -12595,55 +12598,56 @@ body.phone #mapView.shy {
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
+}
+/* line 49, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#detailViewMobile .heading.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 34, sass/_goBackLayout.scss */
 #detailViewMobile .heading.cat-general {
@@ -12778,55 +12782,6 @@ body.phone #mapView.shy {
   /* POI */
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   -moz-background-size: 72%;
   -o-background-size: 72%;
   -webkit-background-size: 72%;
@@ -12954,6 +12909,56 @@ body.phone #mapView.shy {
   border-radius: 20px;
   /*@include box-shadow(0px 0px 2px #555);*/
   background-color: #999999 !important;
+}
+/* line 49, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#detailViewMobile .property.category .property-icon.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 68, sass/_detailView.scss */
 #detailViewMobile .property.category .property-value {
@@ -13397,56 +13402,57 @@ body.phone #menuView .menu-btn {
   cursor: pointer;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   border-left: .5rem solid;
+}
+/* line 49, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-general {
+  background-color: rgba(153, 153, 153, 0.4);
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-language {
+  background-color: rgba(228, 177, 0, 0.4);
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-medic {
+  background-color: rgba(162, 28, 21, 0.4);
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-jobs {
+  background-color: rgba(8, 82, 114, 0.4);
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-consultation {
+  background-color: rgba(94, 104, 35, 0.4);
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-leisure {
+  background-color: rgba(49, 139, 134, 0.4);
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-community {
+  background-color: rgba(105, 62, 117, 0.4);
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-donation {
+  background-color: rgba(202, 115, 17, 0.4);
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-eventseries {
+  background-color: rgba(49, 139, 134, 0.4);
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#legendView .cat-container.cat-external-event {
+  background-color: rgba(51, 51, 51, 0.4);
+  border-color: #333333;
 }
 /* line 113, sass/_legendView.scss */
 #legendView .cat-container.cat-general {
@@ -13606,57 +13612,58 @@ body.phone #menuView .menu-btn {
   transition: max-height 250ms;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   max-height: 0;
   overflow: hidden;
+}
+/* line 49, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-general {
+  background-color: rgba(153, 153, 153, 0.1);
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-language {
+  background-color: rgba(228, 177, 0, 0.1);
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-medic {
+  background-color: rgba(162, 28, 21, 0.1);
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-jobs {
+  background-color: rgba(8, 82, 114, 0.1);
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-consultation {
+  background-color: rgba(94, 104, 35, 0.1);
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-leisure {
+  background-color: rgba(49, 139, 134, 0.1);
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-community {
+  background-color: rgba(105, 62, 117, 0.1);
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-donation {
+  background-color: rgba(202, 115, 17, 0.1);
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-eventseries {
+  background-color: rgba(49, 139, 134, 0.1);
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#legendView .sub-container.cat-external-event {
+  background-color: rgba(51, 51, 51, 0.1);
+  border-color: #333333;
 }
 /* line 180, sass/_legendView.scss */
 #legendView .sub-container.cat-general {
@@ -13667,57 +13674,58 @@ body.phone #menuView .menu-btn {
 #legendView .sub-container .subcat-container {
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   background: none !important;
   border-left: .5rem solid;
+}
+/* line 49, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#legendView .sub-container .subcat-container.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 191, sass/_legendView.scss */
 #legendView .sub-container .subcat-container.cat-general {
@@ -14348,55 +14356,56 @@ body.phone #menuView .menu-btn {
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
+}
+/* line 49, sass/_infoVisSystem.scss */
+#formView .heading.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#formView .heading.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#formView .heading.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#formView .heading.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#formView .heading.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#formView .heading.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#formView .heading.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#formView .heading.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#formView .heading.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#formView .heading.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 34, sass/_goBackLayout.scss */
 #formView .heading.cat-general {
@@ -14661,55 +14670,56 @@ body.phone #menuView .menu-btn {
   position: relative;
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
+}
+/* line 49, sass/_infoVisSystem.scss */
+#includeView .heading.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#includeView .heading.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#includeView .heading.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#includeView .heading.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#includeView .heading.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#includeView .heading.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#includeView .heading.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#includeView .heading.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#includeView .heading.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#includeView .heading.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 34, sass/_goBackLayout.scss */
 #includeView .heading.cat-general {
@@ -14955,55 +14965,6 @@ body.phone #menuView .menu-btn {
   /* POI */
   /* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
   /* Main categories */
-  	/*&.cat-general	{ 
-  		background-color: rgba($gray50, $alpha_background);
-  		border-color: rgba($gray50, $alpha_border);
-  	}
-  
-  	&.cat-language	{ 
-  		background-color: rgba($yellow, $alpha_background);
-  		border-color: rgba($yellow, $alpha_border);
-  	}
-  
-  	&.cat-medic {
-  		background-color: rgba($red,$alpha_background);
-  		border-color: rgba($red, $alpha_border);
-  	}
-  	
-  	&.cat-jobs {
-  		background-color: rgba($blue_dark,$alpha_background);
-  		border-color: rgba($blue_dark, $alpha_border);
-  	}
-  
-  	&.cat-consultation {
-  		background-color: rgba($olive,$alpha_background);
-  		border-color: rgba($olive, $alpha_border);
-  	}
-  
-  	&.cat-leisure {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  	
-  	&.cat-community {
-  		background-color: rgba($violet,$alpha_background);
-  		border-color: rgba($violet, $alpha_border);
-  	}
-  
-  	&.cat-donation {
-  		background-color: rgba($orange,$alpha_background);
-  		border-color: rgba($orange, $alpha_border);
-  	}
-  
-  	&.cat-eventseries {
-  		background-color: rgba($turquoise,$alpha_background);
-  		border-color: rgba($turquoise, $alpha_border);
-  	}
-  
-  	&.cat-external-event {
-  		background-color: rgba($black,$alpha_background);
-  		border-color: rgba($black, $alpha_border);
-  	}*/
   -moz-background-size: 72%;
   -o-background-size: 72%;
   -webkit-background-size: 72%;
@@ -15138,6 +15099,56 @@ body.phone #menuView .menu-btn {
   border-radius: 20px;
   /*@include box-shadow(0px 0px 2px #555);*/
   background-color: #999999 !important;
+}
+/* line 49, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-general {
+  background-color: #999999;
+  border-color: #999999;
+}
+/* line 54, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-language {
+  background-color: #e4b100;
+  border-color: #e4b100;
+}
+/* line 59, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-medic {
+  background-color: #a21c15;
+  border-color: #a21c15;
+}
+/* line 64, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-jobs {
+  background-color: #085272;
+  border-color: #085272;
+}
+/* line 69, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-consultation {
+  background-color: #5e6823;
+  border-color: #5e6823;
+}
+/* line 74, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-leisure {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 79, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-community {
+  background-color: #693e75;
+  border-color: #693e75;
+}
+/* line 84, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-donation {
+  background-color: #ca7311;
+  border-color: #ca7311;
+}
+/* line 89, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-eventseries {
+  background-color: #318b86;
+  border-color: #318b86;
+}
+/* line 94, sass/_infoVisSystem.scss */
+#includeView .entity-shape.cat-external-event {
+  background-color: #333333;
+  border-color: #333333;
 }
 /* line 188, sass/_includeView.scss */
 #includeView .entity-bunch {

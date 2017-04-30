@@ -181,34 +181,70 @@ qx.Class.define("DataManager", {
                 
                 var eventsFiltered = [];
 
-                // today means only today or if it ends today
-                if( options.timeSpan == 'today' ){
+                // today means only today
+                // or if a period event ends today
+                if( options.timeSpan == 'onlyToday' ){
                     eventsFiltered = events.filter(function(entry){
-                        var endsToday;
-                        endsToday = ( entry.dateTo && moment().isSame(entry.dateTo, 'd') )? true : false;
-                        
                         var isOnlyToday;
                         isOnlyToday = ( !entry.dateTo && moment().isSame(entry.dateFrom, 'd') )? true : false;
+                        
+                        var endsToday;
+                        endsToday = ( entry.dateTo && moment().isSame(entry.dateTo, 'd') )? true : false;
                         
                         return (isOnlyToday || endsToday);
                     });
                     
                     return _.sortBy(eventsFiltered, 'dateFrom');
                 }
-                
-                // this week
-                if( options.timeSpan == 'thisWeek' ){
+
+                // also today means a period event is already running and goes beyond today
+                if( options.timeSpan == 'alsoToday' ){
                     eventsFiltered = events.filter(function(entry){
-                        var isThisWeek;
-                        isThisWeek = ( 
-                            // dateFrom < nextMonday
-                            ( moment(entry.dateFrom).isBefore(moment().day(1), 'd') )
-                        )? true : false;
+                        // must be a period
+                        if( !(entry.dateFrom && entry.dateTo) ) return false;
+
+                        // dateFrom < today
+                        var isRunning = ( moment(entry.dateFrom).isBefore(moment(), 'd') )? true : false;
                         
-                        return (isThisWeek);
-                    });   
+                        // dateTo > today
+                        var goesBeyondToday = ( moment(entry.dateTo).isAfter(moment(), 'd') )? true : false;
+                        
+                        return (isRunning && goesBeyondToday);
+                    });
                     
                     return _.sortBy(eventsFiltered, 'dateTo');
+                }
+                
+                // this week means all events between today and next sunday (can also be today)
+                // or if a period event ends this week
+                if( options.timeSpan == 'onlyThisWeek' ){
+                    eventsFiltered = events.filter(function(entry){
+                        // dateFrom <= next sunday
+                        var isThisWeek = 
+                        (
+                            !entry.dateTo &&
+                            (
+                                // moment(entry.dateFrom).isBefore(moment().day(7), 'd') ||
+                                // moment(entry.dateFrom).isSame(moment().day(7), 'd')
+                                moment(entry.dateFrom).isSame(moment(), 'week')
+                            )
+                         )? true : false;
+                        
+                        // dateTo <= next sunday
+                        var endsThisWeek = 
+                        (
+                            entry.dateTo &&
+                            (
+                                // moment(entry.dateTo).isBefore(moment().day(7), 'd') ||
+                                // moment(entry.dateTo).isSame(moment().day(7), 'd')
+                                moment(entry.dateTo).isSame(moment(), 'week')
+                            )
+                         )? true : false;
+
+                        return (isThisWeek || endsThisWeek);
+                    });   
+                    
+                    return _.sortBy(eventsFiltered, 'dateFrom');
                 }
 
                 // next week
