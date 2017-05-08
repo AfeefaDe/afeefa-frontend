@@ -84,7 +84,7 @@ button {
   height: calc(100% - 7rem);
 
   .result {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: $white;
     cursor: pointer;
     @include transition(background-color 150ms);
@@ -99,9 +99,9 @@ button {
       @include entityShapes;
       @include categoryColors;
       @include categorySymbols;
-      width: 2em;
-      height: 2em;
-      margin: .5em 1em .5em 0.5em;
+      width: 2rem;
+      height: 2rem;
+      margin: .5rem 2rem .5rem 0.5rem;
 
       &.add-entry {
         background-image: url("../img/icon_34.svg");

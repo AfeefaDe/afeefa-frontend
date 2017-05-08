@@ -93,7 +93,6 @@ require.config({
         Hammer = require('hammerjs');
         Popper = require('popper');
         moment = require('momentjs');
-        moment.locale('de');
         // d3 = require('d3');
         
         domReady(function () {

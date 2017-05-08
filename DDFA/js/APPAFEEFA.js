@@ -197,6 +197,7 @@ qx.Class.define("APPAFEEFA", {
 		init: function( cb ){
 			var that = this;
 
+      moment.locale('de');
       
 			// load city config
 			that.detectAfeefaArea();

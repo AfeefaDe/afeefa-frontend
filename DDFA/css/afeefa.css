@@ -10416,7 +10416,7 @@ button.btn-center {
 }
 /* line 86, sass/_afeefa-styles.scss */
 .list-results .result {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   color: #f2f2f2;
   cursor: pointer;
   -moz-transition: background-color 150ms;
@@ -10520,9 +10520,9 @@ button.btn-center {
   /* POIs */
   /*&.cat-housing { background-image: url("../img/icon_19.svg"); }*/
   /*&.cat-other { background-image: url("../img/icon_32.svg"); @include background-size(50%); }*/
-  width: 2em;
-  height: 2em;
-  margin: .5em 1em .5em 0.5em;
+  width: 2rem;
+  height: 2rem;
+  margin: .5rem 2rem .5rem 0.5rem;
 }
 /* line 4, sass/_infoVisSystem.scss */
 .list-results .result .icon.type-0 {
@@ -11931,12 +11931,29 @@ body.phone #mapView.shy {
   -webkit-box-shadow: 0px 2px 5px #000;
   box-shadow: 0px 2px 5px #000;
 }
-/* line 21, sass/_eventView.scss */
+/* line 22, sass/_eventView.scss */
 #eventView .section-header {
   text-align: center;
-  font-weight: bold;
+  position: relative;
+  margin-top: 3rem;
 }
 /* line 27, sass/_eventView.scss */
+#eventView .section-header .section-header-line {
+  width: 100%;
+  height: 1px;
+  display: block;
+  position: absolute;
+  top: .5rem;
+  border-bottom: 1px solid #999999;
+}
+/* line 36, sass/_eventView.scss */
+#eventView .section-header .section-header-label {
+  background-color: #222222;
+  display: inline-block;
+  position: relative;
+  padding: 0 1rem;
+}
+/* line 45, sass/_eventView.scss */
 #eventView .filters .event-filter {
   display: -webkit-flex;
   display: flex;
@@ -11944,7 +11961,7 @@ body.phone #mapView.shy {
   justify-content: space-around;
   margin: 2rem 1rem;
 }
-/* line 32, sass/_eventView.scss */
+/* line 50, sass/_eventView.scss */
 #eventView .filters .event-filter .option-value {
   text-transform: uppercase;
   color: #999999;
@@ -11955,7 +11972,7 @@ body.phone #mapView.shy {
   -webkit-transition: background 200ms;
   transition: background 200ms;
 }
-/* line 39, sass/_eventView.scss */
+/* line 57, sass/_eventView.scss */
 #eventView .filters .event-filter .option-value.active, #eventView .filters .event-filter .option-value:hover {
   background-color: #DDDDDD;
   color: #333333;
@@ -11963,13 +11980,13 @@ body.phone #mapView.shy {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-/* line 48, sass/_eventView.scss */
+/* line 66, sass/_eventView.scss */
 #eventView h3 {
   font-size: 1.5rem;
   color: #999999;
   margin: 2rem 0 1rem 0;
 }
-/* line 54, sass/_eventView.scss */
+/* line 72, sass/_eventView.scss */
 #eventView .button-container {
   padding: 0 3rem;
   background-color: #DDDDDD;
@@ -11977,7 +11994,7 @@ body.phone #mapView.shy {
   -webkit-box-shadow: #DDDDDD 0 0 15px;
   box-shadow: #DDDDDD 0 0 15px;
 }
-/* line 60, sass/_eventView.scss */
+/* line 78, sass/_eventView.scss */
 #eventView.active {
   visibility: visible;
   opacity: 1;

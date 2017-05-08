@@ -79,9 +79,8 @@ qx.Class.define("EventView", {
       
       var eventSets = [];
 
-      // APP.getDataManager().getAllEvents( {timeSpan: 'today'} )
       if(options === 'today'){
-        var eventsOnlyToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyToday'} );
+        var eventsOnlyToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
         var eventsAlsoToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday'} );
         eventSets = [
           {
@@ -95,18 +94,59 @@ qx.Class.define("EventView", {
         ];
       }
       else if(options === 'thisWeek'){
-        var eventsOnlyThisWeek = APP.getDataManager().getAllEvents( {timeSpan: 'onlyThisWeek'} );
+        
+        // events for each day of the week
+        var daysLeftInWeek = moment().endOf('week').diff(moment().today, 'days');
+        var eventSetsPerDay = [];
+        for(var i=0;i<=daysLeftInWeek;i++){
+          var atDate = moment().add(i,'days');
+          var eventsOnDayX = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: atDate} );
+          if(eventsOnDayX.length < 1) continue;
+          eventSetsPerDay.push(
+            {
+              heading: ( atDate.isSame(moment(), 'd') )? 'heute' : atDate.format('dddd Do MMMM'),
+              events: eventsOnDayX
+            }
+          );
+        }
+        
+        // other period events in this week
         var eventsAlsoThisWeek = APP.getDataManager().getAllEvents( {timeSpan: 'alsoThisWeek'} );
-        eventSets = [
-          {
-            heading: null,
-            events: eventsOnlyThisWeek
-          },
+        
+        eventSets = _.union(eventSetsPerDay, [
           {
             heading: 'ebenfalls diese Woche',
             events: eventsAlsoThisWeek
           }
-        ];
+        ]);
+      }
+      else if(options === 'nextWeek'){
+        
+        // events for each day of the week
+        var eventSetsPerDay = [];
+        for(var i=0;i<=6;i++){
+          var atDate = moment().weekday(7).add(i, 'days');
+          var eventsOnDayX = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: atDate} );
+          if(eventsOnDayX.length < 1) continue;
+          eventSetsPerDay.push(
+            {
+              heading: ( atDate.isSame(moment(), 'd') )? 'heute' : atDate.format('dddd Do MMMM'),
+              events: eventsOnDayX
+            }
+          );
+        }
+        
+        eventSets = eventSetsPerDay;
+        
+        // other period events in the week
+        // var eventsAlsoThisWeek = APP.getDataManager().getAllEvents( {timeSpan: 'alsoThisWeek'} );
+        
+        // eventSets = _.union(eventSetsPerDay, [
+        //   {
+        //     heading: 'ebenfalls diese Woche',
+        //     events: eventsAlsoThisWeek
+        //   }
+        // ]);
       }
       else {
         // events = APP.getDataManager().getAllEvents();
@@ -137,50 +177,6 @@ qx.Class.define("EventView", {
 
         that.view.addClass('active');
         that.isActive(true);
-
-        // if( query === undefined ) query = '';
-        // query = query.toLowerCase();
-        
-        // if(query){
-        //   that.scrollContainer.empty();
-        //   that.loadResults(query);
-        // } else {
-        //   that.reset();
-        //   that.loadDashboard();
-        // }
-
-        // that.inputField
-        //   .attr('placeholder', that.getWording('search.placeholder'))
-        //   .show();
-
-        // // tooltip
-        // that.createTooltip(
-        //   that.menuBtn,
-        //   function(){
-        //     return that.getWording('menu.menu');
-        //   }(),
-        //   'hover',
-        //   'bottom',
-        //   'desktop'
-        // );
-
-        // // tooltip
-        // that.createTooltip(
-        //   that.refugeeBtn,
-        //   function(){
-        //     return that.getWording('menu.refugee');
-        //   }(),
-        //   'hover',
-        //   'bottom',
-        //   'desktop'
-        // );
-
-        // that.isActive(true);
-        // that.maximize();
-        // that.view.addClass('active');
-        // that.say('searchResultsLoaded');
-
-        // return that;
     },
 
     // generic function to create a section header
@@ -188,8 +184,16 @@ qx.Class.define("EventView", {
       var that = this;
       
       const sectionHeader = $("<div />")
-        .addClass('section-header')
+        .addClass('section-header');
+      
+      const line  = $("<span />")
+        .addClass('section-header-line');
+      sectionHeader.append(line);
+      
+      const labelEl  = $("<div />")
+        .addClass('section-header-label')
         .append(label);
+      sectionHeader.append(labelEl);
       
       that.scrollContainer.append(sectionHeader);
     },
@@ -297,7 +301,7 @@ qx.Class.define("EventView", {
         var that = this;
 
         if( APP.getDetailView().isActive() ) return;
-        if(that.isActive()) that.load( that.inputField.val() );
+        if(that.isActive()) that.load();
     }
   }
 

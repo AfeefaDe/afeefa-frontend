@@ -161,9 +161,11 @@ qx.Class.define("SearchView", {
       // that.createSectionHeader( that.getWording('search.label.eventstoday'), function(){
       //   that.inputField.val('events').trigger( "input" );
       // });
+      var highlightArea = $("<div />")
+
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
       
-      _.each(APP.getDataManager().getAllEvents( {timeSpan: 'onlyToday'} ).slice(0, 3), function(entry) {
+      _.each(APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} ).slice(0, 3), function(entry) {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
               
@@ -257,7 +259,7 @@ qx.Class.define("SearchView", {
       that.createListResult(
         {
           iconClass: 'feedback',
-          label: that.getWording('search.label.feedback'),
+          label: that.getWording('form.heading.feedback'),
           subLabel: that.getWording('search.sublabel.feedback'),
           action: action,
           targetContainertEl: that.scrollContainer
@@ -473,7 +475,7 @@ qx.Class.define("SearchView", {
       var that = this;
       
       const btn = $("<button />")
-        .addClass('btn btn-center')
+        .addClass('btn btn-center grey darken-3')
         .append(options.label);
 
       if(options.iconName) {
