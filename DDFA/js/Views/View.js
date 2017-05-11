@@ -206,8 +206,15 @@ qx.Class.define("View", {
           
           // title
           var label = entry.name;
+          
+          var subLabel = '';
+          
           // sub category
-          var subLabel = entry.subCategory ? that.getWording('cat.' + entry.subCategory) : that.getWording('cat.' + categoryName);
+          if(entry.subCategory == 'fb-event'){
+            subLabel += that.getWording('events.eventBy') + ' ' + entry.additionalData.owner;
+          } else {
+            subLabel += entry.subCategory ? that.getWording('cat.' + entry.subCategory) : that.getWording('cat.' + categoryName);
+          }
           // time
           if( entry.type == 2 && entry.dateFrom ) subLabel += ' | ' + APP.getUtility().buildTimeString(entry, {short: true});
           // place

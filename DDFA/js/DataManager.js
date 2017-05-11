@@ -32,7 +32,7 @@ qx.Class.define("DataManager", {
 
         },
 
-        fetchAllData: function () {
+        fetchAllData: function (cb) {
             var that = this;
 
             var currentAppData = APP.getData();
@@ -45,19 +45,19 @@ qx.Class.define("DataManager", {
                 currentAppData.entries = _.sortBy(currentAppData.entries, 'name');
 
                 APP.setData(currentAppData);
-                that.say('fetchedNewData');
+                if(!cb) that.say('fetchedNewData');
 
                 that.fetchExternalData('freifunk', function(){
-                    that.say('fetchedNewData');
+                    if(!cb) that.say('fetchedNewData');
                     // that.say('fetchedAllData');
 
-                    console.debug('fetchedAllData in ' + APP.getLM().getCurrentLang(), data);
-                    // if(cb) cb();  // finished, so callback
+                    // console.debug('fetchedAllData in ' + APP.getLM().getCurrentLang(), data);
 
-                    // that.fetchExternalData('facebookEvents', function(){
-                    //  that.say('fetchedNewData');
-                    //  that.say('fetchedAllData');
-                    // });
+                    that.fetchExternalData('facebookEvents', function(){
+                     that.say('fetchedNewData');
+                        if(cb) cb();  // finished, so callback
+                     // that.say('fetchedAllData');
+                    });
                 });
 
             });
@@ -311,7 +311,7 @@ qx.Class.define("DataManager", {
                     }
                 },
                 facebookEvents: {
-                    sourceUrl: 'https://backend.afeefa.de/api/v1/facebook_events?token=MapCat_050615',
+                    sourceUrl: 'https://backend.afeefa.de/api/v1/facebook_events?token=zP4uja4yFmnPWZeCVsLU',
                     mapping: {
                         name: function(record){
                             return record.name;
@@ -386,6 +386,11 @@ qx.Class.define("DataManager", {
 
                             date = new Date(record.start_time);
                             return n(date.getHours()) + ':' + n(date.getMinutes());
+                        },
+                        additionalData: function(record){
+                            return {
+                                owner: record.owner
+                            };
                         }
                     }
                 }
@@ -449,7 +454,8 @@ qx.Class.define("DataManager", {
                     dateFrom: mapping.dateFrom? mapping.dateFrom(record) : null,
                     dateTo: mapping.dateTo? mapping.dateTo(record) : null,
                     timeFrom: mapping.timeFrom? mapping.timeFrom(record) : null,
-                    timeTo: mapping.timeTo? mapping.timeTo(record) : null
+                    timeTo: mapping.timeTo? mapping.timeTo(record) : null,
+                    additionalData: mapping.additionalData? mapping.additionalData(record) : null
                 };
 
                 if(newEntry.dateFrom == newEntry.dateTo) newEntry.dateTo = null;

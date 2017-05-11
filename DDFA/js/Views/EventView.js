@@ -61,7 +61,7 @@ qx.Class.define("EventView", {
         
         var optionEl = $("<div />")
           .addClass('option-value')
-          .append(optionValue)
+          .append(that.getWording('events.'+optionValue))
           .click(function(){
             that.load( {filter: optionValue} );
             // $(this).addClass('active');
@@ -163,28 +163,32 @@ qx.Class.define("EventView", {
         if(options === undefined) options = { filter: 'today' };
 
         that.reset();
-        that.heading.empty().append('Veranstaltungen');
+        that.heading.empty().append( that.getWording('events.heading') );
 
         var eventSets = that.setFilter( options.filter );
 
-        _.each(eventSets, function(set) {
-          if(set.heading) that.createSectionHeader(set.heading);
+        _.each(eventSets, function(set, i) {
+          if(set.heading) that.createSectionHeader(set.heading, (i==0)? 'no-top-margin' : null);
           
           _.each(set.events, function(entry) {
             that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
           });
         });
 
+        that.say('listResultsLoaded', _.flatten( _.pluck(eventSets, 'events'), true) );
+
         that.view.addClass('active');
         that.isActive(true);
     },
 
     // generic function to create a section header
-    createSectionHeader: function( label ) {
+    createSectionHeader: function( label, cssClass ) {
       var that = this;
       
       const sectionHeader = $("<div />")
         .addClass('section-header');
+
+      if(cssClass) sectionHeader.addClass(cssClass);
       
       const line  = $("<span />")
         .addClass('section-header-line');

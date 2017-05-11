@@ -212,6 +212,7 @@ strong {
 }
 
 .hidden{ display: none; }
+.no-top-margin { margin-top: 0 !important; }
 
 /* SCROLLBARS with perfect-scrollbar.js */
 .ps-container>.ps-scrollbar-y-rail,

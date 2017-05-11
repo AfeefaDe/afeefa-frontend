@@ -188,7 +188,7 @@ qx.Class.define("MessageView", {
 
 			setTimeout(function(){
 				that.load({key: 'survey', force: true});
-			}, 240000);
+			}, 300000);
 
 			// that.listen('detailViewOpened', function(){
 			// 	setTimeout(function(){

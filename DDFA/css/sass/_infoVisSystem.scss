@@ -105,7 +105,7 @@
 
 	/* Main categories */
 
-	/*&.cat-general	{ background-image: url("../img/icon_174.svg"); }
+	&.cat-general	{ background-image: url("../img/icon_174.svg"); }
 	&.cat-language	{ background-image: url("../img/icon_06.svg"); }
 	&.cat-medic { background-image: url("../img/icon_04.svg"); }
 	&.cat-jobs { background-image: url("../img/icon_76.svg"); }
@@ -114,11 +114,11 @@
 	&.cat-community { background-image: url("../img/icon_02.svg"); @include background-size(85%); }
 	&.cat-donation { background-image: url("../img/icon_12.svg"); }
 	&.cat-eventseries { background-image: url("../img/icon_192.svg"); }
-	&.cat-external-event { background-image: url("../img/icon_192.svg"); }*/
+	&.cat-external-event { background-image: url("../img/icon_192.svg"); }
 	
 	/* Sub categories */
 
-	/*&.subcat-wifi { background-image: url("../img/icon_148.svg"); }
+	&.subcat-wifi { background-image: url("../img/icon_148.svg"); }
 	&.subcat-jewish { background-image: url("../img/icon_22.svg"); }
 	&.subcat-christian { background-image: url("../img/icon_60.svg"); }
 	&.subcat-islam { background-image: url("../img/icon_62.svg"); }
@@ -178,7 +178,7 @@
 	&.subcat-furniture { background-image: url("../img/icon_144.svg"); }
 	
 	&.subcat-iwgr { background-image: url("../img/icon_194.svg"); @include background-size(85%); }
-	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); @include background-size(85%); }*/
+	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); @include background-size(85%); }
 
 	
 	/* POIs */

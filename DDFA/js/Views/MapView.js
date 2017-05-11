@@ -113,6 +113,10 @@ qx.Class.define("MapView", {
 				that.loadNewData();
 			});
 
+			that.listen('listResultsLoaded', function(e){
+				that.loadNewData(e.customData);
+			});
+
 			that.listen('markersCreated', function(){
 				that.applyInteractiveFilters();
 			});
@@ -153,16 +157,18 @@ qx.Class.define("MapView", {
 
 		},
 
-		loadNewData: function() {
+		loadNewData: function( records ) {
 			var that = this;
 
 			// reset things
 			that.removeMarkers();
 
 			// aplly filters
+ 			var data = (records !== undefined )? records : APP.getData().entries;
+			
 			var filter = APP.getActiveFilter();
 			
-			var entries = _.filter(APP.getData().entries, function(entry){
+			var entries = _.filter(data, function(entry){
 				// only entries with location data
 				if( entry.location.length < 1) return false;
 				
@@ -199,7 +205,7 @@ qx.Class.define("MapView", {
 				return true;
 
 			});
-
+				
 			that.addMarkers(entries);
 			// that.loadFromUrl({setView: true});
 		},

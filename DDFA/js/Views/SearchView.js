@@ -171,7 +171,7 @@ qx.Class.define("SearchView", {
               
       that.createButton(
         {
-          label: 'Veranstaltungskalender',
+          label: that.getWording('search.button.events'),
           iconName: 'today',
           action: function(){
             APP.getEventView().load();
