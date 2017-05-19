@@ -3,7 +3,7 @@
 <head>
 	<title></title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="Afeefa informiert, vernetzt und koordiniert. Wir stärken die Autonomie von Geflüchteten und motivieren zum Engagement. Mehrsprachig und deutschlandweit.">
+	<meta name="description" content="Afeefa informiert, vernetzt und koordiniert. Wir stärken dem sozialen Engagement den Rücken und setzen uns für die Autonomie von MigrantInnen ein. Mehrsprachig, aktuell und total lokal.">
 
   	<meta property="og:image" content="afeefa.PNG">
 
