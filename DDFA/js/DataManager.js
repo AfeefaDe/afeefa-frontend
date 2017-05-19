@@ -260,7 +260,7 @@ qx.Class.define("DataManager", {
 
             var sources = {
                 freifunk: {
-                    sourceUrl: APP.getConfig().apiUrl + 'externalDataFiles/freifunk-nodes.json',
+                    sourceUrl: 'externalDataFiles/freifunk-nodes.json',
                     mapping: {
                         name: function(record){
                             return "Wifi Hotspot (Freifunk)";
