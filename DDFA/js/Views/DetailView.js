@@ -160,9 +160,8 @@ qx.Class.define("DetailView", {
 		load: function( record ){
 			var that = this;
 			
-			// set URL (except entry is from external data source)
-			// if(!record.external) window.location.hash = record.entryId;
-			window.location.hash = record.entryId;
+			// set URL
+			APP.getRouter().setUrl('entry', record.entryId);
 
 			if(that.record) {
 				that.reset();
@@ -417,12 +416,8 @@ qx.Class.define("DetailView", {
 				// 	that.view.addClass('right');
 			});
 
-			that.listen('searchResultsLoaded', function(){
+			that.listen('searchViewLoaded', function(){
 				that.close();
-			});
-
-			that.listen('searchViewClosed', function(){
-				// that.view.removeClass('right');
 			});
 
 			that.listen('fetchedNewData', function(){
@@ -435,8 +430,11 @@ qx.Class.define("DetailView", {
 			});
 
 			that.listen('includeViewOpened', function(){
-				if( APP.getUserDevice() === 'mobile' )
-					that.close();
+				that.close();
+			});
+
+			that.listen('filterSet', function(){
+				that.close();
 			});
 
 			that.listen('includeViewClosed', function(){

@@ -208,7 +208,7 @@ qx.Class.define("APPAFEEFA", {
 			// analyse user language
 			that.getLM().init();
 
-			that.setPageTitle('Afeefa.de - Networking platform for refugees and supporters');
+			that.setPageTitle('Afeefa.de - Engagement stärken.');
 
 			// load view-independant UI components
 			that.loadIndependantUI();

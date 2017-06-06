@@ -4,7 +4,7 @@ qx.Class.define("Router", {
 	type: "singleton",
 	
 	properties : {
-		// currentPath: {},
+		// urlParams: {},
 		// renderedViews: {}	
 	},
 
@@ -28,14 +28,21 @@ qx.Class.define("Router", {
 		detectUrl: function(){
 			var that = this;
 
-			that.currentPath = [];
+			that.urlParams = [];
 
-			var url = window.location.hash.split('#');
-			url = _.without(url, '');
+			var params = window.location.hash.split('#');
+			params = _.without(params, '');
 
-			_.each(url, function( pieceOfPath ){
-				that.currentPath.push(pieceOfPath);
+			_.each(params, function( param ){
+				param = param.split('=');
+				var paramObj = {
+					key: param[0],
+					value: (param.length > 1)? param[1] : null
+				}
+				that.urlParams.push(paramObj);
 			});
+
+			console.debug(that.urlParams);
 
 			// that.navigate();
 		},
@@ -84,6 +91,7 @@ qx.Class.define("Router", {
 		navigate: function( path ){
 			var that = this;
 
+			// currentPath is now urlParams
 			if(!path) var path = that.currentPath;
 			else that.currentPath = path;
 			
@@ -180,7 +188,7 @@ qx.Class.define("Router", {
 
 			that.listen('fetchedAllData', function(){
 				
-				if(that.currentPath && that.currentPath.length > 0){
+				if(that.urlParams && that.urlParams.length > 0){
 					that.loadFromUrl();
 				}
 				else {
@@ -215,42 +223,80 @@ qx.Class.define("Router", {
 				}
 			});
 
-			that.listen('IncludeViewRendered', function(){
-				if( window.location.hash == '#presse' ){
-						APP.getIncludeView().load( APP.getIncludeView().getIncludes().press );
-				}
-				// else {
-				// 	APP.getIncludeView().load( APP.getIncludeView().getIncludes().intro );
-				// }
+			that.listen('detailViewClosed', function(){
+				that.resetUrl();
 			});
 
-			that.listen('FormViewRendered', function(){
-				// APP.getFormView().load('initiative');
-				// APP.getFormView().load('marketentry');
+			that.listen('eventViewOpened', function(){
+				that.setUrl('events');
 			});
+
+			that.listen('dashboardLoaded', function(){
+				that.resetUrl();
+			});
+
+			that.listen('filterSet', function(e){
+				var filterObj = e.customData;
+				
+				if(filterObj === undefined) return;
+
+				if(filterObj.category) that.setUrl('cat', filterObj.category);
+				else if (filterObj.subCategory) that.setUrl('subcat', filterObj.subCategory);
+			});
+		},
+
+		setUrl: function(key, value){
+			var that = this;
+
+			if(value){
+				window.location.hash = key + '=' + value;
+			} else {
+				window.location.hash = key;
+			}
+		},
+
+		resetUrl: function(){
+			window.location.hash = '';
 		},
 
 		loadFromUrl: function(){
 			var that = this;
 
-			// var firstParam = url[0] ? url[0].toLowerCase() : null;
-			var firstParam = that.currentPath[0];
-			var secondParam = that.currentPath[1];
-			
-			switch(firstParam) {
-		    case 'pirna':
-		    case 'leipzig':
-					APP.getMapView().setViewToArea(firstParam);
-	        break;
-				case 'tag':
-          APP.getLegendView().setFilter( {tags: secondParam} );
-					break;
-				case 'iwgr':
-          APP.getLegendView().setFilter( {tags: 'iwgr'} );
-					break;
-		    default:
-					APP.getMapView().loadEntryById(firstParam, {setView: true});
-			}
+			_.each(that.urlParams, function(param){
+				switch(param.key) {
+			    case 'entry':
+			    	APP.getMapView().loadEntryById(param.value, {setView: true});
+			    	break;
+			    case 'area':
+						APP.getMapView().setViewToArea(param.value);
+		        break;
+					case 'cat':
+	          APP.getLegendView().setFilter( {category: param.value} );
+						break;
+					case 'subcat':
+	          APP.getLegendView().setFilter( {subCategory: param.value} );
+						break;
+					case 'tag':
+	          APP.getLegendView().setFilter( {tags: param.value} );
+						break;
+					case 'search':
+						APP.getSearchView().inputField.val( param.value ).trigger( "input" );
+						break;
+					// short Urls like afeefa.de/#events
+					case 'add':
+            APP.getFormView().load( 'newEntry' );
+						break;
+					case 'events':
+            APP.getEventView().load();
+						break;
+					case 'iwgr':
+	          APP.getLegendView().setFilter( {tags: 'iwgr'} );
+						break;
+					// deprecated, but possible: entry URLs like afeefa.de/#591c98dcbd6b8
+					default:
+			    	APP.getMapView().loadEntryById(param.value, {setView: true});
+				}
+			});
 		}
 	}
 });

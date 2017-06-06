@@ -4,6 +4,7 @@ qx.Class.define("EventView", {
   type: "singleton",
 
   properties: {
+    currentOptions: {}
   },
 
   construct: function(){
@@ -61,10 +62,8 @@ qx.Class.define("EventView", {
         
         var optionEl = $("<div />")
           .addClass('option-value')
-          .append(that.getWording('events.'+optionValue))
           .click(function(){
             that.load( {filter: optionValue} );
-            // $(this).addClass('active');
           });
         
         that.eventFilter.append(optionEl);
@@ -88,7 +87,7 @@ qx.Class.define("EventView", {
             events: eventsOnlyToday
           },
           {
-            heading: 'ebenfalls heute',
+            heading: null,
             events: eventsAlsoToday
           }
         ];
@@ -104,7 +103,7 @@ qx.Class.define("EventView", {
           if(eventsOnDayX.length < 1) continue;
           eventSetsPerDay.push(
             {
-              heading: ( atDate.isSame(moment(), 'd') )? 'heute' : atDate.format('dddd Do MMMM'),
+              heading: ( atDate.isSame(moment(), 'd') )? that.getWording('term.today') : atDate.format('dddd Do MMMM'),
               events: eventsOnDayX
             }
           );
@@ -115,7 +114,7 @@ qx.Class.define("EventView", {
         
         eventSets = _.union(eventSetsPerDay, [
           {
-            heading: 'ebenfalls diese Woche',
+            heading: that.getWording('events.alsoThisWeek'),
             events: eventsAlsoThisWeek
           }
         ]);
@@ -130,23 +129,13 @@ qx.Class.define("EventView", {
           if(eventsOnDayX.length < 1) continue;
           eventSetsPerDay.push(
             {
-              heading: ( atDate.isSame(moment(), 'd') )? 'heute' : atDate.format('dddd Do MMMM'),
+              heading: atDate.format('dddd Do MMMM'),
               events: eventsOnDayX
             }
           );
         }
         
         eventSets = eventSetsPerDay;
-        
-        // other period events in the week
-        // var eventsAlsoThisWeek = APP.getDataManager().getAllEvents( {timeSpan: 'alsoThisWeek'} );
-        
-        // eventSets = _.union(eventSetsPerDay, [
-        //   {
-        //     heading: 'ebenfalls diese Woche',
-        //     events: eventsAlsoThisWeek
-        //   }
-        // ]);
       }
       else {
         // events = APP.getDataManager().getAllEvents();
@@ -160,10 +149,11 @@ qx.Class.define("EventView", {
     load: function( options ){
         var that = this;
         
-        if(options === undefined) options = { filter: 'today' };
-
         that.reset();
-        that.heading.empty().append( that.getWording('events.heading') );
+        that.loadUIVocab();
+
+        if(options === undefined) options = { filter: 'today' };
+        that.setCurrentOptions(options);
 
         var eventSets = that.setFilter( options.filter );
 
@@ -175,10 +165,11 @@ qx.Class.define("EventView", {
           });
         });
 
-        that.say('listResultsLoaded', _.flatten( _.pluck(eventSets, 'events'), true) );
+        that.say('listResultsLoaded', {records: _.flatten( _.pluck(eventSets, 'events'), true)} );
 
         that.view.addClass('active');
         that.isActive(true);
+        that.say('eventViewOpened');
     },
 
     // generic function to create a section header
@@ -206,25 +197,28 @@ qx.Class.define("EventView", {
       var that = this;
 
       // call superclass
-      // this.base(arguments);
+      this.base(arguments);
       
       that.listen('detailViewOpened', function(){
         that.hide();
       });
 
       that.listen('detailViewClosed', function(){
-        that.show();
-        if( !that.isActive() ) that.load();
+        if(that.isActive) that.show();
+        // if( !that.isActive() ) that.load();
       });
 
       that.listen('includeViewOpened', function(){
         that.close();
       });
 
-      // that.listen('fetchedNewData', function(){
-      //   if( APP.getDetailView().isActive() ) that.hide();
-      //   else that.load(that.inputField.val());
-      // });
+      that.listen('filterSet', function(){
+        that.close();
+      });
+
+      that.listen('fetchedNewData', function(){
+        if(that.isActive()) that.load(that.getCurrentOptions());
+      });
 
       // that.listen('filterSet', function(){
       //   var filter = APP.getActiveFilter();
@@ -270,6 +264,8 @@ qx.Class.define("EventView", {
           that['optionEl-'+optionValue].removeClass('active');
         });
 
+        that.setCurrentOptions(null);
+
         // that.show();
         // that.maximize();
 
@@ -301,11 +297,17 @@ qx.Class.define("EventView", {
         that.say('eventViewClosed');
     },
 
-    changeLanguage: function(){
-        var that = this;
+    loadUIVocab: function(){
+      var that = this;
+      
+      that.heading.empty().append( that.getWording('events.heading') );
+      
+      _.each(that.filterOptions, function(optionValue){
+        that['optionEl-'+optionValue].empty().append(that.getWording('term.'+optionValue));
+      });
+    },
 
-        if( APP.getDetailView().isActive() ) return;
-        if(that.isActive()) that.load();
+    changeLanguage: function(){
     }
   }
 

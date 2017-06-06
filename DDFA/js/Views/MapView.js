@@ -110,11 +110,21 @@ qx.Class.define("MapView", {
 			});
 
 			that.listen('filterSet', function(){
-				that.loadNewData();
+				// that.loadNewData();
 			});
 
 			that.listen('listResultsLoaded', function(e){
-				that.loadNewData(e.customData);
+				if(
+					!e.customData.blockSyncWithMap
+					&& e.customData.records.length > 0
+				) that.loadNewData( {records: e.customData.records, fitBounds: true} );
+			});
+
+			that.listen('dashboardLoaded', function(e){
+				APP.loading(true);
+				that.loadNewData();
+				that.map.setView([ that.getViewCoords()[APP.getArea()].lat, that.getViewCoords()[APP.getArea()].lon ], that.getViewCoords()[APP.getArea()].zoom);
+				APP.loading(false);
 			});
 
 			that.listen('markersCreated', function(){
@@ -143,10 +153,6 @@ qx.Class.define("MapView", {
 					that.deselectMarker();
 			});
 
-			that.listen('searchResultsLoaded', function(){
-					// that.beShy(true);
-			});
-
 			// that.map.on('zoomend', function(){
 			// 	if(that.getSelectedMarker()){
 			// 		try{ that.layerForMainMarkers.getVisibleParent(that.getSelectedMarker()).spiderfy(); } catch(e){}
@@ -157,14 +163,16 @@ qx.Class.define("MapView", {
 
 		},
 
-		loadNewData: function( records ) {
+		loadNewData: function( options ) {
 			var that = this;
+
+			options = (typeof options !== 'undefined') ?  options : {};
 
 			// reset things
 			that.removeMarkers();
 
 			// aplly filters
- 			var data = (records !== undefined )? records : APP.getData().entries;
+ 			var data = (options.records !== undefined )? options.records : APP.getData().entries;
 			
 			var filter = APP.getActiveFilter();
 			
@@ -207,6 +215,7 @@ qx.Class.define("MapView", {
 			});
 				
 			that.addMarkers(entries);
+			if(options.fitBounds) that.map.fitBounds(that.layerForMainMarkers.getBounds());
 			// that.loadFromUrl({setView: true});
 		},
 
@@ -470,7 +479,6 @@ qx.Class.define("MapView", {
 				// that.layerForMainMarkers.getVisibleParent(that.getSelectedMarker()).unspiderfy();
 			}
 
-			window.location.hash = '';
 			that.say('mapMarkerDeselected');
 			that.setSelectedMarker(null);
 		},

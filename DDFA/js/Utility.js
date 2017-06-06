@@ -17,10 +17,15 @@ qx.Class.define("Utility", {
 
 			var times = '';
 			
-			var dateFrom = record.dateFrom? convertTime(record.dateFrom) : record.dateFrom;
-			var dateTo = record.dateTo? convertTime(record.dateTo) : record.dateTo;
-			var timeFrom = record.timeFrom;
-			var timeTo = record.timeTo;
+			var dateFrom = record.dateFrom? moment(record.dateFrom).format('L') : record.dateFrom;
+			var dateTo = record.dateTo? moment(record.dateTo).format('L') : record.dateTo;
+			var timeFrom = record.timeFrom? moment( moment(record.dateFrom).format('YYYY-MM-DD') + ' ' + record.timeFrom).format('LT') : record.timeFrom;
+			var timeTo = function(){
+				if(record.dateTo)
+					return record.timeTo? moment( moment(record.dateTo).format('YYYY-MM-DD') + ' ' + record.timeTo).format('LT') : record.timeTo;
+				else
+					return record.timeTo? moment( moment(record.dateFrom).format('YYYY-MM-DD') + ' ' + record.timeTo).format('LT') : record.timeTo;
+			}();
 
 			var vocabDateFrom = APP.getLM().resolve('prop.dateFrom');
 			var vocabDateTo = APP.getLM().resolve('prop.dateTo');
@@ -48,18 +53,6 @@ qx.Class.define("Utility", {
 				times += dateFrom;
 			}
 			
-			function convertTime( timeValue ){
-				var dateObj = new Date(timeValue);
-				var formattedString = '';
-				if( APP.getLM().getCurrentLang() == 'de' ){
-					formattedString = (dateObj.getDate()) +'.'+ (dateObj.getMonth()+1) +'.'+ (dateObj.getFullYear())
-				} else {
-					formattedString = timeValue;
-				}
-
-				return formattedString;
-			}
-
 			return times;
 		}
 

@@ -105,9 +105,11 @@ qx.Class.define("SearchView", {
         if(query){
           that.scrollContainer.empty();
           that.loadResults(query);
+          APP.getRouter().setUrl('search', query);
         } else {
           that.reset();
           that.loadDashboard();
+          that.say('dashboardLoaded');
         }
 
         that.inputField
@@ -139,7 +141,7 @@ qx.Class.define("SearchView", {
         that.isActive(true);
         that.maximize();
         that.view.addClass('active');
-        that.say('searchResultsLoaded');
+        that.say('searchViewLoaded');
 
         return that;
     },
@@ -161,11 +163,12 @@ qx.Class.define("SearchView", {
       // that.createSectionHeader( that.getWording('search.label.eventstoday'), function(){
       //   that.inputField.val('events').trigger( "input" );
       // });
-      var highlightArea = $("<div />")
 
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
       
-      _.each(APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} ).slice(0, 3), function(entry) {
+      var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
+      if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
+      _.each(eventsToday.slice(0, 3), function(entry) {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
               
@@ -307,7 +310,7 @@ qx.Class.define("SearchView", {
       // });
       const entries = APP.getData().entries;
 
-      var entriesFiltered;
+      var entriesFiltered, blockSyncWithMap = false;
 
       // predefined queries: 
       if( query.indexOf(':') >= 0 ){
@@ -453,6 +456,8 @@ qx.Class.define("SearchView", {
           }
         );
       }
+
+      that.say('listResultsLoaded', {records: entriesFiltered, blockSyncWithMap: blockSyncWithMap} );
     },
 
     // generic function to create a section header
@@ -526,14 +531,42 @@ qx.Class.define("SearchView", {
       that.listen('detailViewOpened', function(){
         that.hide();
       });
-
       that.listen('detailViewClosed', function(){
-        that.show();
-        if( !that.isActive() ) that.load();
+        if( that.isActive() ) that.show();
+        else if(
+          !APP.getEventView().isActive()
+          && !APP.getIncludeView().isActive()
+        ) that.load();
+      });
+
+      that.listen('eventViewOpened', function(){
+        that.close();
+      });
+      that.listen('eventViewClosed', function(){
+        if( that.isActive() ) that.show();
+        else if(
+          !APP.getDetailView().isActive()
+          && !APP.getIncludeView().isActive()
+        ) that.load();
       });
 
       that.listen('includeViewOpened', function(){
         that.close();
+      });
+      that.listen('includeViewClosed', function(){
+        if( that.isActive() ) that.show();
+        else if(
+          !APP.getDetailView().isActive()
+          && !APP.getEventView().isActive()
+        ) that.load();
+      });
+
+      that.listen('searchViewClosed', function(){
+        if(
+          !APP.getDetailView().isActive()
+          && !APP.getEventView().isActive()
+          && !APP.getIncludeView().isActive()
+        ) that.load();
       });
 
       that.listen('fetchedNewData', function(){
@@ -610,8 +643,6 @@ qx.Class.define("SearchView", {
         that.reset();
         that.view.removeClass('active');
         that.isActive(false);
-
-        if( APP.getUserDevice() == 'desktop') that.load();
 
         that.say('searchViewClosed');
     },

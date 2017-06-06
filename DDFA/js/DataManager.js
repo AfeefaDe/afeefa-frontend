@@ -54,9 +54,9 @@ qx.Class.define("DataManager", {
                     // console.debug('fetchedAllData in ' + APP.getLM().getCurrentLang(), data);
 
                     that.fetchExternalData('facebookEvents', function(){
-                     that.say('fetchedNewData');
+                        that.say('fetchedNewData');
+                        that.say('fetchedAllData');
                         if(cb) cb();  // finished, so callback
-                     // that.say('fetchedAllData');
                     });
                 });
 

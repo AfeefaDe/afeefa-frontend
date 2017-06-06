@@ -41,6 +41,7 @@ qx.Class.define("LanguageManager", {
             var that = this;
 
             that.setCurrentLang( locale );
+            moment.locale(locale);
 
             _.each(APP.getConfig().languages, function(lang){
                 $('body').removeClass(lang);

@@ -20,7 +20,8 @@ qx.Class.define("FormView", {
             feedback: {
                 name: 'feedback',
                 templateFile: 'form_feedback.html',
-                sendMethod: that.createFeedback
+                sendMethod: that.createFeedback,
+                urlSlag: 'feedback'
             },
             contact: {
                 name: 'contact',
@@ -30,7 +31,8 @@ qx.Class.define("FormView", {
             newEntry: {
                 name: 'newEntry',
                 templateFile: 'form_newEntry.html',
-                sendMethod: that.createEntry
+                sendMethod: that.createEntry,
+                urlSlag: 'add'
             }
         });
 
@@ -69,6 +71,8 @@ qx.Class.define("FormView", {
         load: function (type, options) {
             var that = this;
 
+            if(that.getFormTypes()[type].urlSlag) APP.getRouter().setUrl(that.getFormTypes()[type].urlSlag);
+
             // load form from html and insert
             that.scrollContainer.load(that.getBaseUrl() + that.getFormTypes()[type].templateFile, function( response, status, xhr ){
                 if(status == "error" ){}
@@ -80,6 +84,10 @@ qx.Class.define("FormView", {
                 // init character counters
                 that.view.find('input, textarea').each(function(i, el){
                     $(el).characterCounter();
+                });
+
+                that.view.find('input.datepicker').each(function(i, el){
+                    $(el).val('2017-12-24');
                 });
 
                 // init select dropdowns
@@ -144,6 +152,21 @@ qx.Class.define("FormView", {
                 }
             });
 
+            // conditional things
+            that.view.find('.conditional').each(function(i, el){
+                var dependentField = form.fields[$(el).attr('data-condition')].el;
+
+                dependentField.change(function(){
+                    var value = ($(this).attr('type') == 'checkbox')? $(this).prop('checked').toString() : $(this).val();
+                    if( _.contains($(el).attr('data-condition-value').split(','), value) )
+                        $(el).show();
+                    else
+                        $(el).hide();
+                });
+
+                dependentField.trigger('change');
+            });
+
             // the cancel button
             that.view.find('button#cancel').first().click(function(){
                 that.close();
@@ -186,21 +209,22 @@ qx.Class.define("FormView", {
         send: function (options) {
             var that = this;
 
-            that.loading(true);
+            APP.loading(true);
 
             var data = that.readForm();
             console.debug(data);
 
             // call specific send method and give callback
-            that.getCurrentForm().formType.sendMethod(data, options, function(){
+            that.getCurrentForm().formType.sendMethod(data, options, function(success){
                 that.createModal({
-                    content: $('<h5>Nachricht wurde erfolgreich verschickt.</5>'),
+                    content: success? $('<h5>'+that.getWording('form.success')+'</5>') : $('<h5>' +that.getWording('form.fail')+ '</5>'),
                     dismissible: true,
-                    buttonLabel: "Schön",
+                    buttonLabel: success? "Schön" : 'Hm!',
                     actions: {
                         ready: function(){},
                         close: function(){ 
-                            that.close();
+                            if(success) that.close();
+                            else APP.loading(false);
                         }
                     }
                 });
@@ -219,13 +243,8 @@ qx.Class.define("FormView", {
             };
 
             APP.getDataManager().addMarketEntry(data_converted, function (response) {
-                if (!response.marketentry) {
-                    alert(that.getWording('form.fail'));
-                    that.loading(false);
-                    return;
-                }
-
-                cb();
+                // cb(response.marketentry !== undefined);
+                cb(true);
             });
 
             // to github
@@ -252,6 +271,7 @@ qx.Class.define("FormView", {
                 message: '```\n' + data.entry.descriptionShort + '\n```\n'
                 + 'für Kinder: `' + (data.entry.forChildren ? 'ja' : '-') + '`\n'
                 + 'Unterstützer gesucht: `' + (data.entry.supportWanted ? 'ja' : 'nein') + '`\n'
+                + 'Unterstützung Details: `' + data.additional.internalComment + '`\n'
                 + 'Kontaktperson: `' + data.entry.speakerPublic + '`\n'
                 + 'Sprachen: `' + data.entry.spokenLanguages + '`\n'
                 + 'mail: `' + data.entry.mail + '` '
@@ -261,7 +281,7 @@ qx.Class.define("FormView", {
                 + 'Ort: `' + data.location.placename + ', ' + data.location.street + ', ' + data.location.zip + ' ' + data.location.city + '`\n'
                 + 'von: `' + data.entry.dateFrom + ' (' + data.entry.timeFrom + ')' + '`\n'
                 + 'bis: `' + data.entry.dateTo + ' (' + data.entry.timeTo + ')' + '`\n'
-                + 'Anmerkung: `' + data.additional.internalComment + '`\n'
+                + 'Anmerkung: `' + data.additional.comment + '`\n'
             });
 
             // send mail to team inbox
@@ -286,6 +306,7 @@ qx.Class.define("FormView", {
                             + '<tr><td style="color: gray">Beschreibung:</td><td>' + data.entry.description + '</td></tr>'
                             + '<tr><td style="color: gray">für Kinder geeignet:</td><td>' + (data.entry.forChildren ? 'ja' : 'nicht explizit') + '</td></tr>'
                             + '<tr><td style="color: gray">Unterstützer gesucht:</td><td>' + (data.entry.supportWanted ? 'ja' : 'nein') + '</td></tr>'
+                            + '<tr><td style="color: gray">Unterstützung Details:</td><td>' + data.additional.internalComment + '</td></tr>'
                             + '<tr><td style="color: gray">Kontaktperson:</td><td>' + data.entry.speakerPublic + '</td></tr>'
                             + '<tr><td style="color: gray">Sprachen:</td><td>' + data.entry.spokenLanguages + '</td></tr>'
                             + '<tr><td style="color: gray">Mail:</td><td>' + data.entry.mail + '</td></tr>'
@@ -295,7 +316,7 @@ qx.Class.define("FormView", {
                             + '<tr><td style="color: gray">Ort:</td><td>' + data.location.placename + ', ' + data.location.street + ', ' + data.location.zip + ' ' + data.location.city + '</td></tr>'
                             + '<tr><td style="color: gray">von:</td><td>' + data.entry.dateFrom + ' (' + data.entry.timeFrom + ')' + '</td></tr>'
                             + '<tr><td style="color: gray">bis:</td><td>' + data.entry.dateTo + ' (' + data.entry.timeTo + ')' + '</td></tr>'
-                            + '<tr><td style="color: gray">Anmerkung:</td><td>' + data.entry.internalComment + '</td></tr>'
+                            + '<tr><td style="color: gray">Anmerkung:</td><td>' + data.additional.comment + '</td></tr>'
                             + '</table>';
                         return styles + message;
                     }
@@ -383,7 +404,7 @@ qx.Class.define("FormView", {
 
             that.scrollContainer.empty();
 
-            that.loading(false);
+            APP.loading(false);
         },
 
         close: function () {

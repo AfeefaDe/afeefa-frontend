@@ -3,7 +3,6 @@
 	/* orga */
 	&.type-0 {
 		@include border-radius(3px);
-		background-color: rgba($turquoise,1);
 	}
 
 	/* market entry */
@@ -17,7 +16,6 @@
 		/*position: relative;*/
 		/*overflow: hidden;*/
 		@include transform(rotate(45deg));
-		background-color: rgba($violet,1);
 
 		/*&::before {
 		    content: "";

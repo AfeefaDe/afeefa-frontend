@@ -37,7 +37,7 @@ qx.Class.define("IntroView", {
 					el: (userDevice == 'mobile')? that.view : APP.getSearchView().view,
 					placement: (userDevice == 'mobile')? 'top' : 'right',
 					preAction: function(){
-						APP.getSearchView().results.scrollTop(0);
+						APP.getSearchView().scrollContainer.scrollTop(0);
 						APP.getSearchView().load();
 						APP.getSearchView().showCurtain(true);
 					},

@@ -1,5 +1,3 @@
-<p><small>{{key:form.preamble.newEntry}}</small></p>
-
 <form>
 
 	<h3>{{key:form.field.entryType}}</h3>	
@@ -11,6 +9,28 @@
 	      <option value="2">{{key:entity.event}}</option>
 	      <option value="1">{{key:entity.market}}</option>
 	    </select>
+	  </div>
+  </div>
+
+	<p class="conditional" data-condition="entry.type" data-condition-value="0">
+		<small>{{key:form.info.newEntry.orga}}</small>
+	</p>
+	<p class="conditional" data-condition="entry.type" data-condition-value="2">
+		<small>{{key:form.info.newEntry.event}}</small>
+	</p>
+	<p class="conditional" data-condition="entry.type" data-condition-value="1">
+		<small>{{key:form.info.newEntry.market}}</small>
+	</p>
+
+  <div class="conditional" data-condition="entry.type" data-condition-value="1">
+		<label>{{key:form.field.markettype}}</label>
+	  <div class="row">
+			<div class="input-field col s12">
+		    <select id="entry.markettype">
+		      <option value="0">{{key:prop.offer.offer}}</option>
+		      <option value="1">{{key:prop.offer.request}}</option>
+		    </select>
+		  </div>
 	  </div>
   </div>
 
@@ -38,6 +58,27 @@
 	  </div>
   </div>
 
+  <div class="conditional" data-condition="entry.type" data-condition-value="2">
+		<label>Startdatum und -uhrzeit</label>
+		<div class="row">
+			<div class="input-field col s6">
+		    <input id="entry.dateFrom" type="date">
+		  </div>
+		  <div class="input-field col s6">
+		    <input id="entry.timeFrom" type="time">
+		  </div>
+	  </div>
+		<label>Enddatum und -uhrzeit</label>
+	  <div class="row">
+			<div class="input-field col s6">
+		    <input id="entry.dateTo" type="date">
+		  </div>
+		  <div class="input-field col s6">
+		    <input id="entry.timeTo" type="time">
+		  </div>
+	  </div>
+  </div>
+
 	<div class="row">
 		<div class="input-field col s12">
 	    <label for="entry.descriptionShort">{{key:form.field.descriptionShort}}*</label>
@@ -60,11 +101,13 @@
     </p>
   </div>
 
+  <div class="conditional" data-condition="entry.supportWanted" data-condition-value="true">
 	<div class="row">
 		<div class="input-field col s12">
 	    <label for="additional.internalComment">{{key:form.field.supportWantedDescription}}</label>
 	    <textarea id="additional.internalComment" class="materialize-textarea" data-length="350"></textarea>
 	  </div>
+  </div>
   </div>
 	
 	<h3>{{key:form.section.newEntry.location}}</h3>
@@ -175,3 +218,5 @@
 
 </form>
 <p><small>* Pflichtfelder</small></p>
+
+<p><small>{{key:form.preamble.newEntry}}</small></p>

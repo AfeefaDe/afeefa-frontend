@@ -16,7 +16,12 @@
 	h3 {
 		font-size: 1.5rem;
 		color: $gray50;
-    margin: 2rem 0 1rem 0;
+    margin: 4rem 0 1rem 0;
+    font-weight: 100;
+
+    &:first-child {
+    	margin-top: 0;
+    }
 	}
 
 	form {
