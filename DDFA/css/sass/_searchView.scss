@@ -132,7 +132,7 @@
 
 	#searchView {
 		&.active {
-			#results {
+			.list-results {
 		    overflow: scroll;
 			}
 		}
@@ -142,13 +142,13 @@
 
 .mobile {
 
-	$height_sb: 3rem;
+	$height_sb: 4rem;
 
 	#searchView {
 
 		width: 100%;
 		background: none;
-		height: 3rem;
+		height: $height_sb;
 
 		#search-bar {
 			width: 100%;
@@ -191,7 +191,7 @@
 			}
 		}
 
-		#results {
+		.list-results {
 			top: 3rem;
 			left: 0;
 			padding: 2rem 1rem;
@@ -215,7 +215,7 @@
 				background-color: $gray95;
 			}
 
-			#results {
+			.list-results {
 				background-color: $gray95;
 				height: calc(100vh - 6rem);
 		    overflow: scroll;
@@ -233,7 +233,7 @@
 
 		&.minimized {
 			height: 3em;
-			#results { display: none; }
+			.list-results { display: none; }
 			#map-area { display: none; }
 		}
   }	

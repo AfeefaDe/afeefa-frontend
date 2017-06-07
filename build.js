@@ -68,7 +68,7 @@
         // skip markercluster in building, because otherwise "L is not defined" in markercluster initialization (dont know why)
         mc: 'empty:',
         popper: '../../popperjs/popper.min',
-        d3: 'empty:',
+        // d3: 'empty:',
         materialize: 'empty:'
     },
 
@@ -112,7 +112,7 @@
         "materialize": ["hammerjs"],
 
         // app files
-        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'hammerjs', 'modernizr', 'popper', 'materialize', 'momentjs'],
+        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'modernizr', 'popper', 'materialize', 'momentjs'],
         'APPAFEEFA': ['Daddy'],
         'DataManager': ['APPAFEEFA'],
         'Router': ['APPAFEEFA'],

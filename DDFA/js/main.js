@@ -16,7 +16,7 @@ require.config({
         mapbox: 'https://api.mapbox.com/mapbox.js/v3.1.0/mapbox',
         mc: '../../leafletPlugins/leaflet.markercluster',
         popper: '../../popperjs/popper.min',
-        d3: 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3',
+        // d3: 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3',
         materialize: '../../materialize/js/materialize.min'
     },
 
@@ -39,7 +39,7 @@ require.config({
         "materialize": ["hammerjs"],
 
         // app files
-        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'hammerjs', 'modernizr', 'popper', 'materialize', 'momentjs'],
+        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'modernizr', 'popper', 'materialize', 'momentjs'],
         'APPAFEEFA': ['Daddy'],
         'DataManager': ['APPAFEEFA'],
         'Router': ['APPAFEEFA'],
