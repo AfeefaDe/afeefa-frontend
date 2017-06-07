@@ -219,7 +219,7 @@ qx.Class.define("DetailView", {
 			
 			// category
 			var prop = 'category';
-			var propName = record[prop] ? record[prop].name : 'nee';
+			var propName = record[prop] ? record[prop].name : null;
 			that['propertyIcon'+prop].addClass('cat-' + propName);
 			// TODO dirty code for subcategory, but hey ;)
 			that['propertyIcon'+prop].addClass('subcat-' + record.subCategory);
