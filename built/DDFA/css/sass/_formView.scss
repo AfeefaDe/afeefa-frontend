@@ -1,8 +1,5 @@
 #formView {
 	
-	/* materialize */
-	/*@import 'materialize';*/
-
 	@include goBackLayout;
 
 	@include box-sizing(border-box);
@@ -13,24 +10,18 @@
 	z-index: 30;
 
 	/* HEADING */
-	.header {
-		background-color: $black;
-		padding: 0 3rem;
-
-		h1 {
-			font-weight: 300;
-			margin: 0;
-			padding: 1rem 0;
-			font-size: 2em;
-			color: $white;
-			@include box-sizing(content-box);
-		}
+	.heading {
 	}
 
 	h3 {
 		font-size: 1.5rem;
 		color: $gray50;
-    margin: 2rem 0 1rem 0;
+    margin: 4rem 0 1rem 0;
+    font-weight: 100;
+
+    &:first-child {
+    	margin-top: 0;
+    }
 	}
 
 	form {

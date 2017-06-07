@@ -58,7 +58,7 @@
         domReady: '../../requirejs/domReady',
         jquery: '../../jquery/jquery-2.2.2.min',
         perfectScrollbarJQuery: 'empty:',
-        momentjs: '../../momentjs/moment.min',
+        momentjs: '../../momentjs/moment-with-locales.min',
         combodate: '../../combodate/combodate',
         restive: '../../restive/restive.min',
         qx: '../../qooxdoo/qx-oo-4.1.min',

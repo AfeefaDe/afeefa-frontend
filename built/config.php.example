@@ -1,0 +1,7 @@
+<?php
+  $apiUrl = 'https://dev.afeefa.de/';
+  // $apiUrl = 'https://neos.afeefa.de/';
+  // $apiUrl = 'http://backend.afeefa.dev:3001/';
+  // $apiUrl = 'http://localhost:3001/';
+  return $apiUrl;
+?>

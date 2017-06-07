@@ -27,7 +27,7 @@
 		min-height: 4em;
 		@include flex-shrink(0);
 		color: $white;
-		background-color: $black;
+		background-color: $gray95;
 		position: relative;
 
 		@include categoryColors;

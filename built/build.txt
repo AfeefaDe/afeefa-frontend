@@ -40,9 +40,10 @@ qooxdoo/qx-oo-4.1.min.js
 jquery/jquery-2.2.2.min.js
 underscore/underscore-min.js
 restive/restive.min.js
-hammerjs/hammer.min.js
 H5BP/js/vendor/modernizr-2.8.3.min.js
 popperjs/popper.min.js
+hammerjs/hammer.min.js
+momentjs/moment-with-locales.min.js
 DDFA/js/Daddy.js
 DDFA/js/APPAFEEFA.js
 DDFA/js/DataManager.js
@@ -52,6 +53,7 @@ DDFA/js/Utility.js
 DDFA/js/Views/View.js
 DDFA/js/Views/MapView.js
 DDFA/js/Views/SearchView.js
+DDFA/js/Views/EventView.js
 DDFA/js/Views/DetailView.js
 DDFA/js/Views/MenuView.js
 DDFA/js/Views/LegendView.js
