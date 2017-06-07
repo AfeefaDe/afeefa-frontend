@@ -277,7 +277,7 @@ qx.Class.define("Router", {
 	          APP.getLegendView().setFilter( {subCategory: param.value} );
 						break;
 					case 'tag':
-	          APP.getLegendView().setFilter( {tags: param.value} );
+	          APP.getLegendView().setFilter( {tags: param.vaule} );
 						break;
 					case 'search':
 						APP.getSearchView().inputField.val( param.value ).trigger( "input" );

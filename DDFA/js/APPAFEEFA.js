@@ -14,9 +14,7 @@ qx.Class.define("APPAFEEFA", {
 
 		that.setConfig(
 			{
-				// apiUrl: 'http://api.afeefa.fx/',
-				// apiUrl: 'http://backend.afeefa.dev:3001/',
-				apiUrl: 'https://neos.afeefa.de/',
+				apiUrl: window.apiurl,
 				includePathForHtmlFiles: 'DDFA/inc/',
 				languages: [
 					'de',
@@ -198,7 +196,7 @@ qx.Class.define("APPAFEEFA", {
 			var that = this;
 
       moment.locale('de');
-      
+
 			// load city config
 			that.detectAfeefaArea();
 
