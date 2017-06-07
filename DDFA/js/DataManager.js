@@ -19,15 +19,22 @@ qx.Class.define("DataManager", {
 
                 APP.getLM().setBib(data);
 
-                that.getAllCategories(function (data) {  // categories
-                    // store in APP
-                    var currentData = APP.getData();
-                    currentData.categories = data.categories;
-                    APP.setData(currentData);
+                var currentData = APP.getData();
+                currentData.categories = APP.getConfig().categories;
+                APP.setData(currentData);
 
-                    console.debug('fetchedInitialData', data);
-                    cb();  // finished, so callback
-                });
+                console.debug('fetchedInitialData', data);
+                cb();  // finished, so callback
+
+                // that.getAllCategories(function (data) {  // categories
+                //     // store in APP
+                //     var currentData = APP.getData();
+                //     currentData.categories = data.categories;
+                //     APP.setData(currentData);
+
+                //     console.debug('fetchedInitialData', data);
+                //     cb();  // finished, so callback
+                // });
             });
 
         },
