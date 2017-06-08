@@ -294,7 +294,7 @@ qx.Class.define("Router", {
 						break;
 					// deprecated, but possible: entry URLs like afeefa.de/#591c98dcbd6b8
 					default:
-			    	APP.getMapView().loadEntryById(param.value, {setView: true});
+			    	APP.getMapView().loadEntryById(param.key, {setView: true});
 				}
 			});
 		}
