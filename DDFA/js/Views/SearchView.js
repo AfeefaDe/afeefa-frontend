@@ -214,7 +214,7 @@ qx.Class.define("SearchView", {
 
       // for women
       var action = function(){
-        that.inputField.val('#frauen').trigger( "input" );
+        that.inputField.val('tag:frauen').trigger( "input" );
       };
       that.createListResult(
         {
@@ -226,19 +226,19 @@ qx.Class.define("SearchView", {
         }
       );
 
-      // certified by SFR
-      var action = function(){
-        that.inputField.val('certified').trigger( "input" );
-      };
-      that.createListResult(
-        {
-          iconClass: 'certified',
-          label: that.getWording('search.label.certified'),
-          subLabel: that.getWording('search.sublabel.certified'),
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
+      // // certified by SFR
+      // var action = function(){
+      //   that.inputField.val('certified').trigger( "input" );
+      // };
+      // that.createListResult(
+      //   {
+      //     iconClass: 'certified',
+      //     label: that.getWording('search.label.certified'),
+      //     subLabel: that.getWording('search.sublabel.certified'),
+      //     action: action,
+      //     targetContainertEl: that.scrollContainer
+      //   }
+      // );
 
       that.createSectionHeader( that.getWording('search.label.activity') );
      
