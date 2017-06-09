@@ -358,7 +358,7 @@ qx.Class.define("FormView", {
                 }
             });
 
-            cb();
+            cb(true);
         },
 
         createContact: function (data, options, cb) {
@@ -389,7 +389,7 @@ qx.Class.define("FormView", {
                 }
             });
 
-            cb();
+            cb(true);
         },
 
         addEvents: function () {

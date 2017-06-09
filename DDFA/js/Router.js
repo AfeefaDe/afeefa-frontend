@@ -286,6 +286,9 @@ qx.Class.define("Router", {
 					case 'add':
             APP.getFormView().load( 'newEntry' );
 						break;
+					case 'feedback':
+            APP.getFormView().load( 'feedback' );
+						break;
 					case 'events':
             APP.getEventView().load();
 						break;
