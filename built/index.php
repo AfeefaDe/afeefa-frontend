@@ -51,7 +51,7 @@
 		<script data-main="/DDFA/js/main" type="text/javascript" src="/requirejs/require.js"></script>
 	<?php } else { ?>
 		<script>window.apiurl = '<?= $apiUrl ?>'</script>
-		<script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
+		<script data-main="/built/DDFA/js/main" type="text/javascript" src="/requirejs/require.js"></script>
 	<?php } ?>
 
 	<script>
