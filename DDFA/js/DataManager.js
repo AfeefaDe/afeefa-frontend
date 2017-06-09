@@ -46,6 +46,9 @@ qx.Class.define("DataManager", {
 
             that.getAllEntries(function (data) {
 
+                // set empty if fetching failed
+                if(data === undefined) data = {marketentries: []};
+
                 // store entries in APP
                 currentAppData.entries = data.marketentries;
 
@@ -56,17 +59,12 @@ qx.Class.define("DataManager", {
 
                 that.fetchExternalData('freifunk', function(){
                     if(!cb) that.say('fetchedNewData');
-                    that.say('fetchedAllData');
 
-                    // console.debug('fetchedAllData in ' + APP.getLM().getCurrentLang(), data);
-
-                    if(cb) cb();  // finished, so callback
-                    
-                    // that.fetchExternalData('facebookEvents', function(){
-                    //     that.say('fetchedNewData');
-                    //     that.say('fetchedAllData');
-                    //     if(cb) cb();  // finished, so callback
-                    // });
+                    that.fetchExternalData('facebookEvents', function(){
+                        that.say('fetchedNewData');
+                        that.say('fetchedAllData');
+                        if(cb) cb();  // finished, so callback
+                    });
                 });
 
             });
@@ -119,47 +117,10 @@ qx.Class.define("DataManager", {
                 dataType: 'json'
             })
                 .done(function (data) {
-                    // var entries = _.filter(data.marketentries, function (entry) {
-                    //     return true;
-                    // });
-
-                    var entries = data.marketentries;
-                    _.each(entries, function (entry) {
-                        
-                        // convert start date and start time into one date object
-                        if(entry.dateFrom && entry.timeFrom){
-                            entry.dateFrom = new Date(entry.dateFrom + ' ' + entry.timeFrom);
-                            entry.has_time_start = true;
-                        }
-                        else if(entry.dateFrom){
-                            entry.dateFrom = new Date(entry.dateFrom);
-                            entry.has_time_start = false;
-                        }
-                        else {
-                            entry.dateFrom = null;
-                            entry.has_time_start = false;
-                        }
-
-                        // convert end date and start time into one date object
-                        if(entry.dateTo && entry.timeTo){
-                            entry.dateTo = new Date(entry.dateTo + ' ' + entry.timeTo);
-                            entry.has_time_end = true;
-                        }
-                        else if(entry.dateTo){
-                            entry.dateTo = new Date(entry.dateTo);
-                            entry.has_time_end = false;
-                        }
-                        else {
-                            entry.dateTo = null;
-                            entry.has_time_end = false;
-                        }
-                    });
-
-                    data.marketentries = entries;
-
                     cb(data);
                 })
                 .fail(function (a) {
+                    cb();
                     console.debug(a);
                 });
 
@@ -430,6 +391,7 @@ qx.Class.define("DataManager", {
                 cb();
             })
             .fail(function (a) {
+                cb();
                 // console.debug(a);
             });
         },
