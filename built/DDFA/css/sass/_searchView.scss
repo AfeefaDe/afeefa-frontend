@@ -159,8 +159,12 @@
 			height: $height_sb !important;
 
 			input {
+				top: 0.7rem;
 				left: 4rem;
+				height: 3rem !important;
+				line-height: $height_sb !important;
 				width: calc(100% - 10rem);
+				margin: 0;
 			}
 
 			.search-tag {
@@ -174,37 +178,34 @@
 			}
 
 			.menu-btn {
-				top: 0;
+				top: 1rem;
 				left: 1rem;
 				background-image: url("../img/icon_38.svg");
 			}
 
 	    .refugee-btn {
+				top: 1rem;
 				right: 4rem;
 			}
 
 	    .filter-btn {
 				display: block;
-				top: 0;
+				top: 1rem;
 				right: 1rem;
 		    background-image: url("../img/icon_94.svg");
 			}
 		}
 
 		.list-results {
-			top: 3rem;
+			top: 4rem;
 			left: 0;
 			padding: 2rem 1rem;
 			width: 100%;
-			height: calc(100% - 3rem);
-		}
-
-		input {
-			height: $height_sb !important;
-			line-height: $height_sb !important;
+			height: calc(100% - 4rem);
 		}
 
     .cancel-btn {
+			top: 1rem !important;
 			right: 3em !important;
 		}
 		
