@@ -135,6 +135,12 @@ qx.Class.define("DetailView", {
 
 			});
 
+			////////////////
+			// timestamps //
+			////////////////
+			that.timestampContainer = $("<div />").addClass('property timestamp-container');
+			that.scrollContainer.append(that.timestampContainer);
+
 			$('#main-container').append(that.view);
 
 			this.base(arguments);
@@ -327,6 +333,11 @@ qx.Class.define("DetailView", {
 
 			});
 
+			if(record.updated_at){
+				that.timestampContainer.append(that.getWording('prop.updated') + ' ' + moment(record.updated_at).format('DD.MM.YYYY'));
+				that.timestampContainer.show();
+			}
+
 			// show DetailView
 			that.view.addClass('active');
       that.isActive(true);
@@ -382,6 +393,9 @@ qx.Class.define("DetailView", {
 				that['propertyValue'+prop].empty();
 				that['propertyContainer'+prop].hide();
 			});
+
+			// timestamp
+			that.timestampContainer.empty().hide();
 			
 			// delete current record
 			that.record = null;
