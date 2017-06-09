@@ -312,10 +312,10 @@ qx.Class.define("Router", {
 	          APP.getLegendView().setFilter( {subCategory: param.value} );
 						break;
 					case 'tag':
-	          APP.getLegendView().setFilter( {tags: param.vaule} );
+	          APP.getLegendView().setFilter( {tags: that.urlParams[i+1]} );
 						break;
 					case 'search':
-						APP.getSearchView().inputField.val( param.value ).trigger( "input" );
+						APP.getSearchView().inputField.val( that.urlParams[i+1] ).trigger( "input" );
 						break;
 					// short Urls like afeefa.de/#events
 					case 'add':
