@@ -263,13 +263,20 @@ qx.Class.define("Router", {
 		// 	}
 		// },
 
-		setUrl: function(key, value){
+		setUrl: function(key, value, name){
 			var that = this;
 
-			if(value){
-				history.pushState(null,null, '/' + key + '/' + value);
+			if(name === undefined) {
+				name = document.title;
 			} else {
-				history.pushState(null,null, '/' + key);
+				name += ' | Afeefa.de';
+			}
+
+
+			if(value){
+				history.pushState(null, name, '/' + key + '/' + value);
+			} else {
+				history.pushState(null, name, '/' + key);
 			}
 		},
 

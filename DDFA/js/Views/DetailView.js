@@ -178,7 +178,7 @@ qx.Class.define("DetailView", {
 
 			// set URL
 			var entryType = record.entryType == 'orga'? 'project' : record.entryType;
-			APP.getRouter().setUrl(entryType, record.id);
+			APP.getRouter().setUrl(entryType, record.id, record.name);
 
 			if(that.record) {
 				that.reset();
