@@ -166,6 +166,11 @@ qx.Class.define("DetailView", {
 		load: function( record ){
 			var that = this;
 			
+			// get parent orga
+			that.parent = null;
+			if(record.parentOrgaId) that.parent = APP.getDataManager().getOrgaById(record.parentOrgaId);
+			console.warn(that.parent);
+
 			// set URL
 			APP.getRouter().setUrl('entry', record.entryId);
 
@@ -284,23 +289,38 @@ qx.Class.define("DetailView", {
 			var properties = APP.getConfig().simpleProperties;
 			_.each(properties, function(prop){
 
+				var propValue = record[prop];
+
+				// handle inheritance
+				if(prop == 'descriptionShort' && record.inheritance.short_description){
+					propValue = '';
+					if(that.parent.descriptionShort) propValue += that.parent.descriptionShort + '\n\n';
+					if(record.descriptionShort) propValue += record.descriptionShort;
+				}
+				// TODO ausbauen, da wir eigentlich die lange Beschreibung nicht vererben wollen
+				else if(prop == 'description' && !propValue){
+					propValue = '';
+					if(that.parent.description) propValue += that.parent.description;
+				}
+				if(propValue == '') propValue = null;
+
 				// only render property if available
-				if( record[prop] ) {
+				if( propValue ) {
 					
 					that['propertyIcon'+prop].addClass('icon-' + prop);
 					that['propertyName'+prop].append( that.getWording( 'prop.' + prop ) );
 					
 					// may create link
 					if( _.contains( ['web', 'facebook'], prop) ){
-						that['propertyValue'+prop].append('<a target="_blank" href="' + record[prop] + '">' + record[prop] + '</a>');
+						that['propertyValue'+prop].append('<a target="_blank" href="' + propValue + '">' + propValue + '</a>');
 					}
 					else if( _.contains( ['description', 'descriptionShort'], prop) ){
-						that['propertyValue'+prop].append(record[prop].replace(/(?:\r\n|\r|\n)/g, '<br />'));
+						that['propertyValue'+prop].append(propValue.replace(/(?:\r\n|\r|\n)/g, '<br />'));
 
 						if(record.descriptionShort) that['propertyContainer'+'description'].addClass('hidden');
 					}
 					else if( _.contains( ['spokenLanguages'], prop) ){
-						_.each( record[prop].split(',') , function( langCode ){
+						_.each( propValue.split(',') , function( langCode ){
 							const span = $('<span />')
 								.addClass('multiselect-value')
 								.append( that.getWording('lan.' + langCode) );
@@ -308,7 +328,7 @@ qx.Class.define("DetailView", {
 						});
 					}
 					else {
-						that['propertyValue'+prop].append(record[prop]);
+						that['propertyValue'+prop].append(propValue);
 					}
 
 					that['propertyContainer'+prop].show();

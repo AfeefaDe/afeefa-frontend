@@ -136,6 +136,16 @@ qx.Class.define("DataManager", {
             return entry;
         },
 
+        getOrgaById: function(id){
+            var that = this;
+
+            var entry = _.find(APP.getData().entries, function(entry){
+                return (entry.entryType == 'orga' && id == entry.id);
+            })
+
+            return entry;
+        },
+
         getAllEvents: function (options) {
 
             if(options === undefined) options = {};
