@@ -16,16 +16,9 @@ qx.Class.define("Utility", {
 			if(options === undefined) options = {};
 
 			var times = '';
-			
-			var dateFrom = record.dateFrom? moment(record.dateFrom).format('L') : record.dateFrom;
-			var dateTo = record.dateTo? moment(record.dateTo).format('L') : record.dateTo;
-			var timeFrom = record.timeFrom? moment( moment(record.dateFrom).format('YYYY-MM-DD') + ' ' + record.timeFrom).format('LT') : record.timeFrom;
-			var timeTo = function(){
-				if(record.dateTo)
-					return record.timeTo? moment( moment(record.dateTo).format('YYYY-MM-DD') + ' ' + record.timeTo).format('LT') : record.timeTo;
-				else
-					return record.timeTo? moment( moment(record.dateFrom).format('YYYY-MM-DD') + ' ' + record.timeTo).format('LT') : record.timeTo;
-			}();
+
+			var FROM = record.dateFrom? moment( moment(record.dateFrom).format('YYYY-MM-DD') + ' ' + record.timeFrom) : null;
+			var TO = record.dateTo? moment( moment(record.dateTo).format('YYYY-MM-DD') + ' ' + record.timeTo) : null;
 
 			var vocabDateFrom = APP.getLM().resolve('prop.dateFrom');
 			var vocabDateTo = APP.getLM().resolve('prop.dateTo');
@@ -34,25 +27,57 @@ qx.Class.define("Utility", {
 			var vocabTimeAt = APP.getLM().resolve('prop.timeAt');
 			var vocabUntil = APP.getLM().resolve('prop.until');
 
+			if(FROM && TO){
+				// same day
+				if( FROM.isSame(TO, 'day') ){
+					// mit startzeit + endzeit
+					if(record.has_time_start && record.has_time_end) {
+						times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeFrom + ' ' + FROM.format('LT') + ' ' + vocabTimeTo + ' ' + TO.format('LT');
+					}
+					// nur startzeit
+					else if(record.has_time_start) {
+						times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeAt + ' ' + FROM.format('LT');
+					}
+					// nur endzeit
+					else if(record.has_time_end) {
+						times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeTo + ' ' + TO.format('LT');
+					}
+					// keine zeitangaben
+					else {
+						times = FROM.format('DD.MM.YYYY');
+					}
+				}
+				// different day
+				else {
+					// mit startzeit + endzeit
+					if(record.has_time_start && record.has_time_end) {
+						times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeAt + ' ' + FROM.format('LT') + ' ' + vocabTimeTo + ' ' + TO.format('DD.MM.YYYY') + ' ' + vocabTimeAt + ' ' + TO.format('LT');
+					}
+					// nur startzeit
+					else if(record.has_time_start) {
+						times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeAt + ' ' + FROM.format('LT') + ' ' + vocabTimeTo + ' ' + TO.format('DD.MM.YYYY');
+					}
+					// nur endzeit
+					else if(record.has_time_end) {
+						times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeTo + ' ' + TO.format('DD.MM.YYYY') + ' ' + vocabTimeAt + ' ' + TO.format('LT');
+					}
+					// keine zeitangaben
+					else {
+						times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeTo + ' ' + TO.format('DD.MM.YYYY');
+					}
+				}
+			}
+			else if(FROM){
+				// mit startzeit
+				if(record.has_time_start) {
+					times = FROM.format('DD.MM.YYYY') + ' ' + vocabTimeAt + ' ' + FROM.format('LT');
+				}
+				// keine zeitangaben
+				else {
+					times = FROM.format('DD.MM.YYYY');
+				}
+			}
 
-			if( dateFrom && timeFrom && dateTo && timeTo){
-				times += vocabDateFrom + ' ' + dateFrom + ' ' +vocabTimeAt+ ' ' + timeFrom + '<br>';
-				times += vocabDateTo + ' ' + dateTo + ' ' + vocabTimeAt + ' ' + timeTo;
-			}
-			else if( dateFrom && timeFrom && timeTo){
-				times += dateFrom + ' ' + vocabTimeFrom + ' ' + timeFrom + ' ' +vocabTimeTo+ ' ' + timeTo;
-			}
-			else if( dateFrom && timeFrom){
-				times += dateFrom + ' ' +vocabTimeAt+ ' ' + timeFrom;
-			}
-			else if( dateFrom && dateTo){
-				if(options.short) times += vocabUntil+ ' ' + dateTo;
-				else times += vocabDateFrom + ' ' + dateFrom + ' ' +vocabDateTo+ ' ' + dateTo;
-			}
-			else if( dateFrom ){
-				times += dateFrom;
-			}
-			
 			return times;
 		}
 
