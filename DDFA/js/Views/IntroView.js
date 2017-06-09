@@ -112,17 +112,17 @@ qx.Class.define("IntroView", {
 				
 				stepContact: {
 					stepName: 'plus',
-					el: APP.getPlusView().feedbackBtn,
+					el: APP.getPlusView().locateBtn,
 					placement: 'left',
 					preAction: function(){
-						APP.getPlusView().show();
+						APP.getPlusView().showCurtain(true);
 					},
 					afterAction: function(){
-						APP.getPlusView().close();
+						APP.getPlusView().showCurtain(false);
 					},
 					phraseAppKeys: {
-						heading: 'intro.step.plus.title',
-						text: 'intro.step.plus.text'
+						heading: 'intro.step.locate.title',
+						text: 'intro.step.locate.text'
 					},
 					buttons: ['finish']
 				},
