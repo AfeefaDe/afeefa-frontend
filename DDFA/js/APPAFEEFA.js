@@ -300,6 +300,12 @@ qx.Class.define("APPAFEEFA", {
 				});
       		$('#main-container').append(curtain);
 			that.setCurtain(curtain);
+
+			$('div#footer').dblclick(function(e){
+				e.preventDefault();
+				APP.loading(true);
+				that.say('languageChanged', APP.getLM().getCurrentLang());
+			});
 		},
 
 		getMainCategory: function(subCategory){
