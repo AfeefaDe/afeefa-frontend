@@ -51,10 +51,18 @@
 	}
 
 	/* TIMESTAMP PROPERTY */
-	.timestamp-container {
+	.timestamp {
 		font-size: .8em;
 		color: $gray50;
 		text-align: center;
+	}
+
+	/* LINKED ENTRIES */
+	.linkedentries {
+		.property-value {
+			cursor: pointer;
+			@extend a;
+		}
 	}
 
 	/* OTHER PROPERTIES */

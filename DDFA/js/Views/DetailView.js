@@ -135,10 +135,16 @@ qx.Class.define("DetailView", {
 
 			});
 
+			////////////////////
+			// link to parent //
+			////////////////////
+			that.linkedEntriesContainer = $("<div />").addClass('property linkedentries');
+			that.scrollContainer.append(that.linkedEntriesContainer);
+
 			////////////////
 			// timestamps //
 			////////////////
-			that.timestampContainer = $("<div />").addClass('property timestamp-container');
+			that.timestampContainer = $("<div />").addClass('property timestamp');
 			that.scrollContainer.append(that.timestampContainer);
 
 			$('#main-container').append(that.view);
@@ -353,6 +359,32 @@ qx.Class.define("DetailView", {
 
 			});
 
+			if(that.parent){
+				
+				var propertyText = $('<div />').addClass("property-text");
+				that.linkedEntriesContainer.append(propertyText);
+				
+				// property name
+				var name = $("<p />")
+					.addClass('property-name')
+					.append(function(){
+						return (record.entryType == 'orga')? that.getWording('term.parent.orga') : that.getWording('term.parent.organiser');
+					}());
+				propertyText.append(name);
+				
+				// property value
+				var value = $("<p />")
+					.addClass('property-value')
+					.append(that.parent.name)
+					.click(function(e){
+						e.preventDefault();
+			    	APP.getMapView().loadEntryById(that.parent.entryId, {setView: true});
+					});
+				propertyText.append(value);
+				
+				that.linkedEntriesContainer.show();
+			}
+
 			if(record.updated_at){
 				that.timestampContainer.append(that.getWording('prop.updated') + ' ' + moment(record.updated_at).format('DD.MM.YYYY'));
 				that.timestampContainer.show();
@@ -416,6 +448,9 @@ qx.Class.define("DetailView", {
 
 			// timestamp
 			that.timestampContainer.empty().hide();
+			
+			// linked entries
+			that.linkedEntriesContainer.empty().hide();
 			
 			// delete current record
 			that.record = null;
