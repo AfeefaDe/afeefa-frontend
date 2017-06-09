@@ -17,8 +17,16 @@ qx.Class.define("Utility", {
 
 			var times = '';
 
-			var FROM = record.dateFrom? moment( moment(record.dateFrom).format('YYYY-MM-DD') + ' ' + record.timeFrom) : null;
-			var TO = record.dateTo? moment( moment(record.dateTo).format('YYYY-MM-DD') + ' ' + record.timeTo) : null;
+			var TO, FROM = null;
+			if(record.dateFrom){
+				if(record.timeFrom)	FROM = moment( moment(record.dateFrom).format('YYYY-MM-DD') + ' ' + record.timeFrom);
+				else FROM = moment( moment(record.dateFrom).format('YYYY-MM-DD'));
+			}
+
+			if(record.dateTo){
+				if(record.timeTo)	TO = moment( moment(record.dateTo).format('YYYY-MM-DD') + ' ' + record.timeTo);
+				else TO = moment( moment(record.dateTo).format('YYYY-MM-DD'));
+			}
 
 			var vocabDateFrom = APP.getLM().resolve('prop.dateFrom');
 			var vocabDateTo = APP.getLM().resolve('prop.dateTo');

@@ -175,7 +175,6 @@ qx.Class.define("DetailView", {
 			// get parent orga
 			that.parent = null;
 			if(record.parentOrgaId) that.parent = APP.getDataManager().getOrgaById(record.parentOrgaId);
-			console.warn(that.parent);
 
 			// set URL
 			APP.getRouter().setUrl('entry', record.entryId);
