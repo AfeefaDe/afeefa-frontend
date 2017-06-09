@@ -56,15 +56,17 @@ qx.Class.define("DataManager", {
 
                 that.fetchExternalData('freifunk', function(){
                     if(!cb) that.say('fetchedNewData');
-                    // that.say('fetchedAllData');
+                    that.say('fetchedAllData');
 
                     // console.debug('fetchedAllData in ' + APP.getLM().getCurrentLang(), data);
 
-                    that.fetchExternalData('facebookEvents', function(){
-                        that.say('fetchedNewData');
-                        that.say('fetchedAllData');
-                        if(cb) cb();  // finished, so callback
-                    });
+                    if(cb) cb();  // finished, so callback
+                    
+                    // that.fetchExternalData('facebookEvents', function(){
+                    //     that.say('fetchedNewData');
+                    //     that.say('fetchedAllData');
+                    //     if(cb) cb();  // finished, so callback
+                    // });
                 });
 
             });
