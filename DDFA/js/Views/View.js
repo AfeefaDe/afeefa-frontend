@@ -227,14 +227,14 @@ qx.Class.define("View", {
           // action
           var action = function(){
             if( entry.location.length > 0 && entry.location[0].lat )
-              APP.getMapView().selectMarkerFromLink(entry.entryId);
+              APP.getMapView().selectMarkerFromLink(entry);
             else
               APP.getDetailView().load(entry);
           };
 
           var action_secondary = function(){
             if( entry.location.length > 0 && entry.location[0].lat )
-              APP.getMapView().selectMarkerFromLink(entry.entryId, {preventDetailView: true});
+              APP.getMapView().selectMarkerFromLink(entry, {preventDetailView: true});
           };
 
           // create entry

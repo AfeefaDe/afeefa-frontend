@@ -25,28 +25,6 @@ qx.Class.define("Router", {
 			};
 		},
 
-		detectUrl: function(){
-			var that = this;
-
-			that.urlParams = [];
-
-			var params = window.location.hash.split('#');
-			params = _.without(params, '');
-
-			_.each(params, function( param ){
-				param = param.split('=');
-				var paramObj = {
-					key: param[0],
-					value: (param.length > 1)? param[1] : null
-				}
-				that.urlParams.push(paramObj);
-			});
-
-			console.debug(that.urlParams);
-
-			// that.navigate();
-		},
-
 		initialNavigate: function(){
 			var that = this;
 
@@ -245,27 +223,77 @@ qx.Class.define("Router", {
 			});
 		},
 
+		// detectUrl: function(){
+		// 	var that = this;
+
+		// 	that.urlParams = [];
+
+		// 	var params = window.location.hash.split('#');
+		// 	params = _.without(params, '');
+
+		// 	_.each(params, function( param ){
+		// 		param = param.split('=');
+		// 		var paramObj = {
+		// 			key: param[0],
+		// 			value: (param.length > 1)? param[1] : null
+		// 		}
+		// 		that.urlParams.push(paramObj);
+		// 	});
+
+		// 	console.debug(that.urlParams);
+
+		// 	// that.navigate();
+		// },
+
+		detectUrl: function(){
+			var that = this;
+
+			that.urlParams = window.location.pathname.split('/');
+			that.urlParams = _.without(that.urlParams, '');
+			console.debug(that.urlParams);
+		},
+
+		// setUrl: function(key, value){
+		// 	var that = this;
+
+		// 	if(value){
+		// 		window.location.hash = key + '=' + value;
+		// 	} else {
+		// 		window.location.hash = key;
+		// 	}
+		// },
+
 		setUrl: function(key, value){
 			var that = this;
 
 			if(value){
-				window.location.hash = key + '=' + value;
+				history.pushState(null,null, '/' + key + '/' + value);
 			} else {
-				window.location.hash = key;
+				history.pushState(null,null, '/' + key);
 			}
 		},
 
+		// resetUrl: function(){
+		// 	window.location.hash = '';
+		// },
+
 		resetUrl: function(){
-			window.location.hash = '';
+			history.pushState(null,null, '/');
 		},
 
 		loadFromUrl: function(){
 			var that = this;
 
-			_.each(that.urlParams, function(param){
-				switch(param.key) {
-			    case 'entry':
-			    	APP.getMapView().loadEntryById(param.value, {setView: true});
+			_.each(that.urlParams, function(param, i){
+				// switch(param.key) {
+				switch(param) {
+			    case 'project':
+			    	var orga = APP.getDataManager().getOrgaById(that.urlParams[i+1]);
+			    	if(orga) APP.getMapView().loadEntry(orga, {setView: true});
+			    	break;
+			    case 'event':
+			    	var event = APP.getDataManager().getEventById(that.urlParams[i+1]);
+			    	if(event) APP.getMapView().loadEntry(event, {setView: true});
 			    	break;
 			    case 'area':
 						APP.getMapView().setViewToArea(param.value);
@@ -295,9 +323,8 @@ qx.Class.define("Router", {
 					case 'iwgr':
 	          APP.getLegendView().setFilter( {tags: 'iwgr'} );
 						break;
-					// deprecated, but possible: entry URLs like afeefa.de/#591c98dcbd6b8
 					default:
-			    	APP.getMapView().loadEntryById(param.key, {setView: true});
+			    	// APP.getMapView().loadEntryById(param.key, {setView: true});
 				}
 			});
 		}

@@ -395,49 +395,29 @@ qx.Class.define("MapView", {
 			}
 		},
 
-		loadEntryById: function(id, options){
+		loadEntry: function(entry, options){
 			var that = this;
 
-			var lookup = that.lookupEntryById(id);
-				// if(lookup){
-					// if(options && options.setView)
-					// 	that.map.setView( [lookup.entry.location[0].lat, lookup.entry.location[0].lon], 16);
-					// that.selectMarker(lookup.marker, lookup.entry, options);
-				// }
-				if(lookup && lookup.marker) that.selectMarker(lookup.marker, lookup.entry, options);
-				else that.selectMarker(null, lookup, options);
+			var lookup = that.lookupEntry(entry);
+
+			if(lookup && lookup.marker) that.selectMarker(lookup.marker, lookup.entry, options);
+			else that.selectMarker(null, lookup, options);
 		},
 
-		lookupEntryById: function( id ){
+		lookupEntry: function( entry ){
 			var that = this;
 
-			var hit;
+			var hit = null;
 			
 			// does the entry have a marker on the map?
 			hit = _.find( that.getEntryMarkerLookup(), function(pair){
-				return pair.entry.entryId == id;
+				return pair.entry.entryType == entry.entryType && pair.entry.id == entry.id;
 			});
-
-			// if no marker, only find the entry
-			if(!hit) hit = _.find(APP.getData().entries, function(entry){
-				return entry.entryId == id;
-			});
+			
+			if(!hit) hit = entry;
 
 			return hit;
 		},
-
-		changeLanguage: function() {
-			var that = this;
-		},
-	 //  addMarkersGeoJSON: function(markers, color) {
-		
-		// var that = this;
-
-	 //  	var featureLayer = L.mapbox.featureLayer()
-		 //    .loadURL('/_Resources/Static/Packages/DDFA.dresdenfueralleDe/DDFA/js/geojson/inis.geojson')
-		 //    .addTo(that.map);
-
-	 //  },
 
 		selectMarker: function( marker, entry, options ){
 			var that = this;
@@ -457,12 +437,12 @@ qx.Class.define("MapView", {
 			if(!options.preventDetailView) APP.getDetailView().load(entry);
 		},
 
-		selectMarkerFromLink: function( entryId, options ) {
+		selectMarkerFromLink: function( entry, options ) {
 			var that = this;
 
 			if(options === undefined) options = {};
 
-			var lookup = that.lookupEntryById( entryId );
+			var lookup = that.lookupEntry( entry );
 				
 			if(lookup && lookup.marker){
 					options.setView = true;
@@ -481,6 +461,10 @@ qx.Class.define("MapView", {
 
 			that.say('mapMarkerDeselected');
 			that.setSelectedMarker(null);
+		},
+
+		changeLanguage: function() {
+			var that = this;
 		},
 
 		addPOIs: function(markers, color) {

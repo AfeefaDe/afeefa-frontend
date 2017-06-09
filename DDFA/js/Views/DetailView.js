@@ -177,7 +177,8 @@ qx.Class.define("DetailView", {
 			if(record.parentOrgaId) that.parent = APP.getDataManager().getOrgaById(record.parentOrgaId);
 
 			// set URL
-			APP.getRouter().setUrl('entry', record.entryId);
+			var entryType = record.entryType == 'orga'? 'project' : record.entryType;
+			APP.getRouter().setUrl(entryType, record.id);
 
 			if(that.record) {
 				that.reset();
@@ -380,7 +381,7 @@ qx.Class.define("DetailView", {
 					.append(that.parent.name)
 					.click(function(e){
 						e.preventDefault();
-			    	APP.getMapView().loadEntryById(that.parent.entryId, {setView: true});
+			    	APP.getMapView().loadEntry(that.parent, {setView: true});
 					});
 				propertyText.append(value);
 				
@@ -521,7 +522,7 @@ qx.Class.define("DetailView", {
 
 			that.headingContainer.click(function(){
 				if( APP.getUserDevice() === 'desktop' || APP.getUserDevice() === 'tablet' )
-					APP.getMapView().selectMarkerFromLink(that.record.entryId);
+					APP.getMapView().selectMarkerFromLink(that.record);
 			});
 		}
 

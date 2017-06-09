@@ -36,7 +36,7 @@
 	<meta name="theme-color" content="#41829e">
 
 	<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
-	<link rel="stylesheet" href="DDFA/css/afeefa.css" />
+	<link rel="stylesheet" href="/DDFA/css/afeefa.css" />
 
 	<!-- mapbox -->
 	<!-- <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> -->
@@ -48,7 +48,7 @@
 	# check if calling dev or production version to load raw or built frontend
 	if (preg_match("/(dev\.afeefa\.fx|localhost)/", $_SERVER['HTTP_HOST'])) { ?>
 		<script>window.apiurl = '<?= $apiUrl ?>'</script>
-		<script data-main="DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>
+		<script data-main="/DDFA/js/main" type="text/javascript" src="/requirejs/require.js"></script>
 	<?php } else { ?>
 		<script>window.apiurl = '<?= $apiUrl ?>'</script>
 		<script data-main="built/DDFA/js/main" type="text/javascript" src="requirejs/require.js"></script>

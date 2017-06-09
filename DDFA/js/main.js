@@ -1,6 +1,6 @@
 require.config({
 
-    // baseUrl: '_Resources/Static/Packages/DDFA.dresdenfueralleDe/DDFA/js',
+    baseUrl: '/DDFA/js/',
 
     paths: {
         modernizr: '../../H5BP/js/vendor/modernizr-2.8.3.min',
