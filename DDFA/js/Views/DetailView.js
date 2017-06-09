@@ -298,16 +298,19 @@ qx.Class.define("DetailView", {
 				var propValue = record[prop];
 
 				// handle inheritance
-				if(prop == 'descriptionShort' && record.inheritance.short_description){
-					propValue = '';
-					if(that.parent.descriptionShort) propValue += that.parent.descriptionShort + '\n\n';
-					if(record.descriptionShort) propValue += record.descriptionShort;
+				if(that.parent){
+					if(prop == 'descriptionShort' && record.inheritance.short_description){
+						propValue = '';
+						if(that.parent.descriptionShort) propValue += that.parent.descriptionShort + '\n\n';
+						if(record.descriptionShort) propValue += record.descriptionShort;
+					}
+					// TODO ausbauen, da wir eigentlich die lange Beschreibung nicht vererben wollen
+					else if(prop == 'description' && !propValue){
+						propValue = '';
+						if(that.parent.description) propValue += that.parent.description;
+					}
 				}
-				// TODO ausbauen, da wir eigentlich die lange Beschreibung nicht vererben wollen
-				else if(prop == 'description' && !propValue){
-					propValue = '';
-					if(that.parent.description) propValue += that.parent.description;
-				}
+
 				if(propValue == '') propValue = null;
 
 				// only render property if available
