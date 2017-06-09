@@ -301,7 +301,7 @@ qx.Class.define("DataManager", {
                     }
                 },
                 facebookEvents: {
-                    sourceUrl: 'https://backend.afeefa.de/api/v1/facebook_events?token=zP4uja4yFmnPWZeCVsLU',
+                    sourceUrl: APP.getConfig().apiUrl + 'api/facebook_events?token=zP4uja4yFmnPWZeCVsLU',
                     mapping: {
                         name: function(record){
                             return record.name;
