@@ -141,6 +141,15 @@ qx.Class.define("DetailView", {
 			that.linkedEntriesContainer = $("<div />").addClass('property linkedentries');
 			that.scrollContainer.append(that.linkedEntriesContainer);
 
+			//////////////////
+			// share button //
+			//////////////////
+			that.shareButton = $("<button />").addClass('btn-share').append('share')
+				.click(function(){
+					that.mobileShare();
+				});
+			that.scrollContainer.append(that.shareButton);					
+
 			////////////////
 			// timestamps //
 			////////////////
@@ -152,6 +161,15 @@ qx.Class.define("DetailView", {
 			this.base(arguments);
 		},
 
+		mobileShare: function(){
+			var that = this;
+			navigator.share({
+			    title: document.title,
+			    text: "Hello World",
+			    url: window.location.href
+			}).then(() => console.log('Successful share'))
+			.catch(error => console.log('Error sharing:', error));
+		},
 		toggleLongDescription: function(){
 			var that = this;
 

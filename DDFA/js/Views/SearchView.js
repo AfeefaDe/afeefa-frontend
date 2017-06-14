@@ -182,6 +182,16 @@ qx.Class.define("SearchView", {
         }
       );
 
+      that.createButton(
+        {
+          label: 'share',
+          iconName: 'facebook',
+          action: function(){
+            APP.getDetailView().mobileShare();
+          }
+        }
+      );
+
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
