@@ -524,8 +524,23 @@ qx.Class.define("SearchView", {
         that.say('searchFieldFocused');
       });
 
-      that.inputField.on('input', function(){
-        that.load(that.inputField.val());
+      that.inputField.on('input', function(e){
+        var val = that.inputField.val();
+        
+        // stop timer that may exist from previous input
+        if(that.timeout) clearTimeout(that.timeout);
+        
+        // triggered by keyboard input (load with delay)
+        if(e.originalEvent !== undefined){
+          if(val.length < 3) return;
+          that.timeout = setTimeout(function(){
+            that.load(val);
+          }, 400);
+        } 
+        // triggered manually (load instantly)
+        else {
+          that.load(val);
+        }
       });
 
       that.listen('detailViewOpened', function(){
@@ -650,8 +665,8 @@ qx.Class.define("SearchView", {
     changeLanguage: function(){
         var that = this;
 
-        if( APP.getDetailView().isActive() ) return;
-        if(that.isActive()) that.load( that.inputField.val() );
+        // if( APP.getDetailView().isActive() ) return;
+        // if(that.isActive()) that.load( that.inputField.val() );
     }
   }
 
