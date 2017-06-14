@@ -326,7 +326,15 @@ qx.Class.define("APPAFEEFA", {
 			var that = this;
 
 			$('head title').empty().append(title);
+		},
 
+		setOpenGraphMetaProperties: function(properties){
+			var that = this;
+
+			_.each(properties, function(value, key){
+				var selector = 'head meta[property="og:'+key+'"]'
+				$(selector).attr('content', value);
+			});
 		}
 	}
 

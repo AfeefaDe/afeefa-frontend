@@ -144,10 +144,7 @@ qx.Class.define("DetailView", {
 			//////////////////
 			// share button //
 			//////////////////
-			that.shareButton = $("<button />").addClass('btn-share').append('share')
-				.click(function(){
-					that.mobileShare();
-				});
+			that.shareButton = $("<div />").addClass('fb-share');
 			that.scrollContainer.append(that.shareButton);					
 
 			////////////////
@@ -161,15 +158,6 @@ qx.Class.define("DetailView", {
 			this.base(arguments);
 		},
 
-		mobileShare: function(){
-			var that = this;
-			navigator.share({
-			    title: document.title,
-			    text: "Hello World",
-			    url: window.location.href
-			}).then(() => console.log('Successful share'))
-			.catch(error => console.log('Error sharing:', error));
-		},
 		toggleLongDescription: function(){
 			var that = this;
 
@@ -197,6 +185,10 @@ qx.Class.define("DetailView", {
 			// set URL
 			var entryType = record.entryType == 'orga'? 'project' : record.entryType;
 			APP.getRouter().setUrl(entryType, record.id, record.name);
+			APP.setOpenGraphMetaProperties({
+				title: record.name,
+				description: record.descriptionShort.slice(0,150)
+			});
 
 			if(that.record) {
 				that.reset();
@@ -411,6 +403,8 @@ qx.Class.define("DetailView", {
 				that.timestampContainer.show();
 			}
 
+			that.shareButton.append('<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdev.afeefa.de%2F'+record.entryType+'%2F'+record.id+'&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
+
 			// show DetailView
 			that.view.addClass('active');
       that.isActive(true);
@@ -472,6 +466,8 @@ qx.Class.define("DetailView", {
 			
 			// linked entries
 			that.linkedEntriesContainer.empty().hide();
+
+			that.shareButton.empty();
 			
 			// delete current record
 			that.record = null;
