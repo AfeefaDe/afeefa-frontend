@@ -404,7 +404,7 @@ qx.Class.define("DetailView", {
 			}
 
 			// that.shareButton.append('<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdev.afeefa.de%2F'+record.entryType+'%2F'+record.id+'&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
-			that.shareButton.append('<div class="btn fb-share-button" data-href="' +window.location.origin+ '/' +that.currentEntryType+ '/' +record.id+ '" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fafeefa.de%2F&amp;src=sdkpreparse">Teilen</a></div>');
+			that.shareButton.append('<div class="btn fb-share-button" data-href="' +window.location.origin+ '/' +that.currentEntryType+ '/' +record.id+ '" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F' +window.location.hostname+ '%2F' +that.currentEntryType+ '%2F' +record.id+ '&amp;src=sdkpreparse">Teilen</a></div>');
 
 			// show DetailView
 			that.view.addClass('active');
