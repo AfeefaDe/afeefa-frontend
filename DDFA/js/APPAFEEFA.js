@@ -301,9 +301,9 @@ qx.Class.define("APPAFEEFA", {
       		$('#main-container').append(curtain);
 			that.setCurtain(curtain);
 
-			$('div#footer').dblclick(function(e){
+			$('div#footer').on('contextmenu', function(e){
 				e.preventDefault();
-				APP.loading(true);
+				// APP.loading(true);
 				that.say('languageChanged', APP.getLM().getCurrentLang());
 			});
 		},
