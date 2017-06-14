@@ -183,11 +183,11 @@ qx.Class.define("DetailView", {
 			if(record.parentOrgaId) that.parent = APP.getDataManager().getOrgaById(record.parentOrgaId);
 
 			// set URL
-			var entryType = record.entryType == 'orga'? 'project' : record.entryType;
-			APP.getRouter().setUrl(entryType, record.id, record.name);
+			that.currentEntryType = (record.entryType == 'orga')? 'project' : record.entryType;
+			APP.getRouter().setUrl(that.currentEntryType, record.id, record.name);
 			APP.setOpenGraphMetaProperties({
-				title: record.name,
-				description: record.descriptionShort.slice(0,150)
+				title: record.name.slice(0,50) + '...',
+				description: record.descriptionShort? record.descriptionShort.slice(0,150) + '...' : null
 			});
 
 			if(that.record) {
@@ -403,7 +403,8 @@ qx.Class.define("DetailView", {
 				that.timestampContainer.show();
 			}
 
-			that.shareButton.append('<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdev.afeefa.de%2F'+record.entryType+'%2F'+record.id+'&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
+			// that.shareButton.append('<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdev.afeefa.de%2F'+record.entryType+'%2F'+record.id+'&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
+			that.shareButton.append('<div class="btn fb-share-button" data-href="' +window.location.origin+ '/' +that.currentEntryType+ '/' +record.id+ '" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fafeefa.de%2F&amp;src=sdkpreparse">Teilen</a></div>');
 
 			// show DetailView
 			that.view.addClass('active');

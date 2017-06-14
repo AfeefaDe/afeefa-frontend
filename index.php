@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="description" content="Afeefa informiert, vernetzt und koordiniert. Wir stärken dem sozialen Engagement den Rücken und setzen uns für die Autonomie von MigrantInnen ein. Mehrsprachig, aktuell und total lokal.">
 
-  	<!-- <meta property="og:url"           content="https://www.afeefa.de" /> -->
+  	<meta property="og:url"           content="https://www.afeefa.de" />
 	  <meta property="og:type"          content="website" />
 	  <meta property="og:title"         content="" />
 	  <meta property="og:description"   content="" />
@@ -67,6 +67,17 @@
 	  ga('create', 'UA-34351955-4', 'auto');
 	  ga('send', 'pageview');
 	</script>
+
+	<!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.9";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+  
 </head>
 <body>
 	<div id="main-container">

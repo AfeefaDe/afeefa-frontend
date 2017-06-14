@@ -272,11 +272,16 @@ qx.Class.define("Router", {
 				name += ' | Afeefa.de';
 			}
 
-
 			if(value){
 				history.pushState(null, name, '/' + key + '/' + value);
+				APP.setOpenGraphMetaProperties({
+					url: window.location.origin + '/' + key + '/' + value
+				});
 			} else {
 				history.pushState(null, name, '/' + key);
+				APP.setOpenGraphMetaProperties({
+					url: window.location.origin + '/' + key
+				});
 			}
 		},
 
@@ -286,6 +291,9 @@ qx.Class.define("Router", {
 
 		resetUrl: function(){
 			history.pushState(null,null, '/');
+			APP.setOpenGraphMetaProperties({
+				url: null
+			});
 		},
 
 		loadFromUrl: function(){
