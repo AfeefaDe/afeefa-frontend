@@ -56,14 +56,14 @@
 
 	.back-btn {
 		position: absolute;
-		top: 1.5em;
-		left: 2em;
-		width: 1.5em;
-		height: 1.5em;
+		top: .2em;
+		left: 1em;
+		width: 4em;
+		height: 4em;
 		cursor: pointer;
 		opacity: .8;
 		background-image: url("../img/icon_201.svg");
-		@include background-size(100%);
+		@include background-size(40%);
 		background-position: center center;
 		background-repeat: no-repeat;
 
