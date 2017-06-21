@@ -17,13 +17,13 @@ H5BP/css/normalize.css
 ----------------
 H5BP/css/normalize.css
 
-leafletPlugins/MarkerCluster.Default.css
+leafletPlugins/MarkerCluster.css
 ----------------
-leafletPlugins/MarkerCluster.Default.css
+leafletPlugins/MarkerCluster.css
 
-leafletPlugins/MarkerCluster.css
+leafletPlugins/MarkerCluster.Default.css
 ----------------
-leafletPlugins/MarkerCluster.css
+leafletPlugins/MarkerCluster.Default.css
 
 materialize/css/materialize.css
 ----------------
