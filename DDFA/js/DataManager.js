@@ -59,12 +59,12 @@ qx.Class.define("DataManager", {
 
                 that.fetchExternalData('freifunk', function(){
                     if(!cb) that.say('fetchedNewData');
+                    that.say('fetchedAllData');
 
-                    that.fetchExternalData('facebookEvents', function(){
-                        that.say('fetchedNewData');
-                        that.say('fetchedAllData');
-                        if(cb) cb();  // finished, so callback
-                    });
+                    // that.fetchExternalData('facebookEvents', function(){
+                    //     that.say('fetchedNewData');
+                    //     if(cb) cb();  // finished, so callback
+                    // });
                 });
 
             });
@@ -154,6 +154,22 @@ qx.Class.define("DataManager", {
             })
 
             return entry;
+        },
+
+        getNewestProjects: function(count){
+            var that = this;
+
+            if(count === undefined) count = 5;
+
+            var projects = APP.getData().entries.filter(function (entry) {
+                return entry.entryType == 'orga';
+            });
+
+            var sortedProjects = _.sortBy(projects, function(o){
+                return o.created_at;
+            });
+
+            return sortedProjects.reverse().slice(0, count);
         },
 
         getAllEvents: function (options) {

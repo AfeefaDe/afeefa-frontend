@@ -165,7 +165,6 @@ qx.Class.define("SearchView", {
       // });
 
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
-      
       var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
       if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
       _.each(eventsToday.slice(0, 3), function(entry) {
@@ -182,6 +181,13 @@ qx.Class.define("SearchView", {
         }
       );
 
+
+      that.createSectionHeader( that.getWording('search.label.newentries') );
+      var newProjects = APP.getDataManager().getNewestProjects(5);
+      _.each(newProjects, function(entry) {
+        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+      });
+              
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
