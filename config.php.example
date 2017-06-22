@@ -1,7 +1,11 @@
 <?php
-  $apiUrl = 'https://dev.afeefa.de/';
-  // $apiUrl = 'https://neos.afeefa.de/';
-  // $apiUrl = 'http://backend.afeefa.dev:3001/';
-  // $apiUrl = 'http://localhost:3001/';
-  return $apiUrl;
+  $APIUrl = 'https://dev.afeefa.de/';
+  // $APIUrl = 'https://neos.afeefa.de/';
+  // $APIUrl = 'http://backend.afeefa.dev:3001/';
+  // $APIUrl = 'http://localhost:3001/';
+  
+  $backendAPIUrl = 'https://dev.afeefa.de/';
+  // $backendAPIUrl = 'http://localhost:3000/';
+
+  return array("APIUrl"=>$APIUrl, "backendAPIUrl"=>$backendAPIUrl);
 ?>

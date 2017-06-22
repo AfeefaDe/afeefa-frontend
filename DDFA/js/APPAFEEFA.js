@@ -15,6 +15,7 @@ qx.Class.define("APPAFEEFA", {
 		that.setConfig(
 			{
 				apiUrl: window.apiurl,
+				backendApiUrl: window.backendapiurl,
 				includePathForHtmlFiles: '/DDFA/inc/',
 				languages: [
 					'de',
