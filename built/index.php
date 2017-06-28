@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Afeefa.de - Engagement sichtbar machen</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="description" content="Afeefa informiert, vernetzt und koordiniert. Wir stärken dem sozialen Engagement den Rücken und setzen uns für die Autonomie von MigrantInnen ein. Mehrsprachig, aktuell und total lokal.">
 
-  	<meta property="og:url"           content="https://www.afeefa.de" />
-	  <meta property="og:type"          content="website" />
-	  <meta property="og:title"         content="" />
-	  <meta property="og:description"   content="" />
-  	<meta property="og:image" content="/afeefa.PNG">
+	<meta property="og:url"           content="https://www.afeefa.de" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="" />
+  <meta property="og:description"   content="" />
+	<meta property="og:image" content="/afeefa.PNG">
 
-  	<!-- mapbox mobile optimization -->
-  	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+	<!-- mapbox mobile optimization -->
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 
 	<!-- favicons -->
 	<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png?v=2bbvyE2wzd">
@@ -46,6 +46,16 @@
 	<!-- <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> -->
 	<link href='https://api.mapbox.com/mapbox.js/v3.1.0/mapbox.css' rel='stylesheet' />
 
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-34351955-4', 'auto');
+	  ga('send', 'pageview');
+	</script>
+
 	<!-- requirejs (module loader) handles all further js includes -->
 	<?php
 		$config = include 'config.php';
@@ -61,16 +71,6 @@
 		<script>window.backendapiurl = '<?= $backendApiUrl ?>'</script>
 		<script data-main="/built/DDFA/js/main" type="text/javascript" src="/requirejs/require.js"></script>
 	<?php } ?>
-
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-	  ga('create', 'UA-34351955-4', 'auto');
-	  ga('send', 'pageview');
-	</script>
   
 </head>
 <body>
