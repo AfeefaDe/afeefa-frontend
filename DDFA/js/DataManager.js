@@ -161,7 +161,7 @@ qx.Class.define("DataManager", {
             if(count === undefined) count = 5;
 
             var projects = APP.getData().entries.filter(function (entry) {
-                return entry.entryType == 'orga';
+                return (entry.entryType == 'orga' && entry.created_at != undefined);
             });
 
             var sortedProjects = _.sortBy(projects, function(o){
@@ -273,7 +273,10 @@ qx.Class.define("DataManager", {
                         type: function(record){
                             return 0;
                         },
-                        entryId: function(record, i){
+                        entryType: function(record){
+                            return 'orga';
+                        },
+                        id: function(record, i){
                             return 'freifunk-'+i;
                         },
                         category: function(record){
@@ -324,7 +327,10 @@ qx.Class.define("DataManager", {
                         type: function(record){
                             return 2;
                         },
-                        entryId: function(record,i){
+                        entryType: function(record){
+                            return 'event';
+                        },
+                        id: function(record,i){
                             return record.id;
                         },
                         category: function(record){
@@ -442,8 +448,9 @@ qx.Class.define("DataManager", {
                 var newEntry = {
                     external:true,
                     name: mapping.name? mapping.name(record) : 'mapping missing',
-                    entryId: mapping.entryId? mapping.entryId(record, i) : 0,
+                    id: mapping.id? mapping.id(record, i) : 0,
                     type: mapping.type? mapping.type(record) : 0,
+                    entryType: mapping.entryType? mapping.entryType(record) : 0,
                     category: mapping.category? mapping.category(record) : {
                         "name":"general",
                     },
