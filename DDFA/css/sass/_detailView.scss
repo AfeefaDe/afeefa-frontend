@@ -4,6 +4,32 @@
 
 	.heading {
 		cursor: pointer;
+
+		h1 {
+			padding-right: 5rem;
+		}
+	}
+
+	.bookmark-btn {
+		position: absolute;
+		width: 2rem;
+		height: 3rem;
+		top: -0.2em;
+		right: 2rem;
+		cursor: pointer;
+		background-image: url("../img/icon_bookmark.svg");
+		@include background-size(contain);
+		background-position: center center;
+		background-repeat: no-repeat;
+		opacity: .25;
+
+		&:hover {
+			opacity: .5;
+		}
+
+		&.active {
+			opacity: 1;
+		}
 	}
 
 	.badge {
@@ -230,11 +256,7 @@
 	&.active {
 		bottom: 0;
 		
-		badge-certificate {
-			display: none;
-		}
-
-		.message-btn {
+		.bookmark-btn, .message-btn, badge-certificate {
 			display: none !important;
 		}
 	}

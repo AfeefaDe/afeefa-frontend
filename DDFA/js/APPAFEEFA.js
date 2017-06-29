@@ -10,6 +10,7 @@ qx.Class.define("APPAFEEFA", {
 		that.setDataManager(new DataManager());
 		that.setRouter(new Router());
 		that.setLM(new LanguageManager());
+		that.setUser(new User());
 		that.setUtility(new Utility());
 
 		that.setConfig(
@@ -168,6 +169,7 @@ qx.Class.define("APPAFEEFA", {
 		title: {},
 		area: {},
 		DataManager: {},
+		User: {},
 		Utility: {},
 		Router: {},
 		LM: {},
@@ -200,6 +202,9 @@ qx.Class.define("APPAFEEFA", {
 
 			// load city config
 			that.detectAfeefaArea();
+
+			// analyse user device
+			that.getUser().load();
 
 			// analyse user device
 			that.detectUserDevice();
@@ -237,15 +242,15 @@ qx.Class.define("APPAFEEFA", {
         },
 
 		loading: function( bool ){
-            var that = this;
+        var that = this;
 
-            if (bool) {
-                $('body').addClass('loading');
-            }
-            else {
-                $('body').removeClass('loading');
-            }
-        },
+        if (bool) {
+            $('body').addClass('loading');
+        }
+        else {
+            $('body').removeClass('loading');
+        }
+    },
 
 		detectAfeefaArea: function(){
 			var that = this;

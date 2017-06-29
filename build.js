@@ -115,6 +115,7 @@
         "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'modernizr', 'popper', 'materialize', 'momentjs'],
         'APPAFEEFA': ['Daddy'],
         'DataManager': ['APPAFEEFA'],
+        'User': ['APPAFEEFA'],
         'Router': ['APPAFEEFA'],
         'LanguageManager': ['APPAFEEFA'],
         'Utility': ['APPAFEEFA'],

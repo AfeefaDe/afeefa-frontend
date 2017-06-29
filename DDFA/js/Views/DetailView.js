@@ -81,6 +81,16 @@ qx.Class.define("DetailView", {
 				});
 		  that.view.append(that.messageBtn);
 
+		  that.bookmarkBtn = $("<div />")
+				.addClass('bookmark-btn')
+				.click(function(){
+		   		if( APP.getUser().bookmark(that.record) )
+		   			$(this).addClass('active');
+		   		else
+		   			$(this).removeClass('active');
+				});
+		  that.view.append(that.bookmarkBtn);
+
 			////////////////////
 			// image property //
 			////////////////////
@@ -212,6 +222,9 @@ qx.Class.define("DetailView", {
 
 			// certificate badge
 			if(record.certified) that.certificateBadge.show();
+
+			// bookmark button
+ 			if(APP.getUser().hasBookmark(record)) that.bookmarkBtn.addClass('active');
 
 			// message button
 			if(record.mail) that.messageBtn.show();
@@ -432,6 +445,7 @@ qx.Class.define("DetailView", {
 
 			that.certificateBadge.hide();
 			that.messageBtn.hide();
+ 			that.bookmarkBtn.removeClass('active');
 
 			// image property
 			that.imageContainer.empty();
