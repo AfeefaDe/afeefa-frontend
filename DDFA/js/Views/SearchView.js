@@ -152,18 +152,6 @@ qx.Class.define("SearchView", {
       // highlights
       // that.createSectionHeader( that.getWording('search.label.highlights') );
 
-      // iwgr
-      // var action = function(){
-      //   APP.getLegendView().setFilter( {tags: 'iwgr'} );
-      //   window.location.hash = 'iwgr';
-      // };
-      // that.createListResult('iwgr', that.getWording('search.label.iwgr'), that.getWording('search.sublabel.iwgr'), action );
-
-      // upcoming events
-      // that.createSectionHeader( that.getWording('search.label.eventstoday'), function(){
-      //   that.inputField.val('events').trigger( "input" );
-      // });
-
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
       var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
       if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
@@ -187,7 +175,24 @@ qx.Class.define("SearchView", {
       _.each(newProjects, function(entry) {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
-              
+      
+      // MY AFEEFA
+      that.createSectionHeader( 'Mein Afeefa' );
+
+      // support wanted
+      var action = function(){
+        that.inputField.val('bookmarks').trigger( "input" );
+      };
+      that.createListResult(
+        {
+          iconClass: 'bookmark',
+          label: that.getWording('search.tag.bookmarks'),
+          subLabel: APP.getUser().getBookmarks().length,
+          action: action,
+          targetContainertEl: that.scrollContainer
+        }
+      );
+
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
@@ -371,13 +376,16 @@ qx.Class.define("SearchView", {
         }
       }
       
-      // events
-      else if( query == 'events' ){
-        entriesFiltered = APP.getDataManager().getAllEvents();
-        
-        that.setSearchTag(null, that.getWording('search.label.upcomingevents'));
+      // user bookmarks
+      else if(query == 'bookmarks' ) {
+
+        entriesFiltered = _.filter( entries, function(entry){
+            return ( APP.getUser().hasBookmark(entry) );
+        });
+
+        that.setSearchTag(null, that.getWording('search.tag.bookmarks'));
       }
-      
+
       // support wanted
       else if( query == 'support wanted' ){
         entriesFiltered = _.filter( entries, function(entry){

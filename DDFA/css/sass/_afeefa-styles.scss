@@ -106,6 +106,10 @@ button {
       &.add-entry {
         background-image: url("../img/icon_34.svg");
       }
+      &.bookmark {
+        background-image: url("../img/icon_bookmark.svg");
+        @include background-size(60%);
+      }
       &.support-wanted {
         background-image: url("../img/icon_56.svg");
       }
