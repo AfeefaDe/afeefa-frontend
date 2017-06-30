@@ -219,9 +219,10 @@ qx.Class.define("DetailView", {
 			////////////////////
 			// image property //
 			////////////////////
-			if( record.imageType && record.image ) {
+			var imageType = record.imageType? record.imageType : 'image';
+			if( imageType && record.image ) {
 				
-				switch(record.imageType){
+				switch(imageType){
 					case 'youtube':
 						// supposed, yt link is as 'https://www.youtube.com/watch?v=RURToWXI6QM'
 						var ytid = record.image.substr(32);
