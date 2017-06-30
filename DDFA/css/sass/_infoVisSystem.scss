@@ -88,6 +88,10 @@
 		background-color: rgba($black,$alpha_background);
 		border-color: rgba($black, $alpha_border);
 	}
+
+	&.subcat-fb-event {
+		background-color: rgba($blue_facebook,$alpha_background);
+	}
 }
 
 @mixin categorySymbols {
