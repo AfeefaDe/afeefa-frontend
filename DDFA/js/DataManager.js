@@ -56,12 +56,13 @@ qx.Class.define("DataManager", {
 
                 APP.setData(currentAppData);
                 if(!cb) that.say('fetchedNewData');
+                that.say('fetchedAllData');
 
                 that.fetchExternalData('freifunk', function(){
                     if(!cb) that.say('fetchedNewData');
+                    
                     that.fetchExternalData('facebookEvents', function(){
                         that.say('fetchedNewData');
-                        that.say('fetchedAllData');
                         if(cb) cb();  // finished, so callback
                     });
                 });

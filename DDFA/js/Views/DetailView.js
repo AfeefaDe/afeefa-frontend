@@ -232,9 +232,10 @@ qx.Class.define("DetailView", {
 			////////////////////
 			// image property //
 			////////////////////
-			if( record.imageType && record.image ) {
+			var imageType = record.imageType? record.imageType : 'image';
+			if( imageType && record.image ) {
 				
-				switch(record.imageType){
+				switch(imageType){
 					case 'youtube':
 						// supposed, yt link is as 'https://www.youtube.com/watch?v=RURToWXI6QM'
 						var ytid = record.image.substr(32);
@@ -525,6 +526,7 @@ qx.Class.define("DetailView", {
 				if( that.record !== null) {
 					// reload record
 			    var newRecord = APP.getDataManager().getEntryByEntryId(that.record.entryId);
+			    var newRecord = (that.record.entryType == 'event')? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
 			    that.reset();
 			    that.load(newRecord);
 				}
