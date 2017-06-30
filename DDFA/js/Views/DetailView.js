@@ -512,6 +512,7 @@ qx.Class.define("DetailView", {
 				if( that.record !== null) {
 					// reload record
 			    var newRecord = APP.getDataManager().getEntryByEntryId(that.record.entryId);
+			    var newRecord = (that.record.entryType == 'event')? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
 			    that.reset();
 			    that.load(newRecord);
 				}
