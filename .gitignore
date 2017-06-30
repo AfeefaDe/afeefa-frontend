@@ -5,3 +5,8 @@ config.php
 built/build.txt
 built/DDFA/css/sass
 built/DDFA/css/.sass-cache
+built/DDFA/css/compass_watch-development.bat
+built/.gitignore
+built/DDFA/css/prod_config.rb
+built/DDFA/css/config.rb
+built/DDFA/css/compass_compile-production.bat
