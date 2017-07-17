@@ -10,7 +10,7 @@
 	@include box-shadow(0px 0px 2px #000);
 	
 	width: $viewWidth;
-	height: 100%;
+	height: calc(100% - 4rem);
 	
 	$height_sb: 2.5rem;
 

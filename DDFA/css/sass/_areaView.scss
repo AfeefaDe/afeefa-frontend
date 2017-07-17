@@ -1,0 +1,48 @@
+#areaView {
+	position: absolute;
+	z-index: 15;
+	min-width: 10rem;
+	bottom: 1rem;
+	left: 2rem;
+	text-align: center;
+	@include display-flex;
+	@include flex-direction(column);
+	
+	.area-btn {
+		display: none;
+		background-color: $white;
+		padding: .3rem 1rem;
+		cursor: pointer;
+		font-weight: 400;
+		color: $gray80;
+		@include shadow();
+
+		&.active {
+			display: inline-block;
+			color: $black;
+			order: 99;
+		}
+	}
+
+	&.active {
+		.area-btn {
+			display: inline-block !important;
+		}
+	}
+}
+
+.mobile {
+	#areaView {
+		display: none;
+	}
+}
+
+.rtl {
+	#languageView {
+
+		.lang-item-label {
+			padding-left: 0 !important;
+			padding-right: 1em !important;
+		}
+	}
+}

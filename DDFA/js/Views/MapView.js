@@ -7,7 +7,6 @@ qx.Class.define("MapView", {
 		userLocation: {},
 		entryMarkerLookup: {},
 		selectedMarker: {},
-		viewCoords: {}
 	},
 	
 	construct: function(){
@@ -19,12 +18,6 @@ qx.Class.define("MapView", {
 		that.setUserLocation(null);
 		that.setSelectedMarker(null);
 		that.setEntryMarkerLookup([]);
-		that.setViewCoords({
-			dresden: { lat: 51.051, lon: 13.74, zoom: 14 },
-			pirna: { lat: 50.957456, lon: 13.937007, zoom: 14 },
-			leipzig: { lat: 51.336143, lon: 12.362952, zoom: 14 },
-			bautzen: { lat: 51.1803977, lon: 14.4242263, zoom: 14 }
-		});
 	},
 
 	members : {
@@ -45,15 +38,15 @@ qx.Class.define("MapView", {
 			L.mapbox.accessToken = 'pk.eyJ1IjoiZmVsaXhrYW1pbGxlIiwiYSI6Ilo1SHFOX0EifQ.pfAzun90Lj1UlVapKI3LiA';
 			that.map = L.mapbox.map(that.getViewId(), 'felixkamille.4128d9e7', {
 			zoomControl: false,
-			maxBounds: [
-					L.latLng(50.115749, 11.804513), // south-west corner
-					L.latLng(51.757315, 15.118189)  // north-east corner
-			],
+			// maxBounds: [
+					// L.latLng(50.115749, 11.804513), // south-west corner
+					// L.latLng(51.757315, 15.118189)  // north-east corner
+			// ],
 			// attributionControl: true,
 			tileLayer: {format: 'jpg70'},  // valid values are png, jpg, png32, png64, png128, png256, jpg70, jpg80, jpg90
 			tapTolerance: 30,
 			maxZoom: 20
-			}).setView([ that.getViewCoords()[APP.getArea()].lat, that.getViewCoords()[APP.getArea()].lon ], that.getViewCoords()[APP.getArea()].zoom);
+			}).setView([ 51.055049, 13.742998], 20);
 		
 		// Layer group for main markers (with clustering)
 		that.layerForMainMarkers = new L.MarkerClusterGroup({
@@ -123,8 +116,12 @@ qx.Class.define("MapView", {
 			that.listen('dashboardLoaded', function(e){
 				APP.loading(true);
 				that.loadNewData();
-				that.map.setView([ that.getViewCoords()[APP.getArea()].lat, that.getViewCoords()[APP.getArea()].lon ], that.getViewCoords()[APP.getArea()].zoom);
+				that.map.setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
 				APP.loading(false);
+			});
+
+			that.listen('areaChanged', function(e){
+				that.map.setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
 			});
 
 			that.listen('markersCreated', function(){
@@ -382,17 +379,6 @@ qx.Class.define("MapView", {
 		
 			that.setEntryMarkerLookup([]);
 
-		},
-
-		setViewToArea: function(areaName){
-			var that = this;
-
-			if( areaName == 'pirna' ) {
-				that.map.setView([ that.getViewCoords().pirna.lat, that.getViewCoords().pirna.lon ], that.getViewCoords().pirna.zoom);
-			}
-			else {
-				console.log('city mentioned in URl not defined');
-			}
 		},
 
 		loadEntry: function(entry, options){

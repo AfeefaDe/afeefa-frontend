@@ -183,6 +183,7 @@ qx.Class.define("APPAFEEFA", {
 		legendView: {},
 		plusView: {},
 		languageView: {},
+		areaView: {},
 		formView: {},
 		includeView: {},
 		messageView: {},
@@ -200,9 +201,6 @@ qx.Class.define("APPAFEEFA", {
 
       moment.locale('de');
 
-			// load city config
-			that.detectAfeefaArea();
-
 			// analyse user device
 			that.getUser().load();
 
@@ -219,9 +217,11 @@ qx.Class.define("APPAFEEFA", {
 
 			// fetch only necessary data for app startup
 			that.getDataManager().fetchInitialData(function(){
+        that.setArea(APP.getData().areas.dresden);
+
 				cb();
       	that.loading(true);
-
+				
 				// fetch other data (e.g. that takes a long time loading)
 				that.getDataManager().fetchAllData();
 			});
@@ -230,16 +230,16 @@ qx.Class.define("APPAFEEFA", {
 		},
 
 		addEvents: function(){
-            var that = this;
+      var that = this;
 
-            that.listen('languageChanged', function(){
-              that.loading(true);
-            });
+      that.listen('languageChanged', function(){
+        that.loading(true);
+      });
 
-            that.listen('fetchedNewData', function(){
-							that.loading(false);
-						});
-        },
+      that.listen('fetchedNewData', function(){
+				that.loading(false);
+			});
+	  },
 
 		loading: function( bool ){
         var that = this;
@@ -251,20 +251,6 @@ qx.Class.define("APPAFEEFA", {
             $('body').removeClass('loading');
         }
     },
-
-		detectAfeefaArea: function(){
-			var that = this;
-
-			var hostname = window.location.hostname;
-
-			if( hostname.indexOf('bautzen') >= 0 ){
-				that.setArea('bautzen');
-				return;
-			}
-			else {
-				that.setArea('dresden');
-			}
-		},
 
 		detectUserDevice: function(){
 			var that = this;

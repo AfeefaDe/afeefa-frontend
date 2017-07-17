@@ -40,6 +40,7 @@ qx.Class.define("Router", {
 			}
 			
 			APP.setLanguageView( new LanguageView() );
+			APP.setAreaView( new AreaView() );
 			APP.setMapView( new MapView() );
 			APP.setSearchView( new SearchView() );
 			APP.setEventView( new EventView() );
@@ -58,6 +59,7 @@ qx.Class.define("Router", {
 			APP.getDetailView().render();
 			APP.getPlusView().render();
 			APP.getLanguageView().render();
+			APP.getAreaView().render();
 			APP.getMenuView().render();
 			APP.getLegendView().render();
 			APP.getFormView().render();
@@ -310,9 +312,6 @@ qx.Class.define("Router", {
 			    	var event = APP.getDataManager().getEventById(that.urlParams[i+1]);
 			    	if(event) APP.getMapView().loadEntry(event, {setView: true});
 			    	break;
-			    case 'area':
-						APP.getMapView().setViewToArea(param.value);
-		        break;
 					case 'cat':
 	          APP.getLegendView().setFilter( {category: param.value} );
 						break;

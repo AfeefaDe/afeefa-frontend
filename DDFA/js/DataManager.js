@@ -23,18 +23,15 @@ qx.Class.define("DataManager", {
                 currentData.categories = APP.getConfig().categories;
                 APP.setData(currentData);
 
-                console.debug('fetchedInitialData', data);
-                cb();  // finished, so callback
+                that.getAllAreas(function (data) {  // categories
+                    // store in APP
+                    var currentData = APP.getData();
+                    currentData.areas = data.areas;
+                    APP.setData(currentData);
 
-                // that.getAllCategories(function (data) {  // categories
-                //     // store in APP
-                //     var currentData = APP.getData();
-                //     currentData.categories = data.categories;
-                //     APP.setData(currentData);
-
-                //     console.debug('fetchedInitialData', data);
-                //     cb();  // finished, so callback
-                // });
+                    that.say('fetchedInitialData');
+                    cb();  // finished, so callback
+                });
             });
 
         },
@@ -86,6 +83,49 @@ qx.Class.define("DataManager", {
                     cb(a);
                 });
 
+        },
+
+        getAllAreas: function (cb) {
+            var that = this;
+
+            var areas = {
+                areas: {
+                    dresden: {
+                        initialView: { lat: 51.051, lon: 13.74, zoom: 14 },
+                        label: 'Dresden',
+                        entryStats: {
+                            orgas: 600,
+                            events: 30
+                        }
+                    },
+                    bautzen: {
+                        initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
+                        label: 'Bautzen',
+                        entryStats: {
+                            orgas: 118,
+                            events: 0
+                        }
+                    },
+                    leipzig: {
+                        initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
+                        label: 'Leipzig',
+                        entryStats: {
+                            orgas: 118,
+                            events: 0
+                        }
+                    },
+                    pirna: {
+                        initialView: { lat: 50.957456, lon: 13.937007, zoom: 14 },
+                        label: 'Pirna',
+                        entryStats: {
+                            orgas: 118,
+                            events: 0
+                        }
+                    }
+                }
+            };
+
+            cb(areas);
         },
 
         getUITranslations: function (lang, cb) {
