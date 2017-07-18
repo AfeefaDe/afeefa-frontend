@@ -3,30 +3,39 @@
 	z-index: 15;
 	min-width: 10rem;
 	bottom: 1rem;
-	left: 2rem;
-	text-align: center;
+	left: 5rem;
 	@include display-flex;
 	@include flex-direction(column);
-	
+
 	.area-btn {
 		display: none;
-		background-color: $white;
-		padding: .3rem 1rem;
+		-webkit-animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+    animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+		padding: .3rem 1rem .3rem 2rem;
 		cursor: pointer;
 		font-weight: 400;
-		color: $gray80;
-		@include shadow();
+		color: $gray50;
 
 		&.active {
 			display: inline-block;
-			color: $black;
 			order: 99;
+		  background-image: url("../img/icon_36.svg");
+		  background-repeat: no-repeat;
+			@include background-size(1.2rem);
+			background-position: left center;
 		}
 	}
 
 	&.active {
 		.area-btn {
+			background-color: $white;
+		  background-image: none;
+			color: $black;
 			display: inline-block !important;
+
+			&:hover {
+				background-color: $gray20;
+			}
 		}
 	}
 }
@@ -38,11 +47,12 @@
 }
 
 .rtl {
-	#languageView {
-
-		.lang-item-label {
-			padding-left: 0 !important;
-			padding-right: 1em !important;
+	#areaView {
+		.area-btn {
+			padding: .3rem 2rem .3rem 1rem;
+			&.active {
+				background-position: right center;
+			}
 		}
 	}
 }

@@ -2,15 +2,25 @@
 	
 	#lang-btn {
 		position: absolute;
+		min-width: 10rem;
 		bottom: 1rem;
-		left: 25rem;
-
-		@include circleBtn;
-		@include background-size(cover);
-		@include languageFlags;
-
+		left: 17rem;
+		padding: .3rem 1rem .3rem 2rem;
+		background-image: url("../img/icon_44.svg");
+	  background-repeat: no-repeat;
+		@include background-size(1.2rem);
+		background-position: left center;
 		cursor: pointer;
-    opacity: .8;
+		font-weight: 400;
+		color: $gray50;
+		-webkit-animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+    animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+
+		&:hover {
+			background-color: $white;
+		  background-image: none;
+			color: $black;
+		}
 	}
 
 	#list-container {
@@ -97,6 +107,12 @@
 
 .rtl {
 	#languageView {
+
+		#lang-btn {
+			left: 17rem;
+			padding: .3rem 2rem .3rem 1rem;
+			background-position: right center;
+		}
 
 		.lang-item-label {
 			padding-left: 0 !important;
