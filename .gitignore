@@ -1,6 +1,8 @@
 DDFA/css/.sass-cache
 built/DDFA/css/.sass-cache
 built/DDFA/css/sass
+built/stats
+built/.gitignore
 messageAPI/lib/swiftmailer/notes
 config.php
 .htaccess

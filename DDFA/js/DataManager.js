@@ -349,7 +349,7 @@ qx.Class.define("DataManager", {
                             return false;
                         },
                         description: function(record){
-                            return 'Veranstalter: ' + record.owner + '\n\n' + record.description;
+                            return record.description;
                         },
                         descriptionShort: function(record){
                             return null;
