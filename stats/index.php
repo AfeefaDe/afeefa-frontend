@@ -5,6 +5,14 @@ body {
 	font-family: sans-serif;
 }
 .dataPrint {display: none;}
+
+table td {
+	padding: 1rem;
+	vertical-align: text-top;
+}
+table th {
+	border: 1px solid black;
+}
 </style>
 
 <!-- script includes -->
@@ -36,10 +44,6 @@ $languages =
 		'ur'
 	];
 
-// entries gesamt
-$result = sql("SELECT * FROM `orgas` WHERE state='active'");
-$entries_count = $result->num_rows;
-
 // orgas gesamt
 $result = sql("SELECT * FROM `orgas` WHERE state='active'");
 $orgas_count = $result->num_rows;
@@ -57,6 +61,7 @@ $events_count = $result->num_rows;
 
 <h2>Entries</h2>
 
+<h4>Entries total (active only)</h4>
 <?php
 $times = [
 	"2015-05-31",
@@ -210,6 +215,74 @@ var myLineChart = new Chart(ctx, {
     }
 });	
 </script>
+
+<h4>Entries per category (active only)</h4>
+<table>
+<tr>
+	<th colspan="2">orgas</th>
+	<th colspan="2">events</th>
+</tr>
+<tr>
+<!-- orgas main category -->
+<td>
+<?php
+$result = sql("SELECT c.title AS category, COUNT(c.title) AS count FROM orgas o
+INNER JOIN categories c ON o.category_id=c.id
+WHERE o.state='active'
+GROUP BY c.title
+ORDER BY count DESC");
+
+while($arr=$result->fetch_array(MYSQLI_ASSOC)){
+	echo "{$arr["category"]}: {$arr["count"]}";
+	echo "<br>";
+}	?>
+</td>
+<!-- orgas sub category -->
+<td>
+<?php
+$result = sql("SELECT c.title AS category, COUNT(c.title) AS count FROM orgas o
+INNER JOIN categories c ON o.sub_category_id=c.id
+WHERE o.state='active'
+GROUP BY c.title
+ORDER BY count DESC");
+
+while($arr=$result->fetch_array(MYSQLI_ASSOC)){
+	echo "{$arr["category"]}: {$arr["count"]}";
+	echo "<br>";
+}	?>
+</td>
+<!-- events main category -->
+<td>
+<?php
+// count orgas per main category
+$result = sql("SELECT c.title AS category, COUNT(c.title) AS count FROM events o
+INNER JOIN categories c ON o.category_id=c.id
+WHERE o.state='active'
+GROUP BY c.title
+ORDER BY count DESC");
+
+while($arr=$result->fetch_array(MYSQLI_ASSOC)){
+	echo "{$arr["category"]}: {$arr["count"]}";
+	echo "<br>";
+}	?>
+</td>
+<!-- events sub category -->
+<td>
+<?php
+// count orgas per main category
+$result = sql("SELECT c.title AS category, COUNT(c.title) AS count FROM events o
+INNER JOIN categories c ON o.sub_category_id=c.id
+WHERE o.state='active'
+GROUP BY c.title
+ORDER BY count DESC");
+
+while($arr=$result->fetch_array(MYSQLI_ASSOC)){
+	echo "{$arr["category"]}: {$arr["count"]}";
+	echo "<br>";
+}	?>
+</td>
+</tr>
+</table>
 
 <h2>Translations</h2>
 
