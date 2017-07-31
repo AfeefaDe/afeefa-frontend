@@ -3,13 +3,13 @@
 <head>
 	<title>Afeefa.de - Engagement sichtbar machen</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="Afeefa informiert, vernetzt und koordiniert. Wir stärken dem sozialen Engagement den Rücken und setzen uns für die Autonomie von MigrantInnen ein. Mehrsprachig, aktuell und total lokal.">
+	<meta name="description" content="Afeefa.de ist die Vernetzungsplattform für eine engagierte Stadtgesellschaft. Hier wird Engagement sichtbar, Kooperation gefördert und die Teilhabe aller Menschen in unserer Stadt direkt unterstützt.">
 
 	<meta property="og:url"           content="https://www.afeefa.de" />
   <meta property="og:type"          content="website" />
   <meta property="og:title"         content="" />
   <meta property="og:description"   content="" />
-	<meta property="og:image" content="/afeefa.PNG">
+	<meta property="og:image" content="/afeefa.jpg">
 
 	<!-- mapbox mobile optimization -->
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />

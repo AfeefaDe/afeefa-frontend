@@ -210,7 +210,7 @@ qx.Class.define("APPAFEEFA", {
 			// analyse user language
 			that.getLM().init();
 
-			that.setPageTitle('Afeefa.de - Engagement stärken.');
+			that.setPageTitle('Afeefa.de - Hier wird soziales Engagement sichtbar.');
 
 			// load view-independant UI components
 			that.loadIndependantUI();
