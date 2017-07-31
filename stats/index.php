@@ -26,24 +26,6 @@ include('sql.php');
 
 $area = isset($_GET['area']) ? $_GET['area'] : 'dresden';
 
-$languages =
-	[
-		'de',
-		'en',
-		'ar',
-		'fa',
-		'ru',
-		'fr',
-		'ps',
-		'ku',
-		'es',
-		'sq',
-		'sr',
-		'ti',
-		'tr',
-		'ur'
-	];
-
 // orgas gesamt
 $result = sql("SELECT * FROM `orgas` WHERE state='active'");
 $orgas_count = $result->num_rows;
@@ -287,10 +269,30 @@ while($arr=$result->fetch_array(MYSQLI_ASSOC)){
 <h2>Translations</h2>
 
 <?php
+$languages =
+	[
+		'en',
+		'ar',
+		'fa',
+		'ru',
+		'fr',
+		'ps',
+		'ku',
+		'es',
+		'sq',
+		'sr',
+		'ti',
+		'tr',
+		'ur'
+	];
+
 // orga translations
 $data_orga_translations = [];
 for($i=0;$i<count($languages);$i++){
-	$result = sql("SELECT translation.name, translation.locale, root.name, root.locale FROM `ddfa_main_domain_model_marketentry` AS translation INNER JOIN `ddfa_main_domain_model_marketentry` AS root ON translation.entry_id=root.entry_id WHERE root.locale='de' AND root.published=1 AND translation.type=0 AND translation.locale='" .$languages[$i]. "'");
+	$result = sql(
+		"SELECT * FROM translation_caches t
+		INNER JOIN orgas o ON t.cacheable_id=o.id
+		WHERE t.cacheable_type='orga' AND t.language='{$languages[$i]}' AND o.state='active'");
 	array_push($data_orga_translations,$result->num_rows);
 
 	// echo $languages[$i] . ": " . $result->num_rows . " (" . round($result->num_rows/$orgas_count*100) . "%)<br>";
@@ -298,35 +300,50 @@ for($i=0;$i<count($languages);$i++){
 
 $data_orga_translations_description_shortdescription = [];
 for($i=0;$i<count($languages);$i++){
-	$result = sql("SELECT translation.name, translation.locale, root.name, root.locale FROM `ddfa_main_domain_model_marketentry` AS translation INNER JOIN `ddfa_main_domain_model_marketentry` AS root ON translation.entry_id=root.entry_id WHERE root.locale='de' AND root.published=1 AND translation.type=0 AND (translation.description IS NOT NULL OR translation.descriptionShort IS NOT NULL) AND translation.locale='" .$languages[$i]. "'");
+	$result = sql(
+		"SELECT * FROM translation_caches t
+		INNER JOIN orgas o ON t.cacheable_id=o.id
+		WHERE t.cacheable_type='orga' AND t.language='{$languages[$i]}' AND o.state='active'
+		AND (t.description IS NOT NULL OR t.short_description IS NOT NULL)");
 	array_push($data_orga_translations_description_shortdescription,$result->num_rows);
 }
 
 $data_orga_translations_description = [];
 for($i=0;$i<count($languages);$i++){
-	$result = sql("SELECT translation.name, translation.locale, root.name, root.locale FROM `ddfa_main_domain_model_marketentry` AS translation INNER JOIN `ddfa_main_domain_model_marketentry` AS root ON translation.entry_id=root.entry_id WHERE root.locale='de' AND root.published=1 AND translation.type=0 AND translation.description IS NOT NULL AND translation.locale='" .$languages[$i]. "'");
+	$result = sql(
+		"SELECT * FROM translation_caches t
+		INNER JOIN orgas o ON t.cacheable_id=o.id
+		WHERE t.cacheable_type='orga' AND t.language='{$languages[$i]}' AND o.state='active'
+		AND t.description IS NOT NULL");
 	array_push($data_orga_translations_description,$result->num_rows);
 }
 
 $data_orga_translations_shortdescription = [];
 for($i=0;$i<count($languages);$i++){
-	$result = sql("SELECT translation.name, translation.locale, root.name, root.locale FROM `ddfa_main_domain_model_marketentry` AS translation INNER JOIN `ddfa_main_domain_model_marketentry` AS root ON translation.entry_id=root.entry_id WHERE root.locale='de' AND root.published=1 AND translation.type=0 AND translation.descriptionshort IS NOT NULL AND translation.locale='" .$languages[$i]. "'");
+	$result = sql(
+		"SELECT * FROM translation_caches t
+		INNER JOIN orgas o ON t.cacheable_id=o.id
+		WHERE t.cacheable_type='orga' AND t.language='{$languages[$i]}' AND o.state='active'
+		AND t.short_description IS NOT NULL");
 	array_push($data_orga_translations_shortdescription,$result->num_rows);
 }
 
 // event translations
 $data_event_translations = [];
 for($i=0;$i<count($languages);$i++){
-	$result = sql("SELECT translation.name, translation.locale, root.name, root.locale FROM `ddfa_main_domain_model_marketentry` AS translation INNER JOIN `ddfa_main_domain_model_marketentry` AS root ON translation.entry_id=root.entry_id WHERE root.locale='de' AND root.published=1 AND translation.type=2 AND translation.locale='" .$languages[$i]. "'");
+	$result = sql(
+		"SELECT * FROM translation_caches t
+		INNER JOIN events e ON t.cacheable_id=e.id
+		WHERE t.cacheable_type='event' AND t.language='{$languages[$i]}' AND e.state='active'");
 	array_push($data_event_translations,$result->num_rows);
 }
 
 // ad translations
-$data_ad_translations = [];
-for($i=0;$i<count($languages);$i++){
-	$result = sql("SELECT translation.name, translation.locale, root.name, root.locale FROM `ddfa_main_domain_model_marketentry` AS translation INNER JOIN `ddfa_main_domain_model_marketentry` AS root ON translation.entry_id=root.entry_id WHERE root.locale='de' AND root.published=1 AND translation.type=1 AND translation.locale='" .$languages[$i]. "'");
-	array_push($data_ad_translations,$result->num_rows);
-}
+// $data_ad_translations = [];
+// for($i=0;$i<count($languages);$i++){
+	// $result = sql("SELECT translation.name, translation.locale, root.name, root.locale FROM `ddfa_main_domain_model_marketentry` AS translation INNER JOIN `ddfa_main_domain_model_marketentry` AS root ON translation.entry_id=root.entry_id WHERE root.locale='de' AND root.published=1 AND translation.type=1 AND translation.locale='" .$languages[$i]. "'");
+	// array_push($data_ad_translations,$result->num_rows);
+// }
 ?>
 
 <span class="dataPrint" id="data_translations_labels">
@@ -353,9 +370,6 @@ for($i=0;$i<count($languages);$i++){
 </span>
 <span class="dataPrint" id="data_translations_event">
 	<?php echo implode(",",$data_event_translations) ?>
-</span>
-<span class="dataPrint" id="data_translations_ad">
-	<?php echo implode(",",$data_ad_translations) ?>
 </span>
 
 <canvas id="translationCoverage" width="600" height="800"></canvas>
@@ -400,11 +414,6 @@ var myBarChart = new Chart(ctx, {
 	            label: "Events",
 	            backgroundColor: 'rgba(178, 76, 76, 0.3)',
 	            data: $('#data_translations_event').text().split(",")
-	        },
-	        {
-	            label: "Ads",
-	            backgroundColor: 'rgba(223, 223, 62, 0.3)',
-	            data: $('#data_translations_ad').text().split(",")
 	        }
 	    ]
     },
