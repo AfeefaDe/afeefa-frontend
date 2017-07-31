@@ -26,7 +26,7 @@ qx.Class.define("IncludeView", {
 				translatable: true
 			},
 			imprint: {
-				url: 'https://about.afeefa.de/impressum/ article .entry-content'
+				url: that.getBaseUrl() + 'impressum/ article .entry-content'
 			},
 			press: {
 				url: that.getBaseUrl() + 'press.html',
@@ -128,82 +128,33 @@ qx.Class.define("IncludeView", {
         var filledHtml = that.fillMustaches(that.scrollContainer.html());
         that.scrollContainer.html(filledHtml);
 
+        // catch links
+        $('a').click(function(e){
+            e.preventDefault();
+        		var url = $(this).attr('href');
+
+            if(url.indexOf('https://afeefa.de') > -1 ){
+            	// load appropriate afeefa content
+            	var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
+							var parameters = url.substr(pos).split('/');
+
+							APP.getRouter().loadFromUrl(url);
+							// switch(parameters[0]){
+							// 	case 'project':
+							// 		alert('load project with id ' + parameters[1]);
+							// 		break;
+							// 	case 'event':
+							// 		alert('load event with id ' + parameters[1]);
+							// 		break;
+							// }
+            }
+            else {
+            	window.open(url);
+            }
+        });
+
 				APP.loading(false);
-
-				const contentEl = that.scrollContainer.find('.content');
-				
-				// TODO remove this workaround
-				// fix nested flexbox issue in firefox
-				// contentEl.outerHeight( that.view.outerHeight() - headerEl.outerHeight() );
-
-				// scrolling
-				// if( APP.getUserDevice() == 'desktop') {
-				// 	contentEl
-				// 		.perfectScrollbar()
-				// 		.on('ps-scroll-down', function() {
-				// 			headerEl.addClass('min');
-				// 			$(this).perfectScrollbar('update');
-				// 		})
-				// 		.on('ps-y-reach-start', function() {
-				// 			headerEl.removeClass('min');
-				// 		});
-				// }
-
-				// mobile language selection
-				if( APP.getUserDevice() != 'desktop' ){
-					$('select#language-select')
-						.val( APP.getLM().getCurrentLang() )
-						.change(function(){
-	            that.say('languageChanged', $(this).val());
-						});
-				}
-
-				// transform links
-				$('a').click(function(e){
-					if($(this).attr('href').indexOf('afeefa.de') > -1 ){
-						e.preventDefault();
-					}
-					// console.debug('locationLink clicked');
-					APP.getMapView().selectMarkerFromLink( $(this).attr('name') );
-				});
-
-				// location links
-				$('span.locationLink').click(function(){
-					// console.debug('locationLink clicked');
-					APP.getMapView().selectMarkerFromLink( $(this).attr('name') );
-				});
-
-				// search links
-				$('span.searchLink').click(function(){
-					// console.debug('searchLink clicked');
-          APP.getSearchView().inputField.val( $(this).attr('name') ).trigger( "input" );
-					// APP.getSearchView().loadResults( $(this).attr('name') );
-				});
-
-				// scan buttons
-				$('button').click(function(){
-					const action = $(this).attr('data-action');
-					switch(action) {
-						case 'close':
-							that.close();
-							break;
-						case 'openForm_initiative':
-			   			that.close();
-			   			APP.getFormView().load( 'initiative' );
-			   			break;
-		   			case 'openForm_marketentry':
-			   			that.close();
-			   			APP.getFormView().load( 'marketentry' );
-			   			break;
-		   			case 'openForm_event':
-			   			that.close();
-			   			APP.getFormView().load( 'event' );
-			   			break;
-						default:
-					}
-				});
 			}
-
 		},
 
 		reset: function(){
