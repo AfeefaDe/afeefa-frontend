@@ -3,7 +3,15 @@
 body {
 	padding: 2em;
 	font-family: sans-serif;
+	max-width: 1000px;
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 600px) {
+	body {
+		max-width: none;
+	}
+}
+
 .dataPrint {display: none;}
 
 table td {
