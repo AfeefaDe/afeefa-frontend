@@ -16,7 +16,9 @@ qx.Class.define("IncludeView", {
 		
 		that.setIncludes({
 			refugeeGuide: {
-				url: that.getBaseUrl() + 'refugeeGuide',
+				de: {
+					url: that.getBaseUrl() + 'wissensportal/guide-de/ article .entry-content',
+				},
 				translatable: true
 			},
 			supporterGuide: {
@@ -91,7 +93,7 @@ qx.Class.define("IncludeView", {
 			that.say('includeViewOpened');
 
 			if( that.getIncludes()[includeKey].translatable ) {
-				that.scrollContainer.load( that.getIncludes()[includeKey].url + '_' + APP.getLM().getCurrentLang() + ".html", function( response, status, xhr ) {
+				that.scrollContainer.load( that.getIncludes()[includeKey][APP.getLM().getCurrentLang()].url, function( response, status, xhr ) {
 
 					if ( status == "error" ) {
 
@@ -122,14 +124,17 @@ qx.Class.define("IncludeView", {
 
 			function loadComplete(){
 
+				// fill mustaches with values
+        var filledHtml = that.fillMustaches(that.scrollContainer.html());
+        that.scrollContainer.html(filledHtml);
+
 				APP.loading(false);
 
-				const headerEl = that.scrollContainer.find('.header');
 				const contentEl = that.scrollContainer.find('.content');
 				
 				// TODO remove this workaround
 				// fix nested flexbox issue in firefox
-				contentEl.outerHeight( that.view.outerHeight() - headerEl.outerHeight() );
+				// contentEl.outerHeight( that.view.outerHeight() - headerEl.outerHeight() );
 
 				// scrolling
 				// if( APP.getUserDevice() == 'desktop') {
@@ -144,11 +149,6 @@ qx.Class.define("IncludeView", {
 				// 		});
 				// }
 
-				// minimizing
-				headerEl.click(function(){
-					// if(that.getViewState() == 2) that.minimize(false);
-				});
-
 				// mobile language selection
 				if( APP.getUserDevice() != 'desktop' ){
 					$('select#language-select')
@@ -157,6 +157,15 @@ qx.Class.define("IncludeView", {
 	            that.say('languageChanged', $(this).val());
 						});
 				}
+
+				// transform links
+				$('a').click(function(e){
+					if($(this).attr('href').indexOf('afeefa.de') > -1 ){
+						e.preventDefault();
+					}
+					// console.debug('locationLink clicked');
+					APP.getMapView().selectMarkerFromLink( $(this).attr('name') );
+				});
 
 				// location links
 				$('span.locationLink').click(function(){

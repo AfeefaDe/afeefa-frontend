@@ -42,7 +42,7 @@
         }
     ],
     
-    fileExclusionRegExp: /^(r|build)\.js$/,
+    fileExclusionRegExp: /^(r|build)\.js|\.git$/,
     optimizeCss: 'standard',
     removeCombined: true,
 
