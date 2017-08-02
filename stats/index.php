@@ -96,10 +96,17 @@ for($i=0;$i<count($times);$i++){
 }
 
 // event trend
-$data_orga_event = [];
+$data_event_trend = [];
 for($i=0;$i<count($times);$i++){
 	$result = sql("SELECT * FROM `events` WHERE state='active' AND created_at<='" .$times[$i]. "'");
-	array_push($data_orga_event,$result->num_rows);
+	array_push($data_event_trend,$result->num_rows);
+}
+
+// upcoming event trend
+$data_upcoming_event_trend = [];
+for($i=0;$i<count($times);$i++){
+	$result = sql("SELECT * FROM `events` WHERE state='active' AND created_at<='{$times[$i]}' AND date_start>='{$times[$i]}'");
+	array_push($data_upcoming_event_trend,$result->num_rows);
 }
 
 // ad trend
@@ -117,7 +124,10 @@ $data_orga_ad = [];
 	<?php echo implode(",",$data_orga_trend) ?>
 </span>
 <span class="dataPrint" id="data_trend_event">
-	<?php echo implode(",",$data_orga_event) ?>
+	<?php echo implode(",",$data_event_trend) ?>
+</span>
+<span class="dataPrint" id="data_event_trend_upcoming">
+	<?php echo implode(",",$data_upcoming_event_trend) ?>
 </span>
 <span class="dataPrint" id="data_trend_ad">
 	<?php echo implode(",",$data_orga_ad) ?>
@@ -174,6 +184,28 @@ var myLineChart = new Chart(ctx, {
             pointRadius: 3,
             pointHitRadius: 10,
             data: $('#data_trend_event').text().split(","),
+            spanGaps: false
+        },
+        {
+            label: "Number of upcoming Events",
+            fill: false,
+            lineTension: 0.1,
+            // backgroundColor: "rgba(10,112,60,0.4)",
+            borderColor: "rgb(178, 76, 76)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgb(178, 76, 76)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "#fff",
+            // pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 3,
+            pointHitRadius: 10,
+            data: $('#data_event_trend_upcoming').text().split(","),
             spanGaps: false
         },
         {
