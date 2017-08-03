@@ -422,33 +422,24 @@ var myBarChart = new Chart(ctx, {
     	labels: $('#data_translations_labels').text().split(","),
 	    datasets: [
 	        {
-	            label: "Orgas with translated title OR desc OR short desc",
-	            backgroundColor: 'rgba(63, 127, 191, 0.4)',
-	            // borderColor: [
-	            //     'rgba(63, 127, 191,1)',
-	            //     'rgba(63, 127, 191,1)',
-	            //     'rgba(63, 127, 191,1)',
-	            //     'rgba(63, 127, 191,1)',
-	            //     'rgba(63, 127, 191,1)',
-	            //     'rgba(63, 127, 191,1)'
-	            // ],
-	            // borderWidth: [10,1,1,1,1],
-	            data: $('#data_translations_orga').text().split(",")
-	        },
-	        {
-	            label: "Orgas with translated desc or short desc",
+	            label: "Orgas with translated DESC or SHORT DESC",
 	            backgroundColor: 'rgba(63, 127, 191, 1)',
 	            data: $('#data_translations_orga_description_shortdescription').text().split(",")
 	        },
 	        {
-	            label: "Orgas with translated desc",
+	            label: "Orgas with translated SHORT DESC",
+	            backgroundColor: 'rgba(63, 127, 191, 0.7)',
+	            data: $('#data_translations_orga_shortdescription').text().split(",")
+	        },
+	        {
+	            label: "Orgas with translated DESC",
 	            backgroundColor: 'rgba(63, 127, 191, 0.4)',
 	            data: $('#data_translations_orga_description').text().split(",")
 	        },
 	        {
-	            label: "Orgas with translated short desc",
-	            backgroundColor: 'rgba(63, 127, 191, 0.7)',
-	            data: $('#data_translations_orga_shortdescription').text().split(",")
+	            label: "Orgas with translated TITLE or DESC or SHORT DESC",
+	            backgroundColor: 'rgba(63, 127, 191, 0.4)',
+	            data: $('#data_translations_orga').text().split(",")
 	        },
 	        {
 	            label: "Events",

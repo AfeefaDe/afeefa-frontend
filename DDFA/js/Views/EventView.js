@@ -56,7 +56,7 @@ qx.Class.define("EventView", {
         .addClass('event-filter');
       that.filters.append(that.eventFilter);
 
-      that.filterOptions = ['today', 'thisWeek', 'nextWeek'];
+      that.filterOptions = ['today', 'thisWeek', 'nextWeek', 'all'];
       
       _.each(that.filterOptions, function(optionValue){
         
@@ -138,7 +138,12 @@ qx.Class.define("EventView", {
         eventSets = eventSetsPerDay;
       }
       else {
-        // events = APP.getDataManager().getAllEvents();
+        eventSets = [
+          {
+            heading: null,
+            events: APP.getDataManager().getAllEvents()
+          }
+        ];
       }
 
       that['optionEl-'+options].addClass('active');

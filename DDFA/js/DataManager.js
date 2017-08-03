@@ -235,10 +235,13 @@ qx.Class.define("DataManager", {
                         var isOnlyToday;
                         isOnlyToday = ( !entry.dateTo && moment(date).isSame(entry.dateFrom, 'd') )? true : false;
                         
+                        var startsToday;
+                        startsToday = ( entry.dateFrom && moment(date).isSame(entry.dateFrom, 'd') )? true : false;
+
                         var endsToday;
                         endsToday = ( entry.dateTo && moment(date).isSame(entry.dateTo, 'd') )? true : false;
                         
-                        return (isOnlyToday || endsToday);
+                        return (isOnlyToday || startsToday || endsToday);
                     });
                     
                     return _.sortBy(eventsFiltered, 'dateFrom');
@@ -250,8 +253,8 @@ qx.Class.define("DataManager", {
                         // must be a period
                         if( !(entry.dateFrom && entry.dateTo) ) return false;
 
-                        // dateFrom <= today
-                        var isRunning = ( moment(entry.dateFrom).isSameOrBefore(moment(), 'd') )? true : false;
+                        // dateFrom < today
+                        var isRunning = ( moment(entry.dateFrom).isBefore(moment(), 'd') )? true : false;
                         
                         // dateTo > today
                         var goesBeyondToday = ( moment(entry.dateTo).isAfter(moment(), 'd') )? true : false;
@@ -268,8 +271,8 @@ qx.Class.define("DataManager", {
                         // must be a period
                         if( !(entry.dateFrom && entry.dateTo) ) return false;
 
-                        // dateFrom <= today
-                        var isRunning = ( moment(entry.dateFrom).isSameOrBefore(moment(), 'week') )? true : false;
+                        // dateFrom < today
+                        var isRunning = ( moment(entry.dateFrom).isBefore(moment(), 'week') )? true : false;
                         
                         // dateTo > today
                         var goesBeyondToday = ( moment(entry.dateTo).isAfter(moment(), 'week') )? true : false;
