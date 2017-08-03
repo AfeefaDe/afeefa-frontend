@@ -17,7 +17,9 @@ require.config({
         mc: '../../leafletPlugins/leaflet.markercluster',
         popper: '../../popperjs/popper.min',
         // d3: 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.4.0/d3',
-        materialize: '../../materialize/js/materialize.min'
+        materialize: '../../materialize/js/materialize.min',
+        pdf: '../../jspdf/jspdf.debug'
+        // pdf: '../../jspdf/jspdf.min'
     },
 
     // define dependencies via shim because of use of old javascript libs, which do not define a module and therefore do not define their dependencies themselves (defined modules in javascript define other dependencies)
@@ -96,6 +98,7 @@ require.config({
         // if dependencies don't become available everywhere within the app, then define them here again as global var
         Hammer = require('hammerjs');
         Popper = require('popper');
+        // jsPDF = require('pdf');
         moment = require('momentjs');
         // d3 = require('d3');
         

@@ -181,7 +181,7 @@ qx.Class.define("SearchView", {
 
       // support wanted
       var action = function(){
-        that.inputField.val('bookmarks').trigger( "input" );
+        that.inputField.val('user:bookmarks').trigger( "input" );
       };
       that.createListResult(
         {
@@ -374,16 +374,14 @@ qx.Class.define("SearchView", {
           var tagLabel = that.getWording('tag.' + operationQuery) ? that.getWording('tag.' + operationQuery) : operationQuery;
           that.setSearchTag("tag-" + operationQuery, tagLabel);
         }
-      }
-      
-      // user bookmarks
-      else if(query == 'bookmarks' ) {
+        
+        // user bookmarks
+        else if(operator == 'user' && operationQuery == 'bookmarks' ) {
 
-        entriesFiltered = _.filter( entries, function(entry){
-            return ( APP.getUser().hasBookmark(entry) );
-        });
+          entriesFiltered = APP.getUser().getBookmarks();
 
-        that.setSearchTag(null, that.getWording('search.tag.bookmarks'));
+          that.setSearchTag(null, that.getWording('search.tag.bookmarks'));
+        }
       }
 
       // support wanted
@@ -453,13 +451,28 @@ qx.Class.define("SearchView", {
 
       _.each(entriesFiltered, function(entry) {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+
       });
       
+      // print list button
+      if(entriesFiltered.length > 0){
+        that.createButton(
+          {
+            label: that.getWording('search.button.printList'),
+            iconName: 'print',
+            action: function(){
+              APP.getUtility().createPdfFromList(APP.getUser().getBookmarks());
+            }
+          }
+        );
+      }
+      
       // nothing found info
-      var action = function(){
-        that.close();
-      };
       if(!entriesFiltered.length) {
+        var action = function(){
+          that.close();
+        };
+
         that.createListResult(
           {
             iconClass: null,

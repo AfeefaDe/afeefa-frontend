@@ -1,0 +1,17 @@
+@media print {
+   @page {
+	  size: A4;
+	}
+   body {
+      color: #000;
+      background: blue;
+   }
+
+   #mapView, #legendView, #search-bar, #areaView, #languageView {
+   	display: none !important;
+   }
+
+   #searchView {
+   	width: 90vw !important;
+   }
+}

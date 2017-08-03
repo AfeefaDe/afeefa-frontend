@@ -35,10 +35,17 @@ qx.Class.define("User", {
             return that.user;
         },
 
+        // remember: bookmarks are saved in an array of IDs
         getBookmarks: function(){
             var that = this;
 
-            return that.user.bookmarks;
+            // return that.user.bookmarks;
+
+            var bookedEntries = _.filter( APP.getData().entries, function(entry){
+              return ( APP.getUser().hasBookmark(entry) );
+            });
+
+            return bookedEntries;
         },
 
         bookmark: function(entry, bool){
