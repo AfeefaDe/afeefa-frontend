@@ -3,7 +3,7 @@ require.config({
     baseUrl: 'https://dev.afeefa.de/DDFA/js/',
 
     paths: {
-        modernizr: '../../H5BP/js/vendor/modernizr-2.8.3.min',
+        // modernizr: '../../H5BP/js/vendor/modernizr-2.8.3.min',
         domReady: '../../requirejs/domReady',
         jquery: '../../jquery/jquery-2.2.2.min',
         perfectScrollbarJQuery: 'https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min',
@@ -39,7 +39,7 @@ require.config({
         "materialize": ["hammerjs"],
 
         // app files
-        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'modernizr', 'popper', 'materialize', 'momentjs'],
+        "Daddy": ['qx', 'jquery', 'underscore', 'restive', 'perfectScrollbarJQuery', 'mapbox', 'mc', 'popper', 'materialize', 'momentjs'],
         'APPAFEEFA': ['Daddy'],
         'DataManager': ['APPAFEEFA'],
         'User': ['APPAFEEFA'],
