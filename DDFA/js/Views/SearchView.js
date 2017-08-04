@@ -105,7 +105,7 @@ qx.Class.define("SearchView", {
         if(query){
           that.scrollContainer.empty();
           that.loadResults(query);
-          APP.getRouter().setUrl('search', query);
+          APP.getRouter().setUrl('search', encodeURI(query));
         } else {
           that.reset();
           that.loadDashboard();
@@ -168,36 +168,37 @@ qx.Class.define("SearchView", {
           }
         }
       );
+      
+      if(APP.getUser().getBookmarks().length > 0){
+        // MY AFEEFA
+        that.createSectionHeader( 'Mein Afeefa' );
 
+        // user bookmarks
+        var action = function(){
+          that.inputField.val('user:bookmarks').trigger( "input" );
+        };
+        that.createListResult(
+          {
+            iconClass: 'bookmark',
+            label: that.getWording('search.tag.bookmarks'),
+            subLabel: APP.getUser().getBookmarks().length,
+            action: action,
+            targetContainertEl: that.scrollContainer
+          }
+        );
+      }
 
       that.createSectionHeader( that.getWording('search.label.newentries') );
       var newProjects = APP.getDataManager().getNewestProjects(5);
       _.each(newProjects, function(entry) {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
-      
-      // MY AFEEFA
-      that.createSectionHeader( 'Mein Afeefa' );
-
-      // support wanted
-      var action = function(){
-        that.inputField.val('user:bookmarks').trigger( "input" );
-      };
-      that.createListResult(
-        {
-          iconClass: 'bookmark',
-          label: that.getWording('search.tag.bookmarks'),
-          subLabel: APP.getUser().getBookmarks().length,
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
 
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
       var action = function(){
-        that.inputField.val('support wanted').trigger( "input" );
+        that.inputField.val('prop:supportwanted').trigger( "input" );
       };
       that.createListResult(
         {
@@ -211,7 +212,7 @@ qx.Class.define("SearchView", {
 
       // for children
       var action = function(){
-        that.inputField.val(that.getWording('prop.forChildren')).trigger( "input" );
+        that.inputField.val('prop:forchildren').trigger( "input" );
       };
       that.createListResult(
         {
@@ -224,18 +225,18 @@ qx.Class.define("SearchView", {
       );
 
       // for women
-      var action = function(){
-        that.inputField.val('tag:frauen').trigger( "input" );
-      };
-      that.createListResult(
-        {
-          iconClass: 'for-women',
-          label: that.getWording('search.label.forwomen'),
-          subLabel: that.getWording('search.sublabel.forwomen'),
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
+      // var action = function(){
+      //   that.inputField.val('group:women').trigger( "input" );
+      // };
+      // that.createListResult(
+      //   {
+      //     iconClass: 'for-women',
+      //     label: that.getWording('search.label.forwomen'),
+      //     subLabel: that.getWording('search.sublabel.forwomen'),
+      //     action: action,
+      //     targetContainertEl: that.scrollContainer
+      //   }
+      // );
 
       // // certified by SFR
       // var action = function(){
@@ -382,35 +383,38 @@ qx.Class.define("SearchView", {
 
           that.setSearchTag(null, that.getWording('search.tag.bookmarks'));
         }
+
+        // support wanted
+        else if(operator == 'prop'){
+          switch(operationQuery){
+            case 'supportwanted':
+              entriesFiltered = _.filter( entries, function(entry){
+                return entry.supportWanted;
+              });
+              that.setSearchTag(null, that.getWording('search.tag.supportwanted'));
+              break;
+            case 'forchildren':
+              entriesFiltered = _.filter( entries, function(entry){
+                return entry.forChildren;
+              });
+              that.setSearchTag(null, that.getWording('prop.forChildren'));
+              break;
+            case 'certified':
+              entriesFiltered = _.filter( entries, function(entry){
+                return entry.certified;
+              });
+              that.setSearchTag(null, that.getWording('search.tag.certified'));
+              break;
+            case 'group':
+              entriesFiltered = _.filter( entries, function(entry){
+                return entry.group[operationQuery];
+              });
+              that.setSearchTag(null, that.getWording('search.group.' + operationQuery));
+              break;
+          };
+
+        }
       }
-
-      // support wanted
-      else if( query == 'support wanted' ){
-        entriesFiltered = _.filter( entries, function(entry){
-          return entry.supportWanted;
-        });
-
-        that.setSearchTag(null, that.getWording('search.tag.supportwanted'));
-      }
-
-      // children
-      else if( query == that.getWording('prop.forChildren').toLowerCase() ){
-        entriesFiltered = _.filter( entries, function(entry){
-          return entry.forChildren;
-        });
-
-        that.setSearchTag(null, that.getWording('prop.forChildren'));
-      }
-
-      // certified
-      else if( query == 'certified' ){
-        entriesFiltered = _.filter( entries, function(entry){
-          return entry.certified;
-        });
-
-        that.setSearchTag(null, that.getWording('search.tag.' + query));
-      }
-      
       // free search
       else {
         entriesFiltered = _.filter( entries, function(entry){
