@@ -151,6 +151,25 @@ qx.Class.define("SearchView", {
 
       // highlights
       // that.createSectionHeader( that.getWording('search.label.highlights') );
+      
+      if(APP.getUser().getBookmarks().length > 0){
+        // MY AFEEFA
+        that.createSectionHeader( that.getWording('search.section.user') );
+
+        // user bookmarks
+        var action = function(){
+          that.inputField.val('user:bookmarks').trigger( "input" );
+        };
+        that.createListResult(
+          {
+            iconClass: 'bookmark',
+            label: that.getWording('search.tag.bookmarks'),
+            subLabel: APP.getUser().getBookmarks().length,
+            action: action,
+            targetContainertEl: that.scrollContainer
+          }
+        );
+      }
 
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
       var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
@@ -168,25 +187,6 @@ qx.Class.define("SearchView", {
           }
         }
       );
-      
-      if(APP.getUser().getBookmarks().length > 0){
-        // MY AFEEFA
-        that.createSectionHeader( 'Mein Afeefa' );
-
-        // user bookmarks
-        var action = function(){
-          that.inputField.val('user:bookmarks').trigger( "input" );
-        };
-        that.createListResult(
-          {
-            iconClass: 'bookmark',
-            label: that.getWording('search.tag.bookmarks'),
-            subLabel: APP.getUser().getBookmarks().length,
-            action: action,
-            targetContainertEl: that.scrollContainer
-          }
-        );
-      }
 
       that.createSectionHeader( that.getWording('search.label.newentries') );
       var newProjects = APP.getDataManager().getNewestProjects(5);
