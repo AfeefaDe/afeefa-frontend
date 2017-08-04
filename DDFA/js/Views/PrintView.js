@@ -30,18 +30,24 @@ qx.Class.define("PrintView", {
 						
 			that.reset();
 
-			var pageTitle = prompt("Give it a name?", data.title);
+			var pageTitle = prompt(that.getWording('print.naming'), data.title);
 			if(!pageTitle) pageTitle = data.title;
 
 			that.view.append(
+				$("<img />")
+					.addClass('header')
+					.attr('src', '/DDFA/img/afeefa.svg')
+			);
+
+			that.view.append(
 				$("<h1 />")
-				.append(pageTitle)
+					.append(pageTitle)
 			);
 
 			that.view.append(
 				$("<p />")
-				.addClass('subtitle')
-				.append('Auszug der Afeefa Datenbank vom ' + moment().format('LL'))
+					.addClass('subtitle')
+					.append('Auszug der Afeefa Datenbank vom ' + moment().format('LL'))
 			);
 
 			that.view.append( $("<hr />") );
@@ -54,45 +60,65 @@ qx.Class.define("PrintView", {
 
       	_.each( groupedEntries, function(group, key){
 					
-					var $cat = $("<p />")
-						.addClass('category')
-						.append(that.getWording('cat.'+key));					
-					that.view.append($cat);
+					that.view.append(
+						$("<p />")
+							.addClass('category')
+							.append(that.getWording('cat.'+key))
+					);
 
       		_.each( group, function(entry, key){
-
 						var $entry = $("<div />")
 							.addClass('entry');
 						
-						var entryTitle = $("<p />")
-							.addClass('title')
-							.append(entry.name);
-						$entry.append(entryTitle);
-
 						$entry.append(
 							$("<p />")
-								.addClass('sub-category')
-								.append(that.getWording('cat.'+entry.subCategory))
+								.addClass('title')
+								.append(entry.name)
 						);
 
-						var entryDescription = $("<p />")
-							.addClass('description')
-							.append(entry.descriptionShort);
-						$entry.append(entryDescription);
-
-						if(entry.location[0]){
+						if(entry.subCategory){
 							$entry.append(
 								$("<p />")
-									.addClass('address')
-									.append(entry.location[0].placename + ', ' + entry.location[0].street + ', ' + entry.location[0].zip + ' ' + entry.location[0].city)
+									.addClass('sub-category')
+									.append(that.getWording('cat.'+entry.subCategory))
 							);
 						}
 
 						$entry.append(
 							$("<p />")
-								.addClass('contact')
-							.append(entry.phone + ' | ' + entry.mail)
+								.addClass('description')
+								.append((entry.descriptionShort? entry.descriptionShort : entry.description))
 						);
+
+						var loc = entry.location[0];
+						if(loc){
+							$entry.append(
+								$("<p />")
+									.addClass('address')
+									.append(function(){
+										var string = '';
+										if(loc.placename) string += loc.placename;
+										if(loc.street) string += (string? ', ' : '') + loc.street;
+										if(loc.zip) string += (string? ', ' : '') + loc.zip;
+										if(loc.city && string) string += (loc.zip? ' ' : ', ') + loc.city;
+										return string;
+									}())
+							);
+						}
+
+						if(entry.speakerPublic || entry.phone || entry.mail){
+							$entry.append(
+								$("<p />")
+									.addClass('contact')
+								.append(function(){
+											var string = '';
+											if(entry.speakerPublic) string += entry.speakerPublic;
+											if(entry.mail) string += (string? ' | ' : '') + entry.mail;
+											if(entry.phone) string += (string? ' | ' : '') + entry.phone;
+											return string;
+										}())
+							);
+						}
 
 						$entry.append(
 							$("<a />")
