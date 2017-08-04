@@ -51,6 +51,7 @@ qx.Class.define("Router", {
 			APP.setIncludeView( new IncludeView() );
 			APP.setMessageView( new MessageView() );
 			APP.setIntroView( new IntroView() );
+			APP.setPrintView( new PrintView() );
 			
 			// render the views
 			APP.getMapView().render();
@@ -66,6 +67,7 @@ qx.Class.define("Router", {
 			APP.getIncludeView().render();
 			APP.getMessageView().render();
 			APP.getIntroView().render();
+			APP.getPrintView().render();
 		},
 
 		navigate: function( path ){

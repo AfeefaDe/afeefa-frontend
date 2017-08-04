@@ -188,6 +188,7 @@ qx.Class.define("APPAFEEFA", {
 		includeView: {},
 		messageView: {},
 		introView: {},
+		printView: {},
 		userDevice: {},
 		config: {},
 		activeFilter: {}

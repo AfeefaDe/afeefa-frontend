@@ -1,0 +1,74 @@
+#printView {
+	display: none;
+}
+
+@media print {
+
+	#main-container {
+		position: inherit;
+	}
+
+	#printView {
+		position: absolute;
+		z-index: 100;
+		width: auto;
+		height: auto;
+		overflow: visible;
+		top: 0;
+		left: 0;
+		display: none;
+		background-color: white;
+		color: black !important;
+		padding: 1rem;
+
+		&.active {
+			display: block;
+		}
+
+		h1 {
+			font-weight: 200;
+			font-size: 4rem;
+		}
+
+		.entry {
+			padding-left: 1rem;
+			border-left: 1px solid #ccc;
+			margin-bottom: 3rem;
+			page-break-inside: avoid;
+		}
+
+		p {
+			margin: 0.5rem 0;
+		}
+
+		.category {
+			text-transform: uppercase;
+	    font-weight: 200;
+	    font-size: 2rem;
+	    margin: 2rem 0 1rem;
+		}
+
+		.title {
+			font-size: 1.3rem;
+    	font-weight: 400;
+		}
+
+		.sub-category {
+			text-transform: uppercase;
+    	font-weight: 400;
+		}
+
+		.address, .contact {
+			padding-left: .5rem;
+		}
+
+	}
+
+	#mapView, #legendView, #search-bar, #areaView, #languageView, #footer {
+		display: none !important;
+	}
+
+.rtl {
+}
+
+}

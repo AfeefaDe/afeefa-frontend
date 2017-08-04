@@ -98,22 +98,22 @@ qx.Class.define("DataManager", {
                             events: 30
                         }
                     },
-                    bautzen: {
-                        initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
-                        label: 'Bautzen',
-                        entryStats: {
-                            orgas: 118,
-                            events: 0
-                        }
-                    },
-                    leipzig: {
-                        initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
-                        label: 'Leipzig',
-                        entryStats: {
-                            orgas: 118,
-                            events: 0
-                        }
-                    },
+                    // bautzen: {
+                    //     initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
+                    //     label: 'Bautzen',
+                    //     entryStats: {
+                    //         orgas: 118,
+                    //         events: 0
+                    //     }
+                    // },
+                    // leipzig: {
+                    //     initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
+                    //     label: 'Leipzig',
+                    //     entryStats: {
+                    //         orgas: 118,
+                    //         events: 0
+                    //     }
+                    // },
                     pirna: {
                         initialView: { lat: 50.957456, lon: 13.937007, zoom: 14 },
                         label: 'Pirna',

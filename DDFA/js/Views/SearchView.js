@@ -450,8 +450,7 @@ qx.Class.define("SearchView", {
       }
 
       _.each(entriesFiltered, function(entry) {
-        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
-
+        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer, query: query} );
       });
       
       // print list button
@@ -461,7 +460,9 @@ qx.Class.define("SearchView", {
             label: that.getWording('search.button.printList'),
             iconName: 'print',
             action: function(){
-              APP.getUtility().createPdfFromList(APP.getUser().getBookmarks());
+              // var title = that.inputField.val();
+              var title = that.searchTag.html();
+              APP.getPrintView().load('bookmarks', {title: title, entries: entriesFiltered});
             }
           }
         );

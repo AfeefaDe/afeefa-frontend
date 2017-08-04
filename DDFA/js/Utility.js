@@ -87,20 +87,6 @@ qx.Class.define("Utility", {
 			}
 
 			return times;
-		},
-
-		createPdfFromList: function(entries){
-			var that = this;
-
-			var doc = new jsPDF()
-			doc.text(20, 20, 'Merkliste von _______________')
-		
-			_.each(entries, function(entry, i){
-				doc.text(20, 40 + (i*20), entry.name);
-			});
-
-			doc.save('afeefa-bookmarks-' + moment().format('YYYY-MM-DD'));
 		}
-
 	}
 });

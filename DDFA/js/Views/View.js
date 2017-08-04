@@ -210,7 +210,7 @@ qx.Class.define("View", {
           var subLabel = '';
           
           // sub category
-            subLabel += entry.subCategory ? that.getWording('cat.' + entry.subCategory) : that.getWording('cat.' + categoryName);
+          subLabel += entry.subCategory ? that.getWording('cat.' + entry.subCategory) : that.getWording('cat.' + categoryName);
           // time
           if( entry.type == 2 && entry.dateFrom ) subLabel += ' | ' + APP.getUtility().buildTimeString(entry, {short: true});
           // place
@@ -236,7 +236,6 @@ qx.Class.define("View", {
           // create entry
           var tooltip;
           if(entry.descriptionShort) tooltip = entry.descriptionShort;
-          // if(!tooltip && entry.description) tooltip = entry.description;
           if(tooltip) tooltip = tooltip.substring(0,150) + '...';
 
           that.createListResult(

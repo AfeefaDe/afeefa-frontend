@@ -11,7 +11,7 @@
 		display: none;
 		-webkit-animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
     animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-		padding: .3rem 1rem .3rem 2rem;
+		padding: .3rem 1rem .3rem 2.5rem;
 		cursor: pointer;
 		font-weight: 400;
 		color: $gray50;
@@ -19,9 +19,9 @@
 		&.active {
 			display: inline-block;
 			order: 99;
-		  background-image: url("../img/icon_36.svg");
+		  background-image: url("../img/city.svg");
 		  background-repeat: no-repeat;
-			@include background-size(1.2rem);
+			@include background-size(1.6rem);
 			background-position: left center;
 		}
 	}
