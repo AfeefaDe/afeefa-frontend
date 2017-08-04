@@ -80,11 +80,13 @@ qx.Class.define("PrintView", {
 							.append(entry.descriptionShort);
 						$entry.append(entryDescription);
 
-						$entry.append(
-							$("<p />")
-								.addClass('address')
-							.append(entry.location[0].street + ', ' + entry.location[0].zip + ' ' + entry.location[0].city)
-						);
+						if(entry.location[0]){
+							$entry.append(
+								$("<p />")
+									.addClass('address')
+									.append(entry.location[0].placename + ', ' + entry.location[0].street + ', ' + entry.location[0].zip + ' ' + entry.location[0].city)
+							);
+						}
 
 						$entry.append(
 							$("<p />")
