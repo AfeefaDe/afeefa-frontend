@@ -333,6 +333,9 @@ qx.Class.define("DetailView", {
 					if( _.contains( ['web', 'facebook'], prop) ){
 						that['propertyValue'+prop].append('<a target="_blank" href="' + propValue + '">' + propValue + '</a>');
 					}
+					else if( _.contains( ['phone'], prop) ){
+						that['propertyValue'+prop].append('<a target="_blank" href="tel:' + propValue.replace(/\D/g, "") + '">' + propValue + '</a>');
+					}
 					else if( _.contains( ['description', 'descriptionShort'], prop) ){
 						that['propertyValue'+prop].append(propValue.replace(/(?:\r\n|\r|\n)/g, '<br />'));
 
