@@ -11,19 +11,10 @@ qx.Class.define("Router", {
 	construct: function(){
 		var that = this;
 
-		// that.registerHashChange();
-		that.detectUrl();
+		that.urlParams = that.detectUrlParameter();
 	},
 
 	members : {
-
-		registerHashChange: function(){
-			var that = this;
-
-			window.onhashchange = function(){
-				that.detectUrl();
-			};
-		},
 
 		initialNavigate: function(){
 			var that = this;
@@ -227,45 +218,22 @@ qx.Class.define("Router", {
 			});
 		},
 
-		// detectUrl: function(){
-		// 	var that = this;
-
-		// 	that.urlParams = [];
-
-		// 	var params = window.location.hash.split('#');
-		// 	params = _.without(params, '');
-
-		// 	_.each(params, function( param ){
-		// 		param = param.split('=');
-		// 		var paramObj = {
-		// 			key: param[0],
-		// 			value: (param.length > 1)? param[1] : null
-		// 		}
-		// 		that.urlParams.push(paramObj);
-		// 	});
-
-		// 	console.debug(that.urlParams);
-
-		// 	// that.navigate();
-		// },
-
-		detectUrl: function(){
+		detectUrlParameter: function(url){
 			var that = this;
 
-			that.urlParams = window.location.pathname.split('/');
-			that.urlParams = _.without(that.urlParams, '');
-			console.debug(that.urlParams);
+			var urlParams;
+			
+			if(url !== undefined){
+				var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
+				urlParams = url.substr(pos).split('/');
+			}
+			else {
+				urlParams = window.location.pathname.split('/');
+				urlParams = _.without(urlParams, '');
+			}
+			
+			return urlParams;
 		},
-
-		// setUrl: function(key, value){
-		// 	var that = this;
-
-		// 	if(value){
-		// 		window.location.hash = key + '=' + value;
-		// 	} else {
-		// 		window.location.hash = key;
-		// 	}
-		// },
 
 		setUrl: function(key, value, name){
 			var that = this;
@@ -289,10 +257,6 @@ qx.Class.define("Router", {
 			}
 		},
 
-		// resetUrl: function(){
-		// 	window.location.hash = '';
-		// },
-
 		resetUrl: function(){
 			history.pushState(null,null, '/');
 			APP.setOpenGraphMetaProperties({
@@ -300,18 +264,21 @@ qx.Class.define("Router", {
 			});
 		},
 
-		loadFromUrl: function(){
+		loadFromUrl: function( url ){
 			var that = this;
 
-			_.each(that.urlParams, function(param, i){
+			var urlParams = that.urlParams;
+			if(url !== undefined) urlParams = that.detectUrlParameter(url);
+
+			_.each(urlParams, function(param, i){
 				// switch(param.key) {
 				switch(param) {
 			    case 'project':
-			    	var orga = APP.getDataManager().getOrgaById(that.urlParams[i+1]);
+			    	var orga = APP.getDataManager().getOrgaById(urlParams[i+1]);
 			    	if(orga) APP.getMapView().loadEntry(orga, {setView: true});
 			    	break;
 			    case 'event':
-			    	var event = APP.getDataManager().getEventById(that.urlParams[i+1]);
+			    	var event = APP.getDataManager().getEventById(urlParams[i+1]);
 			    	if(event) APP.getMapView().loadEntry(event, {setView: true});
 			    	break;
 					case 'cat':
@@ -321,7 +288,7 @@ qx.Class.define("Router", {
 	          APP.getLegendView().setFilter( {subCategory: param.value} );
 						break;
 					case 'tag':
-	          APP.getLegendView().setFilter( {tags: that.urlParams[i+1]} );
+	          APP.getLegendView().setFilter( {tags: urlParams[i+1]} );
 						break;
 					case 'search':
 						APP.getSearchView().inputField.val( decodeURI(that.urlParams[i+1]) ).trigger( "input" );

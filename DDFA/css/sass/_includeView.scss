@@ -47,7 +47,7 @@
 			}
 		}
 
-		.content {
+		.entry-content {
 			
 			@include flex-grow(1);
 			width: 100%;
@@ -217,7 +217,7 @@ body.desktop, body.tablet {
 body.tablet {
 
 	#includeView {
-		.content {
+		.entry-content {
 			overflow: scroll;
 		}
 	}
@@ -239,7 +239,7 @@ body.mobile {
 			height: 1em;
 			h1 { padding-top: 1rem !important; cursor: pointer; }
 			p.subheading { display: none; }
-			.content { display: none; }
+			.entry-content { display: none; }
 			.closeBtn { display: none; }
 		}
 
@@ -247,7 +247,7 @@ body.mobile {
 			h1 { padding-top: 1rem !important; }
 			p.subheading { display: none !important; }
 		}
-		.content {
+		.entry-content {
 			overflow: scroll;
 		}
 	}
