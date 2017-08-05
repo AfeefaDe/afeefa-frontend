@@ -162,8 +162,8 @@ qx.Class.define("PrintView", {
 			that.isActive(true);
 			that.view.addClass('active');
 
-			// window.print();
-			// that.close();
+			window.print();
+			that.close();
 		},
 
 		addEvents: function(){

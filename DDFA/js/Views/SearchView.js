@@ -28,6 +28,11 @@ qx.Class.define("SearchView", {
         .attr('id', 'search-bar');
       that.view.append(that.searchBar);
 
+      // suggestions
+      that.suggestions = $("<div />")
+        .attr('id', 'suggestions');
+      that.view.append(that.suggestions);
+
       // menu button
       that.menuBtn = $("<div />")
         .addClass('button menu-btn');
@@ -312,14 +317,91 @@ qx.Class.define("SearchView", {
       );
     },
 
+    loadSuggestions: function( query ) {
+      var that = this;
+
+      that.suggestions.removeClass('active');
+      that.suggestions.empty();
+
+      // DEFINING
+      var tags = ['homework', 'iwgr'];
+      var groups = ['women', 'children', 'men', 'refugees'];
+      var lists = ['beratung-fur-refugees-in-dd', 'freizeit-fur-kinder', 'geselliger-abend'];
+      var articles = ['Wie finde ich den richtigen Deutschkurs?', 'WOHNEN – WEGE AUS DER SAMMELUNTERKUNFT'];
+
+      var suggestions = {
+        tags: [],
+        groups: [],
+        lists: [],
+        articles: [],
+        addresses: []
+      };
+      
+      // SEARCHING
+      if(query.length > 5){
+        APP.getDataManager().findAddress(query, function(geo){
+          if(geo.latitude && geo.longitude){
+            suggestions.addresses = [geo];
+            suggestAddress();
+          }
+        });
+      }
+
+      suggestions.tags = _.filter(tags, function(tag){
+        return ( tag.toLowerCase().indexOf(query) >= 0 );
+      });
+
+      // DISPLAYING
+      function createEntry(options){
+        that.suggestions.append(
+          $("<a />")
+            .append(options.label)
+            .addClass(options.cssClass)
+            .attr('href', options.url)
+            .click(function(e){
+              e.preventDefault();
+              options.action();
+            })
+        );
+      }
+
+      _.each(suggestions.tags, function(s){
+        createEntry({
+          label: s,
+          cssClass: 'tag',
+          url: '/search/tag:' + s,
+          action: function(){
+            that.inputField.val('tag:' + s).trigger( "input" );
+            that.suggestions.removeClass('active');
+          }
+        });
+      });
+      
+      if(suggestions.tags.length || suggestions.addresses.length) that.suggestions.addClass('active');
+
+      function suggestAddress(){
+        that.suggestions.find('.address').remove();
+        _.each(suggestions.addresses, function(s){
+          createEntry({
+            label: 'Adresse gefunden',
+            cssClass: 'address',
+            url: '',
+            action: function(){
+              APP.getMapView().map.setView([s.latitude, s.longitude], 16);
+              that.suggestions.removeClass('active');
+            }
+          });
+        });
+
+        if(suggestions.tags.length || suggestions.addresses.length) that.suggestions.addClass('active');
+      }
+    },
+
     loadResults: function( query ) {
       var that = this;
 
       that.view.addClass('active-search');
 
-      // const entries = _.filter(APP.getData().entries, function(entry){
-      //   return entry.external;
-      // });
       const entries = APP.getData().entries;
 
       var entriesFiltered, blockSyncWithMap = false;
@@ -384,7 +466,6 @@ qx.Class.define("SearchView", {
           that.setSearchTag(null, that.getWording('search.tag.bookmarks'));
         }
 
-        // support wanted
         else if(operator == 'prop'){
           switch(operationQuery){
             case 'supportwanted':
@@ -417,6 +498,9 @@ qx.Class.define("SearchView", {
       }
       // free search
       else {
+
+        if(that.inputField.is(":focus")) that.loadSuggestions(query);
+
         entriesFiltered = _.filter( entries, function(entry){
           // in name?
           if( entry.name.toLowerCase().indexOf(query) >= 0 ) return true;
@@ -551,7 +635,7 @@ qx.Class.define("SearchView", {
         that.say('mainMenuBtnClicked');
       });
 
-      that.inputField.focus(function(){
+      that.inputField.focusin(function(){
         that.load(that.inputField.val());
         that.say('searchFieldFocused');
       });
@@ -689,6 +773,7 @@ qx.Class.define("SearchView", {
 
         that.reset();
         that.view.removeClass('active');
+        that.suggestions.removeClass('active');
         that.isActive(false);
 
         that.say('searchViewClosed');

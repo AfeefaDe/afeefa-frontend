@@ -128,29 +128,19 @@ qx.Class.define("IncludeView", {
         var filledHtml = that.fillMustaches(that.scrollContainer.html());
         that.scrollContainer.html(filledHtml);
 
-        // catch links
+        // catch all links and handle internal ones separately
         $('a').click(function(e){
-            e.preventDefault();
-        		var url = $(this).attr('href');
+          e.preventDefault();
+          var url = $(this).attr('href');
 
-            if(url.indexOf('https://afeefa.de') > -1 ){
-            	// load appropriate afeefa content
-            	var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
-							var parameters = url.substr(pos).split('/');
-
-							APP.getRouter().loadFromUrl(url);
-							// switch(parameters[0]){
-							// 	case 'project':
-							// 		alert('load project with id ' + parameters[1]);
-							// 		break;
-							// 	case 'event':
-							// 		alert('load event with id ' + parameters[1]);
-							// 		break;
-							// }
-            }
-            else {
-            	window.open(url);
-            }
+          if(url.indexOf('https://afeefa.de') > -1 ){
+		        var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
+            var parameters = url.substr(pos).split('/');
+            APP.getRouter().loadFromUrl(url);
+          }
+          else {
+              window.open(url);
+          }
         });
 
 				APP.loading(false);

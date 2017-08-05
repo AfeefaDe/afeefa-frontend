@@ -136,8 +136,23 @@ qx.Class.define("DataManager", {
                 dataType: 'text',
                 headers: {
                     'Authorization': 'token a9d97a31787c37d64ce0200e8cfdf2c95c01bddf9960999ea601a487e0a386a4'
-                    // 'User-Agent': 'Afeefa.de Frontend (team@afeefa.de)'
                 }
+            })
+                .done(function (data) {
+                    cb(JSON.parse(data));
+                })
+                .fail(function (a) {
+                    console.debug(a);
+                });
+
+        },
+
+        findAddress: function (address, cb) {
+
+            $.ajax({
+                url: 'https://dev.backend.afeefa.de/api/v1/geocoding?token=MapCat_050615&address=' + encodeURI(address),
+                type: 'GET',
+                dataType: 'text',
             })
                 .done(function (data) {
                     cb(JSON.parse(data));
