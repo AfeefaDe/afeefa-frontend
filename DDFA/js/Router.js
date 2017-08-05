@@ -12,6 +12,10 @@ qx.Class.define("Router", {
 		var that = this;
 
 		that.urlParams = that.detectUrlParameter();
+
+		window.onpopstate = function(event) {
+		  that.loadFromUrl(document.location.href);
+		};
 	},
 
 	members : {
