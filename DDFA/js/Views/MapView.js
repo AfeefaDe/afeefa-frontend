@@ -62,7 +62,6 @@ qx.Class.define("MapView", {
 					spiderfyOnMaxZoom: true,
 					spiderfyDistanceMultiplier: 2,
 					spiderLegPolylineOptions: { weight: 1.5, color: '#000' }
-					// disableClusteringAtZoom: 16
 		});
 
 		// Layers for content-specific data (e.g. wifi networks) to handle them seperately (e.g. zoom-dependent visibility)

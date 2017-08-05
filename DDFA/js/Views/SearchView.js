@@ -132,17 +132,6 @@ qx.Class.define("SearchView", {
           'desktop'
         );
 
-        // tooltip
-        that.createTooltip(
-          that.refugeeBtn,
-          function(){
-            return that.getWording('menu.refugee');
-          }(),
-          'hover',
-          'bottom',
-          'desktop'
-        );
-
         that.isActive(true);
         that.maximize();
         that.view.addClass('active');
@@ -228,20 +217,6 @@ qx.Class.define("SearchView", {
           targetContainertEl: that.scrollContainer
         }
       );
-
-      // for women
-      // var action = function(){
-      //   that.inputField.val('group:women').trigger( "input" );
-      // };
-      // that.createListResult(
-      //   {
-      //     iconClass: 'for-women',
-      //     label: that.getWording('search.label.forwomen'),
-      //     subLabel: that.getWording('search.sublabel.forwomen'),
-      //     action: action,
-      //     targetContainertEl: that.scrollContainer
-      //   }
-      // );
 
       // // certified by SFR
       // var action = function(){
@@ -348,7 +323,7 @@ qx.Class.define("SearchView", {
       }
 
       suggestions.tags = _.filter(tags, function(tag){
-        return ( tag.toLowerCase().indexOf(query) >= 0 );
+        return ( that.getWording('tag.' + tag).toLowerCase().indexOf(query) >= 0 );
       });
 
       // DISPLAYING
@@ -367,7 +342,7 @@ qx.Class.define("SearchView", {
 
       _.each(suggestions.tags, function(s){
         createEntry({
-          label: s,
+          label: that.getWording('tag.' + s),
           cssClass: 'tag',
           url: '/search/tag:' + s,
           action: function(){
@@ -449,8 +424,7 @@ qx.Class.define("SearchView", {
 
         // tag listing
         else if(operator == 'tag' ) {
-          // entriesFiltered = _.filter( entries, function(entry){
-          entriesFiltered = _.filter( APP.getDataManager().getAllEvents(), function(entry){
+          entriesFiltered = _.filter( entries, function(entry){
               return ( entry.tags && (entry.tags.indexOf(operationQuery) > -1) );
           });
           

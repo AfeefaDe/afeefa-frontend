@@ -9,8 +9,8 @@
 
 	z-index: 30;
 
-	/* HEADING */
-	.heading {
+	a {
+		@include textLink;
 	}
 
 	h3 {

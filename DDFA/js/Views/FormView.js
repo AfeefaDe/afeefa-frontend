@@ -14,7 +14,7 @@ qx.Class.define("FormView", {
 
         that.setViewId('formView');
         that.setLoadable(true);
-        that.setBaseUrl(APP.getConfig().includePathForHtmlFiles);
+        that.setBaseUrl(document.location.origin + '/DDFA/inc/');
 
         that.setFormTypes({
             feedback: {
@@ -107,14 +107,7 @@ qx.Class.define("FormView", {
 
         loadUIVocab: function(type){
             var that = this;
-
             that.heading.empty().append(that.getWording('form.heading.' + type));
-
-            // that.view.find('label, option').each(function(i, el){
-            //     var key = $(el).html().split(':')[1];
-            //     console.debug(key);
-            //     $(el).html(that.getWording(key));
-            // });
         },
 
         parseForm: function(type, options){
@@ -170,6 +163,12 @@ qx.Class.define("FormView", {
             // the cancel button
             that.view.find('button#cancel').first().click(function(){
                 that.close();
+            });
+
+            // the cancel button
+            that.view.find('a.become-editor').first().click(function(e){
+                e.preventDefault();
+                APP.getFormView().load( 'feedback' );
             });
             
             that.setCurrentForm(form);
