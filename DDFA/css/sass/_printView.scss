@@ -47,6 +47,14 @@
 
 		p {
 			margin: 0.5rem 0;
+			@include propertyIcons;
+			background-size: 1rem;
+			background-repeat: no-repeat;
+    	background-position: left 0.3rem !important;
+		}
+
+		.shift {
+			padding-left: 2rem;
 		}
 
 		.category {
@@ -54,6 +62,20 @@
 	    font-weight: 200;
 	    font-size: 2rem;
 	    margin: 2rem 0 1rem;
+	    padding-left: 3rem;
+			background-size: 2rem;
+			background-repeat: no-repeat;
+    	background-position: left 0.3rem !important;
+
+    	&.cat-general	{ background-image: url("../img/icon_173.svg"); }
+			&.cat-language	{ background-image: url("../img/icon_05.svg"); }
+			&.cat-medic { background-image: url("../img/icon_03.svg"); }
+			&.cat-jobs { background-image: url("../img/icon_75.svg"); }
+			&.cat-consultation { background-image: url("../img/icon_09.svg"); }
+			&.cat-leisure { background-image: url("../img/icon_85.svg"); }
+			&.cat-community { background-image: url("../img/icon_01.svg"); @include background-size(85%); }
+			&.cat-donation { background-image: url("../img/icon_11.svg"); }
+			&.cat-external-event { background-image: url("../img/icon_191.svg"); }
 		}
 
 		.title {
@@ -65,11 +87,6 @@
 			text-transform: uppercase;
     	font-weight: 400;
 		}
-
-		.address, .contact {
-			padding-left: .5rem;
-		}
-
 	}
 
 	body {

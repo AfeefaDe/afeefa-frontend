@@ -62,7 +62,7 @@ qx.Class.define("PrintView", {
 					
 					that.view.append(
 						$("<p />")
-							.addClass('category')
+							.addClass('category cat-' + key)
 							.append(that.getWording('cat.'+key))
 					);
 
@@ -94,7 +94,7 @@ qx.Class.define("PrintView", {
 						if(loc){
 							$entry.append(
 								$("<p />")
-									.addClass('address')
+									.addClass('shift icon-location')
 									.append(function(){
 										var string = '';
 										if(loc.placename) string += loc.placename;
@@ -106,15 +106,36 @@ qx.Class.define("PrintView", {
 							);
 						}
 
+						if(entry.location[0] && entry.location[0].openingHours){
+							$entry.append(
+								$("<p />")
+									.addClass('shift icon-openingHours')
+									.append(entry.location[0].openingHours)
+							);
+						}
+
 						if(entry.speakerPublic || entry.phone || entry.mail){
 							$entry.append(
 								$("<p />")
-									.addClass('contact')
-								.append(function(){
+									.addClass('shift')
+									.append(function(){
 											var string = '';
 											if(entry.speakerPublic) string += entry.speakerPublic;
 											if(entry.mail) string += (string? ' | ' : '') + entry.mail;
 											if(entry.phone) string += (string? ' | ' : '') + entry.phone;
+											return string;
+										}())
+							);
+						}
+
+						if(entry.web || entry.facebook){
+							$entry.append(
+								$("<p />")
+									.addClass('shift')
+								.append(function(){
+											var string = '';
+											if(entry.web) string += entry.web.slice(0,50) + '...';
+											if(entry.facebook) string += (string? ' | ' : '') + entry.facebook.slice(0,50) + '...';
 											return string;
 										}())
 							);
@@ -141,8 +162,8 @@ qx.Class.define("PrintView", {
 			that.isActive(true);
 			that.view.addClass('active');
 
-			window.print();
-			that.close();
+			// window.print();
+			// that.close();
 		},
 
 		addEvents: function(){
