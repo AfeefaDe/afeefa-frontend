@@ -216,7 +216,7 @@ qx.Class.define("FormView", {
             // call specific send method and give callback
             that.getCurrentForm().formType.sendMethod(data, options, function(success){
                 that.createModal({
-                    content: success? $('<h5>'+that.getWording('form.success')+'</5>') : $('<h5>' +that.getWording('form.fail')+ '</5>'),
+                    content: success? $('<h5>'+that.getWording('form.message.'+that.getCurrentForm().formType.name+'.success')+'</5>') : $('<h5>' +that.getWording('form.fail')+ '</5>'),
                     dismissible: true,
                     buttonLabel: success? "Schön" : 'Hm!',
                     actions: {
