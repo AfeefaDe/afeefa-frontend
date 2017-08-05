@@ -16476,13 +16476,10 @@ body.phone #menuView .menu-btn {
   text-transform: uppercase;
 }
 /* line 67, sass/_includeView.scss */
-#includeView .scroll-container .entry-content h2 a, #includeView .scroll-container .entry-content h2 #detailView .linkedentries .property-value, #detailView .linkedentries #includeView .scroll-container .entry-content h2 .property-value, #includeView .scroll-container .entry-content h2 #detailViewMobile .linkedentries .property-value, #detailViewMobile .linkedentries #includeView .scroll-container .entry-content h2 .property-value, #includeView .scroll-container .entry-content h2 span.locationLink, #includeView .scroll-container .entry-content h2 span.searchLink, #includeView .scroll-container .entry-content h2 a:visited, #includeView .scroll-container .entry-content h2 #detailView .linkedentries .property-value:visited, #detailView .linkedentries #includeView .scroll-container .entry-content h2 .property-value:visited, #includeView .scroll-container .entry-content h2 #detailViewMobile .linkedentries .property-value:visited, #detailViewMobile .linkedentries #includeView .scroll-container .entry-content h2 .property-value:visited, #includeView .scroll-container .entry-content h2 span.locationLink:visited, #includeView .scroll-container .entry-content h2 span.searchLink:visited, #includeView .scroll-container .entry-content h2 a:active, #includeView .scroll-container .entry-content h2 #detailView .linkedentries .property-value:active, #detailView .linkedentries #includeView .scroll-container .entry-content h2 .property-value:active, #includeView .scroll-container .entry-content h2 #detailViewMobile .linkedentries .property-value:active, #detailViewMobile .linkedentries #includeView .scroll-container .entry-content h2 .property-value:active, #includeView .scroll-container .entry-content h2 span.locationLink:active, #includeView .scroll-container .entry-content h2 span.searchLink:active, #includeView .scroll-container .entry-content h2 a:hover, #includeView .scroll-container .entry-content h2 #detailView .linkedentries .property-value:hover, #detailView .linkedentries #includeView .scroll-container .entry-content h2 .property-value:hover, #includeView .scroll-container .entry-content h2 #detailViewMobile .linkedentries .property-value:hover, #detailViewMobile .linkedentries #includeView .scroll-container .entry-content h2 .property-value:hover, #includeView .scroll-container .entry-content h2 span.locationLink:hover, #includeView .scroll-container .entry-content h2 span.searchLink:hover {
-  text-decoration: none;
-  border: none;
-  background: none;
-  color: #333333;
+#includeView .scroll-container .entry-content h2:first-child {
+  margin-top: 0;
 }
-/* line 75, sass/_includeView.scss */
+/* line 72, sass/_includeView.scss */
 #includeView .scroll-container .entry-content h3 {
   font-size: 1.2em;
   font-weight: 100;
@@ -16490,33 +16487,33 @@ body.phone #menuView .menu-btn {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
-/* line 83, sass/_includeView.scss */
+/* line 80, sass/_includeView.scss */
 #includeView .scroll-container .entry-content p {
   text-align: justify;
   font-weight: 300;
   line-height: 1.3em;
 }
-/* line 89, sass/_includeView.scss */
+/* line 86, sass/_includeView.scss */
 #includeView .scroll-container .entry-content table {
   font-weight: 300;
 }
-/* line 92, sass/_includeView.scss */
+/* line 89, sass/_includeView.scss */
 #includeView .scroll-container .entry-content table td {
   padding: .3em 0 .3em 1em;
 }
-/* line 94, sass/_includeView.scss */
+/* line 91, sass/_includeView.scss */
 #includeView .scroll-container .entry-content table td:first-child {
   padding-left: 0em;
 }
-/* line 98, sass/_includeView.scss */
+/* line 95, sass/_includeView.scss */
 #includeView .scroll-container .entry-content hr {
   border-color: #ccc;
 }
-/* line 102, sass/_includeView.scss */
+/* line 99, sass/_includeView.scss */
 #includeView .scroll-container .entry-content .no-top-margin {
   margin-top: 0;
 }
-/* line 106, sass/_includeView.scss */
+/* line 103, sass/_includeView.scss */
 #includeView .scroll-container .entry-content span.locationLink, #includeView .scroll-container .entry-content span.searchLink {
   display: inline-block;
   cursor: pointer;
@@ -16529,11 +16526,11 @@ body.phone #menuView .menu-btn {
   background-position: 0 2px;
   background-repeat: no-repeat;
 }
-/* line 117, sass/_includeView.scss */
+/* line 114, sass/_includeView.scss */
 #includeView .scroll-container .entry-content span.locationLink:hover, #includeView .scroll-container .entry-content span.searchLink:hover {
   background-image: url("../img/icon_36.svg");
 }
-/* line 123, sass/_includeView.scss */
+/* line 120, sass/_includeView.scss */
 #includeView .scroll-container .entry-content p.figure-caption {
   margin-top: 0;
   padding: .3em;
@@ -16541,7 +16538,7 @@ body.phone #menuView .menu-btn {
   font-style: italic;
   font-size: .8em;
 }
-/* line 131, sass/_includeView.scss */
+/* line 128, sass/_includeView.scss */
 #includeView .scroll-container .entry-content .media-list-item {
   display: -webkit-flex;
   display: flex;
@@ -16549,42 +16546,42 @@ body.phone #menuView .menu-btn {
   align-items: flex-start;
   margin-bottom: 1em;
 }
-/* line 137, sass/_includeView.scss */
+/* line 134, sass/_includeView.scss */
 #includeView .scroll-container .entry-content .media-list-item img {
   width: 30%;
   margin-right: 1em;
 }
-/* line 142, sass/_includeView.scss */
+/* line 139, sass/_includeView.scss */
 #includeView .scroll-container .entry-content .media-list-item p {
   -webkit-flex-grow: 1;
   flex-grow: 1;
   margin-top: 0;
 }
-/* line 146, sass/_includeView.scss */
+/* line 143, sass/_includeView.scss */
 #includeView .scroll-container .entry-content .media-list-item p span.heading {
   font-weight: bold;
   display: block;
   margin-bottom: .5em;
 }
-/* line 157, sass/_includeView.scss */
+/* line 154, sass/_includeView.scss */
 #includeView .float-right-in-text {
   float: right;
   padding: 1em 0 1em 1em;
 }
-/* line 162, sass/_includeView.scss */
+/* line 159, sass/_includeView.scss */
 #includeView .float-left-in-text {
   float: left;
   padding: 1em 1em 1em 0;
 }
-/* line 167, sass/_includeView.scss */
+/* line 164, sass/_includeView.scss */
 #includeView .chapters {
   margin-top: 2rem;
 }
-/* line 171, sass/_includeView.scss */
+/* line 168, sass/_includeView.scss */
 #includeView .chaptersReal {
   /*@include flex-shrink(0);*/
 }
-/* line 175, sass/_includeView.scss */
+/* line 172, sass/_includeView.scss */
 #includeView .entity-shape {
   /* orga */
   /* market entry */
@@ -16979,36 +16976,36 @@ body.phone #menuView .menu-btn {
   -webkit-background-size: 85%;
   background-size: 85%;
 }
-/* line 188, sass/_includeView.scss */
+/* line 185, sass/_includeView.scss */
 #includeView .entity-bunch {
   padding-left: 3.5em;
   padding-top: .5em;
   min-height: 3em;
   background-size: 3em !important;
 }
-/* line 194, sass/_includeView.scss */
+/* line 191, sass/_includeView.scss */
 #includeView .entity-bunch.type-0 {
   background: url("../img/cluster_orga.svg") left center no-repeat;
 }
-/* line 197, sass/_includeView.scss */
+/* line 194, sass/_includeView.scss */
 #includeView .entity-bunch.type-1 {
   background: url("../img/cluster_event.svg") left center no-repeat;
 }
-/* line 200, sass/_includeView.scss */
+/* line 197, sass/_includeView.scss */
 #includeView .entity-bunch.type-2 {
   background: url("../img/cluster_market.svg") left center no-repeat;
 }
-/* line 203, sass/_includeView.scss */
+/* line 200, sass/_includeView.scss */
 #includeView .entity-bunch.refugee-guide {
   background: url("../img/icon_53.svg") left center no-repeat;
 }
 
-/* line 220, sass/_includeView.scss */
+/* line 217, sass/_includeView.scss */
 body.tablet #includeView .entry-content {
   overflow: scroll;
 }
 
-/* line 229, sass/_includeView.scss */
+/* line 226, sass/_includeView.scss */
 body.mobile #includeView {
   width: 100%;
   height: 100%;
@@ -17017,37 +17014,37 @@ body.mobile #includeView {
   left: 0;
   top: 0;
 }
-/* line 237, sass/_includeView.scss */
+/* line 234, sass/_includeView.scss */
 body.mobile #includeView.min {
   /*.header { cursor: pointer; }*/
   height: 1em;
 }
-/* line 240, sass/_includeView.scss */
+/* line 237, sass/_includeView.scss */
 body.mobile #includeView.min h1 {
   padding-top: 1rem !important;
   cursor: pointer;
 }
-/* line 241, sass/_includeView.scss */
+/* line 238, sass/_includeView.scss */
 body.mobile #includeView.min p.subheading {
   display: none;
 }
-/* line 242, sass/_includeView.scss */
+/* line 239, sass/_includeView.scss */
 body.mobile #includeView.min .entry-content {
   display: none;
 }
-/* line 243, sass/_includeView.scss */
+/* line 240, sass/_includeView.scss */
 body.mobile #includeView.min .closeBtn {
   display: none;
 }
-/* line 247, sass/_includeView.scss */
+/* line 244, sass/_includeView.scss */
 body.mobile #includeView .header h1 {
   padding-top: 1rem !important;
 }
-/* line 248, sass/_includeView.scss */
+/* line 245, sass/_includeView.scss */
 body.mobile #includeView .header p.subheading {
   display: none !important;
 }
-/* line 250, sass/_includeView.scss */
+/* line 247, sass/_includeView.scss */
 body.mobile #includeView .entry-content {
   overflow: scroll;
 }

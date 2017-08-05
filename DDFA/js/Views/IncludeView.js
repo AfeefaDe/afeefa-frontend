@@ -13,11 +13,12 @@ qx.Class.define("IncludeView", {
 		var that = this;
 
 		that.setBaseUrl( APP.getConfig().includePathForHtmlFiles );
+		that.wpPath = 'wissensportal/';
 		
 		that.setIncludes({
 			refugeeGuide: {
 				de: {
-					url: that.getBaseUrl() + 'wissensportal/guide-de/ article .entry-content',
+					url: that.getBaseUrl() + that.wpPath + 'guide-de/ article .entry-content',
 				},
 				translatable: true
 			},
@@ -29,10 +30,10 @@ qx.Class.define("IncludeView", {
 				url: that.getBaseUrl() + 'impressum/ article .entry-content'
 			},
 			press: {
-				url: that.getBaseUrl() + 'press.html',
+				url: that.getBaseUrl() + 'presse/ article .entry-content'
 			},
 			about: {
-				url: 'https://about.afeefa.de article .entry-content'
+				url: that.getBaseUrl() + ' article .entry-content'
 			},
 		});
 		
@@ -75,7 +76,7 @@ qx.Class.define("IncludeView", {
 		},
 
 		// TODO option: modal
-		load: function( includeKey ){
+		load: function( includeKey, url ){
 			var that = this;
 
 			that.reset();
@@ -92,7 +93,12 @@ qx.Class.define("IncludeView", {
 
 			that.say('includeViewOpened');
 
-			if( that.getIncludes()[includeKey].translatable ) {
+			if(url !== undefined){
+				that.scrollContainer.load( url, function( response, status, xhr ) {
+					loadComplete();
+				});
+			}
+			else if( that.getIncludes()[includeKey].translatable ) {
 				that.scrollContainer.load( that.getIncludes()[includeKey][APP.getLM().getCurrentLang()].url, function( response, status, xhr ) {
 
 					if ( status == "error" ) {
@@ -133,11 +139,17 @@ qx.Class.define("IncludeView", {
           e.preventDefault();
           var url = $(this).attr('href');
 
+          // load afeefa view
           if(url.indexOf('https://afeefa.de') > -1 ){
-		        var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
-            var parameters = url.substr(pos).split('/');
+		        // var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
+            // var parameters = window.location.origin.substr(1).split('/');
             APP.getRouter().loadFromUrl(url);
           }
+          // load article
+          else if(url.indexOf(that.getBaseUrl() + that.wpPath) > -1 ){
+            that.load(null, url);
+          }
+          // open external link
           else {
               window.open(url);
           }

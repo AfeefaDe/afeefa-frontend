@@ -64,12 +64,9 @@
 				margin-top: 2em;
 				text-transform: uppercase;
 
-				a, a:visited, a:active, a:hover {
-					text-decoration: none;
-					border: none;
-					background: none;
-					color: $black;
-				}
+				&:first-child {
+			    margin-top: 0;
+			  }
 			}
 
 			h3 {
