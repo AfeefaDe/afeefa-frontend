@@ -29,7 +29,7 @@ qx.Class.define("MenuView", {
                 .attr('href', 'https://afeefa.de')
                 .attr('id', 'logo');
             that.logo  = $('<img />').attr({
-                'src': APP.getConfig().imgPath + 'afeefa_light.svg',
+                'src': '/' + APP.getConfig().imgPath + 'afeefa_light.svg',
                 alt: 'Afeefa Logo',
                 title: 'Afeefa Logo'
             });
@@ -84,7 +84,7 @@ qx.Class.define("MenuView", {
                 'target': '_blank'
             });
             that.dfaLogo  = $('<img />').attr({
-                'src': APP.getConfig().imgPath + 'icon_37.svg',
+                'src': '/' + APP.getConfig().imgPath + 'icon_37.svg',
                 alt: 'Dresden für Alle Logo',
                 title: 'Dresden für Alle Logo'
             });
