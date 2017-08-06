@@ -113,6 +113,9 @@ button {
         background-image: url("../img/icon_bookmark.svg");
         @include background-size(60%);
       }
+      &.wissensportal {
+        background-image: url("../img/icon_54.svg");
+      }
       &.support-wanted {
         background-image: url("../img/icon_56.svg");
       }
@@ -308,6 +311,16 @@ strong {
   }
 }
 
+.rtl {
+  .list-results {
+    left: auto;
+    right: 2rem;
+
+    .result .icon {
+      margin: .5rem .5rem .5rem 2rem;
+    }
+  }
+}
 body.loading {
   #curtain {
     @include curtainActive;

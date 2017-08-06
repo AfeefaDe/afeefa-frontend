@@ -13,12 +13,13 @@ qx.Class.define("IncludeView", {
 		var that = this;
 
 		that.setBaseUrl( APP.getConfig().includePathForHtmlFiles );
-		that.wpPath = 'wissensportal/';
+		that.wpPath = 'wissensportal';
 		
 		that.setIncludes({
-			refugeeGuide: {
+			wissensportal: {
 				de: {
-					url: that.getBaseUrl() + that.wpPath + 'guide-de/ article .entry-content',
+					url: that.getBaseUrl() + that.wpPath + '/leitfaden-fuer-asylsuchende/ article .entry-content'
+					// url: that.getBaseUrl() + that.wpPath
 				},
 				translatable: true
 			},
@@ -93,36 +94,30 @@ qx.Class.define("IncludeView", {
 
 			that.say('includeViewOpened');
 
+
+			// set url
+      if(includeKey == 'wissensportal'){
+	      APP.getRouter().setUrl('wissensportal', null, null);
+      }
+      else if(url !== undefined){
+	      var pos = url.indexOf(that.wpPath) + that.wpPath.length + 1;
+	      var articleSlug = url.substr(pos);
+	      APP.getRouter().setUrl(that.wpPath, articleSlug, null);
+      }
+
 			if(url !== undefined){
-				that.scrollContainer.load( url, function( response, status, xhr ) {
+				that.scrollContainer.load( url + ' article .entry-content', function( response, status, xhr ) {
 					loadComplete();
 				});
 			}
 			else if( that.getIncludes()[includeKey].translatable ) {
-				that.scrollContainer.load( that.getIncludes()[includeKey][APP.getLM().getCurrentLang()].url, function( response, status, xhr ) {
-
-					if ( status == "error" ) {
-
-						that.scrollContainer.load( that.getIncludes()[includeKey].url + '_en.html', function( response, status, xhr ) {
-							
-							if ( status == "error" ) {
-
-								that.scrollContainer.load( that.getIncludes()[includeKey].url + '_de.html', function( response, status, xhr ) {
-									loadComplete();
-								});
-
-							}
-
-							loadComplete();
-
-						});
-
-					}
-
+				var include = that.getIncludes()[includeKey][APP.getLM().getCurrentLang()];
+				if(!include) include = that.getIncludes()[includeKey].de;
+				that.scrollContainer.load( include.url, function( response, status, xhr ) {
 					loadComplete();
-
 				});
-			} else {
+			}
+			else {
 				that.scrollContainer.load( that.getIncludes()[includeKey].url, function( response, status, xhr ) {
 					loadComplete();
 				});
@@ -141,12 +136,10 @@ qx.Class.define("IncludeView", {
 
           // load afeefa view
           if(url.indexOf('https://afeefa.de') > -1 ){
-		        // var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
-            // var parameters = window.location.origin.substr(1).split('/');
             APP.getRouter().loadFromUrl(url);
           }
           // load article
-          else if(url.indexOf(that.getBaseUrl() + that.wpPath) > -1 ){
+          else if(url.indexOf('//about.afeefa.de/' + that.wpPath) > -1 ){
             that.load(null, url);
           }
           // open external link

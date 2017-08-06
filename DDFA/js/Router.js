@@ -4,8 +4,6 @@ qx.Class.define("Router", {
 	type: "singleton",
 	
 	properties : {
-		// urlParams: {},
-		// renderedViews: {}	
 	},
 
 	construct: function(){
@@ -77,73 +75,6 @@ qx.Class.define("Router", {
 			if(that.currentPath.length > 0){
 				APP.getMapView().selectMarkerById( that.currentPath );
 			}
-			
-			
-
-			// console.log('navigate to: ' + path);
-
-	  //   	var firstLevel = path[0];
-			
-	  //   	// define which (and where) views should exist on a certain route
-	  //   	var routes = {
-			//     undefined: [
-			// 		{ view: new StartView(), layoutArea: DL.settings.layoutAreas.mainColumn },
-			// 		{ view: new RunnersSmallView(), layoutArea: DL.settings.layoutAreas.rightColumn }
-			// 	],
-			//     'info': [
-			// 		{ view: new InfoView(), layoutArea: DL.settings.layoutAreas.mainColumn },
-			// 		{ view: new RunnersSmallView(), layoutArea: DL.settings.layoutAreas.rightColumn }
-			// 	],
-			//     'laeufer': [
-			// 		{ view: new RunnersView(), layoutArea: DL.settings.layoutAreas.mainColumn },
-			// 		{ view: new RunnersSmallView(), layoutArea: DL.settings.layoutAreas.rightColumn }
-			// 	],
-			//     'anmeldung': [
-			// 		{ view: new RegistrationView(), layoutArea: DL.settings.layoutAreas.mainColumn },
-			// 		{ view: new RunnersSmallView(), layoutArea: DL.settings.layoutAreas.rightColumn }
-			// 	],
-			//     'impressum': [
-			// 		{ view: new ImprintView(), layoutArea: DL.settings.layoutAreas.mainColumn },
-			// 		{ view: new RunnersSmallView(), layoutArea: DL.settings.layoutAreas.rightColumn }
-			// 	],
-			//     'kontakt': [
-			// 		{ view: new ContactView(), layoutArea: DL.settings.layoutAreas.mainColumn },
-			// 		{ view: new RunnersSmallView(), layoutArea: DL.settings.layoutAreas.rightColumn }
-			// 	]
-			// };
-
-			// // render desired views
-			// var wishlist = routes[firstLevel]? routes[firstLevel] : routes[undefined];
-
-		 //    wishlist.each(function( wish ){
-
-			// 	// render views only if not already rendered
-			// 	var newLayoutViewObject = { layoutArea: wish.layoutArea, view: wish.view };
-			// 	var rendered = _.find( that.renderedViews, function( layoutViewObject ){
-			// 		return ( layoutViewObject.layoutArea == newLayoutViewObject.layoutArea && layoutViewObject.view.get('name') == newLayoutViewObject.view.get('name') );
-			// 	});
-
-			// 	if(!rendered){
-			// 		// remove all memorized views for the certain layoutArea
-			// 		that.renderedViews = _.reject(that.renderedViews, function( layoutViewObject ){
-			// 			if( layoutViewObject.layoutArea == newLayoutViewObject.layoutArea ){
-			// 				if(layoutViewObject.view.die) layoutViewObject.view.die();
-			// 				return true;
-			// 			} else {
-			// 				return false;
-			// 			}
-			// 			// return layoutViewObject.layoutArea == newLayoutViewObject.layoutArea;
-			// 		});
-			// 		newLayoutViewObject.view.render(newLayoutViewObject.layoutArea);
-			// 		that.renderedViews.push( newLayoutViewObject );
-			// 	}
-			// });
-
-		 //    // set new hash if navigate() was invoked manually and not because of a hash change
-		 //    var newHash = '#' + path.join('#')
-	  //   	if( window.location.hash != newHash) window.location.hash = newHash;
-
-		 //    that.updateNavigation();
 		},
 
 		updateNavigation: function(){
@@ -228,7 +159,11 @@ qx.Class.define("Router", {
 			var urlParams;
 			
 			if(url !== undefined){
-				var pos = url.indexOf('afeefa.de/') + 'afeefa.de/'.length;
+				if(url.indexOf(window.location.host) >= 0)
+					var pos = url.indexOf(window.location.host) + window.location.host.length+1;
+				else
+					var pos = url.indexOf('//afeefa.de') + '//afeefa.de'.length+1;
+
 				urlParams = url.substr(pos).split('/');
 			}
 			else {
@@ -274,46 +209,51 @@ qx.Class.define("Router", {
 			var urlParams = that.urlParams;
 			if(url !== undefined) urlParams = that.detectUrlParameter(url);
 
-			_.each(urlParams, function(param, i){
-				// switch(param.key) {
-				switch(param) {
-			    case 'project':
-			    	var orga = APP.getDataManager().getOrgaById(urlParams[i+1]);
-			    	if(orga) APP.getMapView().loadEntry(orga, {setView: true});
-			    	break;
-			    case 'event':
-			    	var event = APP.getDataManager().getEventById(urlParams[i+1]);
-			    	if(event) APP.getMapView().loadEntry(event, {setView: true});
-			    	break;
-					case 'cat':
-	          APP.getLegendView().setFilter( {category: param.value} );
-						break;
-					case 'subcat':
-	          APP.getLegendView().setFilter( {subCategory: param.value} );
-						break;
-					case 'tag':
-	          APP.getLegendView().setFilter( {tags: urlParams[i+1]} );
-						break;
-					case 'search':
-						APP.getSearchView().inputField.val( decodeURI(that.urlParams[i+1]) ).trigger( "input" );
-						break;
-					// short Urls like afeefa.de/#events
-					case 'add':
-            APP.getFormView().load( 'newEntry' );
-						break;
-					case 'feedback':
-            APP.getFormView().load( 'feedback' );
-						break;
-					case 'events':
-            APP.getEventView().load();
-						break;
-					case 'iwgr':
-	          APP.getLegendView().setFilter( {tags: 'iwgr'} );
-						break;
-					default:
-			    	// APP.getMapView().loadEntryById(param.key, {setView: true});
-				}
-			});
+			switch(urlParams[0]) {
+		    case 'project':
+		    	var orga = APP.getDataManager().getOrgaById(urlParams[1]);
+		    	if(orga) APP.getMapView().loadEntry(orga, {setView: true});
+		    	break;
+		    case 'event':
+		    	var event = APP.getDataManager().getEventById(urlParams[1]);
+		    	if(event) APP.getMapView().loadEntry(event, {setView: true});
+		    	break;
+				case 'cat':
+          APP.getLegendView().setFilter( {category: param.value} );
+					break;
+				case 'subcat':
+          APP.getLegendView().setFilter( {subCategory: param.value} );
+					break;
+				case 'tag':
+          APP.getLegendView().setFilter( {tags: urlParams[1]} );
+					break;
+				case 'search':
+					APP.getSearchView().inputField.val( decodeURI(urlParams[1]) ).trigger( "input" );
+					break;
+				case 'wissensportal':
+					var iv = APP.getIncludeView();
+					if(urlParams[1]){
+						iv.load(null, iv.getBaseUrl() + iv.wpPath + '/' + urlParams[1] + ' article .entry-content');
+					} else {
+						iv.load('wissensportal');
+					}
+					break;
+				// short Urls like afeefa.de/#events
+				case 'add':
+          APP.getFormView().load( 'newEntry' );
+					break;
+				case 'feedback':
+          APP.getFormView().load( 'feedback' );
+					break;
+				case 'events':
+          APP.getEventView().load();
+					break;
+				case 'iwgr':
+          APP.getLegendView().setFilter( {tags: 'iwgr'} );
+					break;
+			}
+
+			that.urlParams = null;
 		}
 	}
 });

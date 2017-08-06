@@ -109,29 +109,15 @@
 		}
 	}
 
-	#suggestions {
-		display: none;
-		position: relative;
-		width: calc(100% - 4rem);
-		left: 2rem;
-		top: 2rem;
-		z-index: 15;
-		background-color: $gray95;
-		@include box-shadow(0px 2px 5px #000);
-		padding: .5rem 1rem 0;
-
-		&.active {
-			display: block;
-		}
-
-		a {
-			display: block;
-	    padding: 0 0 .5rem;
-			&.tag {}
-			&.group {}
-			&.list {}
-			&.article {}
-		}
+	a.suggestion {
+		display: block;
+    margin: .5rem 0 2rem;
+    padding-left: 3rem;
+    opacity: .6;
+		&.tag {}
+		&.group {}
+		&.list {}
+		&.article {}
 	}
 
 	.list-results {

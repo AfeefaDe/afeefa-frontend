@@ -28,25 +28,11 @@ qx.Class.define("SearchView", {
         .attr('id', 'search-bar');
       that.view.append(that.searchBar);
 
-      // suggestions
-      that.suggestions = $("<div />")
-        .attr('id', 'suggestions');
-      that.view.append(that.suggestions);
-
       // menu button
       that.menuBtn = $("<div />")
         .addClass('button menu-btn');
       
       that.searchBar.append(that.menuBtn);
-
-      // refugee button
-      that.refugeeBtn = $("<div />")
-        .addClass('button refugee-btn')
-        .click(function(){
-          APP.getIncludeView().load( 'refugeeGuide' );
-        });
-     
-      that.searchBar.append(that.refugeeBtn);
 
       // filter button
       that.filterBtn = $("<div />")
@@ -188,6 +174,22 @@ qx.Class.define("SearchView", {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
 
+      that.createSectionHeader( 'Wissen' );
+      
+      // refugee guide
+      var action = function(){
+        APP.getIncludeView().load('wissensportal');
+      };
+      that.createListResult(
+        {
+          iconClass: 'wissensportal',
+          label: that.getWording('search.label.refugeeGuide'),
+          subLabel: that.getWording('search.sublabel.refugeeGuide'),
+          action: action,
+          targetContainertEl: that.scrollContainer
+        }
+      );
+
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
@@ -295,9 +297,6 @@ qx.Class.define("SearchView", {
     loadSuggestions: function( query ) {
       var that = this;
 
-      that.suggestions.removeClass('active');
-      that.suggestions.empty();
-
       // DEFINING
       var tags = ['homework', 'iwgr'];
       var groups = ['women', 'children', 'men', 'refugees'];
@@ -328,10 +327,11 @@ qx.Class.define("SearchView", {
 
       // DISPLAYING
       function createEntry(options){
-        that.suggestions.append(
+        // that.suggestions.append(
+        that.scrollContainer.prepend(
           $("<a />")
             .append(options.label)
-            .addClass(options.cssClass)
+            .addClass('suggestion ' + options.cssClass)
             .attr('href', options.url)
             .click(function(e){
               e.preventDefault();
@@ -347,15 +347,12 @@ qx.Class.define("SearchView", {
           url: '/search/tag:' + s,
           action: function(){
             that.inputField.val('tag:' + s).trigger( "input" );
-            that.suggestions.removeClass('active');
           }
         });
       });
       
-      if(suggestions.tags.length || suggestions.addresses.length) that.suggestions.addClass('active');
-
       function suggestAddress(){
-        that.suggestions.find('.address').remove();
+        that.scrollContainer.find('.address').remove();
         _.each(suggestions.addresses, function(s){
           createEntry({
             label: 'Adresse gefunden',
@@ -363,12 +360,9 @@ qx.Class.define("SearchView", {
             url: '',
             action: function(){
               APP.getMapView().map.setView([s.latitude, s.longitude], 16);
-              that.suggestions.removeClass('active');
             }
           });
         });
-
-        if(suggestions.tags.length || suggestions.addresses.length) that.suggestions.addClass('active');
       }
     },
 
@@ -747,7 +741,6 @@ qx.Class.define("SearchView", {
 
         that.reset();
         that.view.removeClass('active');
-        that.suggestions.removeClass('active');
         that.isActive(false);
 
         that.say('searchViewClosed');
