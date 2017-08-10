@@ -218,7 +218,7 @@ qx.Class.define("APPAFEEFA", {
 
 			// fetch only necessary data for app startup
 			that.getDataManager().fetchInitialData(function(){
-        that.setArea(APP.getData().areas.dresden);
+        that.setArea(APP.getData().areas.leipzig);
 
 				cb();
       	that.loading(true);
