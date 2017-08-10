@@ -298,7 +298,7 @@ qx.Class.define("SearchView", {
       var that = this;
 
       // DEFINING
-      var tags = ['homework', 'iwgr'];
+      var tags = ['homework', 'iwgr', 'racism'];
       var groups = ['women', 'children', 'men', 'refugees'];
       var lists = ['beratung-fur-refugees-in-dd', 'freizeit-fur-kinder', 'geselliger-abend'];
       var articles = ['Wie finde ich den richtigen Deutschkurs?', 'WOHNEN – WEGE AUS DER SAMMELUNTERKUNFT'];
