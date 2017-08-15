@@ -1,5 +1,3 @@
-import _ from 'jQuery';
-
 class MainView {
 	 constructor(mainText) {
       console.log('Hello From MainView.js');

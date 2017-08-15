@@ -1,20 +1,7 @@
-.htaccess
-config.php
-messageAPI/lib/swiftmailer/notes
-DDFA/css/.sass-cache
-built/.gitignore
-built/stats
-built/build.txt
-built/DDFA/css/sass
-built/DDFA/css/.sass-cache
-built/DDFA/css/compass_watch-development.bat
-built/DDFA/css/prod_config.rb
-built/DDFA/css/config.rb
-built/DDFA/css/compass_compile-production.bat
-
 ################################
 ######Default Node Config#######
 ################################
+dist/built
 
 # Logs
 logs
