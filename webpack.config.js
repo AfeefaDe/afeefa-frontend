@@ -30,12 +30,12 @@ module.exports = {
         }
       },
       {
-        test: /\.(html|php)$/,
+        test: /\.(html|php|svg|png|jpg)$/,
         use: [
           'file-loader'
         ]
       }
-    ]
+    ],
   },
   plugins: [
     new ExtractTextPlugin({filename: cssOutput}),
