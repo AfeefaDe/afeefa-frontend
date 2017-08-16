@@ -12,10 +12,10 @@
 		&.locateBtn {
 			width: 3.5em;
 			height: 3.5em;
-			@include border-radius(2em);
+			border-radius: 2em;
 
 			background-image: url("../img/btn-locate-white.svg");
-			@include background-size(60%);
+			background-size: 60%;
 		}
 	}
 }

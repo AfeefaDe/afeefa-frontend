@@ -7,8 +7,8 @@
   height: 2em;
   color: $gray50;
   padding: 0 1em;
-  @include display-flex;
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
   /*@inlcude justify-content(space-between);*/
 
 	p {
@@ -41,7 +41,7 @@
       height: 1.3em;
       background-image: url("../img/icon_196.svg");
       background-repeat: no-repeat;
-      @include background-size(contain);
+      background-size: contain;
       opacity: .6;
 
       &:hover {

@@ -1,4 +1,3 @@
-@import "compass/css3";
 
 #includeView {
 	
@@ -33,9 +32,9 @@
 				padding: 5rem 0 1rem 0;
 				font-size: 2em;
 				color: $white;
-				@include box-sizing(content-box);
+				box-sizing: content-box;
 
-				@include transition(padding 500ms);
+				transition: padding 500ms;
 			}
 
 			p.subheading {
@@ -54,7 +53,7 @@
 
 		.entry-content {
 			
-			@include flex-grow(1);
+			flex-grow: 1;
 			width: 100%;
 
 			padding: 1em 3rem;

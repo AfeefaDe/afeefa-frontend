@@ -73,7 +73,7 @@
 			&.cat-jobs { background-image: url("../img/icon_75.svg"); }
 			&.cat-consultation { background-image: url("../img/icon_09.svg"); }
 			&.cat-leisure { background-image: url("../img/icon_85.svg"); }
-			&.cat-community { background-image: url("../img/icon_01.svg"); @include background-size(85%); }
+			&.cat-community { background-image: url("../img/icon_01.svg"); background-size: 85%; }
 			&.cat-donation { background-image: url("../img/icon_11.svg"); }
 			&.cat-external-event { background-image: url("../img/icon_191.svg"); }
 		}

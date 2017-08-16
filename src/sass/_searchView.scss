@@ -7,7 +7,7 @@
 	left: 0em;
 	z-index: 10;
 	background-color: $gray95;
-	@include box-shadow(0px 0px 2px #000);
+	box-shadow: 0px 0px 2px #000;
 	color: $white;
 	
 	width: $viewWidth;
@@ -23,13 +23,13 @@
 		height: $height_sb;
 		z-index: 20;
 		background-color: $gray95;
-		@include box-shadow(0px 2px 5px #000);
+		box-shadow: 0px 2px 5px #000;
 
 		.button {
 			position: absolute;
 			width: 3rem;
 			height: $height_sb;
-			@include background-size(40%);
+			background-size: 40%;
 			background-repeat: no-repeat;
 			background-position: center center;
 			cursor: pointer;
@@ -50,7 +50,7 @@
 			top: 0;
 			right: 0;
 	    background-image: url("../img/icon_54.svg");
-			@include background-size(55%);
+			background-size: 55%;
 		}
 
 		.filter-btn {
@@ -61,7 +61,7 @@
 			top: 0;
 			right: 0;
 	    background-image: url("../img/icon_34.svg");
-			@include transform(rotate(45deg));
+			transform: rotate(45deg);
 			opacity: 1;
 			display: none;
 		}
@@ -101,7 +101,7 @@
 			&.active { display: inline-block; }
     	overflow: hidden;
     	text-overflow: ellipsis;
-			@include border-radius(.1em);
+			border-radius: .1em;
 
 			&[class*="cat"] {
 				color: $white;
@@ -165,7 +165,7 @@
 			width: 100%;
 			top: 0;
 			left: 0;
-			@include border-radius(0);
+			border-radius: 0;
 
 			height: $height_sb !important;
 
@@ -231,7 +231,7 @@
 				background-color: $gray95;
 				height: calc(100vh - 6rem);
 		    overflow: scroll;
-				@include box-shadow(0px 0px 2px #000);
+				box-shadow: 0px 0px 2px #000;
 			}
 
 			#map-area {

@@ -7,14 +7,14 @@
 	width: 30em;
 	height: 100%;
 
-	@include display-flex;
-	@include flex-direction(column);
+	display: flex;
+	flex-direction: column;
 	
 	visibility: hidden;
 	background-color: $white;
-	@include box-shadow(0px 0px 2px #333);
+	box-shadow: 0px 0px 2px #333;
 	opacity: 0;
-	@include transition(opacity 200ms);
+	transition: opacity 200ms;
 	
 	&.active {
 		visibility: visible;
@@ -25,7 +25,7 @@
 	.heading {
 		
 		min-height: 4em;
-		@include flex-shrink(0);
+		flex-shrink: 0;
 		color: $white;
 		background-color: $gray95;
 		position: relative;
@@ -36,7 +36,7 @@
 		}
 
 		h1 {
-			@include box-sizing(border-box);
+			box-sizing: border-box;
 			margin: 0;
 			padding: 1.5rem 3rem 1.4rem 5rem;;
 
@@ -47,7 +47,7 @@
 	}
 
 	.scroll-container {
-		@include flex-grow(1);
+		flex-grow: 1;
 		overflow-y: auto;
 		padding-bottom: 1em;
 		overflow-x: hidden;
@@ -63,7 +63,7 @@
 		cursor: pointer;
 		opacity: .8;
 		background-image: url("../img/icon_201.svg");
-		@include background-size(40%);
+		background-size: 40%;
 		background-position: center center;
 		background-repeat: no-repeat;
 
