@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    # Enable URL rewriting
+    RewriteEngine On
+
+    # force https
+    RewriteCond %{SERVER_PORT} !^443$
+    RewriteRule (.*) https://%{HTTP_HOST}/$1   [L]
+
+    RewriteCond %{HTTPS} =on
+    RewriteRule ^api(/.*) http://localhost:65415/api$1 [P]
+
+    RewriteCond %{HTTPS} =off
+    RewriteRule ^api(/.*) http://localhost:65415/api/$1 [P]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /index.php#$1 [L]
+</IfModule>

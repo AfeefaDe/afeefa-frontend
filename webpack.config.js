@@ -3,7 +3,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 /* config */
-const cssInput = './src/sass/style.scss';
+const cssInput = './src/sass/afeefa.scss';
 const cssOutput = 'styles.min.css';
 
 const jsInput = './src/js/index.js';

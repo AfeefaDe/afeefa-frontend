@@ -1,0 +1,58 @@
+#areaView {
+	position: absolute;
+	z-index: 15;
+	min-width: 10rem;
+	bottom: 1rem;
+	left: 5rem;
+	@include display-flex;
+	@include flex-direction(column);
+
+	.area-btn {
+		display: none;
+		-webkit-animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+    animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+		padding: .3rem 1rem .3rem 2.5rem;
+		cursor: pointer;
+		font-weight: 400;
+		color: $gray50;
+
+		&.active {
+			display: inline-block;
+			order: 99;
+		  background-image: url("../img/city.svg");
+		  background-repeat: no-repeat;
+			@include background-size(1.6rem);
+			background-position: left center;
+		}
+	}
+
+	&.active {
+		.area-btn {
+			background-color: $white;
+		  background-image: none;
+			color: $black;
+			display: inline-block !important;
+
+			&:hover {
+				background-color: $gray20;
+			}
+		}
+	}
+}
+
+.mobile {
+	#areaView {
+		display: none;
+	}
+}
+
+.rtl {
+	#areaView {
+		.area-btn {
+			padding: .3rem 2rem .3rem 1rem;
+			&.active {
+				background-position: right center;
+			}
+		}
+	}
+}

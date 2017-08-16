@@ -1,0 +1,329 @@
+@import "compass/css3";
+@mixin languageFlags {
+
+  &.de { background-image: url("../img/flag_de.svg"); }
+  &.en { background-image: url("../img/flag_en.svg"); }
+  &.es { background-image: url("../img/flag_es.svg"); }
+  &.ku { background-image: url("../img/flag_ku.svg"); }
+  &.ar { background-image: url("../img/flag_ar.svg"); }
+  &.fa { background-image: url("../img/flag_fa.svg"); }
+  &.ps { background-image: url("../img/flag_fa.svg"); }
+  &.fr { background-image: url("../img/flag_fr.svg"); }
+  &.sr { background-image: url("../img/flag_sr.svg"); }
+  &.sq { background-image: url("../img/flag_sq.svg"); }
+  &.ru { background-image: url("../img/flag_ru.svg"); }
+  &.ti { background-image: url("../img/flag_ti.svg"); }
+  &.ur { background-image: url("../img/flag_ur.svg"); }
+  &.tr { background-image: url("../img/flag_tr.svg"); }
+  &.it { background-image: url("../img/flag_it.svg"); }
+
+}
+
+@mixin roundedCorners {
+  @include border-radius(.2em);
+}
+
+@mixin shadow($height: 1, $color: #000) {
+  @include transition(box-shadow 150ms);
+  @include box-shadow(0px 0px ($height * 2px) $color);
+}
+
+@mixin textLink {
+  color: $black;
+  text-decoration: none;
+  border-bottom: 1px $black dotted;
+  
+  &:visited, &:active {
+    color: $black;
+    text-decoration: none;
+    border-bottom: 1px $black dotted;
+  }
+
+  &:hover {
+    @include transition(background-color 300ms);
+    color: $white;
+    background-color: $black;
+    text-decoration: none;
+  }
+}
+
+@mixin circleBtn {
+
+  width: 3em;
+  height: 3em;
+  @include border-radius(2em);
+  @include box-sizing(border-box);
+
+  @include shadow();
+  
+  @include background-size(50%);
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+
+  &:hover {
+    @include box-shadow(0px 0px 5px #111);
+  }
+}
+
+a {
+  color: inherit;
+}
+button {
+  &.btn-center {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.margin-top {
+  margin-top: 1rem;
+}
+
+.list-results {
+  position: absolute;
+  left: 2rem;
+  width: calc(100% - 4rem);
+  height: calc(100% - 7rem);
+
+  .result {
+    margin-bottom: 2rem;
+    color: $white;
+    cursor: pointer;
+    @include transition(background-color 150ms);
+
+    @include display-flex;
+
+    &:hover {
+      background-color: $black;
+    }
+    
+    .icon {
+      @include entityShapes;
+      @include categoryColors;
+      @include categorySymbols;
+      width: 2rem;
+      height: 2rem;
+      margin: .5rem 2rem .5rem 0.5rem;
+
+      &.add-entry {
+        background-image: url("../img/icon_34.svg");
+      }
+      &.bookmark {
+        background-image: url("../img/icon_bookmark.svg");
+        @include background-size(60%);
+      }
+      &.wissensportal {
+        background-image: url("../img/icon_54.svg");
+      }
+      &.support-wanted {
+        background-image: url("../img/icon_56.svg");
+      }
+      &.for-children {
+        background-image: url("../img/icon_124.svg");
+      }
+      &.for-women {
+        background-image: url("../img/icon_156.svg");
+      }
+      &.certified {
+        background-image: url("../img/icon_169.svg");
+      }
+      &.start-intro {
+        background-image: url("../img/icon_32.svg");
+      }
+      &.feedback {
+        background-image: url("../img/icon_50.svg");
+      }
+      &.iwgr {
+        background-image: url("../img/icon_194.svg");
+        @include background-size(100%);
+      }
+    }
+
+    .labels {
+      @include flex(1);
+      @include display-flex;
+      @include flex-direction(column);
+
+      span {
+        line-height: 1.5em;
+        cursor: pointer;
+      }
+
+      .sub-label {
+        color: $gray50;
+        font-size: .8em;
+      }
+    }
+  }
+
+  .section-header {
+    text-transform: uppercase;
+    color: $gray50;
+    margin: 2em 0.8em 1em;
+    
+    &:first-child {
+      margin: 0 1em 1em;
+    }
+    
+    &.with-action {
+      cursor: pointer;
+
+      &:hover {
+        color: $gray20;
+      }
+    }
+  }
+}
+  
+.close-btn {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+  opacity: .2;
+  background-image: url("../img/icon_34.svg");
+  @include background-size(100%);
+  background-position: center center;
+  background-repeat: no-repeat;
+  @include transform(rotate(45deg));
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+html {
+  font-size: $font-size !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  font-size: $font-size !important;
+  font-weight: 300;
+  direction: ltr;
+  color: $black !important;
+
+  /* disabling chrome's pull-down-to-refresh feature */
+  overflow-y: hidden;
+
+  background-color: $gray95;
+
+}
+
+b,
+strong {
+  font-weight: 400;
+}
+
+.hidden{ display: none; }
+.no-top-margin { margin-top: 0 !important; }
+
+/* SCROLLBARS with perfect-scrollbar.js */
+.ps-container>.ps-scrollbar-y-rail,
+.ps-container>.ps-scrollbar-y-rail>.ps-scrollbar-y {
+  width: 6px !important;
+}
+
+
+/* dark curtain */
+@mixin curtainActive {
+  visibility: visible !important;
+  opacity: 0.6 !important;
+}
+
+@mixin curtainLoading {
+  background-image: url("../img/loader.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+#curtain {
+  @include transition(all 250ms);
+  background-color: $black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 9999;
+  
+  &.active {
+    @include curtainActive;
+  }
+}
+
+#main-container {
+  
+  @include transition(left 250ms, background-size 500ms ease-out);
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: url("../img/afeefa_light_slogan.svg");
+  @include background-size(30%);
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  @include box-shadow(0px 0px 10px #111);
+
+  &.shifted {
+    left: 15em;
+
+    #curtain {
+      @include curtainActive;
+    }
+
+    #menuView { z-index: 999; }
+    /*#lang-menu { display: none; }*/
+  }
+
+  &.shifted-small {
+    left: 4em;
+
+    #curtain {
+      @include curtainActive;
+    }
+
+    #languageViewMobile { z-index: 999; }
+    /*#main-menu { display: none; }*/
+
+  }
+}
+
+.mobile {
+  #main-container {
+    @include background-size(50%);
+  }
+}
+
+.desktop {
+  #main-container {
+    height: calc(100% - 2em);
+  }
+}
+
+.rtl {
+  .list-results {
+    left: auto;
+    right: 2rem;
+
+    .result .icon {
+      margin: .5rem .5rem .5rem 2rem;
+    }
+  }
+}
+body.loading {
+  #curtain {
+    @include curtainActive;
+    @include curtainLoading;
+  }
+}
