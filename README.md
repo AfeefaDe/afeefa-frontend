@@ -12,3 +12,16 @@ The main web app of Afeefa.de
 4. setup a local virtual host or something phply, which points at the root folder (index.html)
 
 	or simply command `php -S localhost:8000` from source folder
+
+## Development
+
+To build the assets simply run:
+```
+$ npm run build
+```
+
+In developing mode you should use:
+```
+$ npm run dev
+```
+wich watches your stylesheets and scripts and compiles them on the fly.

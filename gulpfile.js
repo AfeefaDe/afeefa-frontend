@@ -15,10 +15,12 @@ var babel = require('babelify');
 
 var paths = {
 	styles: './src/sass/**/*.scss',
+	entryStylesheet: './src/sass/afeefa.scss',
+	entryScript: './src/js/index.js'
 };
 
 gulp.task('styles', function() {
-	gulp.src(['./src/sass/afeefa.scss'])
+	gulp.src([paths.entryStylesheet])
 	//Sass conversion
 	.pipe(sass().on('error', sass.logError))
 	//autoprefixer for compability
@@ -35,7 +37,7 @@ gulp.task('styles', function() {
 });
 
 function compile(watch) {
-	var bundler = watchify(browserify('./src/js/index.js', { debug: true }).transform(babel));
+	var bundler = watchify(browserify(paths.entryScript, { debug: true }).transform(babel));
 	function rebundle() {
 		bundler.bundle()
 			.on('error', function(err) { console.error(err); this.emit('end'); })
