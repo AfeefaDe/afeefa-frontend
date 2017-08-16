@@ -218,8 +218,12 @@ qx.Class.define("APPAFEEFA", {
 
 			// fetch only necessary data for app startup
 			that.getDataManager().fetchInitialData(function(){
-        that.setArea(APP.getData().areas.leipzig);
-
+        	
+        if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum410' ){
+        	that.setArea(APP.getData().areas.leipzig);
+        } else {
+        	that.setArea(APP.getData().areas.dresden);
+        }
 				cb();
       	that.loading(true);
 				
