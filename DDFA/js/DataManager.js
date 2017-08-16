@@ -55,14 +55,19 @@ qx.Class.define("DataManager", {
                 if(!cb) that.say('fetchedNewData');
                 that.say('fetchedAllData');
 
-                that.fetchExternalData('freifunk', function(){
-                    if(!cb) that.say('fetchedNewData');
-                    
-                    that.fetchExternalData('facebookEvents', function(){
-                        that.say('fetchedNewData');
-                        if(cb) cb();  // finished, so callback
+                if(APP.getArea().dataKey == 'dresden') {
+                    that.fetchExternalData('freifunk', function(){
+                        if(!cb) that.say('fetchedNewData');
+                        
+                        that.fetchExternalData('facebookEvents', function(){
+                            that.say('fetchedNewData');
+                            if(cb) cb();  // finished, so callback
+                        });
                     });
-                });
+                } else {
+                    if(cb) that.say('fetchedNewData');
+                    if(cb) cb();  // finished, so callback
+                }
 
             });
         },
@@ -96,31 +101,39 @@ qx.Class.define("DataManager", {
                         entryStats: {
                             orgas: 600,
                             events: 30
-                        }
+                        },
+                        available: true,
+                        dataKey: 'dresden'
                     },
-                    // bautzen: {
-                    //     initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
-                    //     label: 'Bautzen',
-                    //     entryStats: {
-                    //         orgas: 118,
-                    //         events: 0
-                    //     }
-                    // },
-                    // leipzig: {
-                    //     initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
-                    //     label: 'Leipzig',
-                    //     entryStats: {
-                    //         orgas: 118,
-                    //         events: 0
-                    //     }
-                    // },
+                    leipzig: {
+                        initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
+                        label: 'Leipzig',
+                        entryStats: {
+                            orgas: 118,
+                            events: 0
+                        },
+                        available: false,
+                        dataKey: 'leipzig'
+                    },
+                    bautzen: {
+                        initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
+                        label: 'Bautzen',
+                        entryStats: {
+                            orgas: 118,
+                            events: 0
+                        },
+                        available: false,
+                        dataKey: 'bautzen'
+                    },
                     pirna: {
                         initialView: { lat: 50.957456, lon: 13.937007, zoom: 14 },
                         label: 'Pirna',
                         entryStats: {
                             orgas: 118,
                             events: 0
-                        }
+                        },
+                        available: true,
+                        dataKey: 'dresden'
                     }
                 }
             };
@@ -167,7 +180,7 @@ qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: APP.getConfig().apiUrl + "api/marketentries?locale=" + APP.getLM().getCurrentLang(),
+                url: APP.getConfig().apiUrl + "api/marketentries?locale=" + APP.getLM().getCurrentLang() + "&area=" + APP.getArea().dataKey,
                 type: 'GET',
                 dataType: 'json'
             })

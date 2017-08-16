@@ -49,6 +49,8 @@ qx.Class.define("AreaView", {
    //    );
 
       _.each( APP.getData().areas, function(value, key){
+				if(!value.available) return;
+				
 				var item = $("<div />")
 					.addClass('area-btn')
 					.append(value.label)
@@ -61,6 +63,7 @@ qx.Class.define("AreaView", {
 						if( value != APP.getArea() ){
 							APP.setArea(value);
 							that.say('areaChanged', APP.getArea());
+							that.say('languageChanged', APP.getLM().getCurrentLang());
 							that.load();
 						}
 					});
