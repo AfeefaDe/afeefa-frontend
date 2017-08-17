@@ -221,7 +221,11 @@ qx.Class.define("APPAFEEFA", {
         	
         if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum410' ){
         	that.setArea(APP.getData().areas.leipzig);
-        } else {
+        }
+        else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 && prompt() === 'horbz-afeefa' ){
+        	that.setArea(APP.getData().areas.bautzen);
+				}
+        else {
         	that.setArea(APP.getData().areas.dresden);
         }
 				cb();
