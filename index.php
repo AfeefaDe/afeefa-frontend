@@ -86,7 +86,7 @@
 			</p>
 		</div>
 		<div class="opt1">
-			<p class="donate">Was meinen Sie zu Afeefa.de? Für eine Beantwortung unserer <a target="_blank" href="https://afeefade.typeform.com/to/csN7YQ"><strong>Umfrage</strong></a> wären wir sehr dankbar!
+			<p class="donate">Was meinen Sie zu Afeefa.de? Für eine Beantwortung unserer kurzen <a target="_blank" href="https://afeefade.typeform.com/to/csN7YQ"><strong>Umfrage</strong></a> wären wir sehr dankbar!
 			</p>
 		</div>
 	</div>
