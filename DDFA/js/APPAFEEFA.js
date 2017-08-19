@@ -302,6 +302,24 @@ qx.Class.define("APPAFEEFA", {
       		$('#main-container').append(curtain);
 			that.setCurtain(curtain);
 
+			// switch footer content
+			function togglFooter(i){
+				if(i%2){
+					$('#footer div.opt1').hide();
+					$('#footer div.opt2').fadeIn(500);
+				} else {
+					$('#footer div.opt2').hide();
+					$('#footer div.opt1').fadeIn(500);
+				}
+			}
+			var i=0;
+			togglFooter(i);
+			setInterval(function(){
+				i++;
+				togglFooter(i);
+			}, 30000);
+
+			// reload on footer click
 			$('div#footer').on('contextmenu', function(e){
 				e.preventDefault();
 				// APP.loading(true);
