@@ -160,7 +160,11 @@ qx.Class.define("DetailView", {
 			////////////////
 			// timestamps //
 			////////////////
-			that.timestampContainer = $("<div />").addClass('property timestamp');
+			that.timestampContainer = $("<div />")
+				.addClass('property timestamp')
+				.on('contextmenu', function(e){
+          window.open('https://backend.afeefa.de/' + that.record.entryType + 's/' + that.record.id);
+				});
 			that.scrollContainer.append(that.timestampContainer);
 
 			$('#main-container').append(that.view);
