@@ -361,6 +361,8 @@ qx.Class.define("SearchView", {
             url: '',
             action: function(){
               APP.getMapView().map.setView([s.latitude, s.longitude], 16);
+              that.reset();
+              that.loadDashboard();
             }
           });
         });
@@ -467,7 +469,6 @@ qx.Class.define("SearchView", {
       }
       // free search
       else {
-
         if(that.inputField.is(":focus")) that.loadSuggestions(query);
 
         entriesFiltered = _.filter( entries, function(entry){
