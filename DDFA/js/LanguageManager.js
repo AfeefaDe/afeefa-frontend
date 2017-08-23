@@ -33,7 +33,7 @@ qx.Class.define("LanguageManager", {
             var that = this;
 
             var wording = that.getBib()[ key ];
-            if( wording === undefined ) return key + ' not translated';
+            if( wording === undefined ) return '';
             return wording.message;
         },
 

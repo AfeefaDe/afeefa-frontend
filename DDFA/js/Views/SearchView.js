@@ -299,7 +299,7 @@ qx.Class.define("SearchView", {
       var that = this;
 
       // DEFINING
-      var tags = ['asylum', 'homework', 'racism', 'youth'];
+      var tags = ['asylum', 'homework', 'racism', 'women', 'youth'];
       var groups = ['women', 'children', 'men', 'refugees'];
       var lists = ['beratung-fur-refugees-in-dd', 'freizeit-fur-kinder', 'geselliger-abend'];
       var articles = ['Wie finde ich den richtigen Deutschkurs?', 'WOHNEN – WEGE AUS DER SAMMELUNTERKUNFT'];
@@ -343,7 +343,7 @@ qx.Class.define("SearchView", {
 
       _.each(suggestions.tags, function(s){
         createEntry({
-          label: that.getWording('tag.' + s),
+          label: (that.getWording('tag.' + s + '.title'))? that.getWording('tag.' + s + '.title') : that.getWording('tag.' + s),
           cssClass: 'tag',
           url: '/search/tag:' + s,
           action: function(){
