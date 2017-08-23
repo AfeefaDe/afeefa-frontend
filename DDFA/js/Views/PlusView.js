@@ -26,10 +26,10 @@ qx.Class.define("PlusView", {
 				.addClass('button locateBtn')
 				// .attr('id', 'locate-btn')
 				.click(function(){
-					APP.getMapView().locate(true);
+					APP.getMapView().locate();
 				})
 				.on('touchend', function(){
-					APP.getMapView().locate(true);
+					APP.getMapView().locate();
 				});
 			that.view.append(that.locateBtn);
 

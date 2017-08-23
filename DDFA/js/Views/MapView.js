@@ -149,6 +149,33 @@ qx.Class.define("MapView", {
 					that.deselectMarker();
 			});
 
+			// update view if location found
+			that.map.on('locationfound', function(e) {
+				// alert(e.latlng);
+				that.map.setView( e.latlng , 15);
+				that.setUserLocation = e.latlng;
+
+				var myIcon = L.icon({
+						iconUrl: '_Resources/Static/Packages/DDFA.dresdenfueralleDe/img/noun_91817_cc.png',
+						iconSize: [30, 30],
+						iconAnchor: [15, 15],
+						popupAnchor: [40, -10]
+				});
+
+				var leafMarker = L.marker(e.latlng, {
+					icon: L.divIcon({
+									className: 'marker-user-location',
+									html: 'Hier bin ich',
+									iconSize: [16,16],
+									iconAnchor: [8,8]
+							})
+				}).addTo(that.map);
+			});
+
+			// that.map.on('locationerror', function(e) {
+			// 		alert('Locating failed');
+			// });
+
 			// that.map.on('zoomend', function(){
 			// 	if(that.getSelectedMarker()){
 			// 		try{ that.layerForMainMarkers.getVisibleParent(that.getSelectedMarker()).spiderfy(); } catch(e){}
@@ -523,52 +550,16 @@ qx.Class.define("MapView", {
 		},
 
 		// locate the user on startup and set view to his position
-		locate: function(setView) {
+		locate: function() {
 
 			var that = this;
 
-			// trigger locating
+			// trigger mapbox locating
 			that.map.locate( {
 				watch: false,
 				setView: false,
 				enableHighAccuracy: true
 			});
-
-			// update view if location found
-		that.map.on('locationfound', function(e) {
-				// alert(e.latlng);
-				if(setView) that.map.setView( e.latlng , 15);
-				that.setUserLocation = e.latlng;
-
-				var myIcon = L.icon({
-						iconUrl: '_Resources/Static/Packages/DDFA.dresdenfueralleDe/img/noun_91817_cc.png',
-						// iconRetinaUrl: 'my-icon@2x.png',
-						iconSize: [30, 30],
-						iconAnchor: [15, 15],
-						popupAnchor: [40, -10]
-						// shadowUrl: 'my-icon-shadow.png',
-						// shadowRetinaUrl: 'my-icon-shadow@2x.png',
-						// shadowSize: [68, 95],
-						// shadowAnchor: [22, 94]
-				});
-
-				// L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
-				var leafMarker = L.marker(e.latlng, {
-					// icon: myIcon
-					icon: L.divIcon({
-									className: 'marker-user-location',
-									html: '',
-									// html: '<p>' + marker.name + '</p>',
-									// iconSize: [100,20],
-									iconSize: [16,16],
-									iconAnchor: [8,8]
-							})
-				}).addTo(that.map);
-		});
-
-		that.map.on('locationerror', function(e) {
-				// alert('Locating failed');
-		});
 		},
 
 		beShy: function(bool){

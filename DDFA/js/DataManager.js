@@ -163,7 +163,7 @@ qx.Class.define("DataManager", {
         findAddress: function (address, cb) {
 
             $.ajax({
-                url: 'https://dev.backend.afeefa.de/api/v1/geocoding?token=MapCat_050615&address=' + encodeURI(address),
+                url: APP.getConfig().backendApiUrl + 'api/v1/geocoding?token=MapCat_050615&address=' + encodeURI(address),
                 type: 'GET',
                 dataType: 'text',
             })

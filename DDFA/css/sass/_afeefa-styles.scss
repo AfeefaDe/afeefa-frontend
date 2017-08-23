@@ -97,6 +97,10 @@ button {
     &:hover {
       background-color: $black;
     }
+
+    &:first-child, &.first-child {
+      margin-top: 1rem;
+    }
     
     .icon {
       @include entityShapes;

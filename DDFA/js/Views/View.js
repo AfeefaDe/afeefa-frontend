@@ -140,9 +140,12 @@ qx.Class.define("View", {
         // createListResult: function( iconClass, label, subLabel, action, locationSymbol, tooltip, action_secondary ) {
         createListResult: function( options ) {
           var that = this;
+
+          if(options.cssClass === undefined) options.cssClass = 'result';
+          else options.cssClass = 'result ' + options.cssClass;
           
           const resultEl = $("<div />")
-            .addClass('result')
+            .addClass(options.cssClass)
             .click(function(){
               options.action();
             })

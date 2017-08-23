@@ -134,7 +134,7 @@ qx.Class.define("SearchView", {
       
       if(APP.getUser().getBookmarks().length > 0){
         // MY AFEEFA
-        that.createSectionHeader( that.getWording('search.section.user') );
+        // that.createSectionHeader( that.getWording('search.section.user') );
 
         // user bookmarks
         var action = function(){
@@ -142,6 +142,7 @@ qx.Class.define("SearchView", {
         };
         that.createListResult(
           {
+            cssClass: 'first-child',
             iconClass: 'bookmark',
             label: that.getWording('search.tag.bookmarks'),
             subLabel: APP.getUser().getBookmarks().length,
@@ -298,7 +299,7 @@ qx.Class.define("SearchView", {
       var that = this;
 
       // DEFINING
-      var tags = ['homework', 'iwgr', 'racism'];
+      var tags = ['asylum', 'homework', 'racism', 'youth'];
       var groups = ['women', 'children', 'men', 'refugees'];
       var lists = ['beratung-fur-refugees-in-dd', 'freizeit-fur-kinder', 'geselliger-abend'];
       var articles = ['Wie finde ich den richtigen Deutschkurs?', 'WOHNEN – WEGE AUS DER SAMMELUNTERKUNFT'];
@@ -355,7 +356,7 @@ qx.Class.define("SearchView", {
         that.scrollContainer.find('.address').remove();
         _.each(suggestions.addresses, function(s){
           createEntry({
-            label: 'Adresse gefunden',
+            label: s.full_address,
             cssClass: 'address',
             url: '',
             action: function(){
