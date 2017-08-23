@@ -328,7 +328,6 @@ qx.Class.define("SearchView", {
 
       // DISPLAYING
       function createEntry(options){
-        // that.suggestions.append(
         that.scrollContainer.prepend(
           $("<a />")
             .append(options.label)
@@ -469,6 +468,9 @@ qx.Class.define("SearchView", {
       }
       // free search
       else {
+
+        blockSyncWithMap = true;
+
         if(that.inputField.is(":focus")) that.loadSuggestions(query);
 
         entriesFiltered = _.filter( entries, function(entry){
