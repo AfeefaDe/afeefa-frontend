@@ -175,22 +175,6 @@ qx.Class.define("SearchView", {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
 
-      that.createSectionHeader( 'Wissen' );
-      
-      // refugee guide
-      var action = function(){
-        APP.getIncludeView().load('wissensportal');
-      };
-      that.createListResult(
-        {
-          iconClass: 'wissensportal',
-          label: that.getWording('search.label.refugeeGuide'),
-          subLabel: that.getWording('search.sublabel.refugeeGuide'),
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
-
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
@@ -209,13 +193,29 @@ qx.Class.define("SearchView", {
 
       // for children
       var action = function(){
-        that.inputField.val('prop:forchildren').trigger( "input" );
+        that.inputField.val('tag:youth').trigger( "input" );
       };
       that.createListResult(
         {
           iconClass: 'for-children',
           label: that.getWording('search.label.forchildren'),
           subLabel: that.getWording('search.sublabel.forchildren'),
+          action: action,
+          targetContainertEl: that.scrollContainer
+        }
+      );
+
+      that.createSectionHeader( 'Wissen' );
+      
+      // refugee guide
+      var action = function(){
+        APP.getIncludeView().load('wissensportal');
+      };
+      that.createListResult(
+        {
+          iconClass: 'wissensportal',
+          label: that.getWording('search.label.refugeeGuide'),
+          subLabel: that.getWording('search.sublabel.refugeeGuide'),
           action: action,
           targetContainertEl: that.scrollContainer
         }
