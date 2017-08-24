@@ -102,7 +102,7 @@ qx.Class.define("DetailView", {
 			//////////////////////
 			
 			// generic
-			var properties = ['category', 'times', 'descriptionShort', 'description', 'speakerPublic', 'spokenLanguages', 'location', 'arrival', 'openingHours', 'phone', 'mail', 'web', 'facebook'];
+			var properties = ['category', 'times', 'descriptionShort', 'supportWantedDetail', 'description', 'speakerPublic', 'spokenLanguages', 'location', 'arrival', 'openingHours', 'phone', 'mail', 'web', 'facebook'];
 			_.each(properties, function(prop){
 
 				that['propertyContainer'+prop] = $("<div />").addClass('property ' + prop);

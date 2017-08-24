@@ -157,7 +157,7 @@ qx.Class.define("APPAFEEFA", {
 					}
 				],
 				categoriesBasic: ["housing", "christian", "islam", "jewish", 'public', 'wifi', 'shop'],
-				simpleProperties: ['descriptionShort', 'description', 'speakerPublic', 'spokenLanguages', 'phone', 'mail', 'web', 'facebook', 'arrival', 'openingHours'],
+				simpleProperties: ['descriptionShort', 'description', 'supportWantedDetail', 'speakerPublic', 'spokenLanguages', 'phone', 'mail', 'web', 'facebook', 'arrival', 'openingHours'],
 				imgPath: 'DDFA/img/'
 			}
 		);

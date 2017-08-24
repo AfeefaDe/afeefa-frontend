@@ -222,6 +222,10 @@ qx.Class.define("View", {
             if(placename.length > 50) placename = placename.substring(0,50) + '...';
             subLabel += ' | @' + placename;
           }
+          // special
+          if( options.query == 'prop:supportwanted' ){
+            if( entry.supportWantedDetail ) subLabel += '<br><i>' + entry.supportWantedDetail + '<i>';
+          }
           
           // action
           var action = function(){
