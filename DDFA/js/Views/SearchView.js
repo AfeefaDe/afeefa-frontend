@@ -45,6 +45,14 @@ qx.Class.define("SearchView", {
         });
       that.searchBar.append(that.filterBtn);
 
+      // add button
+      that.addBtn = $("<div />")
+        .addClass('button add-btn')
+        .click(function(){
+          APP.getFormView().load( 'newEntry' );
+        });
+      that.searchBar.append(that.addBtn);
+
       // cancel button
       that.cancelBtn = $("<div />")
         .addClass('button cancel-btn')
