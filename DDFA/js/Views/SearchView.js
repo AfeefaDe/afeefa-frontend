@@ -385,6 +385,12 @@ qx.Class.define("SearchView", {
 
       var entriesFiltered, blockSyncWithMap = false;
 
+      // search type for individual result formatting
+      that.currentSearchType = null;
+
+      // info about why entry was found; for individual result formatting (e.g. needle highlighting)
+      var foundCriteria = {};
+
       // predefined queries: 
       if( query.indexOf(':') >= 0 ){
         var operator = query.substring(0, query.indexOf(':'));
@@ -451,6 +457,7 @@ qx.Class.define("SearchView", {
                 return entry.supportWanted;
               });
               that.setSearchTag(null, that.getWording('search.tag.supportwanted'));
+              that.currentSearchType = 'support-search';
               break;
             case 'forchildren':
               entriesFiltered = _.filter( entries, function(entry){
@@ -481,6 +488,8 @@ qx.Class.define("SearchView", {
 
         if(that.inputField.is(":focus")) that.loadSuggestions(query);
 
+        that.currentSearchType = 'free-search';
+        
         entriesFiltered = _.filter( entries, function(entry){
           // in name?
           if( entry.name.toLowerCase().indexOf(query) >= 0 ) return true;
@@ -494,19 +503,21 @@ qx.Class.define("SearchView", {
             var subcat = that.getWording('cat.' + entry.subCategory);
             if( subcat.toLowerCase().indexOf(query) >= 0 ) return true;
           }
-          // children?
-          if( entry.forChildren ) {
-            // the query string occurs in the "for children" property´wording of the selected language
-            var children = that.getWording('prop.forChildren');
-            if( children.toLowerCase().indexOf(query) >= 0 ) return true;
-          }
           // in description?
           if( entry.descriptionShort ) {
-            if( entry.descriptionShort.toLowerCase().indexOf(query) >= 0 ) return true;
+            var needlePos = entry.descriptionShort.toLowerCase().indexOf(query);
+            if( needlePos >= 0 ){
+              foundCriteria[entry.id] = {foundInAttribute: 'descriptionShort', pos: needlePos, length: query.length};
+              return true;
+            }
           }
           // in description?
           if( entry.description ) {
-            if( entry.description.toLowerCase().indexOf(query) >= 0 ) return true;
+            var needlePos = entry.description.toLowerCase().indexOf(query);
+            if( needlePos >= 0 ){
+              foundCriteria[entry.id] = {foundInAttribute: 'description', pos: needlePos, length: query.length};
+              return true;
+            }
           }
           // in speakerPublic?
           if( entry.speakerPublic ) {
@@ -518,7 +529,12 @@ qx.Class.define("SearchView", {
       }
 
       _.each(entriesFiltered, function(entry) {
-        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer, query: query} );
+        that.createEntryResult({
+          entry: entry,
+          targetContainertEl: that.scrollContainer,
+          type: that.currentSearchType,
+          foundCriteria: foundCriteria[entry.id]
+        });
       });
       
       // print list button
