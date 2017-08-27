@@ -340,7 +340,7 @@ qx.Class.define("DetailView", {
 					else if( _.contains( ['phone'], prop) ){
 						that['propertyValue'+prop].append('<a target="_blank" href="tel:' + propValue.replace(/\D/g, "") + '">' + propValue + '</a>');
 					}
-					else if( _.contains( ['description', 'descriptionShort'], prop) ){
+					else if( _.contains( ['description', 'descriptionShort', 'supportWantedDetail'], prop) ){
 						that['propertyValue'+prop].append(propValue.replace(/(?:\r\n|\r|\n)/g, '<br />'));
 
 						if(record.descriptionShort) that['propertyContainer'+'description'].addClass('hidden');

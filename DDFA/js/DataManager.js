@@ -49,7 +49,7 @@ qx.Class.define("DataManager", {
                 // store entries in APP
                 currentAppData.entries = data.marketentries;
 
-                currentAppData.entries = _.sortBy(currentAppData.entries, 'name');
+                currentAppData.entries = _.sortBy(currentAppData.entries, 'updated_at').reverse();
 
                 APP.setData(currentAppData);
                 if(!cb) that.say('fetchedNewData');

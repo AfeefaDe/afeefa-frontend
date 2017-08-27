@@ -226,16 +226,16 @@ qx.Class.define("View", {
           }
           
           // individual formatting depending on search type
-          if( options.type = 'free-search' ){
+          if( options.type == 'free-search' ){
             if(options.foundCriteria) {
-              var distance = 15;
+              var distance = 30;
               var needlePrefix = entry[options.foundCriteria.foundInAttribute].substring(options.foundCriteria.pos-distance, options.foundCriteria.pos);
               var needleSuffix = entry[options.foundCriteria.foundInAttribute].substring(options.foundCriteria.pos+options.foundCriteria.length, options.foundCriteria.pos+options.foundCriteria.length+distance);
               var needle = entry[options.foundCriteria.foundInAttribute].substring(options.foundCriteria.pos, options.foundCriteria.pos+options.foundCriteria.length);
               subLabel += '<br><i>...' + needlePrefix + '<span class="needle">' + needle + '</span>' + needleSuffix + '...</i>';
             }
           }
-          else if( options.type = 'support-search' ){
+          else if( options.type == 'support-search' ){
             if( entry.supportWantedDetail ) subLabel += '<br><i>' + entry.supportWantedDetail + '<i>';
           }
           

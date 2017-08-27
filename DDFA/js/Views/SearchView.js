@@ -126,10 +126,13 @@ qx.Class.define("SearchView", {
           'desktop'
         );
 
+        
         that.isActive(true);
         that.maximize();
         that.view.addClass('active');
         that.say('searchViewLoaded');
+        
+        that.scrollContainer.scrollTop(0);
 
         return that;
     },
@@ -508,6 +511,14 @@ qx.Class.define("SearchView", {
             var needlePos = entry.descriptionShort.toLowerCase().indexOf(query);
             if( needlePos >= 0 ){
               foundCriteria[entry.id] = {foundInAttribute: 'descriptionShort', pos: needlePos, length: query.length};
+              return true;
+            }
+          }
+          // in support details?
+          if( entry.supportWantedDetail ) {
+            var needlePos = entry.supportWantedDetail.toLowerCase().indexOf(query);
+            if( needlePos >= 0 ){
+              foundCriteria[entry.id] = {foundInAttribute: 'supportWantedDetail', pos: needlePos, length: query.length};
               return true;
             }
           }
