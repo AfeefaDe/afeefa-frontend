@@ -371,8 +371,8 @@ qx.Class.define("SearchView", {
             url: '',
             action: function(){
               APP.getMapView().map.setView([s.latitude, s.longitude], 16);
-              that.reset();
-              that.loadDashboard();
+              // that.reset();
+              // that.loadDashboard();
             }
           });
         });
@@ -487,7 +487,7 @@ qx.Class.define("SearchView", {
       // free search
       else {
 
-        blockSyncWithMap = true;
+        // blockSyncWithMap = true;
 
         if(that.inputField.is(":focus")) that.loadSuggestions(query);
 
@@ -642,10 +642,10 @@ qx.Class.define("SearchView", {
         that.say('mainMenuBtnClicked');
       });
 
-      that.inputField.focusin(function(){
-        that.load(that.inputField.val());
-        that.say('searchFieldFocused');
-      });
+      // that.inputField.focusin(function(){
+        // that.load(that.inputField.val());
+        // that.say('searchFieldFocused');
+      // });
 
       that.inputField.on('input', function(e){
         var val = that.inputField.val();
