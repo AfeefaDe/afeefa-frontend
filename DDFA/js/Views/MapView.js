@@ -165,7 +165,7 @@ qx.Class.define("MapView", {
 				var leafMarker = L.marker(e.latlng, {
 					icon: L.divIcon({
 									className: 'marker-user-location',
-									html: 'Hier bin ich',
+									html: null,
 									iconSize: [16,16],
 									iconAnchor: [8,8]
 							})
