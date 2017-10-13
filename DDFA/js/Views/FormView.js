@@ -367,8 +367,9 @@ qx.Class.define("FormView", {
 
             // to slack
             APP.getDataManager().createSlackMessage({
-                heading: 'Kontaktanfrage von _' + data.contact.author + ' (' + data.contact.mail + ')_ an _' + options.entry.name + ' (' + options.entry.mail + ')_',
-                message: '```\n' + data.contact.message + '\n```'
+                heading: 'Kontaktanfrage von _' + data.contact.author + ' (' + data.contact.mail + ')_ an ' + options.entry.name + ' (' + APP.getUtility().getFrontendUrlForEntry(options.entry) + ')',
+                // message: '```\n' + data.contact.message + '\n```'
+                message: '```Nachricht wurde anonymisiert```'
             });
 
             // send mail to entry's email
@@ -379,11 +380,11 @@ qx.Class.define("FormView", {
                     mail_to: options.entry.mail,
                     mail_replyTo: data.contact.mail,
                     mail_subject: 'Anfrage von ' + data.contact.author,
-                    mail_bodyPlain: data.contact.message,
+                    mail_bodyPlain: data.contact.message + '\n\nvon: ' + data.contact.author + ' | ' + data.contact.mail + ' | ' + data.contact.phone + '\n\nDiese Nachricht wurde über Ihren Eintrag auf ' +APP.getUtility().getFrontendUrlForEntry(options.entry)+ ' versendet.',
                     mail_bodyHtml: function () {
                         return '<p><i>' + data.contact.message + '</i></p>'
                             + '<p>' + data.contact.author + ' | ' + data.contact.mail + ' | ' + data.contact.phone + '</p>'
-                            + '<hr><small>Nachricht gesendet über <a href="https://afeefa.de">Afeefa.de</a></small>';
+                            + '<hr><small>Diese Nachricht wurde über Ihren Eintrag auf <a href="' +APP.getUtility().getFrontendUrlForEntry(options.entry)+ '">Afeefa.de</a> versendet.<br>' +APP.getUtility().getFrontendUrlForEntry(options.entry)+ '</small>';
                     }
                 }
             });
