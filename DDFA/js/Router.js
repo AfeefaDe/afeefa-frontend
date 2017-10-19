@@ -205,6 +205,24 @@ qx.Class.define("Router", {
 			});
 		},
 
+		slugify: function(text){
+			var that = this;
+
+			return text.toString().toLowerCase()
+		    .replace(/\s+/g, '-')           // Replace spaces with -
+		    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+		    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+		    .replace(/^-+/, '')             // Trim - from start of text
+		    .replace(/-+$/, '');            // Trim - from end of text
+		},
+
+		unslugify: function(slug){
+			var that = this;
+
+			// extract entry ID
+			return slug.substring(0, slug.indexOf('-'));
+		},
+
 		loadFromUrl: function( url ){
 			var that = this;
 
@@ -213,11 +231,11 @@ qx.Class.define("Router", {
 
 			switch(urlParams[0]) {
 		    case 'project':
-		    	var orga = APP.getDataManager().getOrgaById(urlParams[1]);
+		    	var orga = APP.getDataManager().getOrgaById(that.unslugify(urlParams[1]));
 		    	if(orga) APP.getMapView().loadEntry(orga, {setView: true});
 		    	break;
 		    case 'event':
-		    	var event = APP.getDataManager().getEventById(urlParams[1]);
+		    	var event = APP.getDataManager().getEventById(that.unslugify(urlParams[1]));
 		    	if(event) APP.getMapView().loadEntry(event, {setView: true});
 		    	break;
 				case 'cat':
