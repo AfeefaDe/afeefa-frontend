@@ -90,7 +90,7 @@ qx.Class.define("Utility", {
 		},
 
     getFrontendUrlForEntry: function(entry){
-        var entryType = (entry.entryType == 'orga')? 'project' : entry.entryType;
+        var entryType = (APP.isOrga(entry))? 'project' : entry.entryType;
         return window.location.origin + '/' + entryType + '/' + entry.id;
     }
 	}

@@ -208,7 +208,7 @@ qx.Class.define("DataManager", {
             var that = this;
 
             var entry = _.find(APP.getData().entries, function(entry){
-                return (entry.entryType == 'orga' && id == entry.id);
+                return (APP.isOrga(entry) && id == entry.id);
             })
 
             return entry;
@@ -218,7 +218,7 @@ qx.Class.define("DataManager", {
             var that = this;
 
             var entry = _.find(APP.getData().entries, function(entry){
-                return (entry.entryType == 'event' && id == entry.id);
+                return (APP.isEvent(entry) && id == entry.id);
             })
 
             return entry;
@@ -230,7 +230,7 @@ qx.Class.define("DataManager", {
             if(count === undefined) count = 5;
 
             var projects = APP.getData().entries.filter(function (entry) {
-                return (entry.entryType == 'orga' && entry.created_at != undefined);
+                return (APP.isOrga(entry) && entry.created_at != undefined);
             });
 
             var sortedProjects = _.sortBy(projects, function(o){

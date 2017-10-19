@@ -183,6 +183,8 @@ qx.Class.define("Router", {
 				name += ' | Afeefa.de';
 			}
 
+			key = key.toLowerCase();
+
 			if(value){
 				history.pushState(null, name, '/' + key + '/' + value);
 				APP.setOpenGraphMetaProperties({

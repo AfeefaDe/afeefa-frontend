@@ -354,6 +354,18 @@ qx.Class.define("APPAFEEFA", {
 				var selector = 'head meta[property="og:'+key+'"]'
 				$(selector).attr('content', value);
 			});
+		},
+
+		isOrga: function(record){
+			var that = this;
+
+			return record.entryType == 'Orga';
+		},
+
+		isEvent: function(record){
+			var that = this;
+
+			return record.entryType == 'Event';
 		}
 	}
 

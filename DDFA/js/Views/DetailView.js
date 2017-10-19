@@ -197,7 +197,7 @@ qx.Class.define("DetailView", {
 			if(record.parentOrgaId) that.parent = APP.getDataManager().getOrgaById(record.parentOrgaId);
 
 			// set URL
-			that.currentEntryType = (record.entryType == 'orga')? 'project' : record.entryType;
+			that.currentEntryType = APP.isOrga(record)? 'project' : record.entryType;
 			APP.getRouter().setUrl(that.currentEntryType, record.id, record.name);
 			APP.setOpenGraphMetaProperties({
 				title: record.name.slice(0,50) + '...',
@@ -388,7 +388,7 @@ qx.Class.define("DetailView", {
 				var name = $("<p />")
 					.addClass('property-name')
 					.append(function(){
-						return (record.entryType == 'orga')? that.getWording('term.parent.orga') : that.getWording('term.parent.organiser');
+						return APP.isOrga(record)? that.getWording('term.parent.orga') : that.getWording('term.parent.organiser');
 					}());
 				propertyText.append(name);
 				
@@ -519,7 +519,7 @@ qx.Class.define("DetailView", {
 				if( that.record !== null) {
 					// reload record
 			    var newRecord = APP.getDataManager().getEntryByEntryId(that.record.entryId);
-			    var newRecord = (that.record.entryType == 'event')? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
+			    var newRecord = APP.isEvent(that.record)? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
 			    that.reset();
 			    that.load(newRecord);
 				}
