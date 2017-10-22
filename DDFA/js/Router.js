@@ -205,6 +205,15 @@ qx.Class.define("Router", {
 			});
 		},
 
+    getFrontendUrlForEntry: function(entry, options){
+  		var that = this;
+      
+      var entryType = (APP.isOrga(entry))? 'project' : entry.entryType;
+      var path = entryType + '/' + entry.id + '-' + APP.getRouter().slugify(entry.name)
+      
+      return (options && options.absolute)? window.location.origin + '/' + path : path;
+    },
+
 		slugify: function(text){
 			var that = this;
 

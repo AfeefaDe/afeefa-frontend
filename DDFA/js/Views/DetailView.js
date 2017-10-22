@@ -198,7 +198,7 @@ qx.Class.define("DetailView", {
 
 			// set URL
 			that.currentEntryType = APP.isOrga(record)? 'project' : record.entryType;
-			APP.getRouter().setUrl(that.currentEntryType, record.id + '-' + APP.getRouter().slugify(record.name), record.name);
+			APP.getRouter().setUrl(APP.getRouter().getFrontendUrlForEntry(record), null, record.name);
 			APP.setOpenGraphMetaProperties({
 				title: record.name.slice(0,50) + '...',
 				description: record.descriptionShort? record.descriptionShort.slice(0,150) + '...' : null

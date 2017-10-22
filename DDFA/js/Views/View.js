@@ -144,9 +144,11 @@ qx.Class.define("View", {
           if(options.cssClass === undefined) options.cssClass = 'result';
           else options.cssClass = 'result ' + options.cssClass;
           
-          const resultEl = $("<div />")
+          const resultEl = $("<a />")
             .addClass(options.cssClass)
-            .click(function(){
+            .attr('href', options.href? options.href : '')
+            .click(function(e){
+              e.preventDefault();
               options.action();
             })
             .on('contextmenu', function(e){
@@ -262,6 +264,7 @@ qx.Class.define("View", {
                 iconClass: iconClass,
                 label: label,
                 subLabel: subLabel,
+                href: APP.getRouter().getFrontendUrlForEntry(entry, {absolute: true}),
                 action: action,
                 action_secondary: action_secondary,
                 tooltip: tooltip,

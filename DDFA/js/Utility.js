@@ -87,11 +87,6 @@ qx.Class.define("Utility", {
 			}
 
 			return times;
-		},
-
-    getFrontendUrlForEntry: function(entry){
-        var entryType = (APP.isOrga(entry))? 'project' : entry.entryType;
-        return window.location.origin + '/' + entryType + '/' + entry.id;
-    }
+		}
 	}
 });
