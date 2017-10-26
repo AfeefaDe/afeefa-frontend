@@ -219,7 +219,7 @@ qx.Class.define("APPAFEEFA", {
 			// fetch only necessary data for app startup
 			that.getDataManager().fetchInitialData(function(){
         	
-        if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum410' ){
+        if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum-410' ){
         	that.setArea(APP.getData().areas.leipzig);
         }
         else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 && prompt() === 'horbz-afeefa' ){
