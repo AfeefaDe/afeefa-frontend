@@ -234,7 +234,7 @@ qx.Class.define("FormView", {
             var that = this;
 
             // to backend
-            data.entry.area = APP.getArea().label;
+            data.entry.area = APP.getArea().dataKey;
 
             var data_converted = {
                 marketentry: data.entry,
