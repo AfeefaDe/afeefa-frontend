@@ -271,7 +271,7 @@ qx.Class.define("FormView", {
                 + 'von: `' + data.entry.dateFrom + ' (' + data.entry.timeFrom + ')' + '`\n'
                 + 'bis: `' + data.entry.dateTo + ' (' + data.entry.timeTo + ')' + '`\n'
                 + 'Anmerkung: `' + data.additional.comment + '`\n'
-            });
+            }, null, data.entry.area);
 
             // send mail to team inbox
             APP.getDataManager().sendMail({

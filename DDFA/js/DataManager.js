@@ -606,12 +606,20 @@ qx.Class.define("DataManager", {
         // Outgoing messages //
         ///////////////////////
 
-        createSlackMessage: function (data, cb) {
+        createSlackMessage: function (data, cb, area) {
 
+            if(area === undefined) area = 'dresden';
+
+            var hook;
+            if(area == 'leipzig'){
+                hook = "https://hooks.slack.com/services/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";
+            } else {
+                hook = "https://hooks.slack.com/services/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";
+            }
             var slackMessage = '*' + data.heading + '*' + ':\n' + data.message;
 
             $.ajax({
-                url: "https://hooks.slack.com/services/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",
+                url: hook,
                 type: 'POST',
                 data: JSON.stringify({text: slackMessage}),
                 cache: false,
