@@ -19,18 +19,20 @@ qx.Class.define("DataManager", {
 
                 APP.getLM().setBib(data);
 
-                var currentData = APP.getData();
-                currentData.categories = APP.getConfig().categories;
-                APP.setData(currentData);
-
-                that.getAllAreas(function (data) {  // categories
-                    // store in APP
+                that.getAllCategories(function(data){
                     var currentData = APP.getData();
-                    currentData.areas = data.areas;
+                    currentData.categories = data.categories;
                     APP.setData(currentData);
 
-                    that.say('fetchedInitialData');
-                    cb();  // finished, so callback
+                    that.getAllAreas(function (data) {  // categories
+                        // store in APP
+                        var currentData = APP.getData();
+                        currentData.areas = data.areas;
+                        APP.setData(currentData);
+
+                        that.say('fetchedInitialData');
+                        cb();  // finished, so callback
+                    });
                 });
             });
 
@@ -76,7 +78,8 @@ qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: APP.getConfig().apiUrl + "api/categories",
+                url: APP.getConfig().apiUrl + "api/categories" + "?area=dresden",
+                // url: APP.getConfig().apiUrl + "api/categories" + "&area=" + APP.getArea().dataKey,
                 type: 'GET',
                 dataType: 'json'
             })
