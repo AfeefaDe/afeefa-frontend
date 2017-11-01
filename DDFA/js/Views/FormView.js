@@ -234,7 +234,7 @@ qx.Class.define("FormView", {
             var that = this;
 
             // to backend
-            data.entry.area = "dresden";
+            data.entry.area = APP.getArea().label;
 
             var data_converted = {
                 marketentry: data.entry,
@@ -244,16 +244,6 @@ qx.Class.define("FormView", {
             APP.getDataManager().addMarketEntry(data_converted, function (response) {
                 // cb(response.marketentry !== undefined);
                 cb(true);
-            });
-
-            // to github
-            APP.getDataManager().createGithubIssue({
-                data: {
-                    type: 'entry',
-                    entryType: data.entry.type,
-                    entryData: data.entry,
-                    locationData: data.location
-                }
             });
             
             // send outgoing message
@@ -325,16 +315,6 @@ qx.Class.define("FormView", {
 
         createFeedback: function (data, options, cb) {
             var that = this;
-
-            // to github
-            // TODO read response to get created issue ID and post this ID as waffle link to slack
-            APP.getDataManager().createGithubIssue({
-                data: {
-                    type: 'feedback',
-                    feedbackData: data.feedback,
-                    metaData: JSON.stringify(L.Browser)
-                }
-            });
 
             // to slack
             APP.getDataManager().createSlackMessage({
