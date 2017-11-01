@@ -564,18 +564,18 @@ qx.Class.define("DataManager", {
             $.ajax({
                 url: APP.getConfig().apiUrl + "api/marketentries",
                 type: 'POST',
-                data: data,
+                data: JSON.stringify(data),
                 cache: false,
                 dataType: 'json',
                 processData: true,
-                contentType: false
+                contentType: 'application/json; charset=UTF-8'
             })
-                .done(function (data) {
-                    cb(data);
-                })
-                .fail(function (a) {
-                    cb(a);
-                });
+            .done(function (data) {
+                cb(data);
+            })
+            .fail(function (a) {
+                cb(a);
+            });
 
         },
 
