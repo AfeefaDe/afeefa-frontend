@@ -112,7 +112,7 @@ qx.Class.define("DataManager", {
                             orgas: 118,
                             events: 0
                         },
-                        available: false,
+                        available: true,
                         dataKey: 'leipzig'
                     },
                     bautzen: {
@@ -558,8 +558,6 @@ qx.Class.define("DataManager", {
 
         addMarketEntry: function (data, cb) {
             var that = this;
-
-            // console.debug('POST ' + APP.getConfig().apiUrl + 'api/marketentries', data);
 
             $.ajax({
                 url: APP.getConfig().apiUrl + "api/marketentries",

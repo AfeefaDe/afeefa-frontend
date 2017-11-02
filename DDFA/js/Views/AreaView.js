@@ -38,16 +38,6 @@ qx.Class.define("AreaView", {
 
 			that.view.empty();
 
-			// that.createTooltip(
-   //      that.view,
-   //      function(){
-   //        return that.getWording('areaselection.button');
-   //      }(),
-   //      'hover',
-   //      'top',
-   //      'desktop'
-   //    );
-
       _.each( APP.getData().areas, function(value, key){
 				if(!value.available) return;
 				
@@ -58,6 +48,8 @@ qx.Class.define("AreaView", {
 						that.close();
 
 						// sessionStorage.setItem("languageFrozen", 1);
+
+						if(value.dataKey == 'leipzig' && prompt() !== 'raum-410') return;
 
 						// change area if different from currently selected one
 						if( value != APP.getArea() ){
