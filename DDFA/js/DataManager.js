@@ -11,23 +11,28 @@ qx.Class.define("DataManager", {
 
     members: {
 
+        
+        // fetch only necessary data for app startup
         fetchInitialData: function (cb) {
             var that = this;
 
-            // snychronous data calls (wait for all data calls to finish)
             that.getUITranslations(APP.getLM().getCurrentLang(), function (data) {  // language bib
 
                 APP.getLM().setBib(data);
 
-                that.getAllCategories(function(data){
+                // fetch areas
+                that.getAllAreas(function (data) {  // categories
+                    // store in APP
                     var currentData = APP.getData();
-                    currentData.categories = data.categories;
+                    currentData.areas = data.areas;
                     APP.setData(currentData);
 
-                    that.getAllAreas(function (data) {  // categories
-                        // store in APP
+                    APP.detectArea();
+                    
+                    // fetch categories
+                    that.getAllCategories(function(data){
                         var currentData = APP.getData();
-                        currentData.areas = data.areas;
+                        currentData.categories = data.categories;
                         APP.setData(currentData);
 
                         that.say('fetchedInitialData');
@@ -35,7 +40,6 @@ qx.Class.define("DataManager", {
                     });
                 });
             });
-
         },
 
         fetchAllData: function (cb) {
@@ -78,8 +82,7 @@ qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: APP.getConfig().apiUrl + "api/categories" + "?area=dresden",
-                // url: APP.getConfig().apiUrl + "api/categories" + "&area=" + APP.getArea().dataKey,
+                url: APP.getConfig().apiUrl + "api/categories" + "?area=" + APP.getArea().dataKey,
                 type: 'GET',
                 dataType: 'json'
             })
@@ -115,7 +118,7 @@ qx.Class.define("DataManager", {
                             orgas: 118,
                             events: 0
                         },
-                        available: true,
+                        available: false,
                         dataKey: 'leipzig'
                     },
                     bautzen: {
