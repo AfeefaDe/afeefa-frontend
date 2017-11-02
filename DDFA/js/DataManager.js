@@ -449,9 +449,13 @@ qx.Class.define("DataManager", {
                             }];
                         },
                         dateFrom: function(record){
+                            if(record.start_time === undefined) return null;
+                            
                             return record.start_time.substr( 0, record.start_time.indexOf('T') );
                         },
                         timeFrom: function(record){
+                            if(record.start_time === undefined) return null;
+                            
                             function n(n){
                                 return n > 9 ? "" + n: "0" + n;
                             }
@@ -460,14 +464,18 @@ qx.Class.define("DataManager", {
                             return n(date.getHours()) + ':' + n(date.getMinutes());
                         },
                         dateTo: function(record){
+                            if(record.end_time === undefined) return null;
+                            
                             return record.end_time.substr( 0, record.end_time.indexOf('T') );
                         },
                         timeTo: function(record){
+                            if(record.end_time === undefined) return null;
+                            
                             function n(n){
                                 return n > 9 ? "" + n: "0" + n;
                             }
 
-                            date = new Date(record.start_time);
+                            date = new Date(record.end_time);
                             return n(date.getHours()) + ':' + n(date.getMinutes());
                         },
                         additionalData: function(record){
