@@ -233,9 +233,8 @@ qx.Class.define("FormView", {
         createEntry: function (data, options, cb) {
             var that = this;
 
-            // to backend
             data.entry.area = APP.getArea().dataKey;
-
+            
             var data_converted = {
                 marketentry: data.entry,
                 location: data.location
@@ -271,7 +270,7 @@ qx.Class.define("FormView", {
                 + 'von: `' + data.entry.dateFrom + ' (' + data.entry.timeFrom + ')' + '`\n'
                 + 'bis: `' + data.entry.dateTo + ' (' + data.entry.timeTo + ')' + '`\n'
                 + 'Anmerkung: `' + data.additional.comment + '`\n'
-            }, null, data.entry.area);
+            }, null, APP.getArea().dataKey);
 
             // send mail to team inbox
             APP.getDataManager().sendMail({
