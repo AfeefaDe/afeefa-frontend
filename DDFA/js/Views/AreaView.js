@@ -39,7 +39,6 @@ qx.Class.define("AreaView", {
 			that.view.empty();
 
       _.each( APP.getData().areas, function(value, key){
-				if(!value.available) return;
 				
 				var item = $("<div />")
 					.addClass('area-btn')
@@ -47,16 +46,16 @@ qx.Class.define("AreaView", {
 					.click(function(){
 						that.close();
 
-						// localStorage.setItem("languageFrozen", 1);
-
-						if(value.dataKey == 'leipzig' && prompt() !== 'raum-410') return;
-
 						// change area if different from currently selected one
 						if( value != APP.getArea() ){
-							APP.setArea(value);
-							that.say('areaChanged', APP.getArea());
-							that.say('languageChanged', APP.getLM().getCurrentLang());
-							that.load();
+							if( value.redirect ){
+              	window.open(value.redirect);
+							} else {
+								APP.setArea(value);
+								that.say('areaChanged', APP.getArea());
+								that.say('languageChanged', APP.getLM().getCurrentLang());
+								that.load();
+							}
 						}
 					});
 				

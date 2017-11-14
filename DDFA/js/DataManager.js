@@ -108,7 +108,6 @@ qx.Class.define("DataManager", {
                             orgas: 600,
                             events: 30
                         },
-                        available: true,
                         dataKey: 'dresden'
                     },
                     leipzig: {
@@ -118,7 +117,7 @@ qx.Class.define("DataManager", {
                             orgas: 118,
                             events: 0
                         },
-                        available: false,
+                        redirect: 'https://leipzig.afeefa.de',
                         dataKey: 'leipzig'
                     },
                     bautzen: {
@@ -128,7 +127,7 @@ qx.Class.define("DataManager", {
                             orgas: 118,
                             events: 0
                         },
-                        available: false,
+                        redirect: 'https://bautzen.afeefa.de',
                         dataKey: 'bautzen'
                     },
                     pirna: {
@@ -138,7 +137,6 @@ qx.Class.define("DataManager", {
                             orgas: 118,
                             events: 0
                         },
-                        available: true,
                         dataKey: 'dresden'
                     }
                 }
