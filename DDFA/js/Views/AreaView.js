@@ -49,7 +49,7 @@ qx.Class.define("AreaView", {
 						// change area if different from currently selected one
 						if( value != APP.getArea() ){
 							if( value.redirect ){
-              	window.open(value.redirect);
+              	window.open(value.redirect, "_self");
 							} else {
 								APP.setArea(value);
 								that.say('areaChanged', APP.getArea());
