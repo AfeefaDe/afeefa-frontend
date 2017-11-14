@@ -47,7 +47,7 @@ qx.Class.define("AreaView", {
 					.click(function(){
 						that.close();
 
-						// sessionStorage.setItem("languageFrozen", 1);
+						// localStorage.setItem("languageFrozen", 1);
 
 						if(value.dataKey == 'leipzig' && prompt() !== 'raum-410') return;
 

@@ -62,7 +62,7 @@ qx.Class.define("LanguageView", {
 					.click(function(){
 						that.close();
 
-						sessionStorage.setItem("languageFrozen", 1);
+						localStorage.setItem("languageFrozen", lang);
 
 						APP.getDataManager().getUITranslations(lang, function(data){
 	            APP.getLM().setBib(data);

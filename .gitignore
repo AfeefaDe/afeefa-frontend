@@ -11,3 +11,5 @@ built/DDFA/css/compass_watch-development.bat
 built/DDFA/css/prod_config.rb
 built/DDFA/css/config.rb
 built/DDFA/css/compass_compile-production.bat
+node_modules
+built/node_modules
