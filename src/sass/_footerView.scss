@@ -9,14 +9,15 @@
   padding: 0 1em;
   display: flex;
   flex-direction: row;
-  /*@inlcude justify-content(space-between);*/
-
-	p {
-  	/*width: 49%;*/
-  	padding: 0;
-  	margin: 0;
-    box-sizing: border-box;
+  
+	div {
     flex-grow: 1;
+  }
+  
+  p {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
     padding-top: .3em;
 	}
 

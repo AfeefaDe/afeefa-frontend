@@ -96,6 +96,10 @@ button {
     &:hover {
       background-color: $black;
     }
+
+    &:first-child, &.first-child {
+      margin-top: 1rem;
+    }
     
     .icon {
       @include entityShapes;
@@ -154,6 +158,12 @@ button {
         font-size: .8em;
       }
     }
+  }
+
+  .needle {
+    background-color: #464646;
+    font-weight: 300;
+    color: white;
   }
 
   .section-header {
