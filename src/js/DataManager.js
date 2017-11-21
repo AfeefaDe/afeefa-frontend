@@ -1,4 +1,11 @@
-qx.Class.define("DataManager", {
+import qx from '../../node_modules/qooxdoo/qx-oo.js';
+import $ from 'jquery';
+
+import Daddy from './Daddy.js';
+import APP from './main.js';
+
+
+export default qx.Class.define("DataManager", {
 
     extend: Daddy,
     type: "singleton",

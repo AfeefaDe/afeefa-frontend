@@ -1,4 +1,6 @@
-qx.Class.define("Utility", {
+import qx from '../../node_modules/qooxdoo/qx-oo.js';
+
+export default qx.Class.define("Utility", {
 	
 	extend : Daddy,
 	type: "singleton",  

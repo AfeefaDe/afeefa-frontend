@@ -1,4 +1,6 @@
-qx.Class.define("View", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("View", {
     
     extend : Daddy,
 	type: "abstract",

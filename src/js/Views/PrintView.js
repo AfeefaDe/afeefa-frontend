@@ -1,4 +1,6 @@
-qx.Class.define("PrintView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("PrintView", {
 	
 	extend : View,
 	type: "singleton",

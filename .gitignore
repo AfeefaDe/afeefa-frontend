@@ -1,6 +1,8 @@
 ################################
 ######Default Node Config#######
 ################################
+
+# ignore built assets
 dist/built
 
 # Logs

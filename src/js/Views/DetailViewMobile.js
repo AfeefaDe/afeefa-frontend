@@ -1,4 +1,6 @@
-qx.Class.define("DetailViewMobile", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("DetailViewMobile", {
     
     extend : DetailView,
 	type: "singleton",

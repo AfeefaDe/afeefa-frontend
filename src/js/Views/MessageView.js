@@ -1,4 +1,6 @@
-qx.Class.define("MessageView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("MessageView", {
 	
 	extend : View,
 	type: "singleton",

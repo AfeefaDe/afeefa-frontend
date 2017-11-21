@@ -1,4 +1,6 @@
-qx.Class.define("IncludeView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("IncludeView", {
 	
 	extend : View,
 	type: "singleton",

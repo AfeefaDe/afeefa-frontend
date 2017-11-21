@@ -1,4 +1,6 @@
-qx.Class.define("PlusView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("PlusView", {
 	
 	extend : View,
 	type: "singleton",

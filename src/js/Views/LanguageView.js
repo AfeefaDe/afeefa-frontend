@@ -1,4 +1,6 @@
-qx.Class.define("LanguageView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("LanguageView", {
 	
 	extend : View,
 	type: "singleton",

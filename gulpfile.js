@@ -16,7 +16,8 @@ var babel = require('babelify');
 var paths = {
 	styles: './src/sass/**/*.scss',
 	entryStylesheet: './src/sass/afeefa.scss',
-	entryScript: './src/js/index.js'
+	entryScript: './src/js/main.js',
+
 };
 
 gulp.task('styles', function() {
@@ -37,7 +38,7 @@ gulp.task('styles', function() {
 });
 
 function compile(watch) {
-	var bundler = watchify(browserify(paths.entryScript, { debug: true }).transform(babel));
+	var bundler = watchify(browserify({entries: [paths.entryScript], paths: ['./node_modules'],  debug: true }).transform(babel));
 	function rebundle() {
 		bundler.bundle()
 			.on('error', function(err) { console.error(err); this.emit('end'); })

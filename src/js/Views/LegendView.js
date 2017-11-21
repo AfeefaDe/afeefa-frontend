@@ -1,4 +1,6 @@
-qx.Class.define("LegendView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("LegendView", {
 	
   extend : View,
   type: "singleton",

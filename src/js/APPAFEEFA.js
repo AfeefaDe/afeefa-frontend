@@ -1,4 +1,18 @@
-qx.Class.define("APPAFEEFA", {
+import Daddy from './Daddy.js';
+import DataManager from './DataManager.js';
+import LanguageManager from './LanguageManager.js';
+import User from './User.js';
+import Router from './Router.js';
+import Utility from './Utility.js';
+
+import qx from 'qooxdoo';
+import moment from 'moment';
+
+import $ from 'jquery';
+/* Not working: restive: Uncaught ReferenceError: md5 is not defined */
+//import restive from './restive.min.js';
+
+export default qx.Class.define("APPAFEEFA", {
 	extend : Daddy,
 	type: "singleton",
 
@@ -6,7 +20,6 @@ qx.Class.define("APPAFEEFA", {
 
 	construct: function(){
 		var that = this;
-
 		that.setDataManager(new DataManager());
 		that.setRouter(new Router());
 		that.setLM(new LanguageManager());
@@ -200,7 +213,7 @@ qx.Class.define("APPAFEEFA", {
 		init: function( cb ){
 			var that = this;
 
-      moment.locale('de');
+      		moment.locale('de');
 
 			// analyse user device
 			that.getUser().load();
@@ -218,7 +231,7 @@ qx.Class.define("APPAFEEFA", {
 
 			// fetch only necessary data for app startup
 			that.getDataManager().fetchInitialData(function(){
-        that.setArea(APP.getData().areas.dresden);
+        	that.setArea(that.getData().areas.dresden);
 
 				cb();
       	that.loading(true);
@@ -268,18 +281,18 @@ qx.Class.define("APPAFEEFA", {
 			// else APP.setUserDevice('desktop');
 
 			// $('body').addClass( APP.getUserDevice() );
-
+			/* @todo 
 			$('body').restive({
 				  breakpoints: ['10000'],
 				  classes: ['nb'],
 				  turbo_classes: 'is_mobile=mobi,is_phone=phone,is_tablet=tablet,is_landscape=landscape'
 			});
+			*/
+			this.setUserDevice('desktop');
+			if( $('body').hasClass('mobi') || $('body').hasClass('phone') ) this.setUserDevice('mobile');
+			if( $('body').hasClass('tablet') ) this.setUserDevice('tablet');
 
-			APP.setUserDevice('desktop');
-			if( $('body').hasClass('mobi') || $('body').hasClass('phone') ) APP.setUserDevice('mobile');
-			if( $('body').hasClass('tablet') ) APP.setUserDevice('tablet');
-
-			$('body').addClass( APP.getUserDevice() );
+			$('body').addClass( this.getUserDevice() );
 		},
 
 		loadIndependantUI: function(){
@@ -297,7 +310,7 @@ qx.Class.define("APPAFEEFA", {
 			$('div#footer').on('contextmenu', function(e){
 				e.preventDefault();
 				// APP.loading(true);
-				that.say('languageChanged', APP.getLM().getCurrentLang());
+				that.say('languageChanged', this.getLM().getCurrentLang());
 			});
 		},
 

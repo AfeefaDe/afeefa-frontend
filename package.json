@@ -21,8 +21,16 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
+    "qooxdoo": "^4.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "hammerjs": "^2.0.4",
+    "jquery": "^2.2.2",
+    "moment": "^2.0.0",
+    "popper.js": "^0.6.4",
+    "underscore": "^1.8.2"
   }
 }

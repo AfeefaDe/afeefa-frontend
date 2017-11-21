@@ -1,4 +1,6 @@
-qx.Class.define("EventView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("EventView", {
     
   extend : View,
   type: "singleton",

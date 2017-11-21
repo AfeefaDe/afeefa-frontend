@@ -1,4 +1,6 @@
-qx.Class.define("MapView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("MapView", {
 	
 	extend : View,
 	type: "singleton",

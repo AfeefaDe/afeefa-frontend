@@ -1,4 +1,6 @@
-qx.Class.define("AreaView", {
+import qx from 'qooxdoo/qx-oo.js';
+
+export default qx.Class.define("AreaView", {
 	
 	extend : View,
 	type: "singleton",
