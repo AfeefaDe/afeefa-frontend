@@ -2,10 +2,10 @@
 	
 	@include goBackLayout;
 
-	@include box-sizing(border-box);
+	box-sizing: border-box;
 
-	@include display-flex;
-	@include flex-direction(column);
+	display: flex;
+	flex-direction: column;
 
 	z-index: 30;
 
@@ -45,7 +45,7 @@
 	.button-container {
 		padding: 0 3rem;
 		background-color: $gray20;
-		@include box-shadow($gray20 0 0 15px);
+		box-shadow: $gray20 0 0 15px;
 	}
 
 	&.active {
@@ -59,7 +59,7 @@
 
 		input, textarea, select, .chosen-container {
 			display: block;
-			@include box-sizing(border-box);
+			box-sizing: border-box;
 			width: 100%;
 			padding: 0.5em;
 			border: none;
@@ -92,8 +92,8 @@
 	}
 
 	.form-checkbox {
-		@include display-flex;
-		@include align-items(middle);
+		display: flex;
+		align-items: middle;
 		margin-bottom: 1em;
 
 		input {
@@ -119,7 +119,7 @@
 		span {
 			display: inline-block;
 			padding: .5em 1em;
-			@include transition(background-color 150ms);
+			transition: background-color 150ms;
 			background-color: $gray20;
 			cursor: pointer;
 			color: $gray50;
