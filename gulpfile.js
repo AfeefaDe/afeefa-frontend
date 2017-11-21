@@ -4,7 +4,7 @@ var sass = require('gulp-sass');
 var cleanCSS = require('gulp-clean-css');
 var rename = require('gulp-rename');
 var prefix = require('gulp-autoprefixer');
-
+var notifier   = require('stream-notifier');
 var sourcemaps = require('gulp-sourcemaps');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -17,7 +17,6 @@ var paths = {
 	styles: './src/sass/**/*.scss',
 	entryStylesheet: './src/sass/afeefa.scss',
 	entryScript: './src/js/main.js',
-
 };
 
 gulp.task('styles', function() {
@@ -37,37 +36,66 @@ gulp.task('styles', function() {
 	.pipe(gulp.dest('dist/built'))
 });
 
-function compile(watch) {
-	var bundler = watchify(browserify({entries: [paths.entryScript], paths: ['./node_modules'],  debug: true }).transform(babel));
-	function rebundle() {
-		bundler.bundle()
-			.on('error', function(err) { console.error(err); this.emit('end'); })
-			.pipe(source('build.js'))
-			.pipe(buffer())
-			.pipe(sourcemaps.init({ loadMaps: true }))
-			.pipe(sourcemaps.write('./'))
-			.pipe(gulp.dest('./dist/built'));
-	}
+
+
+function createBundler(debug, watch) {
+	var bundler = browserify({
+		entries: [paths.entryScript], 
+		paths: ['./node_modules'],
+		debug: debug,
+		cache: {},
+	  	packageCache: {}
+	});
 	if (watch) {
-		bundler.on('update', function() {
-			console.log('-> bundling...');
-			rebundle();
-		});
+		bundler.plugin(watchify, {
+			delay: 200,
+			ignoreWatch: ['**/node_modules/**']
+		})
 	}
-	rebundle();
-}
-function watch() {
-	return compile(true);
+	return bundler;
 }
 
+gulp.task('browserify', function() {
+	var bundler = createBundler(false, false);
+	var bundle = compileBundle(bundler);
+	return bundle();
+});
 
+gulp.task('watchify', function() {
+	var bundler = createBundler(true, true);
+  	var bundle = compileBundle(bundler)
+  	bundler.on('update', bundle);
 
-gulp.task('build', function() { return compile(); });
-gulp.task('watch', function() { return watch(); });
+  	return bundle();
+});
 
+function compileBundle(bundler) {
+  return function() {
+    var n = notifier('browserify');
+    console.log('[BUNDLER] Start rebundling')
+    return bundler
+    	.transform(babel)
+      	.bundle()
+      	.on('error', n.error)
+		.pipe(source('build.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(sourcemaps.write('./'))
+		.pipe(gulp.dest('./dist/built'))
+      	.on('end', function() {
+      		n.end;
+      		console.log('[BUNDLER] Finished rebundling')
+      	});
+  };
+}
 
-gulp.task('default', function() {
+gulp.task('build', function() {
 	gulp.start('styles');
-	gulp.start('watch', function() { return watch(); });
+	gulp.start('browserify');
+});
+
+gulp.task('dev', function() {
+	gulp.start('styles');
+	gulp.start('watchify');
 	gulp.watch(paths.styles, ['styles']);
 })
