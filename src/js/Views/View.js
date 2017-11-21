@@ -142,10 +142,15 @@ export default qx.Class.define("View", {
         // createListResult: function( iconClass, label, subLabel, action, locationSymbol, tooltip, action_secondary ) {
         createListResult: function( options ) {
           var that = this;
+
+          if(options.cssClass === undefined) options.cssClass = 'result';
+          else options.cssClass = 'result ' + options.cssClass;
           
-          const resultEl = $("<div />")
-            .addClass('result')
-            .click(function(){
+          const resultEl = $("<a />")
+            .addClass(options.cssClass)
+            .attr('href', options.href? options.href : '')
+            .click(function(e){
+              e.preventDefault();
               options.action();
             })
             .on('contextmenu', function(e){
@@ -201,6 +206,8 @@ export default qx.Class.define("View", {
           var entry = options.entry;
           var categoryName = entry.category ? entry.category.name : null;
           
+          // general formatting
+
           // icon
           var iconClass = 'cat-' + categoryName;
           iconClass += ' type-' + entry.type;
@@ -220,6 +227,20 @@ export default qx.Class.define("View", {
             var placename = entry.location[0].placename;
             if(placename.length > 50) placename = placename.substring(0,50) + '...';
             subLabel += ' | @' + placename;
+          }
+          
+          // individual formatting depending on search type
+          if( options.type == 'free-search' ){
+            if(options.foundCriteria) {
+              var distance = 30;
+              var needlePrefix = entry[options.foundCriteria.foundInAttribute].substring(options.foundCriteria.pos-distance, options.foundCriteria.pos);
+              var needleSuffix = entry[options.foundCriteria.foundInAttribute].substring(options.foundCriteria.pos+options.foundCriteria.length, options.foundCriteria.pos+options.foundCriteria.length+distance);
+              var needle = entry[options.foundCriteria.foundInAttribute].substring(options.foundCriteria.pos, options.foundCriteria.pos+options.foundCriteria.length);
+              subLabel += '<br><i>...' + needlePrefix + '<span class="needle">' + needle + '</span>' + needleSuffix + '...</i>';
+            }
+          }
+          else if( options.type == 'support-search' ){
+            if( entry.supportWantedDetail ) subLabel += '<br><i>' + entry.supportWantedDetail + '<i>';
           }
           
           // action
@@ -245,6 +266,7 @@ export default qx.Class.define("View", {
                 iconClass: iconClass,
                 label: label,
                 subLabel: subLabel,
+                href: APP.getRouter().getFrontendUrlForEntry(entry, {absolute: true}),
                 action: action,
                 action_secondary: action_secondary,
                 tooltip: tooltip,

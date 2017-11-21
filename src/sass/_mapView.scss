@@ -14,7 +14,7 @@
 
 	div.location {
 
-		box-shadow: 1px 1px 2px #333;
+		@include box-shadow(1px 1px 2px #333);
 		background-color: $gray80;
 
 		@include entityShapes;
@@ -30,12 +30,12 @@
 
 		&.active {
 			border: 1px solid $white;
-			box-shadow: 1px 1px 3px #000;
+			@include box-shadow(1px 1px 3px #000);
 		}
 	}
 
 	div.location.type-2 {
-		box-shadow: none;
+		@include box-shadow(none);
 
 		background-color: transparent;
 		background-image: none;
@@ -48,7 +48,7 @@
 			top: 0;
 		}
 		span.event-shape {
-			box-shadow: 1px 1px 2px #333;
+			@include box-shadow(1px 1px 2px #333);
 			@include entityShapes;
 			@include categoryColors;
 		}
@@ -58,18 +58,18 @@
 
 		&.active {
 			border: none;
-			box-shadow: none;
+			@include box-shadow(none);
 			
 			span.event-shape {
 				border: 1px solid $white;
-				box-shadow: 1px 1px 3px #000;
+				@include box-shadow(1px 1px 3px #000);
 			}
 		}
 	}
 
 	div.marker {
 		background-image: url('../img/marker_icon.svg');
-		background-size: contain;
+		@include background-size(contain);
 		background-position: center;
 		background-repeat: no-repeat;
 		font-size: 14px;
@@ -94,8 +94,8 @@
 
 	div.marker-user-location {
 		background-color: $blue;
-		border-radius: 8px;
-		box-shadow: 0px 0px 5px #888888;
+		@include border-radius(8px);
+		@include box-shadow(0px 0px 5px #888888);
 	}
 
 	.afeefa-popup {

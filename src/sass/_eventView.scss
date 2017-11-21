@@ -4,10 +4,10 @@
 
     background-color: $gray95;
 
-    box-sizing: border-box;
+    @include box-sizing(border-box);
 
-    display: flex;
-    flex-direction: column;
+    @include display-flex;
+    @include flex-direction(column);
 
     z-index: 30;
 
@@ -15,7 +15,7 @@
 
     /* HEADING */
     .heading {
-        box-shadow: 0px 2px 5px #000;
+        @include box-shadow(0px 2px 5px #000);
     }
 
 
@@ -43,8 +43,8 @@
 
     .filters {
         .event-filter {
-            display: flex;
-            justify-content: space-around;
+            @include display-flex;
+            @include justify-content(space-around);
             margin: 2rem 1rem;
 
         .option-value {
@@ -52,12 +52,12 @@
             color: $gray50;
             padding: .3rem;
             cursor: pointer;
-            transition: background 200ms;
+            @include transition(background 200ms);
 
             &.active, &:hover {
                 background-color: $gray20;
                 color: $black;
-                border-radius: 4px;
+                @include border-radius(4px);
             }
         }
         }
@@ -72,7 +72,7 @@
     .button-container {
         padding: 0 3rem;
         background-color: $gray20;
-        box-shadow: $gray20 0 0 15px;
+        @include box-shadow($gray20 0 0 15px);
     }
 
     &.active {

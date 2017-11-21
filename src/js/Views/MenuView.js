@@ -52,6 +52,13 @@ export default qx.Class.define("MenuView", {
             
             
             // btn about
+            that.addBtn = $('<div />').addClass('item add');
+            that.addBtnLabel = $('<a />')
+                .attr('href', '/add');
+            that.addBtn.append(that.addBtnLabel);
+            that.menu.append(that.addBtn);
+
+            // btn about
             that.aboutBtn = $('<div />').addClass('item about');
             that.aboutBtnLabel = $('<a />')
                 .attr('href', 'https://about.afeefa.de')
@@ -120,6 +127,12 @@ export default qx.Class.define("MenuView", {
             //     APP.getIncludeView().load( APP.getIncludeView().getIncludes().about );
             // });
 
+            that.addBtn.click(function(e){
+                e.preventDefault();
+                that.close();
+                APP.getFormView().load( 'newEntry' );
+            });
+
             that.pressBtn.click(function(){
                 that.close();
                 APP.getIncludeView().load('press');
@@ -169,6 +182,7 @@ export default qx.Class.define("MenuView", {
 
             $('#main-container').addClass('shifted');
 
+            that.addBtnLabel.append( that.getWording('search.label.addentry') );
             that.aboutBtnLabel.append( that.getWording('menu.about') );
             that.pressBtnLabel.append( that.getWording('menu.press') );
             that.imprintBtnLabel.append( that.getWording('menu.imprint') );
@@ -179,6 +193,7 @@ export default qx.Class.define("MenuView", {
         reset: function(){
             var that = this;
 
+            that.addBtnLabel.empty();
             that.aboutBtnLabel.empty();
             that.pressBtnLabel.empty();
             that.imprintBtnLabel.empty();

@@ -34,8 +34,8 @@ export default qx.Class.define("IntroView", {
 
 			that.steps = {
 
-				stepSearch: {
-					stepName: 'search',
+				stepDashboard: {
+					stepName: 'dashboard',
 					el: (userDevice == 'mobile')? that.view : APP.getSearchView().view,
 					placement: (userDevice == 'mobile')? 'top' : 'right',
 					preAction: function(){
@@ -47,8 +47,8 @@ export default qx.Class.define("IntroView", {
 						APP.getSearchView().showCurtain(false);
 					},
 					phraseAppKeys: {
-						heading: 'intro.step.search.title',
-						text: 'intro.step.search.text'
+						heading: 'intro.step.dashboard.title',
+						text: 'intro.step.dashboard.text'
 					},
 					buttons: ['next', 'cancelForever']
 				},
@@ -84,7 +84,7 @@ export default qx.Class.define("IntroView", {
 						heading: 'intro.step.language.title',
 						text: 'intro.step.language.text'
 					},
-					buttons: ['next', 'cancel']
+					buttons: ['finish']
 				},
 				
 				stepLegend: {
@@ -112,8 +112,8 @@ export default qx.Class.define("IntroView", {
 					buttons: ['next', 'cancel']
 				},
 				
-				stepContact: {
-					stepName: 'plus',
+				stepLocate: {
+					stepName: 'locate',
 					el: APP.getPlusView().locateBtn,
 					placement: 'left',
 					preAction: function(){
@@ -126,12 +126,30 @@ export default qx.Class.define("IntroView", {
 						heading: 'intro.step.locate.title',
 						text: 'intro.step.locate.text'
 					},
-					buttons: ['finish']
+					buttons: ['next', 'cancel']
+				},
+
+				stepSearch: {
+					stepName: 'search',
+					el: APP.getSearchView().searchBar,
+					placement: 'bottom',
+					preAction: function(){
+						APP.getSearchView().close();
+						APP.getPlusView().showCurtain(true);
+					},
+					afterAction: function(){
+						APP.getPlusView().showCurtain(false);
+					},
+					phraseAppKeys: {
+						heading: 'intro.step.search.title',
+						text: 'intro.step.search.text'
+					},
+					buttons: ['next', 'cancel']
 				},
 				
-				stepGuide: {
-					stepName: 'guide',
-					el: APP.getSearchView().refugeeBtn,
+				stepAdd: {
+					stepName: 'add',
+					el: APP.getSearchView().addBtn,
 					placement: 'bottom',
 					preAction: function(){
 						APP.getSearchView().close();
@@ -141,8 +159,8 @@ export default qx.Class.define("IntroView", {
 						APP.getSearchView().showCurtain(false);
 					},
 					phraseAppKeys: {
-						heading: 'intro.step.guide.title',
-						text: 'intro.step.guide.text'
+						heading: 'intro.step.add.title',
+						text: 'intro.step.add.text'
 					},
 					buttons: ['next', 'cancel']
 				}
@@ -180,29 +198,32 @@ export default qx.Class.define("IntroView", {
 
 			var nextStep;
 			if( !that.currentStep ) {
-        nextStep = that.steps.stepSearch;
+        nextStep = that.steps.stepDashboard;
       } else {
 				switch(that.currentStep.stepName) {
-				    case 'search':
-				        nextStep = that.steps.stepGuide;
-				        break;
-			      case 'guide':
+				    case 'dashboard':
+			        nextStep = that.steps.stepSearch;
+			        break;
+			      case 'search':
+			        nextStep = that.steps.stepAdd;
+			        break;
+			      case 'add':
 			        nextStep = that.steps.stepMap;
 			        break;
 	        	case 'map':
-				        nextStep = that.steps.stepLanguage;
-				        break;
-		        case 'language':
 			        nextStep = that.steps.stepLegend;
 			        break;
 		       	case 'legend':
-			        nextStep = that.steps.stepContact;
+			        nextStep = that.steps.stepLocate;
 			        break;
-			      case 'plus':
-			        nextStep = that.steps.stepSearch;
+			      case 'locate':
+			        nextStep = that.steps.stepLanguage;
+			        break;
+		        case 'language':
+			        nextStep = that.steps.stepDashboard;
 			        break;
 				    default:
-				      nextStep = that.steps.stepSearch;
+				      nextStep = that.steps.stepDashboard;
 				}
       }
 

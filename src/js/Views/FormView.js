@@ -235,9 +235,8 @@ export default qx.Class.define("FormView", {
         createEntry: function (data, options, cb) {
             var that = this;
 
-            // to backend
-            data.entry.area = "dresden";
-
+            data.entry.area = APP.getArea().dataKey;
+            
             var data_converted = {
                 marketentry: data.entry,
                 location: data.location
@@ -246,16 +245,6 @@ export default qx.Class.define("FormView", {
             APP.getDataManager().addMarketEntry(data_converted, function (response) {
                 // cb(response.marketentry !== undefined);
                 cb(true);
-            });
-
-            // to github
-            APP.getDataManager().createGithubIssue({
-                data: {
-                    type: 'entry',
-                    entryType: data.entry.type,
-                    entryData: data.entry,
-                    locationData: data.location
-                }
             });
             
             // send outgoing message
@@ -283,7 +272,7 @@ export default qx.Class.define("FormView", {
                 + 'von: `' + data.entry.dateFrom + ' (' + data.entry.timeFrom + ')' + '`\n'
                 + 'bis: `' + data.entry.dateTo + ' (' + data.entry.timeTo + ')' + '`\n'
                 + 'Anmerkung: `' + data.additional.comment + '`\n'
-            });
+            }, null, APP.getArea().dataKey);
 
             // send mail to team inbox
             APP.getDataManager().sendMail({
@@ -328,16 +317,6 @@ export default qx.Class.define("FormView", {
         createFeedback: function (data, options, cb) {
             var that = this;
 
-            // to github
-            // TODO read response to get created issue ID and post this ID as waffle link to slack
-            APP.getDataManager().createGithubIssue({
-                data: {
-                    type: 'feedback',
-                    feedbackData: data.feedback,
-                    metaData: JSON.stringify(L.Browser)
-                }
-            });
-
             // to slack
             APP.getDataManager().createSlackMessage({
                 heading: 'Feedback von _' + data.feedback.author + '_ (' + data.feedback.mail + ')',
@@ -369,8 +348,9 @@ export default qx.Class.define("FormView", {
 
             // to slack
             APP.getDataManager().createSlackMessage({
-                heading: 'Kontaktanfrage von _' + data.contact.author + ' (' + data.contact.mail + ')_ an _' + options.entry.name + ' (' + options.entry.mail + ')_',
-                message: '```\n' + data.contact.message + '\n```'
+                heading: 'Kontaktanfrage von _' + data.contact.author + ' (' + data.contact.mail + ')_ an ' + options.entry.name + ' (' + APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true}) + ')',
+                // message: '```\n' + data.contact.message + '\n```'
+                message: '```Nachricht wurde anonymisiert```'
             });
 
             // send mail to entry's email
@@ -381,11 +361,11 @@ export default qx.Class.define("FormView", {
                     mail_to: options.entry.mail,
                     mail_replyTo: data.contact.mail,
                     mail_subject: 'Anfrage von ' + data.contact.author,
-                    mail_bodyPlain: data.contact.message,
+                    mail_bodyPlain: data.contact.message + '\n\nvon: ' + data.contact.author + ' | ' + data.contact.mail + ' | ' + data.contact.phone + '\n\nDiese Nachricht wurde über Ihren Eintrag auf ' +APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true})+ ' versendet.',
                     mail_bodyHtml: function () {
                         return '<p><i>' + data.contact.message + '</i></p>'
                             + '<p>' + data.contact.author + ' | ' + data.contact.mail + ' | ' + data.contact.phone + '</p>'
-                            + '<hr><small>Nachricht gesendet über <a href="https://afeefa.de">Afeefa.de</a></small>';
+                            + '<hr><small>Diese Nachricht wurde über Ihren Eintrag auf <a href="' +APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true})+ '">Afeefa.de</a> versendet.<br>' +APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true})+ '</small>';
                     }
                 }
             });

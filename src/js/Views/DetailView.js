@@ -105,7 +105,7 @@ export default qx.Class.define("DetailView", {
 			//////////////////////
 			
 			// generic
-			var properties = ['category', 'times', 'descriptionShort', 'description', 'speakerPublic', 'spokenLanguages', 'location', 'arrival', 'openingHours', 'phone', 'mail', 'web', 'facebook'];
+			var properties = ['category', 'times', 'descriptionShort', 'supportWantedDetail', 'description', 'speakerPublic', 'spokenLanguages', 'location', 'arrival', 'openingHours', 'phone', 'mail', 'web', 'facebook'];
 			_.each(properties, function(prop){
 
 				that['propertyContainer'+prop] = $("<div />").addClass('property ' + prop);
@@ -163,7 +163,11 @@ export default qx.Class.define("DetailView", {
 			////////////////
 			// timestamps //
 			////////////////
-			that.timestampContainer = $("<div />").addClass('property timestamp');
+			that.timestampContainer = $("<div />")
+				.addClass('property timestamp')
+				.on('contextmenu', function(e){
+          window.open('https://backend.afeefa.de/' + that.record.entryType + 's/' + that.record.id);
+				});
 			that.scrollContainer.append(that.timestampContainer);
 
 			$('#main-container').append(that.view);
@@ -196,8 +200,8 @@ export default qx.Class.define("DetailView", {
 			if(record.parentOrgaId) that.parent = APP.getDataManager().getOrgaById(record.parentOrgaId);
 
 			// set URL
-			that.currentEntryType = (record.entryType == 'orga')? 'project' : record.entryType;
-			APP.getRouter().setUrl(that.currentEntryType, record.id, record.name);
+			that.currentEntryType = APP.isOrga(record)? 'project' : record.entryType;
+			APP.getRouter().setUrl(APP.getRouter().getFrontendUrlForEntry(record), null, record.name);
 			APP.setOpenGraphMetaProperties({
 				title: record.name.slice(0,50) + '...',
 				description: record.descriptionShort? record.descriptionShort.slice(0,150) + '...' : null
@@ -339,7 +343,7 @@ export default qx.Class.define("DetailView", {
 					else if( _.contains( ['phone'], prop) ){
 						that['propertyValue'+prop].append('<a target="_blank" href="tel:' + propValue.replace(/\D/g, "") + '">' + propValue + '</a>');
 					}
-					else if( _.contains( ['description', 'descriptionShort'], prop) ){
+					else if( _.contains( ['description', 'descriptionShort', 'supportWantedDetail'], prop) ){
 						that['propertyValue'+prop].append(propValue.replace(/(?:\r\n|\r|\n)/g, '<br />'));
 
 						if(record.descriptionShort) that['propertyContainer'+'description'].addClass('hidden');
@@ -387,7 +391,7 @@ export default qx.Class.define("DetailView", {
 				var name = $("<p />")
 					.addClass('property-name')
 					.append(function(){
-						return (record.entryType == 'orga')? that.getWording('term.parent.orga') : that.getWording('term.parent.organiser');
+						return APP.isOrga(record)? that.getWording('term.parent.orga') : that.getWording('term.parent.organiser');
 					}());
 				propertyText.append(name);
 				
@@ -518,7 +522,7 @@ export default qx.Class.define("DetailView", {
 				if( that.record !== null) {
 					// reload record
 			    var newRecord = APP.getDataManager().getEntryByEntryId(that.record.entryId);
-			    var newRecord = (that.record.entryType == 'event')? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
+			    var newRecord = APP.isEvent(that.record)? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
 			    that.reset();
 			    that.load(newRecord);
 				}

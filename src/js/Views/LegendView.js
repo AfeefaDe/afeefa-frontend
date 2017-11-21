@@ -13,7 +13,7 @@ export default qx.Class.define("LegendView", {
 	var that = this;
 
 	that.setViewId('legendView');
-	that.setCategories( APP.getConfig().categories);
+	that.setCategories( APP.getData().categories);
 	// that.setCategories( _.union( APP.getConfig().categoriesIni, APP.getConfig().categoriesMarket ) );
   },
 

@@ -26,11 +26,17 @@ export default qx.Class.define("LanguageManager", {
 
         init: function( cb ){
             var that = this;
+
+            var lang = 'de';
+            
             var browserLang = navigator.language.split('-')[0];
             if( _.contains( APP.getConfig().languages, browserLang) )
-                that.setLanguage( browserLang );
-            else
-                that.setLanguage( APP.getConfig().languages[0] );
+                lang = browserLang;
+            
+            if( localStorage.getItem("languageFrozen") )
+                lang = localStorage.getItem("languageFrozen");
+            
+            that.setLanguage( lang );
 
             that.addEvents();
         },
@@ -41,7 +47,7 @@ export default qx.Class.define("LanguageManager", {
             var that = this;
 
             var wording = that.getBib()[ key ];
-            if( wording === undefined ) return key + ' not translated';
+            if( wording === undefined ) return '';
             return wording.message;
         },
 

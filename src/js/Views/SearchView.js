@@ -47,6 +47,14 @@ export default qx.Class.define("SearchView", {
         });
       that.searchBar.append(that.filterBtn);
 
+      // add button
+      that.addBtn = $("<div />")
+        .addClass('button add-btn')
+        .click(function(){
+          APP.getFormView().load( 'newEntry' );
+        });
+      that.searchBar.append(that.addBtn);
+
       // cancel button
       that.cancelBtn = $("<div />")
         .addClass('button cancel-btn')
@@ -120,10 +128,13 @@ export default qx.Class.define("SearchView", {
           'desktop'
         );
 
+        
         that.isActive(true);
         that.maximize();
         that.view.addClass('active');
         that.say('searchViewLoaded');
+        
+        that.scrollContainer.scrollTop(0);
 
         return that;
     },
@@ -136,7 +147,7 @@ export default qx.Class.define("SearchView", {
       
       if(APP.getUser().getBookmarks().length > 0){
         // MY AFEEFA
-        that.createSectionHeader( that.getWording('search.section.user') );
+        // that.createSectionHeader( that.getWording('search.section.user') );
 
         // user bookmarks
         var action = function(){
@@ -144,6 +155,7 @@ export default qx.Class.define("SearchView", {
         };
         that.createListResult(
           {
+            cssClass: 'first-child',
             iconClass: 'bookmark',
             label: that.getWording('search.tag.bookmarks'),
             subLabel: APP.getUser().getBookmarks().length,
@@ -176,22 +188,6 @@ export default qx.Class.define("SearchView", {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
 
-      that.createSectionHeader( 'Wissen' );
-      
-      // refugee guide
-      var action = function(){
-        APP.getIncludeView().load('wissensportal');
-      };
-      that.createListResult(
-        {
-          iconClass: 'wissensportal',
-          label: that.getWording('search.label.refugeeGuide'),
-          subLabel: that.getWording('search.sublabel.refugeeGuide'),
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
-
       that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
@@ -209,28 +205,30 @@ export default qx.Class.define("SearchView", {
       );
 
       // for children
-      var action = function(){
-        that.inputField.val('prop:forchildren').trigger( "input" );
-      };
-      that.createListResult(
-        {
-          iconClass: 'for-children',
-          label: that.getWording('search.label.forchildren'),
-          subLabel: that.getWording('search.sublabel.forchildren'),
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
-
-      // // certified by SFR
       // var action = function(){
-      //   that.inputField.val('certified').trigger( "input" );
+      //   that.inputField.val('tag:youth').trigger( "input" );
       // };
       // that.createListResult(
       //   {
-      //     iconClass: 'certified',
-      //     label: that.getWording('search.label.certified'),
-      //     subLabel: that.getWording('search.sublabel.certified'),
+      //     iconClass: 'for-children',
+      //     label: that.getWording('search.label.forchildren'),
+      //     subLabel: that.getWording('search.sublabel.forchildren'),
+      //     action: action,
+      //     targetContainertEl: that.scrollContainer
+      //   }
+      // );
+
+      // that.createSectionHeader( 'Wissen' );
+      
+      // refugee guide
+      // var action = function(){
+      //   APP.getIncludeView().load('wissensportal');
+      // };
+      // that.createListResult(
+      //   {
+      //     iconClass: 'wissensportal',
+      //     label: that.getWording('search.label.refugeeGuide'),
+      //     subLabel: that.getWording('search.sublabel.refugeeGuide'),
       //     action: action,
       //     targetContainertEl: that.scrollContainer
       //   }
@@ -283,7 +281,7 @@ export default qx.Class.define("SearchView", {
 
       // about afeefa
       var action = function(){
-        APP.getIncludeView().load('about');
+        window.open('https://about.afeefa.de');
       };
       that.createListResult(
         {
@@ -300,7 +298,7 @@ export default qx.Class.define("SearchView", {
       var that = this;
 
       // DEFINING
-      var tags = ['homework', 'iwgr'];
+      var tags = ['asylum', 'homework', 'racism', 'women', 'youth'];
       var groups = ['women', 'children', 'men', 'refugees'];
       var lists = ['beratung-fur-refugees-in-dd', 'freizeit-fur-kinder', 'geselliger-abend'];
       var articles = ['Wie finde ich den richtigen Deutschkurs?', 'WOHNEN – WEGE AUS DER SAMMELUNTERKUNFT'];
@@ -329,7 +327,6 @@ export default qx.Class.define("SearchView", {
 
       // DISPLAYING
       function createEntry(options){
-        // that.suggestions.append(
         that.scrollContainer.prepend(
           $("<a />")
             .append(options.label)
@@ -344,7 +341,7 @@ export default qx.Class.define("SearchView", {
 
       _.each(suggestions.tags, function(s){
         createEntry({
-          label: that.getWording('tag.' + s),
+          label: (that.getWording('tag.' + s + '.title'))? that.getWording('tag.' + s + '.title') : that.getWording('tag.' + s),
           cssClass: 'tag',
           url: '/search/tag:' + s,
           action: function(){
@@ -357,11 +354,13 @@ export default qx.Class.define("SearchView", {
         that.scrollContainer.find('.address').remove();
         _.each(suggestions.addresses, function(s){
           createEntry({
-            label: 'Adresse gefunden',
+            label: s.full_address,
             cssClass: 'address',
             url: '',
             action: function(){
               APP.getMapView().map.setView([s.latitude, s.longitude], 16);
+              // that.reset();
+              // that.loadDashboard();
             }
           });
         });
@@ -376,6 +375,12 @@ export default qx.Class.define("SearchView", {
       const entries = APP.getData().entries;
 
       var entriesFiltered, blockSyncWithMap = false;
+
+      // search type for individual result formatting
+      that.currentSearchType = null;
+
+      // info about why entry was found; for individual result formatting (e.g. needle highlighting)
+      var foundCriteria = {};
 
       // predefined queries: 
       if( query.indexOf(':') >= 0 ){
@@ -443,6 +448,7 @@ export default qx.Class.define("SearchView", {
                 return entry.supportWanted;
               });
               that.setSearchTag(null, that.getWording('search.tag.supportwanted'));
+              that.currentSearchType = 'support-search';
               break;
             case 'forchildren':
               entriesFiltered = _.filter( entries, function(entry){
@@ -469,8 +475,12 @@ export default qx.Class.define("SearchView", {
       // free search
       else {
 
+        // blockSyncWithMap = true;
+
         if(that.inputField.is(":focus")) that.loadSuggestions(query);
 
+        that.currentSearchType = 'free-search';
+        
         entriesFiltered = _.filter( entries, function(entry){
           // in name?
           if( entry.name.toLowerCase().indexOf(query) >= 0 ) return true;
@@ -484,19 +494,29 @@ export default qx.Class.define("SearchView", {
             var subcat = that.getWording('cat.' + entry.subCategory);
             if( subcat.toLowerCase().indexOf(query) >= 0 ) return true;
           }
-          // children?
-          if( entry.forChildren ) {
-            // the query string occurs in the "for children" property´wording of the selected language
-            var children = that.getWording('prop.forChildren');
-            if( children.toLowerCase().indexOf(query) >= 0 ) return true;
-          }
           // in description?
           if( entry.descriptionShort ) {
-            if( entry.descriptionShort.toLowerCase().indexOf(query) >= 0 ) return true;
+            var needlePos = entry.descriptionShort.toLowerCase().indexOf(query);
+            if( needlePos >= 0 ){
+              foundCriteria[entry.id] = {foundInAttribute: 'descriptionShort', pos: needlePos, length: query.length};
+              return true;
+            }
+          }
+          // in support details?
+          if( entry.supportWantedDetail ) {
+            var needlePos = entry.supportWantedDetail.toLowerCase().indexOf(query);
+            if( needlePos >= 0 ){
+              foundCriteria[entry.id] = {foundInAttribute: 'supportWantedDetail', pos: needlePos, length: query.length};
+              return true;
+            }
           }
           // in description?
           if( entry.description ) {
-            if( entry.description.toLowerCase().indexOf(query) >= 0 ) return true;
+            var needlePos = entry.description.toLowerCase().indexOf(query);
+            if( needlePos >= 0 ){
+              foundCriteria[entry.id] = {foundInAttribute: 'description', pos: needlePos, length: query.length};
+              return true;
+            }
           }
           // in speakerPublic?
           if( entry.speakerPublic ) {
@@ -508,7 +528,12 @@ export default qx.Class.define("SearchView", {
       }
 
       _.each(entriesFiltered, function(entry) {
-        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer, query: query} );
+        that.createEntryResult({
+          entry: entry,
+          targetContainertEl: that.scrollContainer,
+          type: that.currentSearchType,
+          foundCriteria: foundCriteria[entry.id]
+        });
       });
       
       // print list button
@@ -605,10 +630,10 @@ export default qx.Class.define("SearchView", {
         that.say('mainMenuBtnClicked');
       });
 
-      that.inputField.focusin(function(){
-        that.load(that.inputField.val());
-        that.say('searchFieldFocused');
-      });
+      // that.inputField.focusin(function(){
+        // that.load(that.inputField.val());
+        // that.say('searchFieldFocused');
+      // });
 
       that.inputField.on('input', function(e){
         var val = that.inputField.val();

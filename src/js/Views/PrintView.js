@@ -146,8 +146,8 @@ export default qx.Class.define("PrintView", {
 						$entry.append(
 							$("<a />")
 								.addClass('entry-url')
-								.attr('href', 'https://afeefa.de/' + (entry.entryType == 'orga'? 'project/' : 'event/') + entry.id)
-								.append('afeefa.de/' + (entry.entryType == 'orga'? 'project/' : 'event/') + entry.id)
+								.attr('href', 'https://afeefa.de/' + (APP.isOrga(entry)? 'project/' : 'event/') + entry.id)
+								.append('afeefa.de/' + (APP.isOrga(entry)? 'project/' : 'event/') + entry.id)
 						);
 						
 						that.view.append($entry);

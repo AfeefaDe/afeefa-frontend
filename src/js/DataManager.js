@@ -18,29 +18,35 @@ export default qx.Class.define("DataManager", {
 
     members: {
 
+        
+        // fetch only necessary data for app startup
         fetchInitialData: function (cb) {
             var that = this;
 
-            // snychronous data calls (wait for all data calls to finish)
             that.getUITranslations(APP.getLM().getCurrentLang(), function (data) {  // language bib
 
                 APP.getLM().setBib(data);
 
-                var currentData = APP.getData();
-                currentData.categories = APP.getConfig().categories;
-                APP.setData(currentData);
-
+                // fetch areas
                 that.getAllAreas(function (data) {  // categories
                     // store in APP
                     var currentData = APP.getData();
                     currentData.areas = data.areas;
                     APP.setData(currentData);
 
-                    that.say('fetchedInitialData');
-                    cb();  // finished, so callback
+                    APP.detectArea();
+                    
+                    // fetch categories
+                    that.getAllCategories(function(data){
+                        var currentData = APP.getData();
+                        currentData.categories = data.categories;
+                        APP.setData(currentData);
+
+                        that.say('fetchedInitialData');
+                        cb();  // finished, so callback
+                    });
                 });
             });
-
         },
 
         fetchAllData: function (cb) {
@@ -56,20 +62,25 @@ export default qx.Class.define("DataManager", {
                 // store entries in APP
                 currentAppData.entries = data.marketentries;
 
-                currentAppData.entries = _.sortBy(currentAppData.entries, 'name');
+                currentAppData.entries = _.sortBy(currentAppData.entries, 'updated_at').reverse();
 
                 APP.setData(currentAppData);
                 if(!cb) that.say('fetchedNewData');
                 that.say('fetchedAllData');
 
-                that.fetchExternalData('freifunk', function(){
-                    if(!cb) that.say('fetchedNewData');
-                    
-                    that.fetchExternalData('facebookEvents', function(){
-                        that.say('fetchedNewData');
-                        if(cb) cb();  // finished, so callback
+                if(APP.getArea().dataKey == 'dresden') {
+                    that.fetchExternalData('freifunk', function(){
+                        if(!cb) that.say('fetchedNewData');
+                        
+                        that.fetchExternalData('facebookEvents', function(){
+                            that.say('fetchedNewData');
+                            if(cb) cb();  // finished, so callback
+                        });
                     });
-                });
+                } else {
+                    if(cb) that.say('fetchedNewData');
+                    if(cb) cb();  // finished, so callback
+                }
 
             });
         },
@@ -78,7 +89,7 @@ export default qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: APP.getConfig().apiUrl + "api/categories",
+                url: APP.getConfig().apiUrl + "api/categories" + "?area=" + APP.getArea().dataKey,
                 type: 'GET',
                 dataType: 'json'
             })
@@ -103,31 +114,37 @@ export default qx.Class.define("DataManager", {
                         entryStats: {
                             orgas: 600,
                             events: 30
-                        }
+                        },
+                        dataKey: 'dresden'
                     },
-                    // bautzen: {
-                    //     initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
-                    //     label: 'Bautzen',
-                    //     entryStats: {
-                    //         orgas: 118,
-                    //         events: 0
-                    //     }
-                    // },
-                    // leipzig: {
-                    //     initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
-                    //     label: 'Leipzig',
-                    //     entryStats: {
-                    //         orgas: 118,
-                    //         events: 0
-                    //     }
-                    // },
+                    leipzig: {
+                        initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
+                        label: 'Leipzig',
+                        entryStats: {
+                            orgas: 118,
+                            events: 0
+                        },
+                        redirect: 'https://leipzig.afeefa.de',
+                        dataKey: 'leipzig'
+                    },
+                    bautzen: {
+                        initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
+                        label: 'Bautzen',
+                        entryStats: {
+                            orgas: 118,
+                            events: 0
+                        },
+                        redirect: 'https://bautzen.afeefa.de',
+                        dataKey: 'bautzen'
+                    },
                     pirna: {
                         initialView: { lat: 50.957456, lon: 13.937007, zoom: 14 },
                         label: 'Pirna',
                         entryStats: {
                             orgas: 118,
                             events: 0
-                        }
+                        },
+                        dataKey: 'dresden'
                     }
                 }
             };
@@ -157,7 +174,7 @@ export default qx.Class.define("DataManager", {
         findAddress: function (address, cb) {
 
             $.ajax({
-                url: 'https://dev.backend.afeefa.de/api/v1/geocoding?token=MapCat_050615&address=' + encodeURI(address),
+                url: APP.getConfig().backendApiUrl + 'api/v1/geocoding?token=MapCat_050615&address=' + encodeURI(address),
                 type: 'GET',
                 dataType: 'text',
             })
@@ -174,7 +191,7 @@ export default qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: APP.getConfig().apiUrl + "api/marketentries?locale=" + APP.getLM().getCurrentLang(),
+                url: APP.getConfig().apiUrl + "api/marketentries?locale=" + APP.getLM().getCurrentLang() + "&area=" + APP.getArea().dataKey,
                 type: 'GET',
                 dataType: 'json'
             })
@@ -202,7 +219,7 @@ export default qx.Class.define("DataManager", {
             var that = this;
 
             var entry = _.find(APP.getData().entries, function(entry){
-                return (entry.entryType == 'orga' && id == entry.id);
+                return (APP.isOrga(entry) && id == entry.id);
             })
 
             return entry;
@@ -212,7 +229,7 @@ export default qx.Class.define("DataManager", {
             var that = this;
 
             var entry = _.find(APP.getData().entries, function(entry){
-                return (entry.entryType == 'event' && id == entry.id);
+                return (APP.isEvent(entry) && id == entry.id);
             })
 
             return entry;
@@ -224,7 +241,7 @@ export default qx.Class.define("DataManager", {
             if(count === undefined) count = 5;
 
             var projects = APP.getData().entries.filter(function (entry) {
-                return (entry.entryType == 'orga' && entry.created_at != undefined);
+                return (APP.isOrga(entry) && entry.created_at != undefined);
             });
 
             var sortedProjects = _.sortBy(projects, function(o){
@@ -443,9 +460,13 @@ export default qx.Class.define("DataManager", {
                             }];
                         },
                         dateFrom: function(record){
+                            if(record.start_time === undefined) return null;
+                            
                             return record.start_time.substr( 0, record.start_time.indexOf('T') );
                         },
                         timeFrom: function(record){
+                            if(record.start_time === undefined) return null;
+                            
                             function n(n){
                                 return n > 9 ? "" + n: "0" + n;
                             }
@@ -454,14 +475,18 @@ export default qx.Class.define("DataManager", {
                             return n(date.getHours()) + ':' + n(date.getMinutes());
                         },
                         dateTo: function(record){
+                            if(record.end_time === undefined) return null;
+                            
                             return record.end_time.substr( 0, record.end_time.indexOf('T') );
                         },
                         timeTo: function(record){
+                            if(record.end_time === undefined) return null;
+                            
                             function n(n){
                                 return n > 9 ? "" + n: "0" + n;
                             }
 
-                            date = new Date(record.start_time);
+                            date = new Date(record.end_time);
                             return n(date.getHours()) + ':' + n(date.getMinutes());
                         },
                         additionalData: function(record){
@@ -553,23 +578,21 @@ export default qx.Class.define("DataManager", {
         addMarketEntry: function (data, cb) {
             var that = this;
 
-            // console.debug('POST ' + APP.getConfig().apiUrl + 'api/marketentries', data);
-
             $.ajax({
                 url: APP.getConfig().apiUrl + "api/marketentries",
                 type: 'POST',
-                data: data,
+                data: JSON.stringify(data),
                 cache: false,
                 dataType: 'json',
                 processData: true,
-                contentType: false
+                contentType: 'application/json; charset=UTF-8'
             })
-                .done(function (data) {
-                    cb(data);
-                })
-                .fail(function (a) {
-                    cb(a);
-                });
+            .done(function (data) {
+                cb(data);
+            })
+            .fail(function (a) {
+                cb(a);
+            });
 
         },
 
@@ -600,12 +623,20 @@ export default qx.Class.define("DataManager", {
         // Outgoing messages //
         ///////////////////////
 
-        createSlackMessage: function (data, cb) {
+        createSlackMessage: function (data, cb, area) {
 
+            if(area === undefined) area = 'dresden';
+
+            var hook;
+            if(area == 'leipzig'){
+                hook = "https://hooks.slack.com/services/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";
+            } else {
+                hook = "https://hooks.slack.com/services/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";
+            }
             var slackMessage = '*' + data.heading + '*' + ':\n' + data.message;
 
             $.ajax({
-                url: "https://hooks.slack.com/services/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",
+                url: hook,
                 type: 'POST',
                 data: JSON.stringify({text: slackMessage}),
                 cache: false,

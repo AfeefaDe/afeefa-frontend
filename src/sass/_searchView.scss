@@ -7,7 +7,7 @@
 	left: 0em;
 	z-index: 10;
 	background-color: $gray95;
-	box-shadow: 0px 0px 2px #000;
+	@include box-shadow(0px 0px 2px #000);
 	color: $white;
 	
 	width: $viewWidth;
@@ -23,13 +23,13 @@
 		height: $height_sb;
 		z-index: 20;
 		background-color: $gray95;
-		box-shadow: 0px 2px 5px #000;
+		@include box-shadow(0px 2px 5px #000);
 
 		.button {
 			position: absolute;
 			width: 3rem;
 			height: $height_sb;
-			background-size: 40%;
+			@include background-size(40%);
 			background-repeat: no-repeat;
 			background-position: center center;
 			cursor: pointer;
@@ -46,11 +46,11 @@
 			background-image: url("../img/icon_38.svg");
 		}
 
-		.refugee-btn {
+		.add-btn {
 			top: 0;
 			right: 0;
-	    background-image: url("../img/icon_54.svg");
-			background-size: 55%;
+	    background-image: url("../img/icon_34.svg");
+			@include background-size(40%);
 		}
 
 		.filter-btn {
@@ -61,7 +61,7 @@
 			top: 0;
 			right: 0;
 	    background-image: url("../img/icon_34.svg");
-			transform: rotate(45deg);
+			@include transform(rotate(45deg));
 			opacity: 1;
 			display: none;
 		}
@@ -101,7 +101,7 @@
 			&.active { display: inline-block; }
     	overflow: hidden;
     	text-overflow: ellipsis;
-			border-radius: .1em;
+			@include border-radius(.1em);
 
 			&[class*="cat"] {
 				color: $white;
@@ -133,7 +133,7 @@
 			display: block !important;
 		}
 
-		.refugee-btn {
+		.add-btn {
 			display: none;
 		}
 	}
@@ -165,7 +165,7 @@
 			width: 100%;
 			top: 0;
 			left: 0;
-			border-radius: 0;
+			@include border-radius(0);
 
 			height: $height_sb !important;
 
@@ -194,7 +194,7 @@
 				background-image: url("../img/icon_38.svg");
 			}
 
-	    .refugee-btn {
+	    .add-btn {
 				top: 1rem;
 				right: 4rem;
 			}
@@ -231,7 +231,7 @@
 				background-color: $gray95;
 				height: calc(100vh - 6rem);
 		    overflow: scroll;
-				box-shadow: 0px 0px 2px #000;
+				@include box-shadow(0px 0px 2px #000);
 			}
 
 			#map-area {

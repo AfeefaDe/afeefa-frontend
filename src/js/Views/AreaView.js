@@ -40,30 +40,24 @@ export default qx.Class.define("AreaView", {
 
 			that.view.empty();
 
-			// that.createTooltip(
-   //      that.view,
-   //      function(){
-   //        return that.getWording('areaselection.button');
-   //      }(),
-   //      'hover',
-   //      'top',
-   //      'desktop'
-   //    );
-
       _.each( APP.getData().areas, function(value, key){
+				
 				var item = $("<div />")
 					.addClass('area-btn')
 					.append(value.label)
 					.click(function(){
 						that.close();
 
-						// sessionStorage.setItem("languageFrozen", 1);
-
 						// change area if different from currently selected one
 						if( value != APP.getArea() ){
-							APP.setArea(value);
-							that.say('areaChanged', APP.getArea());
-							that.load();
+							if( value.redirect ){
+              	window.open(value.redirect, "_self");
+							} else {
+								APP.setArea(value);
+								that.say('areaChanged', APP.getArea());
+								that.say('languageChanged', APP.getLM().getCurrentLang());
+								that.load();
+							}
 						}
 					});
 				

@@ -2,20 +2,20 @@
 	
 	/* orga */
 	&.type-0 {
-		border-radius: 3px;
+		@include border-radius(3px);
 	}
 
 	/* market entry */
 	&.type-1 {
-		border-radius: 20px;
+		@include border-radius(20px);
 	}
 
 	/* event */
 	&.type-2 {
-		border-radius: 3px;
+		@include border-radius(3px);
 		/*position: relative;*/
 		/*overflow: hidden;*/
-		transform: rotate(45deg);
+		@include transform(rotate(45deg));
 
 		/*&::before {
 		    content: "";
@@ -26,14 +26,14 @@
 		    left: -50%;
 		    z-index: -1;
 		    background: url("../img/icon_10.svg") center center no-repeat;
-			transform: rotate(-45deg);
+			@include transform(rotate(-45deg));
 		}*/
 	}
 
 	/* POI */
 	&.type-3 {
-		border-radius: 20px;
-		/*box-shadow: 0px 0px 2px #555;*/
+		@include border-radius(20px);
+		/*@include box-shadow(0px 0px 2px #555);*/
 		background-color: $gray50 !important;
 	}
 }
@@ -96,7 +96,7 @@
 
 @mixin categorySymbols {
 
-	background-size: 72%;
+	@include background-size(72%);
 	background-repeat: no-repeat;
 	background-position: center center;
 
@@ -108,7 +108,7 @@
 	&.cat-jobs { background-image: url("../img/icon_76.svg"); }
 	&.cat-consultation { background-image: url("../img/icon_10.svg"); }
 	&.cat-leisure { background-image: url("../img/icon_86.svg"); }
-	&.cat-community { background-image: url("../img/icon_02.svg"); background-size: 85%; }
+	&.cat-community { background-image: url("../img/icon_02.svg"); @include background-size(85%); }
 	&.cat-donation { background-image: url("../img/icon_12.svg"); }
 	&.cat-external-event { background-image: url("../img/icon_192.svg"); }
 	
@@ -119,9 +119,9 @@
 	&.subcat-christian { background-image: url("../img/icon_60.svg"); }
 	&.subcat-islam { background-image: url("../img/icon_62.svg"); }
 	&.subcat-religious-other { background-image: url("../img/icon_158.svg"); }
-	&.subcat-shop { background-image: url("../img/icon_66.svg"); background-size: 50%; }
-	&.subcat-nature { background-image: url("../img/icon_96.svg"); background-size: 65%; }
-	&.subcat-authority { background-image: url("../img/icon_70.svg"); background-size: 60%; }
+	&.subcat-shop { background-image: url("../img/icon_66.svg"); @include background-size(50%); }
+	&.subcat-nature { background-image: url("../img/icon_96.svg"); @include background-size(65%); }
+	&.subcat-authority { background-image: url("../img/icon_70.svg"); @include background-size(60%); }
 	&.subcat-hospital { background-image: url("../img/icon_04.svg"); }
 	&.subcat-police { background-image: url("../img/icon_146.svg"); }
 	&.subcat-public-transport { background-image: url("../img/icon_58.svg"); }
@@ -152,7 +152,7 @@
 	&.subcat-museum { background-image: url("../img/icon_116.svg"); }
 	&.subcat-music { background-image: url("../img/icon_120.svg"); }
 	&.subcat-stage { background-image: url("../img/icon_154.svg"); }
-	&.subcat-craft-art { background-image: url("../img/icon_98.svg"); background-size: 75%; }
+	&.subcat-craft-art { background-image: url("../img/icon_98.svg"); @include background-size(75%); }
 	&.subcat-workspace { background-image: url("../img/icon_188.svg"); }
 	&.subcat-gardening { background-image: url("../img/icon_118.svg"); }
 	&.subcat-cooking { background-image: url("../img/icon_126.svg"); }
@@ -173,15 +173,15 @@
 	&.subcat-clothes { background-image: url("../img/icon_140.svg"); }
 	&.subcat-furniture { background-image: url("../img/icon_144.svg"); }
 	
-	&.subcat-iwgr { background-image: url("../img/icon_194.svg"); background-size: 85%; }
-	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); background-size: 85%; }
+	&.subcat-iwgr { background-image: url("../img/icon_194.svg"); @include background-size(85%); }
+	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); @include background-size(85%); }
 
 	
 	/* POIs */
 
 	/*&.cat-housing { background-image: url("../img/icon_19.svg"); }*/
 
-	/*&.cat-other { background-image: url("../img/icon_32.svg"); background-size: 50%; }*/
+	/*&.cat-other { background-image: url("../img/icon_32.svg"); @include background-size(50%); }*/
 }
 
 @mixin propertyIcons {
@@ -196,4 +196,5 @@
 	&.icon-facebook { background-image: url("../img/icon_45.svg"); }
 	&.icon-spokenLanguages { background-image: url("../img/icon_43.svg"); }
 	&.icon-speakerPublic { background-image: url("../img/icon_41.svg"); }
+	&.icon-supportWantedDetail { background-image: url("../img/icon_55.svg"); background-size: 90%; }
 }

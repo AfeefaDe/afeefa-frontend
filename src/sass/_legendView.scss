@@ -1,23 +1,23 @@
 #legendView {
 	
-	transition: all 150ms;
+	@include transition(all 150ms);
 
 	position: absolute;
 	right: -16.9em;
 	top: 0;
 	z-index: 10;
 	
-	box-sizing: border-box;
+	@include box-sizing(border-box);
 	width: 20em;
 	height: 100%;
 	padding: 2em 0;
 
 	background-color: $gray95;
-	box-shadow: 0px 0px 2px #000;
+	@include box-shadow(0px 0px 2px #000);
 	color: $gray50;
 
-	display: flex;
-	flex-direction: column;
+	@include display-flex;
+	@include flex-direction(column);
 
 	.filter-module {
 
@@ -36,30 +36,30 @@
 	}
 
 	.reset-module {
-		order: 2;
+		@include order(2);
 		visibility: hidden;
 	}
 	.category-module {
-		order: 0;	
+		@include order(0);
 	}
 	.entity-module {
-		order: 1;
+		@include order(1);
 		visibility: hidden;
 	}
 
 	.row-container {
-		display: flex;
+		@include display-flex;
 		padding: 0 1em;
 
 		.entity-container {
 			height: 2.5rem;
 
-			flex-grow: 1;
-			flex-basis: 100%;
+			@include flex-grow(1);
+			@include flex-basis(100%);
 			
-			display: flex;
-	    	flex-direction: row;
-	    	align-items: center;
+			@include display-flex;
+	    @include flex-direction(row);
+	    @include align-items(center);
 			
 	    margin-bottom: 1em;
 
@@ -90,7 +90,7 @@
 
 		&.extended {
 			.cat-container .nippus {
-				transform: rotate(180deg);
+				@include transform(rotate(180deg));
 			}
 
 			.sub-container {
@@ -124,7 +124,7 @@
 			width: 2.5em;
 			height: 2.5em;
 			
-			transition: all 150ms;
+			@include transition(all 150ms);
 		}
 
 		p {
@@ -150,9 +150,9 @@
 			background-repeat: no-repeat;
 			background-position: center center;
 			background-image: url("../img/icon_84.svg");
-			background-size: 30%;
+			@include background-size(30%);
 			cursor: pointer;
-			transition: transform 100ms;
+			@include transition(transform 100ms);
 			opacity: .8;
 
 			&:hover {
@@ -163,7 +163,7 @@
 		&:hover {
 			opacity: 1 !important;
 			
-			p { text-shadow:  0px 0px 2px rgba(255, 255, 255, 1) ; }
+			p { @include text-shadow( 0px 0px 2px rgba(255, 255, 255, 1) ); }
 			
 		}
 
@@ -174,7 +174,7 @@
 	}
 
 	.sub-container {
-		transition: max-height 250ms;
+		@include transition(max-height 250ms);
 		@include categoryColors($alpha_background: .1);
 		
 		&.cat-general {
@@ -199,7 +199,7 @@
 			.icon {
 				
 				@include categorySymbols;
-				background-size: 50% !important;
+				@include background-size(50% !important);
 				
 				float: left;			
 				width: 2.5em;
@@ -226,7 +226,7 @@
 			&:hover {
 				opacity: 1 !important;
 				
-				p { text-shadow:  0px 0px 2px rgba(255, 255, 255, 1) ; }
+				p { @include text-shadow( 0px 0px 2px rgba(255, 255, 255, 1) ); }
 			}
 		}
 
@@ -234,22 +234,22 @@
 
 	.entity-module {
 		.row-container {
-    	flex-direction: column;
+    	@include flex-direction(column);
 		}
   }
 
 	.attribute-module {
 		display: none;
 
-		order: 3;
+		@include order(3);
 		visibility: hidden;
 
 		.attribute-container {
 			padding-left: 2em;
 		    margin-bottom: 1em;
 			
-			display: flex;
-	    	align-items: center;
+			@include display-flex;
+	    	@include align-items(center);
 
 			input {
 				width: 1.5em;
