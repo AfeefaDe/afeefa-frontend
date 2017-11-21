@@ -1,7 +1,7 @@
 import qx from '../../node_modules/qooxdoo/qx-oo.js';
 import Daddy from './Daddy.js';
 import * as _ from '../../node_modules/underscore/underscore-min.js';
-import APP from './main.js';
+ 
 
 import DetailView from './Views/DetailView';
 import AreaView from './Views/AreaView';

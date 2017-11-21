@@ -1,7 +1,7 @@
 import qx from '../../node_modules/qooxdoo/qx-oo.js';
-import moment from 'moment';
+ 
 
-import APP from './main.js';
+ 
 
 export default qx.Class.define("Utility", {
 	

@@ -1,11 +1,5 @@
 import qx from '../../node_modules/qooxdoo/qx-oo.js';
-import $ from 'jquery';
-import * as _ from 'underscore';
-import moment from 'moment';
-
 import Daddy from './Daddy.js';
-import APP from './main.js';
-
 
 export default qx.Class.define("DataManager", {
 

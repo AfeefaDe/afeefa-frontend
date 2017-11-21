@@ -1,5 +1,5 @@
 import qx from 'qooxdoo/qx-oo.js';
-import $ from 'jquery';
+ 
 
 export default qx.Class.define("PlusView", {
 	

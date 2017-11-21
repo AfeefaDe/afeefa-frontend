@@ -1,11 +1,11 @@
 import qx from '../../node_modules/qooxdoo/qx-oo.js';
 import Daddy from './Daddy.js';
-import * as _ from 'underscore';
+ 
 
-import moment from 'moment';
-import $ from 'jquery';
+ 
+ 
 
-import APP from './main.js';
+ 
 
 export default qx.Class.define("LanguageManager", {
     extend : Daddy,

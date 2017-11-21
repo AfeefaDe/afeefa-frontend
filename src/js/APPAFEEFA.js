@@ -1,7 +1,5 @@
-import * as _ from 'underscore';
 import qx from 'qooxdoo';
-import moment from 'moment';
-import $ from 'jquery';
+ 
 
 import Daddy from './Daddy.js';
 import DataManager from './DataManager.js';

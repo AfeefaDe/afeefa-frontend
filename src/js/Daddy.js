@@ -1,5 +1,5 @@
 import qx from 'qooxdoo';
-import $ from 'jquery';
+ 
 import jQuery from 'jquery';
 
 export default qx.Class.define("Daddy", {

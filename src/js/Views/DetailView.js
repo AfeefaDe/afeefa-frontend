@@ -1,11 +1,11 @@
 import qx from 'qooxdoo/qx-oo.js';
-import $ from 'jquery';
+ 
 import PerfectScrollbar from 'perfect-scrollbar';
-import moment from 'moment';
-import * as _ from 'underscore';
+ 
+ 
 
 import View from './View.js';
-import APP from '../main.js';
+ 
 
 export default qx.Class.define("DetailView", {
 	

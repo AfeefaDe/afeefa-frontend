@@ -1,9 +1,9 @@
 import qx from 'qooxdoo/qx-oo.js';
-import $ from 'jquery';
+ 
 import PerfectScrollbar from 'perfect-scrollbar';
-import * as _ from 'underscore';
+ 
 
-import APP from '../main.js';
+ 
 
 export default qx.Class.define("EventView", {
     

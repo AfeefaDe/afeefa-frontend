@@ -1,9 +1,9 @@
 import qx from 'qooxdoo/qx-oo.js';
-import $ from 'jquery';
-import * as _ from 'underscore';
+ 
+ 
 import Hammer from 'hammerjs'
 
-import APP from '../main.js';
+ 
 
 export default qx.Class.define("MenuView", {
     
