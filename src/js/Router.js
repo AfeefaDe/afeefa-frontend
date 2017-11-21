@@ -4,6 +4,20 @@ import * as _ from '../../node_modules/underscore/underscore-min.js';
 import APP from './main.js';
 
 import DetailView from './Views/DetailView';
+import AreaView from './Views/AreaView';
+import DetailViewMobile from './Views/DetailViewMobile';
+import EventView from './Views/EventView';
+import FormView from './Views/FormView';
+import IncludeView from './Views/IncludeView';
+import IntroView from './Views/IntroView';
+import LanguageView from './Views/LanguageView';
+import LegendView from './Views/LegendView';
+import MapView from './Views/MapView';
+import MenuView from './Views/MenuView';
+import MessageView from './Views/MessageView';
+import PlusView from './Views/PlusView';
+import PrintView from './Views/PrintView';
+import SearchView from './Views/SearchView';
 
 export default qx.Class.define("Router", {
 	

@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babelify": "^7.3.0",
@@ -26,13 +27,15 @@
     "watchify": "^3.9.0"
   },
   "dependencies": {
-    "qooxdoo": "^4.1.0",
+    "qooxdoo": "4.1.0",
     "hammerjs": "^2.0.4",
     "jquery": "^2.2.2",
     "moment": "^2.0.0",
     "popper.js": "^0.6.4",
     "underscore": "^1.8.2",
-    "materialize": "*",
-    "restive": "*"
+    "materialize-css": "*",
+    "mapbox.js": "3.1.1",
+    "leaflet.markercluster": "1.2.0",
+    "perfect-scrollbar": "1.2.0"
   }
 }

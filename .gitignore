@@ -4,6 +4,8 @@
 
 # ignore built assets
 dist/built
+# ignore specific config.php file
+dist/config.php
 
 # Logs
 logs

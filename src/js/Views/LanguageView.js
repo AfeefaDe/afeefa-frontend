@@ -1,4 +1,9 @@
 import qx from 'qooxdoo/qx-oo.js';
+import $ from 'jquery';
+import PerfectScrollbar from 'perfect-scrollbar';
+import * as _ from 'underscore';
+
+import APP from '../main.js';
 
 export default qx.Class.define("LanguageView", {
 	
@@ -52,7 +57,7 @@ export default qx.Class.define("LanguageView", {
 			that.listContainer = $("<div />")
 				.attr('id', 'list-container');
 			
-	  	if( APP.getUserDevice() == 'desktop') that.listContainer.perfectScrollbar();
+	  	if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.listContainer[0])
 			that.view.append(that.listContainer);
 
 			// all the languages as list items
@@ -123,7 +128,7 @@ export default qx.Class.define("LanguageView", {
 			that.view.addClass('active');
 			that.showCurtain(true);
 
-      if( APP.getUserDevice() == 'desktop') that.listContainer.perfectScrollbar('update');
+      if( APP.getUserDevice() == 'desktop') that.ps.update();
 		},
 
 		addEvents: function(){

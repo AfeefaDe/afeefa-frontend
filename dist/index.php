@@ -40,7 +40,7 @@
 	<meta name="theme-color" content="#41829e">
 
 	<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
-	<link rel="stylesheet" href="built/afeefa.css" />
+	<link rel="stylesheet" href="/built/afeefa.css" />
 
 	<!-- mapbox -->
 	<!-- <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> -->
@@ -55,7 +55,20 @@
 	  ga('create', 'UA-34351955-4', 'auto');
 	  ga('send', 'pageview');
 	</script>
-	<script type="text/javascript" src="built/build.js"></script>
+
+	<?php
+		$config = include 'config.php';
+		$apiUrl = $config['APIUrl'];
+		$backendApiUrl = $config['backendAPIUrl'];
+	?>
+		<script>window.apiurl = '<?= $apiUrl ?>'</script>
+		<script>window.backendapiurl = '<?= $backendApiUrl ?>'</script>
+
+
+
+
+
+	<script type="text/javascript" src="/built/build.js"></script>
   
 </head>
 <body>

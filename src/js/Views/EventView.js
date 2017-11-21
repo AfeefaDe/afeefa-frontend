@@ -1,4 +1,9 @@
 import qx from 'qooxdoo/qx-oo.js';
+import $ from 'jquery';
+import PerfectScrollbar from 'perfect-scrollbar';
+import * as _ from 'underscore';
+
+import APP from '../main.js';
 
 export default qx.Class.define("EventView", {
     
@@ -41,7 +46,7 @@ export default qx.Class.define("EventView", {
       // form container
       that.scrollContainer = $("<div />")
           .addClass('scroll-container list-results');
-      if (APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar();
+      if (APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0])
       that.view.append(that.scrollContainer);
 
       this.base(arguments);
@@ -291,7 +296,7 @@ export default qx.Class.define("EventView", {
 
         that.scrollContainer.empty();
         
-        if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar('update');
+        if( APP.getUserDevice() == 'desktop') that.ps.update();
     },
 
     close: function(){

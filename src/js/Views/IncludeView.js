@@ -1,4 +1,9 @@
 import qx from 'qooxdoo/qx-oo.js';
+import $ from 'jquery';
+import PerfectScrollbar from 'perfect-scrollbar';
+import * as _ from 'underscore';
+
+import APP from '../main.js';
 
 export default qx.Class.define("IncludeView", {
 	
@@ -71,7 +76,7 @@ export default qx.Class.define("IncludeView", {
 
 			$('#main-container').append(that.view);
 
-			if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar();
+			if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0])
 
 			that.setViewState(0);
 

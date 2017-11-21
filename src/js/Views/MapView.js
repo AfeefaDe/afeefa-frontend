@@ -1,4 +1,10 @@
 import qx from 'qooxdoo/qx-oo.js';
+import $ from 'jquery';
+import L from 'mapbox.js';
+import MarkerClusterGroup from 'leaflet.markercluster';
+import * as _ from 'underscore';
+
+import APP from '../main.js';
 
 export default qx.Class.define("MapView", {
 	

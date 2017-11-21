@@ -1,5 +1,11 @@
 import qx from 'qooxdoo/qx-oo.js';
+import $ from 'jquery';
+import PerfectScrollbar from 'perfect-scrollbar';
+import moment from 'moment';
+import * as _ from 'underscore';
+
 import View from './View.js';
+import APP from '../main.js';
 
 export default qx.Class.define("DetailView", {
 	
@@ -50,7 +56,7 @@ export default qx.Class.define("DetailView", {
 			// scrollable content container
 			that.scrollContainer = $("<div />").addClass('scroll-container');
 			that.view.append(that.scrollContainer);
-			if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar();
+			if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0])
 
 			// certificate badge
 			var thePopper;
@@ -221,7 +227,7 @@ export default qx.Class.define("DetailView", {
 
 			// scroll
 			that.scrollContainer.scrollTop(0);
-			that.scrollContainer.perfectScrollbar('update');
+			that.ps.update();
 
 			// heading
 			that.heading.append(record.name ? record.name : '');
@@ -420,7 +426,7 @@ export default qx.Class.define("DetailView", {
 			that.view.addClass('active');
       that.isActive(true);
 
-			if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar('update');
+			if( APP.getUserDevice() == 'desktop') that.ps.update();
 
 			that.say('detailViewOpened');
 		},

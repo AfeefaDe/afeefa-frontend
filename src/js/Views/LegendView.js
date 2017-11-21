@@ -1,4 +1,10 @@
 import qx from 'qooxdoo/qx-oo.js';
+import $ from 'jquery';
+import PerfectScrollbar from 'perfect-scrollbar';
+import * as _ from 'underscore';
+import Hammer from 'hammerjs';
+
+import APP from '../main.js';
 
 export default qx.Class.define("LegendView", {
 	
@@ -26,7 +32,7 @@ export default qx.Class.define("LegendView", {
 	  that.view = $("<div />");
 	  that.view.attr('id', that.getViewId());
 
-	  if( APP.getUserDevice() == 'desktop') that.view.perfectScrollbar();
+	  if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.view[0])
 
 	  /////////////
 	  // Heading //
@@ -309,7 +315,7 @@ export default qx.Class.define("LegendView", {
 			  APP.setActiveFilter(null);
 			  that.say('filterSet');
 				that.view.scrollTop(0);
-				that.view.perfectScrollbar('update');
+				that.ps.update();
 		  }
 	  },
 

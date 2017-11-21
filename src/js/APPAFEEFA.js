@@ -1,3 +1,8 @@
+import * as _ from 'underscore';
+import qx from 'qooxdoo';
+import moment from 'moment';
+import $ from 'jquery';
+
 import Daddy from './Daddy.js';
 import DataManager from './DataManager.js';
 import LanguageManager from './LanguageManager.js';
@@ -5,10 +10,7 @@ import User from './User.js';
 import Router from './Router.js';
 import Utility from './Utility.js';
 
-import qx from 'qooxdoo';
-import moment from 'moment';
 
-import $ from 'jquery';
 /* Not working: restive: Uncaught ReferenceError: md5 is not defined */
 //import restive from './restive.min.js';
 
@@ -69,7 +71,7 @@ export default qx.Class.define("APPAFEEFA", {
 				},
 				categoriesBasic: ["housing", "christian", "islam", "jewish", 'public', 'wifi', 'shop'],
 				simpleProperties: ['descriptionShort', 'description', 'supportWantedDetail', 'speakerPublic', 'spokenLanguages', 'phone', 'mail', 'web', 'facebook', 'arrival', 'openingHours'],
-				imgPath: 'DDFA/img/'
+				imgPath: 'img/'
 			}
 		);
 
@@ -143,17 +145,17 @@ export default qx.Class.define("APPAFEEFA", {
 		detectArea: function(){
 			var that = this;
 
-			// that.setArea(APP.getData().areas.leipzig);
+			// that.setArea(that.getData().areas.leipzig);
 			// return;
 
 			if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum-410' ){
-      	that.setArea(APP.getData().areas.leipzig);
+      	that.setArea(that.getData().areas.leipzig);
       }
       else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 && prompt() === 'horbz-afeefa' ){
-      	that.setArea(APP.getData().areas.bautzen);
+      	that.setArea(that.getData().areas.bautzen);
 			}
       else {
-      	that.setArea(APP.getData().areas.dresden);
+      	that.setArea(that.getData().areas.dresden);
       }
 		},
 
@@ -196,17 +198,17 @@ export default qx.Class.define("APPAFEEFA", {
 
 			// $('body').addClass( APP.getUserDevice() );
 
-			$('body').restive({
+/*			$('body').restive({
 				  breakpoints: ['10000'],
 				  classes: ['nb'],
 				  turbo_classes: 'is_mobile=mobi,is_phone=phone,is_tablet=tablet,is_landscape=landscape'
-			});
+			});*/
 
-			APP.setUserDevice('desktop');
-			if( $('body').hasClass('mobi') || $('body').hasClass('phone') ) APP.setUserDevice('mobile');
-			if( $('body').hasClass('tablet') ) APP.setUserDevice('tablet');
+			that.setUserDevice('desktop');
+			if( $('body').hasClass('mobi') || $('body').hasClass('phone') ) that.setUserDevice('mobile');
+			if( $('body').hasClass('tablet') ) that.setUserDevice('tablet');
 
-			$('body').addClass( APP.getUserDevice() );
+			$('body').addClass( that.getUserDevice() );
 		},
 
 		loadIndependantUI: function(){
@@ -242,7 +244,7 @@ export default qx.Class.define("APPAFEEFA", {
 			$('div#footer').on('contextmenu', function(e){
 				e.preventDefault();
 				// APP.loading(true);
-				that.say('languageChanged', APP.getLM().getCurrentLang());
+				that.say('languageChanged', that.getLM().getCurrentLang());
 			});
 		},
 

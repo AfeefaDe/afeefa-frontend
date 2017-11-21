@@ -1,4 +1,10 @@
 import qx from 'qooxdoo/qx-oo.js';
+import $ from 'jquery';
+import PerfectScrollbar from 'perfect-scrollbar';
+import * as _ from 'underscore';
+import moment from 'moment';
+
+import APP from '../main.js';
 
 export default qx.Class.define("SearchView", {
     
@@ -79,8 +85,7 @@ export default qx.Class.define("SearchView", {
       // results area
       that.scrollContainer = $("<div />")
         .addClass('scroll-container list-results');
-
-      if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar();
+      if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0])
 
       that.view.append(that.scrollContainer);
 
@@ -760,7 +765,7 @@ export default qx.Class.define("SearchView", {
         
         that.view.removeClass('active-search');
         
-        if( APP.getUserDevice() == 'desktop') that.scrollContainer.perfectScrollbar('update');
+        if( APP.getUserDevice() == 'desktop') that.ps.update();
     },
 
     close: function(){

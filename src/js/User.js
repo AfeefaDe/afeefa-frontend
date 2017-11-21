@@ -2,6 +2,9 @@ import qx from '../../node_modules/qooxdoo/qx-oo.js';
 import Daddy from './Daddy.js';
 import * as _ from '../../node_modules/underscore/underscore-min.js';
 
+import APP from './main.js';
+
+
 export default qx.Class.define("User", {
 
     extend: Daddy,
