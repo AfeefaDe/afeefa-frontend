@@ -677,8 +677,8 @@ export default qx.Class.define("DataManager", {
             data.action = 'mail';
 
             $.ajax({
-                url: APP.getConfig().apiUrl + "messageAPI/",
-                // crossDomain: true,
+                // url: APP.getConfig().apiUrl + "messageAPI/",
+                url: "messageAPI/",
                 type: 'POST',
                 data: data,
                 cache: false,
