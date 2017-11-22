@@ -15,7 +15,7 @@ The main web app of Afeefa.de
 
 ## Development
 
-To build the assets simply run:
+To build minfied assets (`afeefa.min.css` and `build.min.js`) run:
 ```
 $ npm run build
 ```
@@ -24,4 +24,4 @@ In developing mode you should use:
 ```
 $ npm run dev
 ```
-wich watches your stylesheets and scripts and compiles them on the fly.
+wich watches your stylesheets and scripts and compiles the unminified version including source maps.

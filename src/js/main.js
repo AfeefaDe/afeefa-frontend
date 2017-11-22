@@ -5,8 +5,9 @@ import * as _ from 'underscore';
 window._ = _;
 
 import Hammer from 'hammerjs';
+window.Hammer = Hammer;
 
-import 'materialize-css/dist/js/materialize.min.js'
+import 'materialize-css/dist/js/materialize'
 
 import moment from 'moment/min/moment-with-locales';
 window.moment = moment;

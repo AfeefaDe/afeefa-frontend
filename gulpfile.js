@@ -39,55 +39,55 @@ gulp.task('styles', function() {
 
 
 
-function createBundler(debug, watch) {
+function createBundler(createSourceMap, watch) {
 	var bundler = browserify({
 		entries: [paths.entryScript], 
 		paths: ['./node_modules'],
-		debug: debug,
+		debug: createSourceMap,
 		cache: {},
 	  	packageCache: {}
 	});
 	if (watch) {
-		bundler.plugin(watchify, {
-			delay: 200,
-			ignoreWatch: ['**/node_modules/**']
-		})
+		bundler.plugin(watchify, {ignoreWatch: ['**/node_modules/**']})
 	}
 	return bundler;
 }
 
 gulp.task('browserify', function() {
 	var bundler = createBundler(false, false);
-	var bundle = compileBundle(bundler);
+	var bundle = compileBundle(bundler, true);
 	return bundle();
 });
 
 gulp.task('watchify', function() {
 	var bundler = createBundler(true, true);
-  	var bundle = compileBundle(bundler)
+  	var bundle = compileBundle(bundler, false)
   	bundler.on('update', bundle);
 
   	return bundle();
 });
 
-function compileBundle(bundler) {
+function compileBundle(bundler, shouldMinify) {
   return function() {
     var n = notifier('browserify');
     console.log('[BUNDLER] Start rebundling')
-    return bundler
+    bundler = bundler
     	.transform(babel)
       	.bundle()
       	.on('error', n.error)
 		.pipe(source('build.js'))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(sourcemaps.write('./'))
-		.pipe(minify({ext: {src: '', min:'.min.js'}}))
-		.pipe(gulp.dest('./dist/built'))
+		.pipe(sourcemaps.write('./'));
+		if (shouldMinify) {
+			bundler = bundler.pipe(minify({ext: {src: '', min:'.min.js'}}));
+		}
+		bundler = bundler.pipe(gulp.dest('./dist/built'))
       	.on('end', function() {
       		n.end;
       		console.log('[BUNDLER] Finished rebundling')
       	});
+      	return bundler;
   };
 }
 
