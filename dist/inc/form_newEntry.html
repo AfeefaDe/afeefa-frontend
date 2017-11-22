@@ -7,7 +7,6 @@
 	    <select id="entry.type">
 	      <option value="0">{{key:entity.orga}}</option>
 	      <option value="2">{{key:entity.event}}</option>
-	      <option value="1">{{key:entity.market}}</option>
 	    </select>
 	  </div>
   </div>
@@ -18,21 +17,6 @@
 	<p class="conditional" data-condition="entry.type" data-condition-value="2">
 		<small>{{key:form.info.newEntry.event}}</small>
 	</p>
-	<p class="conditional" data-condition="entry.type" data-condition-value="1">
-		<small>{{key:form.info.newEntry.market}}</small>
-	</p>
-
-  <div class="conditional" data-condition="entry.type" data-condition-value="1">
-		<label>{{key:form.field.markettype}}</label>
-	  <div class="row">
-			<div class="input-field col s12">
-		    <select id="entry.markettype">
-		      <option value="0">{{key:prop.offer.offer}}</option>
-		      <option value="1">{{key:prop.offer.request}}</option>
-		    </select>
-		  </div>
-	  </div>
-  </div>
 
 	<h3>{{key:prop.description}}</h3>
   
