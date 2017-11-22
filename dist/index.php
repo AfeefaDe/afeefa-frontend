@@ -39,7 +39,6 @@
 	<meta name="msapplication-TileImage" content="/mstile-144x144.png?v=2bbvyE2wzd">
 	<meta name="theme-color" content="#41829e">
 
-
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -54,12 +53,20 @@
 		$config = include 'config.php';
 		$apiUrl = $config['APIUrl'];
 		$backendApiUrl = $config['backendAPIUrl'];
+		$isDevelopmentMode = $config['isDevelopmentMode']
 	?>
 	<script>window.apiurl = '<?= $apiUrl ?>'</script>
 	<script>window.backendapiurl = '<?= $backendApiUrl ?>'</script>
 
-	<link rel="stylesheet" href="/built/afeefa.css" />
-	<script type="text/javascript" src="/built/build.js"></script>
+	<?php if($isDevelopmentMode): ?>
+		<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
+		<link rel="stylesheet" href="/built/afeefa.css" />
+		<script type="text/javascript" src="/built/build.js"></script>
+	<?php else: ?>
+		<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
+		<link rel="stylesheet" href="/built/afeefa.min.css" />
+		<script type="text/javascript" src="/built/build.min.js"></script>
+	<?php endif; ?>
   
 </head>
 <body>

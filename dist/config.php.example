@@ -7,5 +7,7 @@
   $backendAPIUrl = 'https://dev.afeefa.de/';
   // $backendAPIUrl = 'http://localhost:3000/';
 
-  return array("APIUrl"=>$APIUrl, "backendAPIUrl"=>$backendAPIUrl);
+  $isDevelopmentMode = true;
+
+  return array("APIUrl"=>$APIUrl, "backendAPIUrl"=>$backendAPIUrl, "isDevelopmentMode"=>$isDevelopmentMode);
 ?>

@@ -11,6 +11,7 @@ var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babel = require('babelify');
+var minify = require('gulp-minify');
 
 
 var paths = {
@@ -31,7 +32,7 @@ gulp.task('styles', function() {
 	//output afeefa.css
 	.pipe(gulp.dest('dist/built'))
 	.pipe(rename({suffix: '.min'}))
-	.pipe(cleanCSS())
+	.pipe(cleanCSS({sourceMap: false}))
 	//output afeefa.min.css
 	.pipe(gulp.dest('dist/built'))
 });
@@ -81,6 +82,7 @@ function compileBundle(bundler) {
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(sourcemaps.write('./'))
+		.pipe(minify({ext: {src: '', min:'.min.js'}}))
 		.pipe(gulp.dest('./dist/built'))
       	.on('end', function() {
       		n.end;
