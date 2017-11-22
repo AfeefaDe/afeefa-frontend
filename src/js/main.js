@@ -4,7 +4,7 @@ window.$ = window.jQuery = jQuery;
 import * as _ from 'underscore';
 window._ = _;
 
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 window.moment = moment;
 
 import APPAFEEFA from './APPAFEEFA.js';
