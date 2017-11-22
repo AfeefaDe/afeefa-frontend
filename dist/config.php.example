@@ -4,7 +4,7 @@
   // $APIUrl = 'http://backend.afeefa.dev:3001/';
   // $APIUrl = 'http://localhost:3001/';
   
-  $backendAPIUrl = 'https://dev.afeefa.de/';
+  $backendAPIUrl = 'https://backend.afeefa.de/';
   // $backendAPIUrl = 'http://localhost:3000/';
 
   $isDevelopmentMode = true;
