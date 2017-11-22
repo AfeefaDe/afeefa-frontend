@@ -2,7 +2,6 @@ import qx from 'qooxdoo/qx-oo.js';
  
 import PerfectScrollbar from 'perfect-scrollbar';
  
-import Hammer from 'hammerjs';
 
  
 

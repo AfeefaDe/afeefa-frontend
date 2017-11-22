@@ -4,6 +4,10 @@ window.$ = window.jQuery = jQuery;
 import * as _ from 'underscore';
 window._ = _;
 
+import Hammer from 'hammerjs';
+
+import 'materialize-css/dist/js/materialize.min.js'
+
 import moment from 'moment/min/moment-with-locales';
 window.moment = moment;
 
