@@ -32,19 +32,13 @@
 	<link rel="manifest" href="/manifest.json?v=2bbvyE2wzd">
 	<link rel="mask-icon" href="/safari-pinned-tab.svg?v=2bbvyE2wzd" color="#5bbad5">
 	<link rel="shortcut icon" href="/favicon.ico?v=2bbvyE2wzd">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
 	<meta name="apple-mobile-web-app-title" content="Afeefa.de">
 	<meta name="application-name" content="Afeefa.de">
 	<meta name="msapplication-TileColor" content="#333333">
 	<meta name="msapplication-TileImage" content="/mstile-144x144.png?v=2bbvyE2wzd">
 	<meta name="theme-color" content="#41829e">
 
-	<!-- CSS styles (also containing vendor styles, all combined with SASS) -->
-	<link rel="stylesheet" href="/built/afeefa.css" />
-
-	<!-- mapbox -->
-	<!-- <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> -->
-	<link href='https://api.mapbox.com/mapbox.js/v3.1.0/mapbox.css' rel='stylesheet' />
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -61,13 +55,10 @@
 		$apiUrl = $config['APIUrl'];
 		$backendApiUrl = $config['backendAPIUrl'];
 	?>
-		<script>window.apiurl = '<?= $apiUrl ?>'</script>
-		<script>window.backendapiurl = '<?= $backendApiUrl ?>'</script>
+	<script>window.apiurl = '<?= $apiUrl ?>'</script>
+	<script>window.backendapiurl = '<?= $backendApiUrl ?>'</script>
 
-
-
-
-
+	<link rel="stylesheet" href="/built/afeefa.css" />
 	<script type="text/javascript" src="/built/build.js"></script>
   
 </head>
