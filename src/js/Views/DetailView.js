@@ -56,7 +56,7 @@ export default qx.Class.define("DetailView", {
 			// scrollable content container
 			that.scrollContainer = $("<div />").addClass('scroll-container');
 			that.view.append(that.scrollContainer);
-			if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0])
+			if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0]);
 
 			// certificate badge
 			var thePopper;
@@ -227,7 +227,7 @@ export default qx.Class.define("DetailView", {
 
 			// scroll
 			that.scrollContainer.scrollTop(0);
-			that.ps.update();
+			if( APP.getUserDevice() == 'desktop') that.ps.update();
 
 			// heading
 			that.heading.append(record.name ? record.name : '');
