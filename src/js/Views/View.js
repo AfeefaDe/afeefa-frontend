@@ -132,9 +132,20 @@ export default qx.Class.define("View", {
                 }
                 
                 // look for translation
-                if( inner.indexOf('key:') > -1 ) {
+                if( inner.indexOf('translation:') > -1 ) {
                     var key = inner.split(':')[1];
                     return that.getWording(key);
+                }
+
+                if( inner.indexOf('custom:categoryDropdown') > -1 ) {
+                    var html = '<select id="entry.category">';
+                    
+                    _.each( APP.getData().categories, function(cat){
+                      html += '<option value="' + cat.id + '">' + that.getWording('cat.'+cat.name) + '</option>';
+                    });
+
+                    html += '</select>';
+                    return html;
                 }
 
                 return 'undefined';
