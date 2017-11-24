@@ -183,28 +183,20 @@ export default qx.Class.define("APPAFEEFA", {
 		detectUserDevice: function(){
 			var that = this;
 
-			// analyse user device
-			// $('body').restive({
-			//     breakpoints: ['768', '1280'],
-			//     classes: ['768-c', '1280-c'],
-			//     force_dip: true
-			// });
-
-			// if( $('body').hasClass('768-c') ) APP.setUserDevice('phone');
-			// else if( $('body').hasClass('1280-c') ) APP.setUserDevice('tablet');
-			// else APP.setUserDevice('desktop');
-
-			// $('body').addClass( APP.getUserDevice() );
-
-/*			$('body').restive({
-				  breakpoints: ['10000'],
-				  classes: ['nb'],
-				  turbo_classes: 'is_mobile=mobi,is_phone=phone,is_tablet=tablet,is_landscape=landscape'
-			});*/
+			var isMobile = { 
+				Android: function() { return navigator.userAgent.match(/Android/i); }, 
+				BlackBerry: function() { return navigator.userAgent.match(/BlackBerry/i); }, 
+				iOS: function() { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, 
+				Opera: function() { return navigator.userAgent.match(/Opera Mini/i); }, 
+				Windows: function() { return navigator.userAgent.match(/IEMobile/i); }, 
+				any: function() { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); }
+			};
 
 			that.setUserDevice('desktop');
-			if( $('body').hasClass('mobi') || $('body').hasClass('phone') ) that.setUserDevice('mobile');
-			if( $('body').hasClass('tablet') ) that.setUserDevice('tablet');
+			if ( isMobile.any() ) that.setUserDevice('mobile');
+			
+			// TODO detect tablets, because there is special behavior for tablets already implemented in the afeefa app
+			// if( $('body').hasClass('tablet') ) that.setUserDevice('tablet');
 
 			$('body').addClass( that.getUserDevice() );
 		},
