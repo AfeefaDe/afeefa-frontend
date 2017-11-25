@@ -126,14 +126,18 @@ export default qx.Class.define("Router", {
 					// }
 					// else {
 						// start intro?
+						
+						// dont start intro for IEs
+						var isIE = function() { return navigator.userAgent.match(/Edge|MSIE|Trident/i); };
+
 						if( !localStorage.getItem("introIsKnown") ){
 							if( !localStorage.getItem("languageFrozen") ){
 								APP.getLanguageView().open(function(){
-									APP.getIntroView().start();
+									if(!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
 								});
 							}
 							else {
-								APP.getIntroView().start();
+								if(!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
 							}
 						}
 						// open search view
