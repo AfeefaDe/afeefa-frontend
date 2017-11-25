@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var cleanCSS = require('gulp-clean-css');
 var rename = require('gulp-rename');
@@ -12,6 +11,7 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var babel = require('babelify');
 var minify = require('gulp-minify');
+var gulpif = require('gulp-if');
 
 
 var paths = {
@@ -71,24 +71,21 @@ function compileBundle(bundler, shouldMinify) {
   return function() {
     var n = notifier('browserify');
     console.log('[BUNDLER] Start rebundling')
-    bundler = bundler
+   	return bundler
     	.transform(babel)
       	.bundle()
       	.on('error', n.error)
 		.pipe(source('build.js'))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(sourcemaps.write('./'));
-		if (shouldMinify) {
-			bundler = bundler.pipe(minify({ext: {src: '', min:'.min.js'}}));
-		}
-		bundler = bundler.pipe(gulp.dest('./dist/built'))
+		.pipe(sourcemaps.write('./'))
+		.pipe(gulpif(shouldMinify, minify({ext: {src: '', min:'.min.js'}})))
+		.pipe(gulp.dest('./dist/built'))
       	.on('end', function() {
       		n.end;
       		console.log('[BUNDLER] Finished rebundling')
       	});
-      	return bundler;
-  };
+  }
 }
 
 gulp.task('build', function() {
