@@ -19,32 +19,6 @@ export default qx.Class.define("IncludeView", {
 	construct: function(){
 		var that = this;
 
-		that.setBaseUrl( APP.getConfig().includePathForHtmlFiles );
-		that.wpPath = 'wissensportal';
-		
-		that.setIncludes({
-			wissensportal: {
-				de: {
-					url: that.getBaseUrl() + that.wpPath + '/leitfaden-fuer-asylsuchende/ article .entry-content'
-					// url: that.getBaseUrl() + that.wpPath
-				},
-				translatable: true
-			},
-			supporterGuide: {
-				url: that.getBaseUrl() + 'supporterGuide',
-				translatable: true
-			},
-			imprint: {
-				url: that.getBaseUrl() + 'impressum/ article .entry-content'
-			},
-			press: {
-				url: that.getBaseUrl() + 'presse/ article .entry-content'
-			},
-			about: {
-				url: that.getBaseUrl() + ' article .entry-content'
-			},
-		});
-		
 		that.setViewId('includeView');
 		that.setLoadable(true);
 	},
@@ -84,65 +58,66 @@ export default qx.Class.define("IncludeView", {
 		},
 
 		// TODO option: modal
-		load: function( includeKey, url ){
+		// load: function( includeKey, url ){
+		load: function( chapterID ){
 			var that = this;
+
+			if( chapterID === undefined ) return;
 
 			that.reset();
 			
 			// that.showCurtain(true);
 			APP.loading(true);
 
-			that.setIncludeKey(includeKey);
+			// that.setIncludeKey(includeKey);
 
 			that.view.addClass('active');
-			that.view.addClass(includeKey);
+			// that.view.addClass(includeKey);
 			that.setViewState(1);
 			// that.minimize(false);
 
 			that.say('includeViewOpened');
 
-
-			// set url
-      if(includeKey == 'wissensportal'){
-	      APP.getRouter().setUrl('wissensportal', null, null);
-      }
-      else if(url !== undefined){
-	      var pos = url.indexOf(that.wpPath) + that.wpPath.length + 1;
-	      var articleSlug = url.substr(pos);
-	      APP.getRouter().setUrl(that.wpPath, articleSlug, null);
-      }
-
-			if(url !== undefined){
-				that.scrollContainer.load( url + ' article .entry-content', function( response, status, xhr ) {
-					loadComplete();
-				});
-			}
-			else if( that.getIncludes()[includeKey].translatable ) {
-				var include = that.getIncludes()[includeKey][APP.getLM().getCurrentLang()];
-				if(!include) include = that.getIncludes()[includeKey].de;
-				that.scrollContainer.load( include.url, function( response, status, xhr ) {
-					loadComplete();
-				});
-			}
-			else {
-				that.scrollContainer.load( that.getIncludes()[includeKey].url, function( response, status, xhr ) {
-					loadComplete();
-				});
-			}
+			var chapter;
+			APP.getDataManager().getChapterFromWisdom(chapterID, function(data){
+				chapter = data;
+				loadComplete();
+			});
 
 			function loadComplete(){
 
 				// fill mustaches with values
-        var filledHtml = that.fillMustaches(that.scrollContainer.html());
-        that.scrollContainer.html(filledHtml);
+        // var filledHtml = that.fillMustaches(that.scrollContainer.html());
+        // that.scrollContainer.html(filledHtml);
+
+        // set url
+	      APP.getRouter().setUrl('chapter', chapter.id + '/' + APP.getRouter().slugify(chapter.title), null);
+
+      	that.scrollContainer.empty().append(chapter.content);
 
         // catch all links and handle internal ones separately
-        $('a').click(function(e){
+        that.scrollContainer.find('a').click(function(e){
           e.preventDefault();
           var url = $(this).attr('href');
 
+          // load chapter
+          if (url.indexOf('afeefa://chapter:') > -1 ) {
+            var referredChapterID = url.split(':')[2];
+            if(referredChapterID) that.load(referredChapterID);
+          }
+          else if (url.indexOf('afeefa://orga:') > -1 ) {
+            var referredOrgaID = url.split(':')[2];
+            var orga = APP.getDataManager().getOrgaById(referredOrgaID);
+
+            if (orga) {
+	            if( orga.location.length > 0 && orga.location[0].lat )
+	              APP.getMapView().selectMarkerFromLink(orga);
+	            else
+	              APP.getDetailView().load(orga);
+            }
+          }
           // load afeefa view
-          if(url.indexOf('https://afeefa.de') > -1 ){
+          else if(url.indexOf('https://afeefa.de') > -1 ){
             APP.getRouter().loadFromUrl(url);
           }
           // load article
@@ -236,9 +211,9 @@ export default qx.Class.define("IncludeView", {
 			var that = this;
 
 			that.view.removeClass('active');
-			_.each(that.getIncludes(), function(value, key){
-				that.view.removeClass(value);
-			});
+			// _.each(that.getIncludes(), function(value, key){
+			// 	that.view.removeClass(value);
+			// });
 			
 			that.setViewState(0);
 			that.setIncludeKey(null);

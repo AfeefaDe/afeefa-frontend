@@ -170,6 +170,19 @@ export default qx.Class.define("SearchView", {
         );
       }
 
+      var action = function(){
+        APP.getIncludeView().load(1);
+      };
+      that.createListResult(
+        {
+          iconClass: 'wissensportal',
+          label: 'Wegweiser',
+          subLabel: 'Praktisches Hintergrundwissen für ehrenamtliche Flüchtlingsbegleiter',
+          action: action,
+          targetContainertEl: that.scrollContainer
+        }
+      );
+
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
       var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
       if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
@@ -218,22 +231,6 @@ export default qx.Class.define("SearchView", {
       //     iconClass: 'for-children',
       //     label: that.getWording('search.label.forchildren'),
       //     subLabel: that.getWording('search.sublabel.forchildren'),
-      //     action: action,
-      //     targetContainertEl: that.scrollContainer
-      //   }
-      // );
-
-      // that.createSectionHeader( 'Wissen' );
-      
-      // refugee guide
-      // var action = function(){
-      //   APP.getIncludeView().load('wissensportal');
-      // };
-      // that.createListResult(
-      //   {
-      //     iconClass: 'wissensportal',
-      //     label: that.getWording('search.label.refugeeGuide'),
-      //     subLabel: that.getWording('search.sublabel.refugeeGuide'),
       //     action: action,
       //     targetContainertEl: that.scrollContainer
       //   }

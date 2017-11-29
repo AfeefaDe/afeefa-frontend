@@ -148,6 +148,40 @@ export default qx.Class.define("DataManager", {
             cb(areas);
         },
 
+        getAllChaptersFromWisdom: function (cb) {
+            var that = this;
+
+            $.ajax({
+                url: APP.getConfig().apiUrl + "api/chapters",
+                type: 'GET',
+                dataType: 'json'
+            })
+                .done(function (data) {
+                    cb(data);
+                })
+                .fail(function (a) {
+                    console.debug(a);
+                    cb(a);
+                });
+        },
+
+        getChapterFromWisdom: function (chapterID, cb) {
+            var that = this;
+
+            $.ajax({
+                url: 'http://localhost:3010/' + "chapters/" + chapterID,
+                type: 'GET',
+                dataType: 'json'
+            })
+                .done(function (data) {
+                    cb(data);
+                })
+                .fail(function (a) {
+                    console.debug(a);
+                    cb(a);
+                });
+        },
+
         getUITranslations: function (lang, cb) {
 
             $.ajax({
