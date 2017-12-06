@@ -78,7 +78,7 @@
 		h2 {
 			font-size: 2rem;
 			line-height: 1.3em;
-			margin-top: 2em;
+			margin: 2em 0 1em;
 			text-transform: uppercase;
 
 			&:first-child {
@@ -90,16 +90,14 @@
 			font-size: 1.2rem;
 			font-weight: 100;
 			line-height: 1em;
-			margin-top: 1.5em;
-			margin-bottom: 1.5em;
+			margin: 1.5em 0 .7em;
 		}
 
 		h4 {
 			font-size: 1rem;
 			font-weight: bold;
 			line-height: 1em;
-			margin-top: 1.5em;
-			margin-bottom: .5em;
+			margin: 1em 0 .5em;
 		}
 
 		p {
