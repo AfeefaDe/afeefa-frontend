@@ -284,12 +284,10 @@ export default qx.Class.define("Router", {
 				case 'search':
 					APP.getSearchView().inputField.val( decodeURI(urlParams[1]) ).trigger( "input" );
 					break;
-				case 'wissensportal':
+				case 'chapter':
 					var iv = APP.getIncludeView();
 					if(urlParams[1]){
-						iv.load(null, iv.getBaseUrl() + iv.wpPath + '/' + urlParams[1] + ' article .entry-content');
-					} else {
-						iv.load('wissensportal');
+						iv.load(urlParams[1]);
 					}
 					break;
 				// short Urls like afeefa.de/#events

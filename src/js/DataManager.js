@@ -169,7 +169,7 @@ export default qx.Class.define("DataManager", {
             var that = this;
 
             $.ajax({
-                url: APP.getConfig().apiUrl + "api/chapters",
+                url: APP.getConfig().apiUrl + "api/chapters/" + chapterID,
                 type: 'GET',
                 dataType: 'json'
             })
