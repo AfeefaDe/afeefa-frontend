@@ -170,18 +170,23 @@ export default qx.Class.define("SearchView", {
         );
       }
 
-      var action = function(){
-        APP.getIncludeView().load(1);
-      };
-      that.createListResult(
-        {
-          iconClass: 'wissensportal',
-          label: 'Wegweiser',
-          subLabel: 'Praktisches Hintergrundwissen für ehrenamtliche Flüchtlingsbegleiter',
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
+      if (APP.getArea().dataKey == 'leipzig') {
+        that.createSectionHeader( '' );
+
+        var action = function(){
+          APP.getIncludeView().load(1);
+        };
+
+        that.createListResult(
+          {
+            iconClass: 'wissensportal',
+            label: 'Wegweiser',
+            subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Flüchtlingshilfe',
+            action: action,
+            targetContainertEl: that.scrollContainer
+          }
+        );
+      }
 
       that.createSectionHeader( that.getWording('search.label.eventstoday') );
       var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );

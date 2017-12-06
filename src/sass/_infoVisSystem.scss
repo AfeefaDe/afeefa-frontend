@@ -48,49 +48,54 @@
 		background-color: rgba($gray50, $alpha_background);
 		border-color: rgba($gray50, $alpha_border);
 	}
-
 	&.cat-language	{ 
 		background-color: rgba($yellow, $alpha_background);
 		border-color: rgba($yellow, $alpha_border);
 	}
-
 	&.cat-medic {
 		background-color: rgba($red,$alpha_background);
 		border-color: rgba($red, $alpha_border);
 	}
-	
 	&.cat-jobs {
 		background-color: rgba($blue_dark,$alpha_background);
 		border-color: rgba($blue_dark, $alpha_border);
 	}
-
 	&.cat-consultation {
 		background-color: rgba($olive,$alpha_background);
 		border-color: rgba($olive, $alpha_border);
 	}
-
 	&.cat-leisure {
 		background-color: rgba($turquoise,$alpha_background);
 		border-color: rgba($turquoise, $alpha_border);
 	}
-	
 	&.cat-community {
 		background-color: rgba($violet,$alpha_background);
 		border-color: rgba($violet, $alpha_border);
 	}
-
 	&.cat-donation {
 		background-color: rgba($orange,$alpha_background);
 		border-color: rgba($orange, $alpha_border);
 	}
-
 	&.cat-external-event {
 		background-color: rgba($black,$alpha_background);
 		border-color: rgba($black, $alpha_border);
 	}
-
 	&.subcat-fb-event {
 		background-color: rgba($blue_facebook,$alpha_background);
+	}
+
+	/* LEIPZIG */
+	&.cat-advice-and-support {
+		background-color: rgba($olive,$alpha_background);
+		border-color: rgba($olive, $alpha_border);
+	}
+	&.cat-living-in-leipzig {
+		background-color: rgba($yellow, $alpha_background);
+		border-color: rgba($yellow, $alpha_border);
+	}
+	&.cat-work-and-education {
+		background-color: rgba($blue_dark,$alpha_background);
+		border-color: rgba($blue_dark, $alpha_border);
 	}
 }
 
@@ -177,11 +182,12 @@
 	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); background-size: 85%; }
 
 	
-	/* POIs */
+	/* LEIPZIG */
 
-	/*&.cat-housing { background-image: url("../img/icon_19.svg"); }*/
+	&.cat-advice-and-support { background-image: url("../img/icon_10.svg"); }
+	&.cat-living-in-leipzig { background-image: url("../img/icon_86.svg"); }
+	&.cat-work-and-education { background-image: url("../img/icon_76.svg"); }
 
-	/*&.cat-other { background-image: url("../img/icon_32.svg"); background-size: 50%; }*/
 }
 
 @mixin propertyIcons {
