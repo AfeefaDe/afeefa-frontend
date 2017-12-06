@@ -1,0 +1,115 @@
+#printView {
+	display: none;
+}
+
+@media print {
+
+	#main-container {
+		position: inherit;
+	}
+
+	#printView {
+		position: absolute;
+		z-index: 100;
+		width: auto;
+		height: auto;
+		overflow: visible;
+		top: 0;
+		left: 0;
+		display: none;
+		background-color: white;
+		color: black !important;
+		padding: 1rem;
+
+		&.active {
+			display: block;
+		}
+
+		img.header {
+			width: 5rem;
+			height: auto;
+			position: absolute;
+			right: 1rem;
+			top: 2rem;
+		}
+
+		h1 {
+			font-weight: 200;
+			font-size: 4rem;
+		}
+
+		.entry {
+			padding-left: 1rem;
+			border-left: 1px solid #ccc;
+			margin-bottom: 3rem;
+			page-break-inside: avoid;
+		}
+
+		p {
+			margin: 0.5rem 0;
+			@include propertyIcons;
+			background-size: 1rem;
+			background-repeat: no-repeat;
+    	background-position: left 0.3rem !important;
+		}
+
+		.shift {
+			padding-left: 2rem;
+		}
+
+		.category {
+			text-transform: uppercase;
+	    font-weight: 200;
+	    font-size: 2rem;
+	    margin: 2rem 0 1rem;
+	    padding-left: 3rem;
+			background-size: 2rem;
+			background-repeat: no-repeat;
+    	background-position: left 0.3rem !important;
+
+    	&.cat-general	{ background-image: url("../img/icon_173.svg"); }
+			&.cat-language	{ background-image: url("../img/icon_05.svg"); }
+			&.cat-medic { background-image: url("../img/icon_03.svg"); }
+			&.cat-jobs { background-image: url("../img/icon_75.svg"); }
+			&.cat-consultation { background-image: url("../img/icon_09.svg"); }
+			&.cat-leisure { background-image: url("../img/icon_85.svg"); }
+			&.cat-community { background-image: url("../img/icon_01.svg"); background-size: 85%; }
+			&.cat-donation { background-image: url("../img/icon_11.svg"); }
+			&.cat-external-event { background-image: url("../img/icon_191.svg"); }
+		}
+
+		.title {
+			font-size: 1.3rem;
+    	font-weight: 400;
+		}
+
+		.sub-category {
+			text-transform: uppercase;
+    	font-weight: 400;
+		}
+	}
+
+	body {
+		background-color: white;
+	}
+
+	.view-container:not([id='printView']), #footer{
+		display: none !important;
+	}
+
+	.rtl {
+		img.header {
+			right: auto !important;
+    	left: 1rem !important;
+		}
+		.entry {
+			padding-left: 0 !important;
+			padding-right: 1rem;
+			border-left: none !important;
+			border-right: 1px solid #ccc;
+			margin-bottom: 3rem;
+			page-break-inside: avoid;
+		}
+	}
+
+}

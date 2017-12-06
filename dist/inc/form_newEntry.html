@@ -1,0 +1,200 @@
+<form>
+
+	<h3>{{translation:form.field.entryType}}</h3>	
+	
+  <div class="row">
+		<div class="input-field col s12">
+	    <select id="entry.type">
+	      <option value="0">{{translation:entity.orga}}</option>
+	      <option value="2">{{translation:entity.event}}</option>
+	    </select>
+	  </div>
+  </div>
+
+	<p class="conditional" data-condition="entry.type" data-condition-value="0">
+		<small>{{translation:form.info.newEntry.orga}}</small>
+	</p>
+	<p class="conditional" data-condition="entry.type" data-condition-value="2">
+		<small>{{translation:form.info.newEntry.event}}</small>
+	</p>
+
+	<h3>{{translation:prop.description}}</h3>
+  
+  <div class="row">
+		<div class="input-field col s12">
+			<label for="entry.name">{{translation:form.field.title}}*</label>
+			<input id="entry.name" type="text" class="title" maxlength="100" data-length="100" required>
+		</div>
+	</div>
+
+  <div class="row">
+	  <div class="input-field col s12">
+	    {{custom:categoryDropdown}}
+			<label>{{translation:form.field.category}}</label>
+	  </div>
+  </div>
+
+  <div class="conditional" data-condition="entry.type" data-condition-value="2">
+		<label>Startdatum und -uhrzeit</label>
+		<div class="row">
+			<div class="input-field col s6">
+		    <input id="entry.dateFrom" type="date">
+		  </div>
+		  <div class="input-field col s6">
+		    <input id="entry.timeFrom" type="time">
+		  </div>
+	  </div>
+		<label>Enddatum und -uhrzeit</label>
+	  <div class="row">
+			<div class="input-field col s6">
+		    <input id="entry.dateTo" type="date">
+		  </div>
+		  <div class="input-field col s6">
+		    <input id="entry.timeTo" type="time">
+		  </div>
+	  </div>
+  </div>
+
+	<div class="row">
+		<div class="input-field col s12">
+	    <label for="entry.descriptionShort">{{translation:form.field.descriptionShort}}*</label>
+	    <textarea id="entry.descriptionShort" class="materialize-textarea" maxlength="350" data-length="350" required></textarea>
+	    <small styles="color: #666">WER macht WAS für WEN und WIE, evtl WAS MUSS ICH TUN</small>
+	  </div>
+  </div>
+
+	<div class="row">
+		<p>
+			<input type="checkbox" class="filled-in" id="entry.forChildren">
+	    <label for="entry.forChildren">{{translation:form.placeholder.forChildren}}</label>
+	  </p>
+	</div>
+
+	<div class="row">
+		<p>
+			<input type="checkbox" class="filled-in" id="entry.supportWanted">
+	    <label for="entry.supportWanted">{{translation:form.placeholder.supportWanted}}</label>
+    </p>
+  </div>
+
+  <div class="conditional" data-condition="entry.supportWanted" data-condition-value="true">
+	<div class="row">
+		<div class="input-field col s12">
+	    <label for="additional.internalComment">{{translation:form.field.supportWantedDescription}}</label>
+	    <textarea id="additional.internalComment" class="materialize-textarea" maxlength="350" data-length="350"></textarea>
+	  </div>
+  </div>
+  </div>
+	
+	<h3>{{translation:form.section.newEntry.location}}</h3>
+
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="location.placename">{{translation:form.placeholder.placename}}</label>
+			<input id="location.placename" type="text" class="author" maxlength="100">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="location.street">{{translation:form.placeholder.street}}</label>
+			<input id="location.street" type="text" class="author" maxlength="100">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="input-field col s6">
+			<label for="location.zip">{{translation:form.placeholder.zip}}</label>
+			<input id="location.zip" type="text" class="author" maxlength="5">
+		</div>
+		<div class="input-field col s6">
+			<label for="location.city">{{translation:form.placeholder.city}}</label>
+			<input id="location.city" type="text" class="author" maxlength="50">
+		</div>
+	</div>
+
+
+	<h3>{{translation:form.section.newEntry.contact}}</h3>
+
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="entry.speakerPublic">{{translation:form.placeholder.speakerPublic}}</label>
+			<input id="entry.speakerPublic" type="text" class="author" maxlength="100">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="entry.mail">{{translation:form.field.mail}}</label>
+			<input id="entry.mail" type="email" class="mail" maxlength="50">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="entry.phone">{{translation:form.field.phone}}</label>
+			<input id="entry.phone" type="tel" class="phone" maxlength="50">
+		</div>
+	</div>
+
+  <div class="row">
+		<div class="input-field col s12">
+	    <select id="entry.spokenLanguages" multiple>
+	      <option value="" disabled selected>{{translation:form.placeholder.spokenLanguages}}</option>
+	      <option value="de">Deutsch</option>
+	      <option value="en">Englisch</option>
+	      <option value="ar">Arabisch</option>
+	      <option value="fa">Persisch</option>
+	      <option value="ru">Russisch</option>
+	      <option value="fr">Französisch</option>
+	    </select>
+			<label>{{translation:prop.spokenLanguages}}</label>
+	  </div>
+  </div>
+
+  <div class="row">
+		<div class="input-field col s12">
+			<label for="entry.web">{{translation:prop.web}}</label>
+			<input id="entry.web" type="url" class="web">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="entry.facebook">{{translation:prop.facebook}}</label>
+			<input id="entry.facebook" type="url" class="web">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="input-field col s12">
+	    <textarea id="additional.comment" class="materialize-textarea" maxlength="100" data-length="100"></textarea>
+	    <label for="additional.comment">{{translation:form.field.newEntry.comment}}</label>
+	  </div>
+  </div>
+
+	<div class="row">
+		<p>
+			<input type="checkbox" class="filled-in" id="additional.disclaimer" required>
+	    <label for="additional.disclaimer">{{translation:form.disclaimer.newEntry}}*</label>
+		</p>
+	</div>
+
+	<div class="row">
+	  <div class="input-field col s6">
+		  <button class="btn" type="submit" name="action">{{translation:form.button.newEntry.submit}}
+		    <i class="material-icons right">send</i>
+		  </button>
+	  </div>
+  
+	  <div class="input-field col s6">
+		  <button id="cancel" type="button" class="btn-flat">{{translation:form.button.cancel}}</button>
+	  </div>
+	</div>
+
+</form>
+<p><small>* Pflichtfelder</small></p>
+
+<p><small>{{translation:form.preamble.newEntry}}</small></p>
+<hr>
+<p>Du kennst dich in Dresden aus? Werde <strong>Redakteur</strong> bei Afeefa! <a href="#" class="become-editor">Schreib uns.</a></p>

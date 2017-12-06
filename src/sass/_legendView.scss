@@ -1,0 +1,314 @@
+#legendView {
+	
+	transition: all 150ms;
+
+	position: absolute;
+	right: -16.9em;
+	top: 0;
+	z-index: 10;
+	
+	box-sizing: border-box;
+	width: 20em;
+	height: 100%;
+	padding: 2em 0;
+
+	background-color: $gray95;
+	box-shadow: 0px 0px 2px #000;
+	color: $gray50;
+
+	display: flex;
+	flex-direction: column;
+
+	.filter-module {
+
+	    margin-bottom: 2em;
+		text-align: center;
+
+		h3 {
+			text-align: left;
+			font-weight: normal;
+			text-transform: uppercase;
+			color: $gray50;
+			padding-left: 1em;
+			font-size: 1em;
+			visibility: hidden;
+		}
+	}
+
+	.reset-module {
+		order: 2;
+		visibility: hidden;
+	}
+	.category-module {
+		order: 0;	
+	}
+	.entity-module {
+		display: none;
+		order: 1;
+		visibility: hidden;
+	}
+
+	.row-container {
+		display: flex;
+		padding: 0 1em;
+
+		.entity-container {
+			height: 2.5rem;
+
+			flex-grow: 1;
+			flex-basis: 100%;
+			
+			display: flex;
+	    	flex-direction: row;
+	    	align-items: center;
+			
+	    margin-bottom: 1em;
+
+			cursor: pointer;
+
+			.entity {
+				@include entityShapes;
+				height: 2em;
+				width: 2em;
+		        border: 2px solid $white;
+			}
+			
+			.label {
+				color: $gray50;
+        padding-left: 1em;
+			}
+
+			&:hover {
+				.label { color: $white; }
+			}
+		}
+
+	}
+
+	.std-container {
+		margin-bottom: 1em;
+		color: $white;
+
+		&.extended {
+			.cat-container .nippus {
+				transform: rotate(180deg);
+			}
+
+			.sub-container {
+				max-height: 450px; /* the height is not real, just a work around to make the transition working, because it needs a specific value */
+			}
+		}
+	}
+
+	.cat-container {
+
+		position: relative;
+		width: 100%;
+		height: 2.5em;
+		line-height: 2.5em;
+		cursor: pointer;
+		
+		@include categoryColors($alpha_background: .4);
+		border-left: .5rem solid;
+
+		&.cat-general {
+			background-color: rgba($white, .4);
+			border-color: rgba($white, 1);
+		}
+
+		.icon {
+			
+			@include categorySymbols;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 2.5em;
+			height: 2.5em;
+			
+			transition: all 150ms;
+		}
+
+		p {
+			position: absolute;
+			top: 0;
+			left: 3.5em;
+			margin: 0;
+			text-transform: uppercase;
+			font-weight: 300;
+			text-overflow: ellipsis;
+			width: calc(100% - 6em);
+			text-align: left;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.nippus {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 2.5em;
+			height: 2.5em;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-image: url("../img/icon_84.svg");
+			background-size: 30%;
+			cursor: pointer;
+			transition: transform 100ms;
+			opacity: .8;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+
+		&:hover {
+			opacity: 1 !important;
+			
+			p { text-shadow:  0px 0px 2px rgba(255, 255, 255, 1) ; }
+			
+		}
+
+		&.inactive {
+			opacity: .3;
+		}
+
+	}
+
+	.sub-container {
+		transition: max-height 250ms;
+		@include categoryColors($alpha_background: .1);
+		
+		&.cat-general {
+			background-color: rgba($white, .1);
+			border-color: rgba($white, 1);
+		}
+
+		max-height: 0;
+		overflow: hidden;
+
+		.subcat-container {
+			@include categoryColors();
+
+			&.cat-general {
+				background-color: rgba($white, 1);
+				border-color: rgba($white, 1);
+			}
+
+			background: none !important;
+			border-left: .5rem solid;
+			
+			.icon {
+				
+				@include categorySymbols;
+				background-size: 50% !important;
+				
+				float: left;			
+				width: 2.5em;
+				height: 2.5em;
+				margin-left: .5em;
+				cursor: pointer;
+			}
+
+			p {
+				margin: 0 0 0 3.5em;
+				text-overflow: ellipsis;
+				height: 2.5em;
+				line-height: 2.5em;
+				text-align: left;
+				cursor: pointer;
+				overflow: hidden;
+    			white-space: nowrap;
+			}
+
+			&.inactive {
+				opacity: .3;
+			}
+
+			&:hover {
+				opacity: 1 !important;
+				
+				p { text-shadow:  0px 0px 2px rgba(255, 255, 255, 1) ; }
+			}
+		}
+
+	}
+
+	.entity-module {
+		.row-container {
+    	flex-direction: column;
+		}
+  }
+
+	.attribute-module {
+		display: none;
+
+		order: 3;
+		visibility: hidden;
+
+		.attribute-container {
+			padding-left: 2em;
+		    margin-bottom: 1em;
+			
+			display: flex;
+	    	align-items: center;
+
+			input {
+				width: 1.5em;
+				height: 1.5em;
+	    		cursor: pointer;
+			}
+
+			label {
+				text-indent: 1em;
+	    		cursor: pointer;
+			}
+
+			&:hover {
+				label {
+					color: $white;
+				}				
+			}
+		}
+	}
+}
+
+@mixin activeState {
+
+	right: 0 !important;
+
+	.filter-module {
+		h3 { visibility: visible; }
+	}
+	.entity-module { visibility: visible; }
+	.attribute-module { visibility: visible; }
+	.reset-module { visibility: visible; }
+
+	.cat-container .icon { margin-left: .5em; }
+}
+
+.desktop {
+	#legendView.active {
+		@include activeState;
+	}
+}
+
+.tablet {
+	#legendView {
+		overflow: scroll;
+
+		&.active {
+			@include activeState;
+		}
+	}
+}
+
+.mobile {
+	#legendView {
+		right: -20em;
+		overflow: scroll;
+
+		&.active {
+			@include activeState;
+		}
+	}
+}

@@ -1,1 +1,0 @@
-qx.Class.define("Object",{type:"abstract",extend:qx.core.Object,properties:{entryId:{},name:{},description:{}},members:{}});

@@ -1,0 +1,133 @@
+#mapView {
+
+	position: absolute;
+	top: 0;
+	left: 30em;
+	z-index: 0;
+	width: calc(100% - 30em - 3em);;
+	height: 100%;
+
+	font-size: $font-size !important;
+
+	/*background-color: $black;*/
+	background: none !important;
+
+	div.location {
+
+		box-shadow: 1px 1px 2px #333;
+		background-color: $gray80;
+
+		@include entityShapes;
+		@include categoryColors;
+		@include categorySymbols;
+		
+		&.marker-cluster {
+			background-color: $white;
+			text-align: center;
+			font-size: 20px;
+			padding-top: 4px;
+		}
+
+		&.active {
+			border: 1px solid $white;
+			box-shadow: 1px 1px 3px #000;
+		}
+	}
+
+	div.location.type-2 {
+		box-shadow: none;
+
+		background-color: transparent;
+		background-image: none;
+
+		span.event-shape, span.event-icon {
+			display: block;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+		}
+		span.event-shape {
+			box-shadow: 1px 1px 2px #333;
+			@include entityShapes;
+			@include categoryColors;
+		}
+		span.event-icon {
+			@include categorySymbols;
+		}
+
+		&.active {
+			border: none;
+			box-shadow: none;
+			
+			span.event-shape {
+				border: 1px solid $white;
+				box-shadow: 1px 1px 3px #000;
+			}
+		}
+	}
+
+	div.marker {
+		background-image: url('../img/marker_icon.svg');
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
+		font-size: 14px;
+		text-align: center;
+		padding-top: 8px;
+
+		&.support-needed {
+			background-image: url('../img/marker_support-needed.svg');
+		}
+	}
+
+	div.marker-station {
+		p {
+			background-color: $yellow_dvb;
+			padding: 2px;
+			text-align: center;
+			opacity: .9;
+			font-family: monospace;
+			font-size: .9em;
+		}
+	}
+
+	div.marker-user-location {
+		background-color: $blue;
+		border-radius: 8px;
+		box-shadow: 0px 0px 5px #888888;
+	}
+
+	.afeefa-popup {
+		
+		.leaflet-popup-content {
+			padding: 5px 5px 5px;
+			color: $white;
+		}
+
+		.leaflet-popup-content-wrapper {
+			background-color: $black_alpha;
+		}
+		.leaflet-popup-tip {
+			border-top-color: $black_alpha;
+		}
+
+		span {display: block;}
+		.title {}
+		.category, .date { font-size: .8em; }
+
+	}
+}
+
+body.phone {
+
+	#mapView{
+		width: 100%;
+		left: 0;
+
+		&.shy {
+			opacity: .3;
+		}
+	}
+
+}

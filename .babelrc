@@ -1,0 +1,5 @@
+{
+  "presets": ["env"],
+  "plugins": ["transform-runtime", "transform-remove-strict-mode"],
+  "comments": false
+}

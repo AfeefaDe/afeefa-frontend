@@ -1,0 +1,206 @@
+@mixin entityShapes {
+	
+	/* orga */
+	&.type-0 {
+		border-radius: 3px;
+	}
+
+	/* market entry */
+	&.type-1 {
+		border-radius: 20px;
+	}
+
+	/* event */
+	&.type-2 {
+		border-radius: 3px;
+		/*position: relative;*/
+		/*overflow: hidden;*/
+		transform: rotate(45deg);
+
+		/*&::before {
+		    content: "";
+		    position: absolute;
+		    width: 200%;
+		    height: 200%;
+		    top: -50%;
+		    left: -50%;
+		    z-index: -1;
+		    background: url("../img/icon_10.svg") center center no-repeat;
+			transform: rotate(-45deg);
+		}*/
+	}
+
+	/* POI */
+	&.type-3 {
+		border-radius: 20px;
+		/*box-shadow: 0px 0px 2px #555;*/
+		background-color: $gray50 !important;
+	}
+}
+
+@mixin categoryColors($alpha_background: 1, $alpha_border: 1) {
+
+	/* TODO find a solution to avoid setting the border on elements that dont need that and dont provide a parameter for it */
+
+	/* Main categories */
+	
+	&.cat-general	{ 
+		background-color: rgba($gray50, $alpha_background);
+		border-color: rgba($gray50, $alpha_border);
+	}
+	&.cat-language	{ 
+		background-color: rgba($yellow, $alpha_background);
+		border-color: rgba($yellow, $alpha_border);
+	}
+	&.cat-medic {
+		background-color: rgba($red,$alpha_background);
+		border-color: rgba($red, $alpha_border);
+	}
+	&.cat-jobs {
+		background-color: rgba($blue_dark,$alpha_background);
+		border-color: rgba($blue_dark, $alpha_border);
+	}
+	&.cat-consultation {
+		background-color: rgba($olive,$alpha_background);
+		border-color: rgba($olive, $alpha_border);
+	}
+	&.cat-leisure {
+		background-color: rgba($turquoise,$alpha_background);
+		border-color: rgba($turquoise, $alpha_border);
+	}
+	&.cat-community {
+		background-color: rgba($violet,$alpha_background);
+		border-color: rgba($violet, $alpha_border);
+	}
+	&.cat-donation {
+		background-color: rgba($orange,$alpha_background);
+		border-color: rgba($orange, $alpha_border);
+	}
+	&.cat-external-event {
+		background-color: rgba($black,$alpha_background);
+		border-color: rgba($black, $alpha_border);
+	}
+	&.subcat-fb-event {
+		background-color: rgba($blue_facebook,$alpha_background);
+	}
+
+	/* LEIPZIG */
+	&.cat-advice-and-support {
+		background-color: rgba($olive,$alpha_background);
+		border-color: rgba($olive, $alpha_border);
+	}
+	&.cat-living-in-leipzig {
+		background-color: rgba($yellow, $alpha_background);
+		border-color: rgba($yellow, $alpha_border);
+	}
+	&.cat-work-and-education {
+		background-color: rgba($blue_dark,$alpha_background);
+		border-color: rgba($blue_dark, $alpha_border);
+	}
+}
+
+@mixin categorySymbols {
+
+	background-size: 72%;
+	background-repeat: no-repeat;
+	background-position: center center;
+
+	/* Main categories */
+
+	&.cat-general	{ background-image: url("../img/icon_174.svg"); }
+	&.cat-language	{ background-image: url("../img/icon_06.svg"); }
+	&.cat-medic { background-image: url("../img/icon_04.svg"); }
+	&.cat-jobs { background-image: url("../img/icon_76.svg"); }
+	&.cat-consultation { background-image: url("../img/icon_10.svg"); }
+	&.cat-leisure { background-image: url("../img/icon_86.svg"); }
+	&.cat-community { background-image: url("../img/icon_02.svg"); background-size: 85%; }
+	&.cat-donation { background-image: url("../img/icon_12.svg"); }
+	&.cat-external-event { background-image: url("../img/icon_192.svg"); }
+	
+	/* Sub categories */
+
+	&.subcat-wifi { background-image: url("../img/icon_148.svg"); }
+	&.subcat-jewish { background-image: url("../img/icon_22.svg"); }
+	&.subcat-christian { background-image: url("../img/icon_60.svg"); }
+	&.subcat-islam { background-image: url("../img/icon_62.svg"); }
+	&.subcat-religious-other { background-image: url("../img/icon_158.svg"); }
+	&.subcat-shop { background-image: url("../img/icon_66.svg"); background-size: 50%; }
+	&.subcat-nature { background-image: url("../img/icon_96.svg"); background-size: 65%; }
+	&.subcat-authority { background-image: url("../img/icon_70.svg"); background-size: 60%; }
+	&.subcat-hospital { background-image: url("../img/icon_04.svg"); }
+	&.subcat-police { background-image: url("../img/icon_146.svg"); }
+	&.subcat-public-transport { background-image: url("../img/icon_58.svg"); }
+
+	&.subcat-german-course { background-image: url("../img/icon_88.svg"); }
+	&.subcat-german-course-state { background-image: url("../img/icon_180.svg"); }
+	&.subcat-meet-and-speak { background-image: url("../img/icon_100.svg"); }
+	&.subcat-learning-place { background-image: url("../img/icon_90.svg"); }
+	&.subcat-interpreter { background-image: url("../img/icon_164.svg"); }
+	&.subcat-foreign-language { background-image: url("../img/icon_178.svg"); }
+	
+	&.subcat-medical-counselling { background-image: url("../img/icon_104.svg"); }
+	&.subcat-psychological-counselling { background-image: url("../img/icon_106.svg"); }
+	
+	&.subcat-job-counselling { background-image: url("../img/icon_10.svg"); }
+	&.subcat-education-counselling { background-image: url("../img/icon_172.svg"); }
+	&.subcat-political-education { background-image: url("../img/icon_108.svg"); }
+	&.subcat-library { background-image: url("../img/icon_18.svg"); }
+
+	&.subcat-asylum-counselling { background-image: url("../img/icon_112.svg"); }
+	&.subcat-legal-advice { background-image: url("../img/icon_110.svg"); }
+	&.subcat-social-counselling { background-image: url("../img/icon_114.svg"); }
+	&.subcat-family-counselling { background-image: url("../img/icon_92.svg"); }
+	&.subcat-volunteer-coordination { background-image: url("../img/icon_56.svg"); }
+	
+	&.subcat-youth-club { background-image: url("../img/icon_166.svg"); }
+	&.subcat-sports { background-image: url("../img/icon_08.svg"); }
+	&.subcat-museum { background-image: url("../img/icon_116.svg"); }
+	&.subcat-music { background-image: url("../img/icon_120.svg"); }
+	&.subcat-stage { background-image: url("../img/icon_154.svg"); }
+	&.subcat-craft-art { background-image: url("../img/icon_98.svg"); background-size: 75%; }
+	&.subcat-workspace { background-image: url("../img/icon_188.svg"); }
+	&.subcat-gardening { background-image: url("../img/icon_118.svg"); }
+	&.subcat-cooking { background-image: url("../img/icon_126.svg"); }
+	&.subcat-festival { background-image: url("../img/icon_82.svg"); }
+	&.subcat-lecture { background-image: url("../img/icon_162.svg"); }
+	&.subcat-film { background-image: url("../img/icon_182.svg"); }
+	&.subcat-congress { background-image: url("../img/icon_186.svg"); }
+
+	&.subcat-welcome-network { background-image: url("../img/icon_64.svg") !important; }
+	&.subcat-meeting-place { background-image: url("../img/icon_78.svg"); }
+	&.subcat-childcare { background-image: url("../img/icon_130.svg"); }
+	&.subcat-workshop { background-image: url("../img/icon_190.svg"); }
+	&.subcat-sponsorship { background-image: url("../img/icon_168.svg"); }
+	&.subcat-lgbt { background-image: url("../img/icon_132.svg"); }
+	&.subcat-housing-project { background-image: url("../img/icon_136.svg"); }
+	
+	&.subcat-food { background-image: url("../img/icon_142.svg"); }
+	&.subcat-clothes { background-image: url("../img/icon_140.svg"); }
+	&.subcat-furniture { background-image: url("../img/icon_144.svg"); }
+	
+	&.subcat-iwgr { background-image: url("../img/icon_194.svg"); background-size: 85%; }
+	&.subcat-fb-event { background-image: url("../img/icon_196.svg"); background-size: 85%; }
+
+	
+	/* LEIPZIG */
+
+	&.cat-advice-and-support { background-image: url("../img/icon_10.svg"); }
+	&.cat-living-in-leipzig { background-image: url("../img/icon_86.svg"); }
+	&.cat-work-and-education { background-image: url("../img/icon_76.svg"); }
+
+}
+
+@mixin propertyIcons {
+	&.icon-times { background-image: url("../img/icon_29.svg"); }
+	&.icon-location { background-image: url("../img/icon_35.svg"); }
+	&.icon-phone { background-image: url("../img/icon_23.svg"); }
+	&.icon-mail { background-image: url("../img/icon_25.svg"); }
+	&.icon-web { background-image: url("../img/icon_27.svg"); }
+	&.icon-arrival { background-image: url("../img/icon_57.svg"); }
+	&.icon-openingHours { background-image: url("../img/icon_29.svg"); }
+	&.icon-description { background-image: url("../img/icon_175.svg"); background-size: 70%; }
+	&.icon-facebook { background-image: url("../img/icon_45.svg"); }
+	&.icon-spokenLanguages { background-image: url("../img/icon_43.svg"); }
+	&.icon-speakerPublic { background-image: url("../img/icon_41.svg"); }
+	&.icon-supportWantedDetail { background-image: url("../img/icon_55.svg"); background-size: 90%; }
+}

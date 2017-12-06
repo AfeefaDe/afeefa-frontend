@@ -1,0 +1,291 @@
+@mixin detailViewBasic {
+
+	@include goBackLayout;
+
+	.heading {
+		cursor: pointer;
+
+		h1 {
+			padding-right: 5rem;
+		}
+	}
+
+	.bookmark-btn {
+		position: absolute;
+		width: 2rem;
+		height: 3rem;
+		top: -0.2em;
+		right: 2rem;
+		cursor: pointer;
+		background-image: url("../img/icon_bookmark_shadow.svg");
+		background-size: contain;
+		background-position: center center;
+		background-repeat: no-repeat;
+		opacity: .25;
+
+		&:hover {
+			opacity: .5;
+		}
+
+		&.active {
+			opacity: 1;
+		}
+	}
+
+	.badge {
+		display: none;
+		position: absolute;
+		height: 2.5em;
+		width: 2.5em;
+    top: 1em;
+		right: 1em;
+    z-index: 10;
+		
+		&.badge-certificate {
+			background-image: url("../img/icon_169.svg");
+			background-size: 100%;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+	}
+
+	.message-btn {
+		@include circleBtn;
+		
+		display: none;
+
+		width: 4rem;
+    height: 4rem;
+
+		position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+
+		background-color: $black_alpha;
+		background-image: url("../img/icon_202.svg");
+	}
+
+	/* IMAGE PROPERTY */
+	.image-container {
+		max-height: 10em;
+		text-align: center;
+		overflow: hidden;
+
+		img {
+			width: 100%;
+		}
+	}
+
+	/* TIMESTAMP PROPERTY */
+	.timestamp {
+		font-size: .8em;
+		color: $gray50;
+		text-align: center;
+	}
+
+	/* LINKED ENTRIES */
+	.linkedentries {
+		.property-value {
+			cursor: pointer;
+			@extend a;
+		}
+	}
+
+	/* OTHER PROPERTIES */
+	.property {
+		display: none;
+		padding: 0 5%;
+		margin-top: 2em;
+		min-height: 2em;
+
+		$iconSize: 2.5em;
+
+		&.category {
+			.property-icon {
+				@include entityShapes;
+				@include categoryColors;
+				@include categorySymbols;
+			}
+			.property-value {
+				font-style: italic;
+				color: $gray50;
+			}
+		}
+
+		&.descriptionShort {
+			font-weight: bold;
+			text-align: center;
+			background-color: white;
+			padding: 4%;
+			cursor: pointer;
+			
+			&.read-more {
+				background-image: url("../img/icon_175.svg");
+				background-position: center bottom;
+				background-size: 8%;
+				background-repeat: no-repeat;
+				padding: 4% 4% 8%;
+			}
+
+			.property-icon {display: none;}
+			.property-text { margin-left: 0; }
+			.property-name {display: none;}
+		}
+
+		&.description {
+			.property-name {display: none;}
+
+			&.hidden {
+				display: none !important;
+			}
+		}
+
+		&.descriptionShort, &.description {
+		}
+
+		.property-icon {
+			width: $iconSize;
+			height: $iconSize;
+			float: left;
+
+			background-repeat: no-repeat;
+			background-position: center 0.2em;
+
+			@include propertyIcons;
+		}
+		.property-text {
+			margin-left: calc(5% + 2.5em);
+
+			&.ar, &.ur, &.fa {
+				margin-right: calc(5% + 2.5em);
+			}
+
+			p { 
+				margin: 0;
+				line-height: 1.3em;
+
+				&.property-name {
+					color: $gray50;
+					font-size: 0.9em;
+					padding-bottom: 0.3em;
+					text-transform: uppercase;
+				}
+			}
+
+			a {
+				  width: 100%;
+				  display: inline-block;
+				  overflow: hidden;
+				  text-overflow: ellipsis;
+				  white-space: nowrap;
+			}
+		}
+
+		&.location .property-value {
+			background-position: right .5em;
+			background-repeat: no-repeat;
+			background-size: 1em;
+			cursor: pointer;
+		}
+
+		.multiselect-value {
+			display: inline-block;
+			margin: 0 .5em .5em 0;
+		}
+
+		&.category .property-name {
+			font-size: 1em !important;
+			padding: 0 !important;
+			color: $black !important;
+			text-transform: none !important;
+		}
+
+	}
+	
+	/* overwrite for POIs */
+	&.type-3 {
+		.property.category {
+			.property-name { line-height: 2.6em !important; }
+			.property-value { display: none; }
+		}
+	}
+}
+
+#detailView {
+	
+	@include detailViewBasic;
+}
+
+.tablet {
+	#detailViewMobile {
+		width: 30%;
+	}	
+}
+
+#detailViewMobile {
+	
+	@include detailViewBasic;
+
+	transition: all 200ms;
+	width: 100%;
+	height: 4em;
+	position: absolute;
+	bottom: -4em;
+	overflow: hidden;
+	
+	background-color: $white;
+	box-shadow: 0px 0px 2px #333;
+
+	.message-btn {
+		position: fixed;
+    bottom: 2rem;
+	}
+
+	&.active {
+		bottom: 0;
+		
+		.bookmark-btn, .message-btn, badge-certificate {
+			display: none !important;
+		}
+	}
+
+	&.active-large {
+		bottom: 0;
+		height: 100%;
+
+		visibility: visible;
+		opacity: 1;
+
+		.heading h1 {
+			overflow: inherit;
+			text-overflow: inherit;
+			white-space: inherit;
+		}
+	}
+	
+	.scroll-container {
+		height: calc(100% - 4em);
+		overflow-y: auto;
+		padding-bottom: 1em;
+		position: relative;
+	}
+
+	.heading h1 {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+.rtl {
+	#detailView {
+		.property.location .property-value {
+	  	background-position: left .5em;
+		}
+
+		.message-btn {
+			right: inherit;
+			left: 2rem;
+		}
+	}
+}
