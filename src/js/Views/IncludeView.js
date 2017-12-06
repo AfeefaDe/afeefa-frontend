@@ -93,6 +93,12 @@ export default qx.Class.define("IncludeView", {
         // set url
 	      APP.getRouter().setUrl('chapter', chapter.id + '/' + APP.getRouter().slugify(chapter.title), null);
 
+        // set heading
+        that.heading.empty().append(chapter.title);
+
+				// make URLs a link
+				// var content = APP.getUtility().urlify(chapter.content);
+
       	that.scrollContainer.empty().append(chapter.content);
 
         // catch all links and handle internal ones separately
