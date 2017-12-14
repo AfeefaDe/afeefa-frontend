@@ -6,6 +6,8 @@
 dist/built
 # ignore specific config.php file
 dist/config.php
+# ignore mail config file
+dist/messageAPI/smtpconf.ini
 
 # Logs
 logs
