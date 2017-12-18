@@ -73,13 +73,17 @@ export default qx.Class.define("MenuView", {
 
             // btn press
             that.pressBtn = $('<div />').addClass('item press');
-            that.pressBtnLabel = $('<span />');
+            that.pressBtnLabel = $('<a />')
+                .attr('href', 'https://about.afeefa.de/presse')
+                .attr('target', '_blank');
             that.pressBtn.append(that.pressBtnLabel);
             that.menu.append(that.pressBtn);
 
             // btn imprint
             that.imprintBtn = $('<div />').addClass('item imprint');
-            that.imprintBtnLabel = $('<span />');
+            that.imprintBtnLabel = $('<a />')
+                .attr('href', 'https://about.afeefa.de/impressum')
+                .attr('target', '_blank');
             that.imprintBtn.append(that.imprintBtnLabel);
             that.menu.append(that.imprintBtn);
 
@@ -136,16 +140,6 @@ export default qx.Class.define("MenuView", {
                 e.preventDefault();
                 that.close();
                 APP.getFormView().load( 'newEntry' );
-            });
-
-            that.pressBtn.click(function(){
-                that.close();
-                APP.getIncludeView().load('press');
-            });
-
-            that.imprintBtn.click(function(){
-                that.close();
-                APP.getIncludeView().load('imprint');
             });
 
             that.listen('curtainclicked', function(){
