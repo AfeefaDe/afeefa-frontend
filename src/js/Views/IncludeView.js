@@ -107,12 +107,12 @@ export default qx.Class.define("IncludeView", {
           var url = $(this).attr('href');
 
           // load chapter
-          if (url.indexOf('afeefa://chapter:') > -1 ) {
-            var referredChapterID = url.split(':')[2];
+          if (url.indexOf('afeefa://chapter/') > -1 ) {
+            var referredChapterID = url.split('/')[3];
             if(referredChapterID) that.load(referredChapterID);
           }
-          else if (url.indexOf('afeefa://orga:') > -1 ) {
-            var referredOrgaID = url.split(':')[2];
+          else if (url.indexOf('afeefa://orga/') > -1 ) {
+            var referredOrgaID = url.split('/')[3];
             var orga = APP.getDataManager().getOrgaById(referredOrgaID);
 
             if (orga) {
