@@ -132,15 +132,18 @@ export default qx.Class.define("DetailView", {
 					that.scrollContainer.append($link);
 					that['propertyContainer'+prop].click(function(){
 						if( that.record.location[0] ){
-							var userLocation = APP.getMapView().getUserLocation();
-							if ( userLocation )
-							   // $link.attr('href', 'http://maps.google.com/?saddr=' + userLocation.lat + ',' + userLocation.lon + '&daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
-							   $link.attr('href', 'https://www.google.com/maps/dir/'+userLocation.lat+','+userLocation.lon+'/'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
-							else
-							   // $link.attr('href', 'http://maps.google.com/?daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
-							   $link.attr('href', 'https://www.google.com/maps/dir//'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
+							if ( APP.getUserDevice() === 'desktop' || APP.getUserDevice() === 'tablet' ) {
+								APP.getMapView().selectMarkerFromLink(that.record);
+							}
+						// 	var userLocation = APP.getMapView().getUserLocation();
+						// 	if ( userLocation )
+						// 		// $link.attr('href', 'http://maps.google.com/?saddr=' + userLocation.lat + ',' + userLocation.lon + '&daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
+						// 		$link.attr('href', 'https://www.google.com/maps/dir/'+userLocation.lat+','+userLocation.lon+'/'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
+						// 	else
+						// 		// $link.attr('href', 'http://maps.google.com/?daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
+						// 		$link.attr('href', 'https://www.google.com/maps/dir//'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
 
-							$link[0].click();
+						// 	$link[0].click();
 						}
 					});
 				}
@@ -553,10 +556,10 @@ export default qx.Class.define("DetailView", {
 				that.close();
 			});
 
-			that.headingContainer.click(function(){
-				if( APP.getUserDevice() === 'desktop' || APP.getUserDevice() === 'tablet' )
-					APP.getMapView().selectMarkerFromLink(that.record);
-			});
+			// that.headingContainer.click(function(){
+				// if( APP.getUserDevice() === 'desktop' || APP.getUserDevice() === 'tablet' )
+				// 	APP.getMapView().selectMarkerFromLink(that.record);
+			// });
 		}
 
 	}
