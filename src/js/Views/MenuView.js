@@ -109,6 +109,11 @@ export default qx.Class.define("MenuView", {
             a.append(that.dfaLogo);
             that.menu.append(a);
 
+            var fundingNote = $('<p />')
+                .addClass('fundingNote')
+                .append('Gefördert durch den Freistaat Sachsen im Rahmen des Landesprogramms Integrative Maßnahmen');
+            that.menu.append(fundingNote);
+
             // fb like btn
             // that.menu.append('<div class="fb-like" data-href="https://www.facebook.com/afeefa.de" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>');
 
