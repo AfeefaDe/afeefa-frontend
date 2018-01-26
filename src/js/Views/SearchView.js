@@ -713,6 +713,11 @@ export default qx.Class.define("SearchView", {
         }
       });
 
+      that.listen('bookmarksChanged', function(){
+        that.reset();
+        that.loadDashboard();
+      });
+
     },
 
     minimize: function(){

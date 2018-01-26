@@ -58,19 +58,19 @@ export default qx.Class.define("User", {
         bookmark: function(entry, bool){
             var that = this;
 
-            // TODO make use of bool if needed
-
+            
             // if bool not set, just toggle
             if(that.hasBookmark(entry)) {
                 that.user.bookmarks = _.without(that.user.bookmarks, entry.id);
                 that.save();
+                that.say('bookmarksChanged');
                 return false;
             } else {
                 that.user.bookmarks = _.union(that.user.bookmarks, [entry.id]);
                 that.save();
+                that.say('bookmarksChanged');
                 return true;
             }
-
         },
 
         hasBookmark: function(entry){
