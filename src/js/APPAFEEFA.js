@@ -147,14 +147,14 @@ export default qx.Class.define("APPAFEEFA", {
 			// return;
 
 			if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum-410' ){
-      	that.setArea(that.getData().areas.leipzig);
-      }
-      else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 && prompt() === 'horbz-afeefa' ){
-      	that.setArea(that.getData().areas.bautzen);
+				that.setArea(that.getData().areas.leipzig);
 			}
-      else {
-      	that.setArea(that.getData().areas.dresden);
-      }
+			else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 ){
+				that.setArea(that.getData().areas.bautzen);
+					}
+			else {
+				that.setArea(that.getData().areas.dresden);
+			}
 		},
 
 		addEvents: function(){
