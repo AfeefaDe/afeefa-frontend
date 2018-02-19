@@ -188,7 +188,7 @@ export default qx.Class.define("SearchView", {
         );
       }
 
-      if (APP.getArea().dataKey == 'leipzig') {
+      if (APP.getArea().dataKey == 'dresden') {
         that.createSectionHeader( that.getWording('search.label.eventstoday') );
         var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
         if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
