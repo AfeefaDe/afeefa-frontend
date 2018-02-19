@@ -188,22 +188,24 @@ export default qx.Class.define("SearchView", {
         );
       }
 
-      that.createSectionHeader( that.getWording('search.label.eventstoday') );
-      var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
-      if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
-      _.each(eventsToday.slice(0, 3), function(entry) {
-        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
-      });
-              
-      that.createButton(
-        {
-          label: that.getWording('search.button.events'),
-          iconName: 'today',
-          action: function(){
-            APP.getEventView().load();
+      if (APP.getArea().dataKey == 'leipzig') {
+        that.createSectionHeader( that.getWording('search.label.eventstoday') );
+        var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
+        if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
+        _.each(eventsToday.slice(0, 3), function(entry) {
+          that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+        });
+                
+        that.createButton(
+          {
+            label: that.getWording('search.button.events'),
+            iconName: 'today',
+            action: function(){
+              APP.getEventView().load();
+            }
           }
-        }
-      );
+        );
+      }
 
       that.createSectionHeader( that.getWording('search.label.newentries') );
       var newProjects = APP.getDataManager().getNewestProjects(5);

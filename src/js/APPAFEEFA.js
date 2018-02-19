@@ -131,7 +131,7 @@ export default qx.Class.define("APPAFEEFA", {
 			that.getDataManager().fetchInitialData(function(){
         
 				cb();
-      	that.loading(true);
+      			that.loading(true);
 				
 				// fetch other data (e.g. entries, that takes a long time loading)
 				that.getDataManager().fetchAllData();
@@ -158,16 +158,16 @@ export default qx.Class.define("APPAFEEFA", {
 		},
 
 		addEvents: function(){
-      var that = this;
+		var that = this;
 
-      that.listen('languageChanged', function(){
-        that.loading(true);
-      });
+			that.listen('languageChanged', function(){
+				that.loading(true);
+			});
 
-      that.listen('fetchedNewData', function(){
+			that.listen('fetchedNewData', function(){
 				that.loading(false);
 			});
-	  },
+		},
 
 		loading: function( bool ){
         var that = this;
