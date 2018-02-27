@@ -7,6 +7,10 @@
 	width: calc(100% - 30em - 3em);;
 	height: 100%;
 
+	&.small {
+		width: calc(100% - 30em - 30em);;
+	}
+
 	font-size: $font-size !important;
 
 	/*background-color: $black;*/

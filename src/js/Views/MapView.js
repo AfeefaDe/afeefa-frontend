@@ -155,8 +155,13 @@ export default qx.Class.define("MapView", {
 					that.deselectMarker();
 			});
 
-			that.listen('DetailViewClosed', function(){
-					that.deselectMarker();
+			that.listen('detailViewOpened ', function(){
+				that.view.addClass('small');
+			});
+			
+			that.listen('detailViewClosed', function(){
+				// that.deselectMarker();
+				that.view.removeClass('small');
 			});
 
 			// update view if location found
@@ -356,10 +361,10 @@ export default qx.Class.define("MapView", {
 				marker.bindPopup(popup);
 
 				marker.on('mouseover', function (e) {
-						that.map.openPopup(popup);
+					that.map.openPopup(popup);
 				});
 				marker.on('mouseout', function (e) {
-						// that.map.closePopup();
+					that.map.closePopup();
 				});
 			
 

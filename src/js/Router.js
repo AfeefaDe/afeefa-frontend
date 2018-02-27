@@ -269,12 +269,12 @@ export default qx.Class.define("Router", {
 					if(cb) cb();
 					if (!that.currentUrlWasPopped) APP.setPageTitle(orga.name);
 					break;
-					case 'event':
+				case 'event':
 					var event = APP.getDataManager().getEventById(that.unslugify(urlParams[1]));
 					if(event) APP.getMapView().loadEntry(event);
 					if(event) APP.getDetailView().load(event);
 					if(cb) cb();
-					if (event && !that.currentUrlWasPopped) APP.setPageTitle(event.name);
+					if (!that.currentUrlWasPopped) APP.setPageTitle(event.name);
 					break;
 				case 'cat':
 					APP.getLegendView().setFilter( {category: param.value} );

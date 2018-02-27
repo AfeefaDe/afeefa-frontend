@@ -668,8 +668,11 @@ export default qx.Class.define("SearchView", {
       });
 
       that.listen('fetchedNewData', function(){
-        if( APP.getDetailView().isActive() ) that.hide();
-        else that.load(that.inputField.val());
+        if( APP.getDetailView().isActive() ) {
+
+        } else {
+          that.load(that.inputField.val());
+        }
       });
 
       that.listen('filterSet', function(){

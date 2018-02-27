@@ -249,21 +249,21 @@ export default qx.Class.define("DataManager", {
         getOrgaById: function(id){
             var that = this;
 
-            var entry = _.find(APP.getData().entries, function(entry){
+            var orga = _.find(APP.getData().entries, function(entry){
                 return (APP.isOrga(entry) && id == entry.id);
             })
-
-            return entry;
+            console.log('getOrgaById');
+            return orga;
         },
 
         getEventById: function(id){
             var that = this;
 
-            var entry = _.find(APP.getData().entries, function(entry){
+            var event = _.find(APP.getData().entries, function(entry){
                 return (APP.isEvent(entry) && id == entry.id);
             })
 
-            return entry;
+            return event;
         },
 
         getNewestProjects: function(count){
@@ -442,7 +442,7 @@ export default qx.Class.define("DataManager", {
                             return 2;
                         },
                         entryType: function(record){
-                            return 'event';
+                            return 'Event';
                         },
                         id: function(record,i){
                             return record.id;
