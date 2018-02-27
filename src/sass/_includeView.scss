@@ -14,14 +14,24 @@
 		@include textLink;
 	}
 	a[href^="afeefa://orga"], a[href^="afeefa://event"] {
-    padding: 1em;
-    border: 1px dashed black;
-    background-color: white;
-    display: block;
+		display: inline-block;
+		padding: .5em 1em;
+		border-left: 5px solid $gray50;
+		border-bottom: none;
+		box-shadow: 1px 1px 2px 1px $gray50;
 
-    &:hover {
-    	background-color: black;
-    };
+		&:before {
+			content: "Angebot öffnen: ";
+			font-size: 0.8em;
+			color: $gray50;
+			display: block;
+		 }
+
+		&:hover {
+			border-color: black;
+			background-color: inherit;
+			color: inherit;
+		};
 	}
 
 	img {

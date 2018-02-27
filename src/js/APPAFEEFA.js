@@ -131,7 +131,7 @@ export default qx.Class.define("APPAFEEFA", {
 			that.getDataManager().fetchInitialData(function(){
         
 				cb();
-      	that.loading(true);
+      			that.loading(true);
 				
 				// fetch other data (e.g. entries, that takes a long time loading)
 				that.getDataManager().fetchAllData();
@@ -147,14 +147,14 @@ export default qx.Class.define("APPAFEEFA", {
 			// return;
 
 			if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum-410' ){
-      	that.setArea(that.getData().areas.leipzig);
-      }
-      else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 && prompt() === 'horbz-afeefa' ){
-      	that.setArea(that.getData().areas.bautzen);
+				that.setArea(that.getData().areas.leipzig);
 			}
-      else {
-      	that.setArea(that.getData().areas.dresden);
-      }
+			else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 ){
+				that.setArea(that.getData().areas.bautzen);
+					}
+			else {
+				that.setArea(that.getData().areas.dresden);
+			}
 		},
 
 		route: function(route, name, data, keyState) {
@@ -164,16 +164,16 @@ export default qx.Class.define("APPAFEEFA", {
 		},
 
 		addEvents: function(){
-      var that = this;
+		var that = this;
 
-      that.listen('languageChanged', function(){
-        that.loading(true);
-      });
+			that.listen('languageChanged', function(){
+				that.loading(true);
+			});
 
-      that.listen('fetchedNewData', function(){
+			that.listen('fetchedNewData', function(){
 				that.loading(false);
 			});
-	  },
+		},
 
 		loading: function( bool ){
         var that = this;

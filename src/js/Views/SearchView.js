@@ -177,15 +177,16 @@ export default qx.Class.define("SearchView", {
           APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
         };
 
-      that.createListResult(
-        {
-          iconClass: 'wisdom',
-          label: 'Wegweiser',
-          subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Flüchtlingshilfe',
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
+        that.createListResult(
+          {
+            iconClass: 'wisdom',
+            label: 'Wegweiser',
+            subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Flüchtlingshilfe',
+            action: action,
+            targetContainertEl: that.scrollContainer
+          }
+        );
+      }
 
       if (APP.getArea().dataKey == 'dresden') {
         that.createSectionHeader( that.getWording('search.label.eventstoday') );
@@ -203,8 +204,8 @@ export default qx.Class.define("SearchView", {
              APP.route('/events', that.getWording('search.button.events'), null, true);
             }
           }
-        }
-      );
+        );
+      }
 
       that.createSectionHeader( that.getWording('search.label.newentries') );
       var newProjects = APP.getDataManager().getNewestProjects(5);
@@ -712,6 +713,11 @@ export default qx.Class.define("SearchView", {
         else if( filter.tags ) {
           that.inputField.val( 'tag:' + filter.tags ).trigger( "input" );
         }
+      });
+
+      that.listen('bookmarksChanged', function(){
+        that.reset();
+        that.loadDashboard();
       });
 
     },
