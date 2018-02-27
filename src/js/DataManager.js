@@ -111,8 +111,7 @@ export default qx.Class.define("DataManager", {
                             orgas: 600,
                             events: 30
                         },
-                        dataKey: 'dresden',
-                        wisdomRootId: 1
+                        dataKey: 'dresden'
                     },
                     leipzig: {
                         initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
