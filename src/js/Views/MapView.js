@@ -227,10 +227,12 @@ export default qx.Class.define("MapView", {
 				return true;
 
 			});
-				
-			that.addMarkers(entries);
-			if(options.fitBounds) that.map.fitBounds(that.layerForMainMarkers.getBounds());
-			if ( that.getLoadedEntry() ) that.loadEntry( that.getLoadedEntry() );
+			
+			if (entries.length) {
+				that.addMarkers(entries);
+				if (options.fitBounds && that.layerForMainMarkers.getLayers().length) that.map.fitBounds(that.layerForMainMarkers.getBounds());
+				if ( that.getLoadedEntry() ) that.loadEntry( that.getLoadedEntry() );
+			}
 		},
 
 		addMarkers: function(entries) {
@@ -436,7 +438,7 @@ export default qx.Class.define("MapView", {
 			that.setSelectedMarker(marker);
 
 			if(marker){
-				if(options && options.setView) that.map.setView( [entry.location[0].lat, entry.location[0].lon], 16);
+				if(options && options.setView) that.map.setView( [entry.location[0].lat, entry.location[0].lon], 14);
 				try{ that.layerForMainMarkers.getVisibleParent(marker).spiderfy(); } catch(e){}
 				marker.openPopup();
 				$(marker._icon).addClass('active');

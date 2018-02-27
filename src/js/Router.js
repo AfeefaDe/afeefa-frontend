@@ -289,7 +289,8 @@ export default qx.Class.define("Router", {
 					if(cb) cb();
 					break;
 				case 'search':
-					APP.getSearchView().inputField.val( decodeURI(urlParams[1]) ).trigger( "input" );
+					APP.getSearchView().inputField.val(decodeURI(urlParams[1]));
+					APP.getSearchView().load( decodeURI(urlParams[1]) );
 					if(cb) cb();
 					break;
 				case 'chapter':

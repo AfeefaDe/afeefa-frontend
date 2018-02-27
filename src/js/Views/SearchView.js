@@ -65,7 +65,7 @@ export default qx.Class.define("SearchView", {
       that.cancelBtn = $("<div />")
         .addClass('button cancel-btn')
         .click(function(){
-          that.close();
+          APP.getRouter().backToLastKeyState();
         });
       that.searchBar.append(that.cancelBtn);
 
@@ -111,7 +111,6 @@ export default qx.Class.define("SearchView", {
         if(query){
           that.scrollContainer.empty();
           that.loadResults(query);
-          APP.route('/search/' + encodeURI(query), query );
         } else {
           that.reset();
           that.loadDashboard();
@@ -640,12 +639,12 @@ export default qx.Class.define("SearchView", {
         if(e.originalEvent !== undefined){
           if(val.length < 3) return;
           that.timeout = setTimeout(function(){
-            that.load(val);
+            APP.route('/search/' + encodeURI(val), val );
           }, 400);
-        } 
+        }
         // triggered manually (load instantly)
         else {
-          that.load(val);
+          APP.route('/search/' + encodeURI(val), val );
         }
       });
 
