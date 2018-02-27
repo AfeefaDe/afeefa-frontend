@@ -12,7 +12,6 @@ export default qx.Class.define("LanguageView", {
 
 	construct: function(){
 		var that = this;
-
 		that.setViewId('languageView');
 	},
 
@@ -41,17 +40,6 @@ export default qx.Class.define("LanguageView", {
 				'tr': 'Türkçe',
 				'ur': 'اردو'
 			}
-
-			// circle button to open
-			that.langBtn = $("<div />")
-				.attr('id', 'lang-btn')
-				.append(that.getWording('lan.'+APP.getLM().getCurrentLang()))
-				.addClass(APP.getLM().getCurrentLang())
-				.click(function(){
-					that.open();
-				});
-
-			that.view.append(that.langBtn);
 
 			// list container
 			that.listContainer = $("<div />")
@@ -160,12 +148,6 @@ export default qx.Class.define("LanguageView", {
 
 		changeLanguage: function(){
 			var that = this;
-
-			that.langBtn
-				.empty()
-				.append(that.getWording('lan.'+APP.getLM().getCurrentLang()))
-				.attr('class', null)
-				.addClass(APP.getLM().getCurrentLang());
 		},
 
 		close: function(){

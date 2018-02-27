@@ -3,6 +3,7 @@
 	@include goBackLayout;
 
 	z-index: 30;
+	overflow: hidden;
 
 	.heading {
 		cursor: pointer;

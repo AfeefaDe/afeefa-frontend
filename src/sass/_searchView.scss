@@ -3,7 +3,7 @@
 	$viewWidth: 30em;
 
 	position: absolute;
-	top: 0em;
+	top: 4rem;
 	left: 0em;
 	z-index: 10;
 	background-color: $gray95;
@@ -19,11 +19,12 @@
 		position: relative;
 		width: calc(100% - 4rem);
 		left: 2rem;
-		top: 2rem;
+		top: 1.5rem;
 		height: $height_sb;
 		z-index: 20;
-		background-color: $gray95;
+		background-color: $gray90;
 		box-shadow: 0px 2px 5px #000;
+		border-radius: 2px;
 
 		.button {
 			position: absolute;
@@ -38,12 +39,6 @@
 			&:hover {
 				opacity: 1;
 			}
-		}
-
-		.menu-btn {
-			top: 0;
-			left: 0;
-			background-image: url("../img/icon_38.svg");
 		}
 
 		.add-btn {
@@ -78,7 +73,7 @@
 			color: $white;
 
 			&::placeholder{
-				color: $gray80;
+				color: $white_alpha;
 			}
 
 			&:focus {
@@ -186,12 +181,6 @@
 
 			.btn {
 				height: $height_sb;
-			}
-
-			.menu-btn {
-				top: 1rem;
-				left: 1rem;
-				background-image: url("../img/icon_38.svg");
 			}
 
 	    .add-btn {

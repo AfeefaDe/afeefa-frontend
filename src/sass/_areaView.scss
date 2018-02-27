@@ -1,16 +1,74 @@
 #areaView {
 	position: absolute;
-	z-index: 15;
-	min-width: 10rem;
-	bottom: 1rem;
-	left: 5rem;
+	z-index: 50;
+	top: 0;
+	left: 0;
+	width: 30em;
+	height: 4rem;
+	padding: 1rem 2rem 1rem 1rem;
 	display: flex;
-	flex-direction: column;
+	justify-content: space-between;
+	color: $white_alpha;
+
+	.herz {
+		display: flex;
+	}
+
+	.button {
+		width: 2.5rem;
+		height: 2.5rem;
+		background-size: 45%;
+		background-repeat: no-repeat;
+		background-position: center center;
+		cursor: pointer;
+		opacity: .8;
+		
+		&:hover {
+			opacity: 1;
+		}
+	}
+	
+	#menu-btn {
+		margin: 0 .5rem;
+		background-image: url("../img/icon_38.svg");
+	}
+
+	#typo-logo {
+		width: 5rem;
+		height: 1rem;
+		margin-top: 0.7rem;
+		background-image: url("../img/afeefa-logo-typo-white.svg");
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: left center;
+	}
+
+	#current-area, #current-language {
+		height: 1.1rem;
+		margin-top: 0.7rem;
+		text-indent: 2em;
+		font-size: 0.9rem;
+		background-repeat: no-repeat;
+		background-size: 1.5em;
+		background-position: left center;
+		cursor: pointer;
+		opacity: .7;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+	#current-area {
+		background-image: url("../img/city.svg");
+	}
+	#current-language {
+		background-image: url("../img/icon_44.svg");
+	}
 
 	.area-btn {
 		display: none;
 		-webkit-animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-    animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+		animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 		padding: .3rem 1rem .3rem 2.5rem;
 		cursor: pointer;
 		font-weight: 400;
@@ -19,8 +77,8 @@
 		&.active {
 			display: inline-block;
 			order: 99;
-		  background-image: url("../img/city.svg");
-		  background-repeat: no-repeat;
+			background-image: url("../img/city.svg");
+			background-repeat: no-repeat;
 			background-size: 1.6rem;
 			background-position: left center;
 		}
@@ -29,7 +87,7 @@
 	&.active {
 		.area-btn {
 			background-color: $white;
-		  background-image: none;
+			background-image: none;
 			color: $black;
 			display: inline-block !important;
 

@@ -12,7 +12,6 @@ export default qx.Class.define("MenuView", {
 
     construct: function(){
     	var that = this;
-
         that.setViewId('menuView');
     },
 
@@ -185,6 +184,7 @@ export default qx.Class.define("MenuView", {
             that.reset();
 
             $('#main-container').addClass('shifted');
+            that.view.addClass('active');
 
             that.addBtnLabel.append( that.getWording('search.label.addentry') );
             that.aboutBtnLabel.append( that.getWording('menu.about') );
@@ -209,6 +209,7 @@ export default qx.Class.define("MenuView", {
             var that = this;
 
             $('#main-container').removeClass('shifted');
+            that.view.removeClass('active');
         },
 
         changeLanguage: function(){

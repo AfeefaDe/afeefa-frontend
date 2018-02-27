@@ -36,12 +36,6 @@ export default qx.Class.define("SearchView", {
         .attr('id', 'search-bar');
       that.view.append(that.searchBar);
 
-      // menu button
-      that.menuBtn = $("<div />")
-        .addClass('button menu-btn');
-      
-      that.searchBar.append(that.menuBtn);
-
       // filter button
       that.filterBtn = $("<div />")
         .addClass('button filter-btn')
@@ -121,18 +115,6 @@ export default qx.Class.define("SearchView", {
           .attr('placeholder', that.getWording('search.placeholder'))
           .show();
 
-        // tooltip
-        that.createTooltip(
-          that.menuBtn,
-          function(){
-            return that.getWording('menu.menu');
-          }(),
-          'hover',
-          'bottom',
-          'desktop'
-        );
-
-        
         that.isActive(true);
         that.maximize();
         that.view.addClass('active');
@@ -620,10 +602,6 @@ export default qx.Class.define("SearchView", {
       // call superclass
       this.base(arguments);
       
-      that.menuBtn.click(function(){
-        that.say('mainMenuBtnClicked');
-      });
-
       // that.inputField.focusin(function(){
         // that.load(that.inputField.val());
         // that.say('searchFieldFocused');
@@ -639,12 +617,12 @@ export default qx.Class.define("SearchView", {
         if(e.originalEvent !== undefined){
           if(val.length < 3) return;
           that.timeout = setTimeout(function(){
-            APP.route('/search/' + encodeURI(val), val );
+            APP.route('/search/' + encodeURI(val), val, null, true );
           }, 400);
         }
         // triggered manually (load instantly)
         else {
-          APP.route('/search/' + encodeURI(val), val );
+          APP.route('/search/' + encodeURI(val), val, null, true );
         }
       });
 

@@ -1,28 +1,5 @@
 #languageView {
 	
-	#lang-btn {
-		position: absolute;
-		min-width: 10rem;
-		bottom: 1rem;
-		left: 17rem;
-		padding: .3rem 1rem .3rem 2rem;
-		background-image: url("../img/icon_44.svg");
-	  background-repeat: no-repeat;
-		background-size: 1.2rem;
-		background-position: left center;
-		cursor: pointer;
-		font-weight: 400;
-		color: $gray50;
-		-webkit-animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-    animation: slide-in-blurred-bottom 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-
-		&:hover {
-			background-color: $white;
-		  background-image: none;
-			color: $black;
-		}
-	}
-
 	#list-container {
 		display: none;
 		position: absolute;
@@ -88,13 +65,6 @@
 .mobile {
 	#languageView {
 
-		#lang-btn {
-			top: initial;
-			right: initial;
-			bottom: 2em;
-			left: 2em;
-		}
-
 		#list-container {
 			width: 70%;
 			max-height: 70%;
@@ -107,12 +77,6 @@
 
 .rtl {
 	#languageView {
-
-		#lang-btn {
-			left: 17rem;
-			padding: .3rem 2rem .3rem 1rem;
-			background-position: right center;
-		}
 
 		.lang-item-label {
 			padding-left: 0 !important;

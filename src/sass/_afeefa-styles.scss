@@ -260,7 +260,7 @@ strong {
   height: 100%;
   visibility: hidden;
   opacity: 0;
-  z-index: 9999;
+  z-index: 999;
   
   &.active {
     @include curtainActive;
@@ -285,26 +285,10 @@ strong {
   box-shadow: 0px 0px 10px #111;
 
   &.shifted {
-    left: 15em;
-
     #curtain {
       @include curtainActive;
     }
-
     #menuView { z-index: 999; }
-    /*#lang-menu { display: none; }*/
-  }
-
-  &.shifted-small {
-    left: 4em;
-
-    #curtain {
-      @include curtainActive;
-    }
-
-    #languageViewMobile { z-index: 999; }
-    /*#main-menu { display: none; }*/
-
   }
 }
 
