@@ -40,7 +40,11 @@ export default qx.Class.define("IncludeView", {
 
 			// back button
 			that.createBackBtn(function(){
-				that.close();
+				if (that.currentChapter.id != APP.getArea().wisdomRootId ) {
+					APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
+				} else {
+					APP.getRouter().backToLastKeyState();
+				}
 			});
 
 			// scrollable content container
@@ -59,7 +63,7 @@ export default qx.Class.define("IncludeView", {
 
 		// TODO option: modal
 		// load: function( includeKey, url ){
-		load: function( chapterID ){
+		load: function( chapterID, cb ){
 			var that = this;
 
 			if( chapterID === undefined ) return;
@@ -70,71 +74,64 @@ export default qx.Class.define("IncludeView", {
 			APP.loading(true);
 
 			// that.setIncludeKey(includeKey);
-
+			
 			that.view.addClass('active');
 			// that.view.addClass(includeKey);
 			that.setViewState(1);
 			// that.minimize(false);
-
+			
 			that.say('includeViewOpened');
-
-			var chapter;
+			
 			APP.getDataManager().getChapterFromWisdom(chapterID, function(data){
-				chapter = data;
+				that.currentChapter = data;
 				loadComplete();
+				if(cb) cb();
 			});
-
+			
 			function loadComplete(){
+				
+				// set url
+				// APP.getRouter().setUrl('chapter', chapter.id + '/' + APP.getRouter().slugify(chapter.title), null);
 
 				// fill mustaches with values
-        // var filledHtml = that.fillMustaches(that.scrollContainer.html());
-        // that.scrollContainer.html(filledHtml);
+				// var filledHtml = that.fillMustaches(that.scrollContainer.html());
+				// that.scrollContainer.html(filledHtml);
 
-        // set url
-	      APP.getRouter().setUrl('chapter', chapter.id + '/' + APP.getRouter().slugify(chapter.title), null);
 
-        // set heading
-        that.heading.empty().append(chapter.title);
+				// set heading
+				that.heading.empty().append(that.currentChapter.title);
 
-				// make URLs a link
-				// var content = APP.getUtility().urlify(chapter.content);
+						// make URLs a link
+						// var content = APP.getUtility().urlify(chapter.content);
 
-      	that.scrollContainer.empty().append(chapter.content);
+				that.scrollContainer.empty().append(that.currentChapter.content);
 
-        // catch all links and handle internal ones separately
-        that.scrollContainer.find('a').click(function(e){
-          e.preventDefault();
-          var url = $(this).attr('href');
+				// catch all links and handle internal ones separately
+				that.scrollContainer.find('a').click(function(e){
+					e.preventDefault();
+					var url = $(this).attr('href');
 
-          // load chapter
-          if (url.indexOf('afeefa://chapter:') > -1 ) {
-            var referredChapterID = url.split(':')[2];
-            if(referredChapterID) that.load(referredChapterID);
-          }
-          else if (url.indexOf('afeefa://orga:') > -1 ) {
-            var referredOrgaID = url.split(':')[2];
-            var orga = APP.getDataManager().getOrgaById(referredOrgaID);
-
-            if (orga) {
-	            if( orga.location.length > 0 && orga.location[0].lat )
-	              APP.getMapView().selectMarkerFromLink(orga);
-	            else
-	              APP.getDetailView().load(orga);
-            }
-          }
-          // load afeefa view
-          else if(url.indexOf('https://afeefa.de') > -1 ){
-            APP.getRouter().loadFromUrl(url);
-          }
-          // load article
-          else if(url.indexOf('//about.afeefa.de/' + that.wpPath) > -1 ){
-            that.load(null, url);
-          }
-          // open external link
-          else {
-              window.open(url);
-          }
-        });
+					// load chapter
+					if (url.indexOf('afeefa://chapter/') > -1 ) {
+						var referredChapterID = url.split('/')[3];
+						// if(referredChapterID) that.load(referredChapterID);
+						if(referredChapterID) APP.route('/chapter/' + referredChapterID, null, null, true);
+					}
+					// load chapter
+					else if (url.indexOf('afeefa://orga/') > -1 ) {
+						var referredOrgaID = url.split('/')[3];
+						var orga = APP.getDataManager().getOrgaById(referredOrgaID);
+						if (orga) APP.route(APP.getRouter().getFrontendUrlForEntry(orga), orga.name);
+					}
+					// load afeefa view
+					else if(url.indexOf(window.origin) > -1 ){
+						APP.getRouter().loadFromUrl(url);
+					}
+					// open external link
+					else {
+						window.open(url);
+					}
+				});
 
 				APP.loading(false);
 			}
@@ -177,18 +174,8 @@ export default qx.Class.define("IncludeView", {
 			// 	that.say('includeViewClicked', {viewState: that.getViewState()} );
 			// });
 
-			that.listen('detailViewOpened', function(){
-				// that.minimize(true);
-				that.hide();
-			});
-
-			that.listen('detailViewClosed', function(){
-				// that.minimize(false);
-				that.show();
-			});
-
-			that.listen('searchResultsLoaded', function(){
-				// that.minimize(true);
+			that.listen('searchViewLoaded', function(){
+				that.close();
 			});
 
 			// that.listen('detailViewMobileMaximized', function(){

@@ -11,7 +11,7 @@ The main web app of Afeefa.de
 
 4. setup a local virtual host or something phply, which points at the root folder (index.html)
 
-	or simply command `php -S localhost:8000` from source folder
+	or simply command `php -S localhost:8000 -t dist/` from source folder
 
 ## Development
 

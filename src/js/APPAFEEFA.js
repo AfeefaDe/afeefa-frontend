@@ -122,7 +122,7 @@ export default qx.Class.define("APPAFEEFA", {
 			// analyse user language
 			that.getLM().init();
 
-			that.setPageTitle('Afeefa.de - Hier wird soziales Engagement sichtbar.');
+			that.setPageTitle('Afeefa.de');
 
 			// load view-independant UI components
 			that.loadIndependantUI();
@@ -155,6 +155,12 @@ export default qx.Class.define("APPAFEEFA", {
       else {
       	that.setArea(that.getData().areas.dresden);
       }
+		},
+
+		route: function(route, name, data, keyState) {
+			var that = this;
+			that.getRouter().setUrl( {route: route, name: name, data: data, keyState: keyState} );
+			APP.setPageTitle(name);
 		},
 
 		addEvents: function(){

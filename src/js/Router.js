@@ -33,13 +33,16 @@ export default qx.Class.define("Router", {
 		that.urlParams = that.detectUrlParameter();
 
 		window.onpopstate = function(event) {
-		  that.loadFromUrl(document.location.href);
+			that.currentUrlWasPopped = true;
+			that.loadFromUrl(document.location.href, function(){
+				that.currentUrlWasPopped = false;
+			});
 		};
 	},
 
 	members : {
 
-		initialNavigate: function(){
+		initializeViews: function(){
 			var that = this;
 
 			that.addEvents();
@@ -84,20 +87,6 @@ export default qx.Class.define("Router", {
 			APP.getPrintView().render();
 		},
 
-		navigate: function( path ){
-			var that = this;
-
-			// currentPath is now urlParams
-			if(!path) var path = that.currentPath;
-			else that.currentPath = path;
-			
-			console.log('navigate to: ' + path);
-
-			if(that.currentPath.length > 0){
-				APP.getMapView().selectMarkerById( that.currentPath );
-			}
-		},
-
 		updateNavigation: function(){
 			var that = this;
 
@@ -115,6 +104,7 @@ export default qx.Class.define("Router", {
 		addEvents: function(){
 			var that = this;
 
+			// this triggers the initial navigation
 			that.listen('fetchedAllData', function(){
 				
 				if(that.urlParams && that.urlParams.length > 0){
@@ -156,18 +146,6 @@ export default qx.Class.define("Router", {
 				}
 			});
 
-			that.listen('detailViewClosed', function(){
-				that.resetUrl();
-			});
-
-			that.listen('eventViewOpened', function(){
-				that.setUrl('events');
-			});
-
-			that.listen('dashboardLoaded', function(){
-				that.resetUrl();
-			});
-
 			that.listen('filterSet', function(e){
 				var filterObj = e.customData;
 				
@@ -199,110 +177,148 @@ export default qx.Class.define("Router", {
 			return urlParams;
 		},
 
-		setUrl: function(key, value, name){
+		/**
+		 * @param {object} options
+		 * 	@attr {string} route : url to set, e.g. 'events/today' makes 'afeefa.de/events/today'
+		 * 	@attr {string} name : title of the history object
+		 * 	@attr {object} data : custom data to save with the history state, e.g. view-specific state
+		 * 	@attr {bool} keyState : mark this state as important and jump right to this one instead of natively going back/ forward
+		 */
+		setUrl: function(options){
 			var that = this;
 
-			if(name === undefined) {
-				name = document.title;
-			} else {
-				name += ' | Afeefa.de';
+			if (options.keyState) {
+				that.lastKeyState = options;
+				that.lastKeyState_distance = 0;
 			}
+			that.lastKeyState_distance++;
 
-			key = key.toLowerCase();
-
-			if(value){
-				history.pushState(null, name, '/' + key + '/' + value);
-				APP.setOpenGraphMetaProperties({
-					url: window.location.origin + '/' + key + '/' + value
-				});
-			} else {
-				history.pushState(null, name, '/' + key);
-				APP.setOpenGraphMetaProperties({
-					url: window.location.origin + '/' + key
-				});
-			}
-		},
-
-		resetUrl: function(){
-			history.pushState(null,null, '/');
+			if (options === undefined) console.warn('missing info for setting history state');
+			options.name = (options.name)? options.name : document.title;
+			options.route = (options.route)? options.route.toLowerCase() : '';
+			
+			history.pushState(options.data, options.name, options.route);
 			APP.setOpenGraphMetaProperties({
-				url: null
+				url: window.location.origin + options.route
 			});
+
+			// fire a popstate event to trigger detection of URL change
+			var popStateEvent = new PopStateEvent('popstate', { state: options.data });
+			dispatchEvent(popStateEvent);
 		},
 
-    getFrontendUrlForEntry: function(entry, options){
-  		var that = this;
-      
-      var entryType = (APP.isOrga(entry))? 'project' : entry.entryType;
-      var path = entryType + '/' + entry.id + '-' + APP.getRouter().slugify(entry.name)
-      
-      return (options && options.absolute)? window.location.origin + '/' + path : path;
-    },
+		back: function() {
+			history.back();
+		},
+
+		// not just jump one step back in history, but rather jump to the last important state like the user would expect
+		backToLastKeyState: function () {
+			var that = this;
+			if ( that.lastKeyState && window.location.href.indexOf(that.lastKeyState.route) < 0 ) that.setUrl( that.lastKeyState );
+			else { that.goToDashboard(); }
+		},
+
+		goToDashboard: function() {
+			var that = this;
+			APP.route('/', null, null, true);
+		},
+
+		getFrontendUrlForEntry: function(entry, options){
+			var that = this;
+		
+			var entryType = (APP.isOrga(entry))? 'project' : entry.entryType;
+			var path = '/' + entryType + '/' + entry.id + '-' + APP.getRouter().slugify(entry.name)
+			
+			return (options && options.absolute)? window.location.origin + path : path;
+		},
 
 		slugify: function(text){
 			var that = this;
 
 			return text.toString().toLowerCase()
-		    .replace(/\s+/g, '-')           // Replace spaces with -
-		    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-		    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-		    .replace(/^-+/, '')             // Trim - from start of text
-		    .replace(/-+$/, '');            // Trim - from end of text
+				.replace(/\s+/g, '-')           // Replace spaces with -
+				.replace(/\ä+/g, 'ae')
+				.replace(/\ö+/g, 'oe')
+				.replace(/\ü+/g, 'ue')
+				.replace(/\ß+/g, 'ss')
+				.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+				.replace(/\-\-+/g, '-')         // Replace multiple - with single -
+				.replace(/^-+/, '')             // Trim - from start of text
+				.replace(/-+$/, '');            // Trim - from end of text
 		},
 
 		unslugify: function(slug){
 			var that = this;
 
-			// extract entry ID
-			return slug.substring(0, slug.indexOf('-'));
+			// extract entry ID, also read URL without slug like /project/4542
+			var pos = slug.indexOf('-');
+			return (pos > 0 )? slug.substring(0, pos) : slug;
 		},
 
-		loadFromUrl: function( url ){
+		loadFromUrl: function( url, cb ){
 			var that = this;
 
 			var urlParams = that.urlParams;
 			if(url !== undefined) urlParams = that.detectUrlParameter(url);
 
 			switch(urlParams[0]) {
-		    case 'project':
-		    	var orga = APP.getDataManager().getOrgaById(that.unslugify(urlParams[1]));
-		    	if(orga) APP.getMapView().loadEntry(orga, {setView: true});
-		    	break;
-		    case 'event':
-		    	var event = APP.getDataManager().getEventById(that.unslugify(urlParams[1]));
-		    	if(event) APP.getMapView().loadEntry(event, {setView: true});
-		    	break;
+				case 'project':
+					var orga = APP.getDataManager().getOrgaById(that.unslugify(urlParams[1]));
+					if(orga) APP.getMapView().loadEntry(orga);
+					if(orga) APP.getDetailView().load(orga);
+					if(cb) cb();
+					if (!that.currentUrlWasPopped) APP.setPageTitle(orga.name);
+					break;
+					case 'event':
+					var event = APP.getDataManager().getEventById(that.unslugify(urlParams[1]));
+					if(event) APP.getMapView().loadEntry(event);
+					if(event) APP.getDetailView().load(event);
+					if(cb) cb();
+					if (!that.currentUrlWasPopped) APP.setPageTitle(event.name);
+					break;
 				case 'cat':
-          APP.getLegendView().setFilter( {category: param.value} );
+					APP.getLegendView().setFilter( {category: param.value} );
+					if(cb) cb();
 					break;
 				case 'subcat':
-          APP.getLegendView().setFilter( {subCategory: param.value} );
+					APP.getLegendView().setFilter( {subCategory: param.value} );
+					if(cb) cb();
 					break;
 				case 'tag':
-          APP.getLegendView().setFilter( {tags: urlParams[1]} );
+					APP.getLegendView().setFilter( {tags: urlParams[1]} );
+					if(cb) cb();
 					break;
 				case 'search':
 					APP.getSearchView().inputField.val( decodeURI(urlParams[1]) ).trigger( "input" );
+					if(cb) cb();
 					break;
 				case 'chapter':
 					var iv = APP.getIncludeView();
 					if(urlParams[1]){
-						iv.load(urlParams[1]);
+						iv.load(urlParams[1], function(){
+							if(cb) cb();
+						});
 					}
 					break;
-				// short Urls like afeefa.de/#events
 				case 'add':
-          APP.getFormView().load( 'newEntry' );
+					APP.getFormView().load( 'newEntry' );
+					if(cb) cb();
 					break;
 				case 'feedback':
-          APP.getFormView().load( 'feedback' );
+					APP.getFormView().load( 'feedback' );
+					if(cb) cb();
 					break;
 				case 'events':
-          APP.getEventView().load();
+					APP.getEventView().load();
+					if(cb) cb();
 					break;
 				case 'iwgr':
-          APP.getLegendView().setFilter( {tags: 'iwgr'} );
+					APP.getLegendView().setFilter( {tags: 'iwgr'} );
+					if(cb) cb();
 					break;
+				default:
+					APP.getSearchView().load();
+					if(cb) cb();
 			}
 
 			that.urlParams = null;

@@ -111,7 +111,7 @@ export default qx.Class.define("SearchView", {
         if(query){
           that.scrollContainer.empty();
           that.loadResults(query);
-          APP.getRouter().setUrl('search', encodeURI(query));
+          APP.route('/search/' + encodeURI(query), query );
         } else {
           that.reset();
           that.loadDashboard();
@@ -156,7 +156,7 @@ export default qx.Class.define("SearchView", {
 
         // user bookmarks
         var action = function(){
-          that.inputField.val('user:bookmarks').trigger( "input" );
+          APP.route('/search/user:bookmarks', that.getWording('search.tag.bookmarks'), null, true);
         };
         that.createListResult(
           {
@@ -170,11 +170,12 @@ export default qx.Class.define("SearchView", {
         );
       }
 
-      that.createSectionHeader( '' );
+      if (APP.getArea().wisdomRootId !== undefined) {
+        that.createSectionHeader( '' );
 
-      var action = function(){
-        APP.getIncludeView().load(1);
-      };
+        var action = function(){
+          APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
+        };
 
       that.createListResult(
         {
@@ -186,19 +187,21 @@ export default qx.Class.define("SearchView", {
         }
       );
 
-      that.createSectionHeader( that.getWording('search.label.eventstoday') );
-      var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
-      if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
-      _.each(eventsToday.slice(0, 3), function(entry) {
-        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
-      });
-              
-      that.createButton(
-        {
-          label: that.getWording('search.button.events'),
-          iconName: 'today',
-          action: function(){
-            APP.getEventView().load();
+      if (APP.getArea().dataKey == 'dresden') {
+        that.createSectionHeader( that.getWording('search.label.eventstoday') );
+        var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
+        if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
+        _.each(eventsToday.slice(0, 3), function(entry) {
+          that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+        });
+                
+        that.createButton(
+          {
+            label: that.getWording('search.button.events'),
+            iconName: 'today',
+            action: function(){
+             APP.route('/events', that.getWording('search.button.events'), null, true);
+            }
           }
         }
       );
@@ -646,44 +649,44 @@ export default qx.Class.define("SearchView", {
       });
 
       that.listen('detailViewOpened', function(){
-        that.hide();
+        // that.hide();
       });
       that.listen('detailViewClosed', function(){
-        if( that.isActive() ) that.show();
-        else if(
-          !APP.getEventView().isActive()
-          && !APP.getIncludeView().isActive()
-        ) that.load();
+        // if( that.isActive() ) that.show();
+        // else if(
+        //   !APP.getEventView().isActive()
+        //   && !APP.getIncludeView().isActive()
+        // ) that.load();
       });
 
       that.listen('eventViewOpened', function(){
-        that.close();
+        // that.close();
       });
       that.listen('eventViewClosed', function(){
-        if( that.isActive() ) that.show();
-        else if(
-          !APP.getDetailView().isActive()
-          && !APP.getIncludeView().isActive()
-        ) that.load();
+        // if( that.isActive() ) that.show();
+        // else if(
+        //   !APP.getDetailView().isActive()
+        //   && !APP.getIncludeView().isActive()
+        // ) that.load();
       });
 
       that.listen('includeViewOpened', function(){
-        that.close();
+        // that.close();
       });
       that.listen('includeViewClosed', function(){
-        if( that.isActive() ) that.show();
-        else if(
-          !APP.getDetailView().isActive()
-          && !APP.getEventView().isActive()
-        ) that.load();
+        // if( that.isActive() ) that.show();
+        // else if(
+        //   !APP.getDetailView().isActive()
+        //   && !APP.getEventView().isActive()
+        // ) that.load();
       });
 
       that.listen('searchViewClosed', function(){
-        if(
-          !APP.getDetailView().isActive()
-          && !APP.getEventView().isActive()
-          && !APP.getIncludeView().isActive()
-        ) that.load();
+        // if(
+        //   !APP.getDetailView().isActive()
+        //   && !APP.getEventView().isActive()
+        //   && !APP.getIncludeView().isActive()
+        // ) that.load();
       });
 
       that.listen('fetchedNewData', function(){

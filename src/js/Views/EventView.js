@@ -38,7 +38,10 @@ export default qx.Class.define("EventView", {
       that.view.append(headingContainer);
 
       // back button
-      that.createBackBtn(function(){that.close();});
+      that.createBackBtn(function(){
+        APP.getRouter().backToLastKeyState();
+        that.close();
+      });
 
       // FILTERS
       that.createFilters();
@@ -211,13 +214,8 @@ export default qx.Class.define("EventView", {
       // call superclass
       this.base(arguments);
       
-      that.listen('detailViewOpened', function(){
-        that.hide();
-      });
-
-      that.listen('detailViewClosed', function(){
-        if(that.isActive) that.show();
-        // if( !that.isActive() ) that.load();
+      that.listen('searchViewLoaded', function(){
+        that.close();
       });
 
       that.listen('includeViewOpened', function(){
@@ -225,7 +223,7 @@ export default qx.Class.define("EventView", {
       });
 
       that.listen('filterSet', function(){
-        that.close();
+        // that.close();
       });
 
       that.listen('fetchedNewData', function(){

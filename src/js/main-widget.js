@@ -106,10 +106,10 @@ require.config({
             APP.init(function () {
                 if (APP.getUserDevice() === 'mobile') {
                     require(['Views/DetailViewMobile'], function () {
-                        APP.getRouter().initialNavigate();
+                        APP.getRouter().initializeViews();
                     });
                 } else {
-                    APP.getRouter().initialNavigate();
+                    APP.getRouter().initializeViews();
                 }
 
                 APP.say('appInitialized');

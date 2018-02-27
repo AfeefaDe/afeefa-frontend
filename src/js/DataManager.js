@@ -111,7 +111,8 @@ export default qx.Class.define("DataManager", {
                             orgas: 600,
                             events: 30
                         },
-                        dataKey: 'dresden'
+                        dataKey: 'dresden',
+                        wisdomRootId: 1
                     },
                     leipzig: {
                         initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
@@ -121,7 +122,8 @@ export default qx.Class.define("DataManager", {
                             events: 0
                         },
                         redirect: 'https://leipzig.afeefa.de',
-                        dataKey: 'leipzig'
+                        dataKey: 'leipzig',
+                        wisdomRootId: 1
                     },
                     bautzen: {
                         initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },

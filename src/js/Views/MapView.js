@@ -14,7 +14,8 @@ export default qx.Class.define("MapView", {
 	properties : {
 		userLocation: {},
 		entryMarkerLookup: {},
-		selectedMarker: {},
+		loadedEntry: {},
+		selectedMarker: {}
 	},
 	
 	construct: function(){
@@ -24,6 +25,7 @@ export default qx.Class.define("MapView", {
 
 		// that.setLoadable(true);
 		that.setUserLocation(null);
+		that.setLoadedEntry(null);
 		that.setSelectedMarker(null);
 		that.setEntryMarkerLookup([]);
 	},
@@ -164,34 +166,24 @@ export default qx.Class.define("MapView", {
 				that.setUserLocation = e.latlng;
 
 				var myIcon = L.icon({
-						iconUrl: '_Resources/Static/Packages/DDFA.dresdenfueralleDe/img/noun_91817_cc.png',
-						iconSize: [30, 30],
-						iconAnchor: [15, 15],
-						popupAnchor: [40, -10]
+					iconUrl: '_Resources/Static/Packages/DDFA.dresdenfueralleDe/img/noun_91817_cc.png',
+					iconSize: [30, 30],
+					iconAnchor: [15, 15],
+					popupAnchor: [40, -10]
 				});
 
 				var leafMarker = L.marker(e.latlng, {
 					icon: L.divIcon({
-									className: 'marker-user-location',
-									html: null,
-									iconSize: [16,16],
-									iconAnchor: [8,8]
-							})
+						className: 'marker-user-location',
+						html: null,
+						iconSize: [16,16],
+						iconAnchor: [8,8]
+					})
 				}).addTo(that.map);
 			});
-
-			// that.map.on('locationerror', function(e) {
-			// 		alert('Locating failed');
-			// });
-
-			// that.map.on('zoomend', function(){
-			// 	if(that.getSelectedMarker()){
-			// 		try{ that.layerForMainMarkers.getVisibleParent(that.getSelectedMarker()).spiderfy(); } catch(e){}
-			// 	}
-			// });
 		},
-		removeEvents: function() {
 
+		removeEvents: function() {
 		},
 
 		loadNewData: function( options ) {
@@ -232,22 +224,13 @@ export default qx.Class.define("MapView", {
 						if( !(entry.supportWanted === filter.supportWanted) ) return false;
 				};
 				
-				// show markers depending on zoom level
-				// if( entry.subCategory == 'wifi' ){
-				// 	// that.map.getZoom() < 16 )
-				// 	if( filter && filter.subCategory && filter.subCategory == 'wifi' )
-				// 		return true;
-				// 	else
-				// 		return false;
-				// }
-
 				return true;
 
 			});
 				
 			that.addMarkers(entries);
 			if(options.fitBounds) that.map.fitBounds(that.layerForMainMarkers.getBounds());
-			// that.loadFromUrl({setView: true});
+			if ( that.getLoadedEntry() ) that.loadEntry( that.getLoadedEntry() );
 		},
 
 		addMarkers: function(entries) {
@@ -358,7 +341,7 @@ export default qx.Class.define("MapView", {
 					}
 
 					container.on('click', function(e){
-						APP.getDetailView().load(entry);
+						APP.route(APP.getRouter().getFrontendUrlForEntry(entry), entry.name);
 						if( APP.getUserDevice() == 'mobile' ){
 							APP.getDetailView().resize(2);
 							APP.getDetailView().say('detailViewMobileMaximized');
@@ -369,19 +352,18 @@ export default qx.Class.define("MapView", {
 				}());
 
 				marker.bindPopup(popup);
-				
 
 				marker.on('mouseover', function (e) {
 						that.map.openPopup(popup);
 				});
 				marker.on('mouseout', function (e) {
-						that.map.closePopup();
+						// that.map.closePopup();
 				});
 			
 
 			// TODO load detail view
 			marker.on('click', function(){
-				that.selectMarker(marker, entry);
+				APP.route(APP.getRouter().getFrontendUrlForEntry(entry), entry.name);
 			});
 
 			if (entry.type === 3 && entry.subCategory && entry.subCategory == 'wifi') {
@@ -415,21 +397,27 @@ export default qx.Class.define("MapView", {
 
 		},
 
+		// load an entry on the map if possible; no matter if you know which marker belongs to it
 		loadEntry: function(entry, options){
 			var that = this;
 
 			var lookup = that.lookupEntry(entry);
 
+			if (options === undefined) {
+				options = { setView: true };
+			} else {
+				if (options.setView === undefined) options.setView = true;
+			}
+			
 			if(lookup && lookup.marker) that.selectMarker(lookup.marker, lookup.entry, options);
-			else that.selectMarker(null, lookup, options);
 		},
-
+		
+		// look if the entry has a marker on the map
 		lookupEntry: function( entry ){
 			var that = this;
 
 			var hit = null;
 			
-			// does the entry have a marker on the map?
 			hit = _.find( that.getEntryMarkerLookup(), function(pair){
 				return pair.entry.entryType == entry.entryType && pair.entry.id == entry.id;
 			});
@@ -439,22 +427,20 @@ export default qx.Class.define("MapView", {
 			return hit;
 		},
 
+		// visually select a marker on the map
 		selectMarker: function( marker, entry, options ){
 			var that = this;
 
-			if(options === undefined) options = {};
-
 			that.deselectMarker();
+			that.setLoadedEntry(entry);
 			that.setSelectedMarker(marker);
 
 			if(marker){
 				if(options && options.setView) that.map.setView( [entry.location[0].lat, entry.location[0].lon], 16);
 				try{ that.layerForMainMarkers.getVisibleParent(marker).spiderfy(); } catch(e){}
-				$(marker._icon).addClass('active');
 				marker.openPopup();
+				$(marker._icon).addClass('active');
 			}
-
-			if(!options.preventDetailView) APP.getDetailView().load(entry);
 		},
 
 		selectMarkerFromLink: function( entry, options ) {
@@ -476,10 +462,10 @@ export default qx.Class.define("MapView", {
 
 			if( that.getSelectedMarker() ) {
 				$( that.getSelectedMarker()._icon ).removeClass('active');
-				// that.layerForMainMarkers.getVisibleParent(that.getSelectedMarker()).unspiderfy();
 			}
 
 			that.say('mapMarkerDeselected');
+			that.setLoadedEntry(null);
 			that.setSelectedMarker(null);
 		},
 

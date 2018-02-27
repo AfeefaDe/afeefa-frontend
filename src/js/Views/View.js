@@ -261,15 +261,12 @@ export default qx.Class.define("View", {
           
           // action
           var action = function(){
-            if( entry.location.length > 0 && entry.location[0].lat )
-              APP.getMapView().selectMarkerFromLink(entry);
-            else
-              APP.getDetailView().load(entry);
+            APP.route(APP.getRouter().getFrontendUrlForEntry(entry), entry.name);
           };
 
           var action_secondary = function(){
-            if( entry.location.length > 0 && entry.location[0].lat )
-              APP.getMapView().selectMarkerFromLink(entry, {preventDetailView: true});
+            // if( entry.location.length > 0 && entry.location[0].lat )
+            //   APP.getMapView().selectMarkerFromLink(entry, {preventDetailView: true});
           };
 
           // create entry
@@ -346,6 +343,7 @@ export default qx.Class.define("View", {
         },
 
         createTooltip: function(el, content, event, placement, device, cssClasses, contentType, conditionFn){
+            return false;
             var that = this;
 
             // check device restrictions

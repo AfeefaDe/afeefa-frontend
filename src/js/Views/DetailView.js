@@ -46,9 +46,10 @@ export default qx.Class.define("DetailView", {
 			that.createBackBtn(function(){
 				if( that.view.hasClass('active-large') ) {
 					that.resize(1);
-          that.say('detailViewMobileMinimized');
+								that.say('detailViewMobileMinimized');
 				}
 				else {
+					APP.getRouter().backToLastKeyState();
 					that.close();
 				}
 			});
@@ -64,41 +65,41 @@ export default qx.Class.define("DetailView", {
 				.addClass('badge badge-certificate')
 				.hover(
 					function(){
-					  thePopper = new Popper(
-						    that.certificateBadge,
-						    {
-						        content: that.getWording('tooltip.certificate'),
-						        contentType: 'html'
-						    },
-						    {
-					        placement: 'right',
+						thePopper = new Popper(
+								that.certificateBadge,
+								{
+										content: that.getWording('tooltip.certificate'),
+										contentType: 'html'
+								},
+								{
+									placement: 'right',
 									removeOnDestroy: true
-						    }
+								}
 						);
 					},
 					function(){
 						thePopper.destroy();
 					}
 				);
-		  that.scrollContainer.append(that.certificateBadge);
+			that.scrollContainer.append(that.certificateBadge);
 
-		  // message button
+			// message button
 			that.messageBtn = $("<div />")
 				.addClass('message-btn')
 				.click(function(){
-		   		APP.getFormView().load( 'contact', { entry: that.record, mustaches: { recipient: that.record.name } } );
+			 		APP.getFormView().load( 'contact', { entry: that.record, mustaches: { recipient: that.record.name } } );
 				});
-		  that.view.append(that.messageBtn);
+			that.view.append(that.messageBtn);
 
-		  that.bookmarkBtn = $("<div />")
+			that.bookmarkBtn = $("<div />")
 				.addClass('bookmark-btn')
 				.click(function(){
-		   		if( APP.getUser().bookmark(that.record) )
-		   			$(this).addClass('active');
-		   		else
-		   			$(this).removeClass('active');
+			 		if( APP.getUser().bookmark(that.record) )
+			 			$(this).addClass('active');
+			 		else
+			 			$(this).removeClass('active');
 				});
-		  that.view.append(that.bookmarkBtn);
+			that.view.append(that.bookmarkBtn);
 
 			////////////////////
 			// image property //
@@ -132,15 +133,18 @@ export default qx.Class.define("DetailView", {
 					that.scrollContainer.append($link);
 					that['propertyContainer'+prop].click(function(){
 						if( that.record.location[0] ){
-							var userLocation = APP.getMapView().getUserLocation();
-							if ( userLocation )
-							   // $link.attr('href', 'http://maps.google.com/?saddr=' + userLocation.lat + ',' + userLocation.lon + '&daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
-							   $link.attr('href', 'https://www.google.com/maps/dir/'+userLocation.lat+','+userLocation.lon+'/'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
-							else
-							   // $link.attr('href', 'http://maps.google.com/?daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
-							   $link.attr('href', 'https://www.google.com/maps/dir//'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
+							if ( APP.getUserDevice() === 'desktop' || APP.getUserDevice() === 'tablet' ) {
+								APP.getMapView().loadEntry(that.record, {setView: true});
+							}
+						// 	var userLocation = APP.getMapView().getUserLocation();
+						// 	if ( userLocation )
+						// 		// $link.attr('href', 'http://maps.google.com/?saddr=' + userLocation.lat + ',' + userLocation.lon + '&daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
+						// 		$link.attr('href', 'https://www.google.com/maps/dir/'+userLocation.lat+','+userLocation.lon+'/'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
+						// 	else
+						// 		// $link.attr('href', 'http://maps.google.com/?daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
+						// 		$link.attr('href', 'https://www.google.com/maps/dir//'+that.record.location[0].lat+','+that.record.location[0].lon+'/data=!4m2!4m1!3e3');
 
-							$link[0].click();
+						// 	$link[0].click();
 						}
 					});
 				}
@@ -172,7 +176,7 @@ export default qx.Class.define("DetailView", {
 			that.timestampContainer = $("<div />")
 				.addClass('property timestamp')
 				.on('contextmenu', function(e){
-          window.open('https://backend.afeefa.de/' + that.record.entryType + 's/' + that.record.id);
+					window.open('https://backend.afeefa.de/' + that.record.entryType + 's/' + that.record.id);
 				});
 			that.scrollContainer.append(that.timestampContainer);
 
@@ -207,7 +211,6 @@ export default qx.Class.define("DetailView", {
 
 			// set URL
 			that.currentEntryType = APP.isOrga(record)? 'project' : record.entryType;
-			APP.getRouter().setUrl(APP.getRouter().getFrontendUrlForEntry(record), null, record.name);
 			APP.setOpenGraphMetaProperties({
 				title: record.name.slice(0,50) + '...',
 				description: record.descriptionShort? record.descriptionShort.slice(0,150) + '...' : null
@@ -407,7 +410,7 @@ export default qx.Class.define("DetailView", {
 					.append(that.parent.name)
 					.click(function(e){
 						e.preventDefault();
-			    	APP.getMapView().loadEntry(that.parent, {setView: true});
+						APP.getMapView().loadEntry(that.parent, {setView: true});
 					});
 				propertyText.append(value);
 				
@@ -424,7 +427,7 @@ export default qx.Class.define("DetailView", {
 
 			// show DetailView
 			that.view.addClass('active');
-      that.isActive(true);
+			that.isActive(true);
 
 			if( APP.getUserDevice() == 'desktop') that.ps.update();
 
@@ -500,7 +503,7 @@ export default qx.Class.define("DetailView", {
 			that.view.removeClass('active');
 			that.reset();
 			that.setViewState(0);
-      that.isActive(false);
+					that.isActive(false);
 			that.say('detailViewClosed');
 		},
 
@@ -515,7 +518,7 @@ export default qx.Class.define("DetailView", {
 
 			that.listen('searchFieldFocused', function(){
 				// if( APP.getUserDevice() === 'mobile' )
-					that.close();
+					// that.close();
 				// else
 				// 	that.view.addClass('right');
 			});
@@ -524,41 +527,34 @@ export default qx.Class.define("DetailView", {
 				that.close();
 			});
 
-			that.listen('fetchedNewData', function(){
-				if( that.record !== null) {
-					// reload record
-			    var newRecord = APP.getDataManager().getEntryByEntryId(that.record.entryId);
-			    var newRecord = APP.isEvent(that.record)? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
-			    that.reset();
-			    that.load(newRecord);
-				}
-			});
-
 			that.listen('includeViewOpened', function(){
 				that.close();
 			});
 
+			that.listen('eventViewOpened', function(){
+				that.close();
+			});
+
+			that.listen('fetchedNewData', function(){
+				if( that.record !== null) {
+					// reload record
+					var newRecord = APP.getDataManager().getEntryByEntryId(that.record.entryId);
+					var newRecord = APP.isEvent(that.record)? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
+					that.reset();
+					that.load(newRecord);
+				}
+			});
+
 			that.listen('filterSet', function(){
-				that.close();
-			});
-
-			that.listen('includeViewClosed', function(){
-			});
-
-			that.listen('mapMarkerDeselected', function(){
-				that.close();
+				// that.close();
 			});
 
 			that.listen('mapclicked', function(){
-				that.close();
+				// that.close();
 			});
 
-			that.headingContainer.click(function(){
-				if( APP.getUserDevice() === 'desktop' || APP.getUserDevice() === 'tablet' )
-					APP.getMapView().selectMarkerFromLink(that.record);
-			});
+			// that.headingContainer.click(function(){
+			// });
 		}
-
 	}
-
 });

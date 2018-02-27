@@ -19,11 +19,7 @@ window.APP = APP;
 
 $( document ).ready(function() {
 	APP.init(function () {
-		if (APP.getUserDevice() === 'mobile') {
-			APP.getRouter().initialNavigate();
-		} else {
-			APP.getRouter().initialNavigate();
-		}
+		APP.getRouter().initializeViews();
 		APP.say('appInitialized');
 	});
 });
