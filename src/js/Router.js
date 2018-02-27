@@ -274,7 +274,7 @@ export default qx.Class.define("Router", {
 					if(event) APP.getMapView().loadEntry(event);
 					if(event) APP.getDetailView().load(event);
 					if(cb) cb();
-					if (!that.currentUrlWasPopped) APP.setPageTitle(event.name);
+					if (event && !that.currentUrlWasPopped) APP.setPageTitle(event.name);
 					break;
 				case 'cat':
 					APP.getLegendView().setFilter( {category: param.value} );
