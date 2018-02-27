@@ -85,6 +85,10 @@
 	}
 
 	/* LEIPZIG */
+	&.cat-hotspots	{ 
+		background-color: rgba($gray50, $alpha_background);
+		border-color: rgba($gray50, $alpha_border);
+	}
 	&.cat-advice-and-support {
 		background-color: rgba($olive,$alpha_background);
 		border-color: rgba($olive, $alpha_border);
@@ -183,7 +187,8 @@
 
 	
 	/* LEIPZIG */
-
+	
+	&.cat-hotspots { background-image: url("../img/icon_166.svg"); }
 	&.cat-advice-and-support { background-image: url("../img/icon_10.svg"); }
 	&.cat-living-in-leipzig { background-image: url("../img/icon_86.svg"); }
 	&.cat-work-and-education { background-image: url("../img/icon_76.svg"); }
