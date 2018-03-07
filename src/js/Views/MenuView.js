@@ -31,8 +31,7 @@ export default qx.Class.define("MenuView", {
             that.view.append(that.menu);
 
             // logo
-            var a = $('<a />')
-                .attr('href', 'https://afeefa.de')
+            var a = $('<div />')
                 .attr('id', 'logo');
             that.logo  = $('<img />').attr({
                 'src': '/' + APP.getConfig().imgPath + 'afeefa_light.svg',

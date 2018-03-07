@@ -524,7 +524,7 @@ export default qx.Class.define("DetailView", {
 			});
 
 			that.listen('searchViewLoaded', function(){
-				that.close();
+				// that.close();
 			});
 
 			that.listen('includeViewOpened', function(){
@@ -550,7 +550,7 @@ export default qx.Class.define("DetailView", {
 			});
 
 			that.listen('mapclicked', function(){
-				// that.close();
+				that.close();
 			});
 
 			// that.headingContainer.click(function(){

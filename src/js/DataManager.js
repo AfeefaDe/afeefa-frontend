@@ -38,7 +38,7 @@ export default qx.Class.define("DataManager", {
                         currentData.categories = data.categories;
                         APP.setData(currentData);
 
-                        that.say('fetchedInitialData');
+                        // that.say('fetchedInitialData');
                         cb();  // finished, so callback
                     });
                 });

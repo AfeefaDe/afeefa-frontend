@@ -122,8 +122,6 @@ export default qx.Class.define("APPAFEEFA", {
 			// analyse user language
 			that.getLM().init();
 
-			that.setPageTitle('Afeefa.de');
-
 			// load view-independant UI components
 			that.loadIndependantUI();
 
@@ -260,8 +258,9 @@ export default qx.Class.define("APPAFEEFA", {
 
 		setPageTitle: function(title) {
 			var that = this;
-
-			$('head title').empty().append(title);
+			var pageTitle = title? 'Afeefa ' + APP.getArea().label + ' | ' + title : 'Afeefa ' + APP.getArea().label + ' | Knallbunter Stadtplan';
+			
+			$('head title').empty().append(pageTitle);
 		},
 
 		setOpenGraphMetaProperties: function(properties){

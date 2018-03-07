@@ -39,7 +39,9 @@ export default qx.Class.define("EventView", {
 
       // back button
       that.createBackBtn(function(){
-        APP.getRouter().backToLastKeyState();
+        // if mobile: might be good to go back to last key state
+        // APP.getRouter().backToLastKeyState();
+        APP.getRouter().goToDashboard();
         that.close();
       });
 

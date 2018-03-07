@@ -2,10 +2,12 @@
 	
 	position: absolute;
 	top: 0;
-	opacity: .2;
+	opacity: 0;
 	
 	box-sizing: border-box;
 	width: 15em;
+	left: -15em;
+	transition: left 150ms;
 	height: 100%;
 	padding: 2em 0;
 	background-color: $gray95;
@@ -13,10 +15,11 @@
 	
 	&.active {
 		z-index: 9999;
+		left: 0;
 		opacity: 1;
 	}
 
-	a#logo, a#dfa-logo {
+	#logo, a#dfa-logo {
 		width: 80%;
 		display: block;
 		margin: 0 auto 3em auto;
