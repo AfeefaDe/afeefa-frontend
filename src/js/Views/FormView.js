@@ -64,7 +64,10 @@ export default qx.Class.define("FormView", {
       that.view.append(headingContainer);
 
       // back button
-      that.createBackBtn(function(){that.close();});
+      that.createBackBtn(function(){
+        APP.getRouter().backToLastKeyState();
+        that.close();
+      });
 
       // form container
       that.scrollContainer = $("<div />")
@@ -103,7 +106,7 @@ export default qx.Class.define("FormView", {
 
         that.parseForm(type, options);
         that.loadUIVocab(type);
-        that.ps.update();
+        if( APP.getUserDevice() == 'desktop') that.ps.update();
       });
 
       that.view.addClass('active');

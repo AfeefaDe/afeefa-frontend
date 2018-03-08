@@ -224,9 +224,9 @@ export default qx.Class.define("EventView", {
         that.close();
       });
 
-      that.listen('filterSet', function(){
+      // that.listen('filterSet', function(){
         // that.close();
-      });
+      // });
 
       that.listen('fetchedNewData', function(){
         if(that.isActive()) that.load(that.getCurrentOptions());

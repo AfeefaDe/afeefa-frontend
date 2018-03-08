@@ -12,6 +12,8 @@
 	padding: 2em 0;
 	background-color: $gray95;
 	box-shadow: 1px 0px 2px #111;
+	overflow-y: scroll;
+	overflow-x: hidden;
 	
 	&.active {
 		z-index: 9999;

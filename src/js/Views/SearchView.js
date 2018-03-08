@@ -37,15 +37,15 @@ export default qx.Class.define("SearchView", {
       that.view.append(that.searchBar);
 
       // filter button
-      that.filterBtn = $("<div />")
-        .addClass('button filter-btn')
-        .click(function(){
-          if( APP.getLegendView().view.hasClass('active') )
-            APP.getLegendView().close();
-          else
-            APP.getLegendView().show();
-        });
-      that.searchBar.append(that.filterBtn);
+      // that.filterBtn = $("<div />")
+      //   .addClass('button filter-btn')
+      //   .click(function(){
+      //     if( APP.getLegendView().view.hasClass('active') )
+      //       APP.getLegendView().close();
+      //     else
+      //       APP.getLegendView().show();
+      //   });
+      // that.searchBar.append(that.filterBtn);
 
       // add button
       that.addBtn = $("<div />")
@@ -61,6 +61,7 @@ export default qx.Class.define("SearchView", {
         .click(function(){
           // if mobile: might be good to go back to last key state
           // APP.getRouter().backToLastKeyState();
+          APP.getLegendView().resetFilter();
           APP.getRouter().goToDashboard();
         });
       that.searchBar.append(that.cancelBtn);
@@ -596,9 +597,21 @@ export default qx.Class.define("SearchView", {
         // that.say('searchFieldFocused');
       // });
 
+      that.inputField.on('focusin', function(e){
+        var val = that.inputField.val();
+        if (val.length < 1) APP.getLegendView().show(true);
+        that.view.addClass('active-search');
+      });
+
+      // that.inputField.on('focusout', function(e){
+        // if (APP.getUserDevice() == 'mobile') APP.getLegendView().close();
+      // });
+        
       that.inputField.on('input', function(e){
         var val = that.inputField.val();
         
+        if (val.length < 1) APP.getLegendView().show(true);
+
         // stop timer that may exist from previous input
         if(that.timeout) clearTimeout(that.timeout);
         
@@ -728,6 +741,7 @@ export default qx.Class.define("SearchView", {
         that.scrollContainer.empty();
         
         that.view.removeClass('active-search');
+        APP.getLegendView().close();
         
         if( APP.getUserDevice() == 'desktop') that.ps.update();
     },

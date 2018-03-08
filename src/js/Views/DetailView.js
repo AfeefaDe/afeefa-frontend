@@ -1,11 +1,7 @@
 import qx from 'qooxdoo/qx-oo.js';
- 
 import PerfectScrollbar from 'perfect-scrollbar';
- 
- 
 
 import View from './View.js';
- 
 
 export default qx.Class.define("DetailView", {
 	
@@ -545,9 +541,9 @@ export default qx.Class.define("DetailView", {
 				}
 			});
 
-			that.listen('filterSet', function(){
+			// that.listen('filterSet', function(){
 				// that.close();
-			});
+			// });
 
 			that.listen('mapclicked', function(){
 				that.close();

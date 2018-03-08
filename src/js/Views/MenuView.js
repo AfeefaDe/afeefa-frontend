@@ -1,9 +1,6 @@
 import qx from 'qooxdoo/qx-oo.js';
- 
- 
+import PerfectScrollbar from 'perfect-scrollbar';
 import Hammer from 'hammerjs'
-
- 
 
 export default qx.Class.define("MenuView", {
     
@@ -25,6 +22,9 @@ export default qx.Class.define("MenuView", {
             that.view.attr('id', that.getViewId());
             $('#main-container').append(that.view);
 
+            // scrollable content container
+			if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.view[0]);
+
             // menu
             that.menu  = $("<div />");
             that.menu.attr('id', 'main-menu');
@@ -40,19 +40,6 @@ export default qx.Class.define("MenuView", {
             });
             a.append(that.logo);
             that.menu.append(a);
-            
-            // btn refugee guide
-            // that.refugeeBtn = $('<div />').addClass('item refugee-guide');
-            // that.refugeeLBtnLabel = $('<span />');
-            // that.refugeeBtn.append(that.refugeeLBtnLabel);
-            // that.menu.append(that.refugeeBtn);
-
-            // btn supporter guide
-            // that.supporterBtn = $('<div />').addClass('item supporter-guide');
-            // that.supporterBtnLabel = $('<span />');
-            // that.supporterBtn.append(that.supporterBtnLabel);
-            // that.menu.append(that.supporterBtn);
-            
             
             // btn about
             that.addBtn = $('<div />').addClass('item add');

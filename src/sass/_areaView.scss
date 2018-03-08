@@ -60,6 +60,7 @@
 	}
 	#current-area {
 		background-image: url("../img/city.svg");
+		display: none;
 	}
 	#current-language {
 		background-image: url("../img/icon_44.svg");
@@ -100,7 +101,7 @@
 
 .mobile {
 	#areaView {
-		display: none;
+		width: 100%;
 	}
 }
 

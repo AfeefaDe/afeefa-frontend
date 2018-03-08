@@ -112,9 +112,9 @@ export default qx.Class.define("MapView", {
         that.applyInteractiveFilters();
       });
 
-      that.listen('filterSet', function(){
+      // that.listen('filterSet', function(){
         // that.loadNewData();
-      });
+      // });
 
       that.listen('listResultsLoaded', function(e){
       	if(

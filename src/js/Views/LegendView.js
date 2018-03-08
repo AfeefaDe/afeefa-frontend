@@ -47,14 +47,6 @@ export default qx.Class.define("LegendView", {
 	  that.filterModuleReset.attr('class', 'filter-module reset-module');
 	  that.view.append(that.filterModuleReset);
 		
-		// button
-		that.resetBtn = $("<div />")
-			.addClass('btn')
-			.click(function() {
-				that.resetFilter();
-			});
-		that.filterModuleReset.append(that.resetBtn);
-
 	  ///////////////////
 	  // Entity filter //
 	  ///////////////////
@@ -280,7 +272,6 @@ export default qx.Class.define("LegendView", {
 		  	that['label-entity-' + value].append(that.getWording('entity.' + value));
 		  });
 
-		  that.resetBtn.append( that.getWording('misc.filterReset') );
 	  	that.moduleHeadingEntity.append(that.getWording('entry.type'));
 	  	that.moduleHeadingCategory.append(that.getWording('category'));
 	  	that.moduleHeadingAttribute.append(that.getWording('label.attribute.filter'));
@@ -314,7 +305,7 @@ export default qx.Class.define("LegendView", {
 			  APP.setActiveFilter(null);
 			  that.say('filterSet');
 				that.view.scrollTop(0);
-				that.ps.update();
+				if( APP.getUserDevice() == 'desktop') that.ps.update();
 		  }
 	  },
 
@@ -359,7 +350,11 @@ export default qx.Class.define("LegendView", {
 
 			that.listen('curtainclicked', function(){
         	if( that.view.hasClass('active') ) that.close();
-  		});
+			});
+			
+			that.listen('listResultsLoaded', function(){
+				if( that.view.hasClass('active') ) that.close();
+			});
 
   		////////////////////
       // swipe gestures //
@@ -369,16 +364,18 @@ export default qx.Class.define("LegendView", {
           if( that.view.hasClass('active') ) that.close();
       });
 
-      // show on hover
-			that.view.hover(
-			  function() {
-			  	that.show();
-			  }, function(e) {
-			  	// only react if view is really active
-          // firefox fires mouseleave while transition (bug), so additionally check current css state
-		  		if( that.view.hasClass('active') && ($(this).css('right') == '0px') ) that.close();
-			  }
-			);
+			// show on hover
+			if (APP.getUserDevice == 'desktop') {
+				that.view.hover(
+					function() {
+						that.show();
+					}, function(e) {
+						// only react if view is really active
+						// firefox fires mouseleave while transition (bug), so additionally check current css state
+						if( that.view.hasClass('active') && ($(this).css('right') == '0px') ) that.close();
+					}
+				);
+			}
 
   		that.listen('searchViewClosed', function(){
 				that.resetFilter();
@@ -411,8 +408,6 @@ export default qx.Class.define("LegendView", {
 		  _.each( {0: 'orga', 1: 'market', 2: 'event'}, function(value, key){
 		  	that['label-entity-' + value].empty();
 		  });
-
-		  that.resetBtn.empty();
 
 		  that.moduleHeadingEntity.empty();
 	  	that.moduleHeadingCategory.empty();

@@ -30,7 +30,7 @@
 			position: absolute;
 			width: 3rem;
 			height: $height_sb;
-			background-size: 40%;
+			background-size: 50%;
 			background-repeat: no-repeat;
 			background-position: center center;
 			cursor: pointer;
@@ -71,6 +71,7 @@
 			background: none;
 			border: none;
 			color: $white;
+			box-shadow: none;
 
 			&::placeholder{
 				color: $white_alpha;
@@ -120,9 +121,6 @@
 	}
 
 	&.active-search {
-		#search-bar input {
-	    width: calc(100% - 6em);
-		}
 
 		.cancel-btn {
 			display: block !important;
@@ -153,47 +151,53 @@
 	#searchView {
 
 		width: 100%;
-		background: none;
 		height: $height_sb;
+		box-shadow: none;
+		
 
 		#search-bar {
-			width: 100%;
-			top: 0;
-			left: 0;
-			border-radius: 0;
 
-			height: $height_sb !important;
+			width: calc(100% - 2rem);
+			left: 1rem;
+			top: 0.8rem;
 
-			input {
-				top: 0.7rem;
-				left: 4rem;
-				height: 3rem !important;
-				line-height: $height_sb !important;
-				width: calc(100% - 10rem);
-				margin: 0;
-			}
+		// 	width: 100%;
+		// 	top: 0;
+		// 	left: 0;
+		// 	border-radius: 0;
 
-			.search-tag {
-				left: 4em;
-				top: calc( (4em - 1em) / 2 );
-				width: calc(100% - 10rem);
-			}
+		// 	height: $height_sb !important;
 
-			.btn {
-				height: $height_sb;
-			}
+		// 	input {
+		// 		top: 0.7rem;
+		// 		left: 2rem;
+		// 		height: 3rem !important;
+		// 		line-height: $height_sb !important;
+		// 		width: calc(100% - 6rem);
+		// 		margin: 0;
+		// 	}
 
-	    .add-btn {
-				top: 1rem;
-				right: 4rem;
-			}
+		// 	.search-tag {
+		// 		left: 4em;
+		// 		top: calc( (4em - 1em) / 2 );
+		// 		width: calc(100% - 10rem);
+		// 	}
 
-	    .filter-btn {
-				display: block;
-				top: 1rem;
-				right: 1rem;
-		    background-image: url("../img/icon_94.svg");
-			}
+		// 	.btn {
+		// 		height: $height_sb;
+		// 	}
+
+	  //   .add-btn {
+		// 		top: 1rem;
+		// 		right: 1.5rem;
+		// 	}
+
+	  //   .filter-btn {
+		// 		display: block;
+		// 		top: 1rem;
+		// 		right: 1rem;
+		//     background-image: url("../img/icon_94.svg");
+		// 	}
 		}
 
 		.list-results {
@@ -205,22 +209,21 @@
 		}
 
     .cancel-btn {
-			top: 1rem !important;
-			right: 3em !important;
+			// top: 1rem !important;
+			// right: 1.5rem !important;
 		}
 		
 		&.active {
 			height: 100%;
 			
-			#search-bar {
-				background-color: $gray95;
-			}
+			// #search-bar {
+			// 	background-color: $gray95;
+			// }
 
 			.list-results {
 				background-color: $gray95;
 				height: calc(100vh - 6rem);
 		    overflow: scroll;
-				box-shadow: 0px 0px 2px #000;
 			}
 
 			#map-area {
