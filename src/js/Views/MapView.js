@@ -156,17 +156,6 @@ export default qx.Class.define("MapView", {
         that.deselectMarker();
       });
 
-      that.listen('detailViewOpened ', function(){
-        that.view.addClass('small');
-        that.map.invalidateSize();
-      });
-      
-      that.listen('detailViewClosed', function(){
-        // that.deselectMarker();
-        that.view.removeClass('small');
-        that.map.invalidateSize();
-      });
-
       // update view if location found
       that.map.on('locationfound', function(e) {
         // alert(e.latlng);
@@ -189,6 +178,34 @@ export default qx.Class.define("MapView", {
           })
         }).addTo(that.map);
       });
+
+			if (APP.getUserDevice() == 'desktop') {
+        that.listen('detailViewOpened', function(){
+          that.view.addClass('small');
+          that.map.invalidateSize();
+        });
+
+        that.listen('detailViewClosed', function(){
+          // that.deselectMarker();
+          that.view.removeClass('small');
+          that.map.invalidateSize();
+        });
+      }
+      
+      if (APP.getUserDevice() == 'mobile') {
+        that.listen('detailViewMinimized', function(){
+          that.view.addClass('active');
+          that.map.invalidateSize();
+        });
+
+        that.listen('detailViewOpened', function(){
+          that.view.removeClass('active');
+        });
+
+        that.listen('searchViewLoaded', function(){
+          that.view.removeClass('active');
+        });
+      }
     },
 
     removeEvents: function() {
@@ -353,10 +370,6 @@ export default qx.Class.define("MapView", {
 
             container.on('click', function(e){
               APP.route(APP.getRouter().getFrontendUrlForEntry(entry), entry.name);
-              if( APP.getUserDevice() == 'mobile' ){
-                APP.getDetailView().resize(2);
-                APP.getDetailView().say('detailViewMobileMaximized');
-              }
             });
 
             return container[0];

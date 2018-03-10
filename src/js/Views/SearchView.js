@@ -72,11 +72,7 @@ export default qx.Class.define("SearchView", {
       that.searchBar.append(that.inputField);
 
       // search tags
-      that.searchTag = $("<span />")
-        .click(function(){
-          if( APP.getUserDevice() == 'mobile') that.maximize();
-          // that.inputField.trigger( "input" );
-        });
+      that.searchTag = $("<span />");
       that.searchBar.append(that.searchTag);      
 
       // results area
@@ -86,16 +82,6 @@ export default qx.Class.define("SearchView", {
 
       that.view.append(that.scrollContainer);
 
-      // map area on mobile
-      if( APP.getUserDevice() == 'mobile'){
-        that.mapArea = $("<div />")
-          .attr('id', 'map-area')
-          .click(function(){
-            that.minimize();
-          });
-        that.view.append(that.mapArea);
-      }
-      
       this.base(arguments);
     },
 
@@ -118,7 +104,6 @@ export default qx.Class.define("SearchView", {
           .show();
 
         that.isActive(true);
-        that.maximize();
         that.view.addClass('active');
         that.say('searchViewLoaded');
         
@@ -592,21 +577,12 @@ export default qx.Class.define("SearchView", {
       // call superclass
       this.base(arguments);
       
-      // that.inputField.focusin(function(){
-        // that.load(that.inputField.val());
-        // that.say('searchFieldFocused');
-      // });
-
-      that.inputField.on('focusin', function(e){
+      that.inputField.on('click', function(e){
         var val = that.inputField.val();
         if (val.length < 1) APP.getLegendView().show(true);
         that.view.addClass('active-search');
       });
 
-      // that.inputField.on('focusout', function(e){
-        // if (APP.getUserDevice() == 'mobile') APP.getLegendView().close();
-      // });
-        
       that.inputField.on('input', function(e){
         var val = that.inputField.val();
         
@@ -704,26 +680,10 @@ export default qx.Class.define("SearchView", {
 
     },
 
-    minimize: function(){
-      var that = this;
-
-      // that.show();
-      // that.isActive(false);
-      that.view.addClass('minimized');
-    },
-
-    maximize: function(){
-      var that = this;
-
-      that.show();
-      that.view.removeClass('minimized');
-    },
-
     reset: function(){
         var that = this;
 
         that.show();
-        that.maximize();
 
         that.scrollContainer.scrollTop(0);
 

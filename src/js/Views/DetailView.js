@@ -33,22 +33,25 @@ export default qx.Class.define("DetailView", {
 			if( L.Browser.ie ) that.view.css('overflow', 'auto');
 
 			// heading
-			that.headingContainer = $("<div />").addClass('heading');
+			that.headingContainer = $("<div />")
+				.addClass('heading')
+				.click(function(){
+					if (that.view.hasClass('small')) {
+						that.load(that.record);
+						// that.view.removeClass('small');
+					}
+				});
 			that.heading = $("<h1 />");
 			that.headingContainer.append(that.heading);
 			that.view.append(that.headingContainer);
 
 			// back button
-			that.createBackBtn(function(){
-				if( that.view.hasClass('active-large') ) {
-					that.resize(1);
-								that.say('detailViewMobileMinimized');
-				}
-				else {
+			if (APP.getUserDevice() == 'mobile') {
+				that.createBackBtn(function(){
 					APP.getRouter().backToLastKeyState();
 					that.close();
-				}
-			});
+				});
+			}
 
 			// scrollable content container
 			that.scrollContainer = $("<div />").addClass('scroll-container');
@@ -129,9 +132,11 @@ export default qx.Class.define("DetailView", {
 					that.scrollContainer.append($link);
 					that['propertyContainer'+prop].click(function(){
 						if( that.record.location[0] ){
-							if ( APP.getUserDevice() === 'desktop' || APP.getUserDevice() === 'tablet' ) {
-								APP.getMapView().loadEntry(that.record, {setView: true});
-							}
+							APP.getMapView().loadEntry(that.record, {setView: true});
+								if ( APP.getUserDevice() === 'mobile') {
+									that.view.addClass('small');
+									that.say('detailViewMinimized');
+								}
 						// 	var userLocation = APP.getMapView().getUserLocation();
 						// 	if ( userLocation )
 						// 		// $link.attr('href', 'http://maps.google.com/?saddr=' + userLocation.lat + ',' + userLocation.lon + '&daddr=' + that.record.location[0].lat + ',' + that.record.location[0].lon);
@@ -406,7 +411,7 @@ export default qx.Class.define("DetailView", {
 					.append(that.parent.name)
 					.click(function(e){
 						e.preventDefault();
-						APP.getMapView().loadEntry(that.parent, {setView: true});
+						APP.route(APP.getRouter().getFrontendUrlForEntry(that.parent), that.parent.name);
 					});
 				propertyText.append(value);
 				
@@ -438,6 +443,7 @@ export default qx.Class.define("DetailView", {
 			that.view.removeClass (function (index, css) {
 				return (css.match (/(^|\s)cat-\S+/g) || []).join(' ');
 			});
+			if (APP.getUserDevice() == 'mobile') that.view.removeClass('small');
 
 			// heading
 			that.heading.empty();
@@ -512,16 +518,18 @@ export default qx.Class.define("DetailView", {
 
 			this.base(arguments);
 
-			that.listen('searchFieldFocused', function(){
+			// that.listen('searchFieldFocused', function(){
 				// if( APP.getUserDevice() === 'mobile' )
 					// that.close();
 				// else
 				// 	that.view.addClass('right');
-			});
+			// });
 
-			that.listen('searchViewLoaded', function(){
-				// that.close();
-			});
+			if (APP.getUserDevice() == 'mobile') {
+				that.listen('searchViewLoaded', function(){
+					that.close();
+				});
+			}
 
 			that.listen('includeViewOpened', function(){
 				that.close();
@@ -548,9 +556,6 @@ export default qx.Class.define("DetailView", {
 			that.listen('mapclicked', function(){
 				that.close();
 			});
-
-			// that.headingContainer.click(function(){
-			// });
 		}
 	}
 });

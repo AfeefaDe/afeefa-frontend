@@ -206,6 +206,7 @@ button {
 
 html {
   font-size: $font-size !important;
+  &.mobile { font-size: $font-size-mobile !important; }
 }
 
 body {
@@ -213,7 +214,6 @@ body {
   padding: 0;
   height: 100%;
 
-  font-size: $font-size !important;
   font-weight: 300;
   direction: ltr;
   color: $black !important;

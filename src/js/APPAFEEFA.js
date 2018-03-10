@@ -141,9 +141,6 @@ export default qx.Class.define("APPAFEEFA", {
 		detectArea: function(){
 			var that = this;
 
-			// that.setArea(that.getData().areas.leipzig);
-			// return;
-
 			if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum-410' ){
 				that.setArea(that.getData().areas.leipzig);
 			}
@@ -202,7 +199,7 @@ export default qx.Class.define("APPAFEEFA", {
 			// TODO detect tablets, because there is special behavior for tablets already implemented in the afeefa app
 			// if( $('body').hasClass('tablet') ) that.setUserDevice('tablet');
 
-			$('body').addClass( that.getUserDevice() );
+			$('html').addClass( that.getUserDevice() );
 		},
 
 		loadIndependantUI: function(){

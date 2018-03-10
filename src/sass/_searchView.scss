@@ -225,20 +225,11 @@
 				height: calc(100vh - 6rem);
 		    overflow: scroll;
 			}
-
-			#map-area {
-				height: 3rem;
-		    position: absolute;
-		    bottom: 0;
-		    width: 100%;
-				background-color: rgba(0,0,0,0.4);
-			}
 		}
 
 		&.minimized {
 			height: 3em;
 			.list-results { display: none; }
-			#map-area { display: none; }
 		}
   }	
 }

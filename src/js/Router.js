@@ -5,7 +5,6 @@ import * as _ from '../../node_modules/underscore/underscore-min.js';
 
 import DetailView from './Views/DetailView';
 import AreaView from './Views/AreaView';
-import DetailViewMobile from './Views/DetailViewMobile';
 import EventView from './Views/EventView';
 import FormView from './Views/FormView';
 import IncludeView from './Views/IncludeView';
@@ -49,13 +48,7 @@ export default qx.Class.define("Router", {
 
       var userDevice = APP.getUserDevice();
 
-      if( userDevice === 'mobile' ) {
-        APP.setDetailView( new DetailViewMobile() );
-      }
-      else {
-        APP.setDetailView( new DetailView() );
-      }
-      
+      APP.setDetailView( new DetailView() );
       APP.setLanguageView( new LanguageView() );
       APP.setAreaView( new AreaView() );
       APP.setMapView( new MapView() );
