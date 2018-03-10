@@ -237,14 +237,6 @@
 
 		display: none;
 	
-		.scroll-container {
-			height: calc(100% - 4em);
-			overflow-y: auto;
-			padding-bottom: 1em;
-			position: relative;
-		}
-
-		
 		.back-btn {
 			display: block;
 			background-position: left center;
@@ -263,7 +255,7 @@
 		}
 		
 		&.active {
-			display: initial;
+			display: flex;
 		}
 		
 		&.small {

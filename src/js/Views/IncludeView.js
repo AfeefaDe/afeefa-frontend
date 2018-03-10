@@ -78,7 +78,6 @@ export default qx.Class.define("IncludeView", {
 			that.view.addClass('active');
 			// that.view.addClass(includeKey);
 			that.setViewState(1);
-			// that.minimize(false);
 			
 			that.say('includeViewOpened');
 			
@@ -146,24 +145,6 @@ export default qx.Class.define("IncludeView", {
 			that.scrollContainer.empty();
 		},
 
-		minimize: function(bool){
-			var that = this;
-
-			// only min/max if view is active
-			if( that.getViewState() === 0 ) return false;
-
-			if( bool ) {
-				that.showCurtain(false);
-				that.view.addClass('min')
-				that.setViewState(2);
-			}
-			else {
-				that.showCurtain(true);
-				that.view.removeClass('min')  
-				that.setViewState(1);
-			}
-		},
-
 		addEvents: function(){
 			var that = this;
 
@@ -177,14 +158,6 @@ export default qx.Class.define("IncludeView", {
 			that.listen('searchViewLoaded', function(){
 				that.close();
 			});
-
-			// that.listen('detailViewMobileMaximized', function(){
-			//     that.minimize(true);
-			// });
-
-			// that.listen('detailViewMobileMinimized', function(){
-			//     that.minimize(true);
-			// });
 
 			// that.listen('searchFieldFocused', function(){
 			// 	that.close();

@@ -105,43 +105,31 @@ export default qx.Class.define("DataManager", {
             var areas = {
                 areas: {
                     dresden: {
-                        initialView: { lat: 51.051, lon: 13.74, zoom: 14 },
+                        dataKey: 'dresden',
                         label: 'Dresden',
-                        entryStats: {
-                            orgas: 600,
-                            events: 30
-                        },
-                        dataKey: 'dresden'
+                        redirect: 'https://afeefa.de',
+                        initialView: { lat: 51.051, lon: 13.74, zoom: 14 },
+                        inMainMenu: true
                     },
                     leipzig: {
-                        initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
-                        label: 'Leipzig',
-                        entryStats: {
-                            orgas: 118,
-                            events: 0
-                        },
-                        redirect: 'https://leipzig.afeefa.de',
                         dataKey: 'leipzig',
-                        wisdomRootId: 1
+                        label: 'Leipzig',
+                        redirect: 'https://leipzig.afeefa.de',
+                        initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
+                        wisdomRootId: 1,
+                        inMainMenu: true
                     },
                     bautzen: {
-                        initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
+                        dataKey: 'bautzen',
                         label: 'Bautzen',
-                        entryStats: {
-                            orgas: 118,
-                            events: 0
-                        },
                         redirect: 'https://bautzen.afeefa.de',
-                        dataKey: 'bautzen'
+                        initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
+                        inMainMenu: true
                     },
                     pirna: {
-                        initialView: { lat: 50.957456, lon: 13.937007, zoom: 14 },
+                        dataKey: 'dresden',
                         label: 'Pirna',
-                        entryStats: {
-                            orgas: 118,
-                            events: 0
-                        },
-                        dataKey: 'dresden'
+                        initialView: { lat: 50.957456, lon: 13.937007, zoom: 14 }
                     }
                 }
             };

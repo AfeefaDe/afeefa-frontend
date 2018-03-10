@@ -117,7 +117,8 @@
 	}
 
 	.list-results {
-  	top: 5rem;
+		top: 4rem;
+		height: calc(100% - 4rem);
 	}
 
 	&.active-search {
@@ -146,90 +147,21 @@
 
 .mobile {
 
-	$height_sb: 4rem;
-
 	#searchView {
-
 		width: 100%;
-		height: $height_sb;
 		box-shadow: none;
 		
-
 		#search-bar {
-
 			width: calc(100% - 2rem);
 			left: 1rem;
 			top: 0.8rem;
-
-		// 	width: 100%;
-		// 	top: 0;
-		// 	left: 0;
-		// 	border-radius: 0;
-
-		// 	height: $height_sb !important;
-
-		// 	input {
-		// 		top: 0.7rem;
-		// 		left: 2rem;
-		// 		height: 3rem !important;
-		// 		line-height: $height_sb !important;
-		// 		width: calc(100% - 6rem);
-		// 		margin: 0;
-		// 	}
-
-		// 	.search-tag {
-		// 		left: 4em;
-		// 		top: calc( (4em - 1em) / 2 );
-		// 		width: calc(100% - 10rem);
-		// 	}
-
-		// 	.btn {
-		// 		height: $height_sb;
-		// 	}
-
-	  //   .add-btn {
-		// 		top: 1rem;
-		// 		right: 1.5rem;
-		// 	}
-
-	  //   .filter-btn {
-		// 		display: block;
-		// 		top: 1rem;
-		// 		right: 1rem;
-		//     background-image: url("../img/icon_94.svg");
-		// 	}
 		}
 
 		.list-results {
-			top: 4rem;
 			left: 0;
-			padding: 2rem 1rem;
+			padding: 1rem 1rem 2rem;
 			width: 100%;
-			height: calc(100% - 4rem);
-		}
-
-    .cancel-btn {
-			// top: 1rem !important;
-			// right: 1.5rem !important;
-		}
-		
-		&.active {
-			height: 100%;
-			
-			// #search-bar {
-			// 	background-color: $gray95;
-			// }
-
-			.list-results {
-				background-color: $gray95;
-				height: calc(100vh - 6rem);
-		    overflow: scroll;
-			}
-		}
-
-		&.minimized {
-			height: 3em;
-			.list-results { display: none; }
+			overflow: scroll;
 		}
   }	
 }
