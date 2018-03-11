@@ -190,6 +190,17 @@ export default qx.Class.define("MapView", {
           that.view.removeClass('small');
           that.map.invalidateSize();
         });
+
+        that.listen('includeViewOpened', function(){
+          that.view.addClass('small-2');
+          that.map.invalidateSize();
+        });
+
+        that.listen('includeViewClosed', function(){
+          // that.deselectMarker();
+          that.view.removeClass('small-2');
+          that.map.invalidateSize();
+        });
       }
       
       if (APP.getUserDevice() == 'mobile') {

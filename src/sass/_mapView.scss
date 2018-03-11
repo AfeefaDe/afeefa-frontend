@@ -11,6 +11,16 @@
 		width: calc(100% - 30em - 30em);
 	}
 
+	&.small-2 {
+		width: calc(100% - 50vw);
+		left: 50vw;
+	}
+
+	&.small.small-2 {
+		width: calc(100% - 50vw - 30em);
+		left: 50vw;
+	}
+
 	font-size: $font-size !important;
 
 	/*background-color: $black;*/

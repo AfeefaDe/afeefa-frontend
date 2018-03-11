@@ -17,17 +17,19 @@
 	}
 	a[href^="afeefa://orga"], a[href^="afeefa://event"] {
 		display: inline-block;
-		padding: .5em 1em;
-		border-left: 5px solid $gray50;
+		padding: 0 .5em 0 1.7em;
+		background: url("../img/icon_203.svg") .4em center no-repeat;
+		background-size: .9em;
 		border-bottom: none;
-		box-shadow: 1px 1px 2px 1px $gray50;
+		box-shadow: 1px 1px 1px 1px $gray50;
+		line-height: 1.3em;
 
-		&:before {
-			content: "Angebot öffnen: ";
-			font-size: 0.8em;
-			color: $gray50;
-			display: block;
-		 }
+		// &:before {
+		// 	content: "Angebot öffnen: ";
+		// 	font-size: 0.8em;
+		// 	color: $gray50;
+		// 	display: block;
+		// }
 
 		&:hover {
 			border-color: black;
@@ -116,7 +118,7 @@
 		p {
 			text-align: justify;
 			font-weight: 300;
-			line-height: 1.3em;
+			line-height: 1.5em;
 		}
 
 		table {
@@ -170,9 +172,6 @@ body.tablet {
 			h1 { padding-top: 1rem !important; }
 			p.subheading { display: none !important; }
 		}
-		// .entry-content {
-		// 	overflow: scroll;
-		// }
 	}
 
 }
