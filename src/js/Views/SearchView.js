@@ -145,13 +145,20 @@ export default qx.Class.define("SearchView", {
         );
       }
 
-      if (APP.getArea().dataKey == 'dresden') {
-        that.createSectionHeader( that.getWording('search.label.eventstoday') );
+      // if (APP.getData().dataKey == 'dresden') {
+      if (APP.getDataManager().getAllEvents().length > 0) {
+        // today's events
         var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
         if(eventsToday.length == 0) eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'alsoToday', atDate: moment()} );
-        _.each(eventsToday.slice(0, 3), function(entry) {
-          that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
-        });
+        
+        if (eventsToday.length > 0) {
+          that.createSectionHeader( that.getWording('search.label.eventstoday') );
+          _.each(eventsToday.slice(0, 3), function(entry) {
+            that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+          });
+        } else {
+          that.createSectionHeader( '' );
+        }
                 
         that.createButton(
           {
