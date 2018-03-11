@@ -663,8 +663,11 @@ export default qx.Class.define("SearchView", {
       });
 
       that.listen('bookmarksChanged', function(){
-        that.reset();
-        that.loadDashboard();
+        // react only in dashboard and bookmark mode
+        var mode = that.inputField.val();
+        if (mode ==  "" || mode == "user:bookmarks") {
+          that.load(mode);
+        }
       });
 
     },

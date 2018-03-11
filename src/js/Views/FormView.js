@@ -65,7 +65,7 @@ export default qx.Class.define("FormView", {
 
       // back button
       that.createBackBtn(function(){
-        APP.getRouter().backToLastKeyState();
+        if (that.getCurrentForm().formType.name != 'contact') APP.getRouter().backToLastKeyState();
         that.close();
       });
 
