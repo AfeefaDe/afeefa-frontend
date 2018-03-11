@@ -45,8 +45,12 @@
 
 	.scroll-container {
 		
-		padding: 2rem;
-
+		flex-grow: 1;
+		width: 100%;
+		padding: 1em 3rem;
+		position: relative;
+		word-break: break-all;
+		
 		.header {
 			background-color: $black;
 			padding: 0 3rem;
@@ -75,14 +79,6 @@
 				p.subheading { display: none; }
 			}
 		}
-
-		flex-grow: 1;
-		width: 100%;
-
-		padding: 1em 3rem;
-		position: relative;
-		
-		line-height: 2em;
 
 		h1, h2, h3, h4, h5, h6 {
 			font-weight: 100;
@@ -162,11 +158,20 @@ body.tablet {
 
 	#includeView {
 		width: 100vw;
-		// height: 100vh;
-		// max-width: 100%;
-		// max-height: 100%;
 		left: 0;
 		top: 0;
+
+		.scroll-container {
+			padding: 1em 1.5rem;
+			
+			h1 {
+				font-size: 2rem;
+			}
+			h2 {
+				font-size: 1.5rem;
+			}
+		}
+
 
 		.header {
 			h1 { padding-top: 1rem !important; }
