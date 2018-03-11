@@ -178,16 +178,16 @@ export default qx.Class.define("View", {
           options.targetContainertEl.append(resultEl);
 
           // tooltip
-          if(options.tooltip){
-            that.createTooltip(
-              resultEl,
-              options.tooltip,
-              'hover',
-              'right',
-              'desktop',
-              ['search-result-tooltip']
-            );
-          }
+        //   if(options.tooltip){
+        //     that.createTooltip(
+        //       resultEl,
+        //       options.tooltip,
+        //       'hover',
+        //       'right',
+        //       'desktop',
+        //       ['search-result-tooltip']
+        //     );
+        //   }
           
           // icon
           const iconEl = $("<div />")
