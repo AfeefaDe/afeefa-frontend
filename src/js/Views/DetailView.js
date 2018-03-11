@@ -229,10 +229,6 @@ export default qx.Class.define("DetailView", {
 			that.view.addClass('type-' + record.type);
 			if(record.category) that.view.addClass('cat-' + record.category.name);
 
-			// scroll
-			that.scrollContainer.scrollTop(0);
-			if( APP.getUserDevice() == 'desktop') that.ps.update();
-
 			// heading
 			that.heading.append(record.name ? record.name : '');
 			if(record.category) that.headingContainer.addClass('cat-' + record.category.name);
@@ -430,6 +426,8 @@ export default qx.Class.define("DetailView", {
 			that.view.addClass('active');
 			that.isActive(true);
 
+			// scroll
+			that.scrollContainer.scrollTop(0);
 			if( APP.getUserDevice() == 'desktop') that.ps.update();
 
 			that.say('detailViewOpened');
