@@ -263,20 +263,20 @@ export default qx.Class.define("FormView", {
         message: '```\n' + data.feedback.message + '\n```'
       });
 
-      // send mail to team inbox
-      APP.getDataManager().sendMail({
-        data: {
-          mail_fromMail: 'bot@afeefa.de',
-          mail_fromName: data.feedback.author,
-          mail_to: 'team@afeefa.de',
-          mail_replyTo: data.feedback.mail,
-          mail_subject: '[Feedback] ' + data.feedback.author,
-          mail_bodyPlain: data.feedback.message,
-          mail_bodyHtml: function () {
-            return '<p><i>' + data.feedback.message + '</i></p>';
-          }
-        }
-      });
+      // // send mail to team inbox
+      // APP.getDataManager().feedback({
+      //   data: {
+      //     mail_fromMail: 'bot@afeefa.de',
+      //     mail_fromName: data.feedback.author,
+      //     mail_to: 'team@afeefa.de',
+      //     mail_replyTo: data.feedback.mail,
+      //     mail_subject: '[Feedback] ' + data.feedback.author,
+      //     mail_bodyPlain: data.feedback.message,
+      //     mail_bodyHtml: function () {
+      //       return '<p><i>' + data.feedback.message + '</i></p>';
+      //     }
+      //   }
+      // });
 
       cb(true);
     },
@@ -289,26 +289,20 @@ export default qx.Class.define("FormView", {
       // to slack
       APP.getDataManager().createSlackMessage({
         heading: 'Kontaktanfrage von _' + data.contact.author + ' (' + data.contact.mail + ')_ an ' + options.entry.name + ' (' + APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true}) + ')',
-        // message: '```\n' + data.contact.message + '\n```'
-        message: '```Nachricht wurde anonymisiert```'
+        message: '```\n' + data.contact.message + '\n```'
+        // message: '```Nachricht wurde anonymisiert```'
       });
 
       // send mail to entry's email
-      APP.getDataManager().sendMail({
-        data: {
-          mail_fromMail: 'bot@afeefa.de',
-          mail_fromName: data.contact.author + ' über Afeefa.de',
-          mail_to: options.entry.mail,
-          mail_replyTo: data.contact.mail,
-          mail_subject: 'Anfrage von ' + data.contact.author,
-          mail_bodyPlain: data.contact.message + '\n\nvon: ' + data.contact.author + ' | ' + data.contact.mail + ' | ' + data.contact.phone + '\n\nDiese Nachricht wurde über Ihren Eintrag auf ' +APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true})+ ' versendet.',
-          mail_bodyHtml: function () {
-            return '<p><i>' + data.contact.message + '</i></p>'
-              + '<p>' + data.contact.author + ' | ' + data.contact.mail + ' | ' + data.contact.phone + '</p>'
-              + '<hr><small>Diese Nachricht wurde über Ihren Eintrag auf <a href="' +APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true})+ '">Afeefa.de</a> versendet.<br>' +APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true})+ '</small>';
-          }
+      APP.getDataManager().contact(
+        options.entry,
+        {
+          message: data.contact.message,
+          author: data.contact.author,
+          phone: data.contact.phone,
+          mail: data.contact.mail
         }
-      });
+      );
 
       cb(true);
     },
