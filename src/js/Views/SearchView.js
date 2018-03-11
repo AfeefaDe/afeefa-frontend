@@ -36,17 +36,6 @@ export default qx.Class.define("SearchView", {
         .attr('id', 'search-bar');
       that.view.append(that.searchBar);
 
-      // filter button
-      // that.filterBtn = $("<div />")
-      //   .addClass('button filter-btn')
-      //   .click(function(){
-      //     if( APP.getLegendView().view.hasClass('active') )
-      //       APP.getLegendView().close();
-      //     else
-      //       APP.getLegendView().show();
-      //   });
-      // that.searchBar.append(that.filterBtn);
-
       // add button
       that.addBtn = $("<div />")
         .addClass('button add-btn')

@@ -54,6 +54,7 @@ export default qx.Class.define("IntroView", {
 						heading: 'intro.step.dashboard.title',
 						text: 'intro.step.dashboard.text'
 					},
+					headingSuffix: ' ' + APP.getArea().label,
 					buttons: ['next', 'cancelForever']
 				},
 				
@@ -76,13 +77,13 @@ export default qx.Class.define("IntroView", {
 				
 				stepLanguage: {
 					stepName: 'language',
-					el: APP.getLanguageView().langBtn,
+					el: APP.getAreaView().language,
 					placement: 'right',
 					preAction: function(){
-						APP.getLanguageView().showCurtain(true);
+						APP.getAreaView().showCurtain(true);
 					},
 					afterAction: function(){
-						APP.getLanguageView().showCurtain(false);
+						APP.getAreaView().showCurtain(false);
 					},
 					phraseAppKeys: {
 						heading: 'intro.step.language.title',
@@ -138,11 +139,10 @@ export default qx.Class.define("IntroView", {
 					el: APP.getSearchView().searchBar,
 					placement: 'bottom',
 					preAction: function(){
-						APP.getSearchView().close();
-						APP.getPlusView().showCurtain(true);
+						APP.getSearchView().showCurtain(true);
 					},
 					afterAction: function(){
-						APP.getPlusView().showCurtain(false);
+						APP.getSearchView().showCurtain(false);
 					},
 					phraseAppKeys: {
 						heading: 'intro.step.search.title',
@@ -156,7 +156,6 @@ export default qx.Class.define("IntroView", {
 					el: APP.getSearchView().addBtn,
 					placement: 'bottom',
 					preAction: function(){
-						APP.getSearchView().close();
 						APP.getSearchView().showCurtain(true);
 					},
 					afterAction: function(){
@@ -215,7 +214,7 @@ export default qx.Class.define("IntroView", {
 			        nextStep = that.steps.stepMap;
 			        break;
 	        	case 'map':
-			        nextStep = that.steps.stepLegend;
+			        nextStep = that.steps.stepLanguage;
 			        break;
 		       	case 'legend':
 			        nextStep = that.steps.stepLocate;
@@ -260,6 +259,7 @@ export default qx.Class.define("IntroView", {
 						
 			var heading = $("<h3 />")
 				.append(that.getWording(step.phraseAppKeys.heading));
+			if (step.headingSuffix) heading.append(step.headingSuffix);
 
 			var text = $("<p />")
 				.append(that.getWording(step.phraseAppKeys.text));

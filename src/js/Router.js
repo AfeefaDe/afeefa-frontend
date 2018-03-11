@@ -103,41 +103,30 @@ export default qx.Class.define("Router", {
         that.loadFromUrl();
         APP.setPageTitle();
         
-        if(that.urlParams && that.urlParams.length > 0){
-        }
-        else {
-          // if(APP.getUserDevice() == 'mobile') {
-          // 	APP.getIncludeView().load( APP.getIncludeView().getIncludes().intro );
-          // }
-          // else {
-            // start intro?
-            
-            // dont start intro for IEs
-            var isIE = function() { return navigator.userAgent.match(/Edge|MSIE|Trident/i); };
+        if(!that.urlParams || that.urlParams.length < 1){
+          
+          // detect IEs (dont start intro for those)
+          var isIE = function() { return navigator.userAgent.match(/Edge|MSIE|Trident/i); };
 
-            if( !localStorage.getItem("introIsKnown") ){
-              if( !localStorage.getItem("languageFrozen") ){
-                APP.getLanguageView().open(function(){
-                  if(!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
-                });
-              }
-              else {
-                if(!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
-              }
+          // intro not seen
+          if ( !localStorage.getItem("introIsKnown") ){
+            // language not set
+            if ( !localStorage.getItem("languageFrozen") ){
+              APP.getLanguageView().open(function(){
+                if (!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
+              });
             }
-            // open search view
             else {
-              if( !localStorage.getItem("languageFrozen") ){
-                // APP.getSearchView().hide();
-                APP.getLanguageView().open(function(){
-                  APP.getSearchView().show();
-                });
-              }
-              else {
-                // APP.getSearchView().load();
-              }
+              if (!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
             }
-          // }
+          }
+          // intro seen
+          else {
+            // language not set
+            if ( !localStorage.getItem("languageFrozen") ){
+              APP.getLanguageView().open();
+            }
+          }
         }
       });
 
@@ -256,7 +245,7 @@ export default qx.Class.define("Router", {
     loadFromUrl: function( url, cb ){
       var that = this;
 
-      var urlParams = (that.urlParams != null)? that.urlParams : that.detectUrlParameter();
+      var urlParams = that.detectUrlParameter();
       if(url === null || url !== undefined) urlParams = that.detectUrlParameter(url);
 
       switch(urlParams[0]) {
@@ -321,7 +310,7 @@ export default qx.Class.define("Router", {
           if(cb) cb();
       }
 
-      that.urlParams = null;
+      // that.urlParams = null;
     }
   }
 });

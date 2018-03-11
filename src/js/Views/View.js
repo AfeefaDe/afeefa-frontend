@@ -343,7 +343,6 @@ export default qx.Class.define("View", {
         },
 
         createTooltip: function(el, content, event, placement, device, cssClasses, contentType, conditionFn){
-            return false;
             var that = this;
 
             // check device restrictions
