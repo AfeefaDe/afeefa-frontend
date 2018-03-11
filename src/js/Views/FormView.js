@@ -263,28 +263,19 @@ export default qx.Class.define("FormView", {
         message: '```\n' + data.feedback.message + '\n```'
       });
 
-      // // send mail to team inbox
-      // APP.getDataManager().feedback({
-      //   data: {
-      //     mail_fromMail: 'bot@afeefa.de',
-      //     mail_fromName: data.feedback.author,
-      //     mail_to: 'team@afeefa.de',
-      //     mail_replyTo: data.feedback.mail,
-      //     mail_subject: '[Feedback] ' + data.feedback.author,
-      //     mail_bodyPlain: data.feedback.message,
-      //     mail_bodyHtml: function () {
-      //       return '<p><i>' + data.feedback.message + '</i></p>';
-      //     }
-      //   }
-      // });
+      APP.getDataManager().feedback(
+        {
+          message: data.feedback.message,
+          author: data.feedback.author,
+          mail: data.feedback.mail
+        }
+      );
 
       cb(true);
     },
 
     createContact: function (data, options, cb) {
       var that = this;
-
-      console.debug(options);
 
       // to slack
       APP.getDataManager().createSlackMessage({
@@ -293,7 +284,6 @@ export default qx.Class.define("FormView", {
         // message: '```Nachricht wurde anonymisiert```'
       });
 
-      // send mail to entry's email
       APP.getDataManager().contact(
         options.entry,
         {

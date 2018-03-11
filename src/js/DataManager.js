@@ -699,7 +699,25 @@ export default qx.Class.define("DataManager", {
     contact: function (entry, data, cb) {
       var apiTypePaths = {"Orga": "orgas", "Event": 'events'};
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/marketentries/" + apiTypePaths[entry.entryType] + '/' + entry.id + '/contact',
+        url: APP.getConfig().apiUrl + "api/" + apiTypePaths[entry.entryType] + '/' + entry.id + '/contact',
+        type: 'POST',
+        data: data,
+        cache: false,
+        dataType: 'json',
+        processData: true
+        // contentType: 'application/json; charset=UTF-8'
+      })
+        .done(function (data) {
+          // cb(data);
+        })
+        .fail(function (a) {
+          // cb(a);
+        });
+    },
+
+    feedback: function (data, cb) {
+      $.ajax({
+        url: APP.getConfig().apiUrl + "api/feedbacks",
         type: 'POST',
         data: data,
         cache: false,
