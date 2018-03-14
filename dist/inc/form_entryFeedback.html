@@ -1,0 +1,59 @@
+<form>
+
+	<div class="row">
+	    <p>
+	    {{translation:form.label.recipient}}:<br>
+	    <span style="font-size: 1.1rem; font-weight: bold">{{recipient}}</span>
+    	</p>
+	</div>
+	
+	<div class="row">
+		<p>
+		{{translation:form.label.suspect}}:<br>
+		<span style="font-size: 1.1rem; font-weight: bold">{{suspect}}</span>
+		</p>
+</div>
+	
+	<h3>{{translation:form.field.message}}</h3>
+	<div class="row">
+		<div class="input-field col s12">
+	    <textarea id="feedback.message" class="materialize-textarea" maxlength="1500" data-length="1500" required validate></textarea>
+	    <label for="feedback.message">{{translation:prop.message}}</label>
+	  </div>
+  </div>
+	
+	<h3>{{translation:form.section.newEntry.contact}}</h3>
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="feedback.author">{{translation:prop.author}}</label>
+			<input id="feedback.author" type="text" class="author" required>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="feedback.mail">{{translation:form.field.mail}}</label>
+			<input id="feedback.mail" type="email" class="mail">
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="input-field col s12">
+			<label for="feedback.phone">{{translation:form.field.phone}}</label>
+			<input id="feedback.phone" type="tel" class="phone">
+		</div>
+	</div>
+
+  <div class="row">
+	  <div class="input-field col s6">
+		  <button class="btn" type="submit" name="action">{{translation:form.button.submit}}
+		    <i class="material-icons right">send</i>
+		  </button>
+	  </div>
+  
+	  <div class="input-field col s6">
+		  <button id="cancel" type="button" class="btn-flat">{{translation:form.button.cancel}}</button>
+	  </div>
+	</div>
+
+</form>

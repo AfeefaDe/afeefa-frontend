@@ -27,8 +27,7 @@ export default qx.Class.define("FormView", {
       feedback: {
         name: 'feedback',
         templateFile: 'form_feedback.html',
-        sendMethod: that.createFeedback,
-        urlSlag: 'feedback'
+        sendMethod: that.createFeedback
       },
       contact: {
         name: 'contact',
@@ -38,8 +37,12 @@ export default qx.Class.define("FormView", {
       newEntry: {
         name: 'newEntry',
         templateFile: 'form_newEntry.html',
-        sendMethod: that.createEntry,
-        urlSlag: 'add'
+        sendMethod: that.createEntry
+      },
+      entryFeedback: {
+        name: 'entryFeedback',
+        templateFile: 'form_entryFeedback.html',
+        sendMethod: that.createEntryFeedback
       }
     });
 
@@ -105,7 +108,7 @@ export default qx.Class.define("FormView", {
         });
 
         that.parseForm(type, options);
-        that.loadUIVocab(type);
+        that.loadUIVocab(type, options);
         if( APP.getUserDevice() == 'desktop') that.ps.update();
       });
 
@@ -113,7 +116,7 @@ export default qx.Class.define("FormView", {
       that.isActive(true);
     },
 
-    loadUIVocab: function(type){
+    loadUIVocab: function(type, options){
       var that = this;
       that.heading.empty().append(that.getWording('form.heading.' + type));
     },
@@ -248,10 +251,39 @@ export default qx.Class.define("FormView", {
         location: data.location
       };
 
-      APP.getDataManager().addMarketEntry(data_converted, function (response) {
-        // cb(response.marketentry !== undefined);
-        cb(true);
-      });
+      APP.getDataManager().addMarketEntry(
+        data_converted,
+        function(success){
+          cb(success);
+        }
+      );
+
+      // send outgoing message
+      var entryTypes = {0: 'Orga', 1: 'Börse', 2: 'Event'};
+
+      // to slack
+      APP.getDataManager().createSlackMessage({
+          heading: function () {
+              var entryTypeString = entryTypes[data.entry.type];
+              var marketTypeString = (data.entry.offer) ? 'Angebot' : 'Gesuch';
+              if (data.entry.type == 1) entryTypeString += ' (' + marketTypeString + ')'
+              return 'Neuer Eintrag: ' + entryTypeString + ' "' + data.entry.name + '"'
+          }(),
+          message: '```\n' + data.entry.descriptionShort + '\n```\n'
+          + 'für Kinder: `' + (data.entry.forChildren ? 'ja' : '-') + '`\n'
+          + 'Unterstützer gesucht: `' + (data.entry.supportWanted ? 'ja' : 'nein') + '`\n'
+          + 'Unterstützung Details: `' + data.additional.internalComment + '`\n'
+          + 'Kontaktperson: `' + data.entry.speakerPublic + '`\n'
+          + 'Sprachen: `' + data.entry.spokenLanguages + '`\n'
+          + 'mail: `' + data.entry.mail + '` '
+          + 'web: `' + data.entry.web + '` '
+          + 'facebook: `' + data.entry.facebook + '` '
+          + 'phone: `' + data.entry.phone + '`\n'
+          + 'Ort: `' + data.location.placename + ', ' + data.location.street + ', ' + data.location.zip + ' ' + data.location.city + '`\n'
+          + 'von: `' + data.entry.dateFrom + ' (' + data.entry.timeFrom + ')' + '`\n'
+          + 'bis: `' + data.entry.dateTo + ' (' + data.entry.timeTo + ')' + '`\n'
+          + 'Anmerkung: `' + data.additional.comment + '`\n'
+      }, null, APP.getArea().dataKey);
     },
 
     createFeedback: function (data, options, cb) {
@@ -268,10 +300,32 @@ export default qx.Class.define("FormView", {
           message: data.feedback.message,
           author: data.feedback.author,
           mail: data.feedback.mail
+        }, function(success){
+          cb(success);
         }
       );
+    },
 
-      cb(true);
+    createEntryFeedback: function (data, options, cb) {
+      var that = this;
+
+      // to slack
+      APP.getDataManager().createSlackMessage({
+        heading: 'Feedback zum Eintrag _' + options.entry.name + '_ von _' + data.feedback.author + '_ (' + data.feedback.mail + ')',
+        message: '```\n' + data.feedback.message + '\n```'
+      });
+
+      APP.getDataManager().entryFeedback(
+        options.entry,
+        {
+          message: data.feedback.message,
+          author: data.feedback.author,
+          phone: data.feedback.phone,
+          mail: data.feedback.mail
+        }, function(success){
+          cb(success);
+        }
+      );
     },
 
     createContact: function (data, options, cb) {
@@ -291,10 +345,10 @@ export default qx.Class.define("FormView", {
           author: data.contact.author,
           phone: data.contact.phone,
           mail: data.contact.mail
+        }, function(success){
+          cb(success);
         }
       );
-
-      cb(true);
     },
 
     addEvents: function () {

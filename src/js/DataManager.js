@@ -606,13 +606,10 @@ export default qx.Class.define("DataManager", {
         processData: true,
         contentType: 'application/json; charset=UTF-8'
       })
-      .done(function (data) {
-        cb(data);
-      })
-      .fail(function (a) {
-        cb(a);
+      .always(function (response) {
+        if (response.status == 200 || response.status == 201) cb(true);
+        else cb(false);
       });
-
     },
 
     addLocation: function (data, cb) {
@@ -672,30 +669,6 @@ export default qx.Class.define("DataManager", {
 
     },
 
-    createGithubIssue: function (data, cb) {
-      data.action = 'github';
-
-      $.ajax({
-        // url: "_Resources/Static/Packages/DDFA.dresdenfueralleDe/githubAPI/",
-        // url: "http://afeefa.hejn.de/githubAPI/",
-        url: APP.getConfig().apiUrl + "messageAPI/",
-        // crossDomain: true,
-        type: 'POST',
-        data: data,
-        cache: false,
-        dataType: 'text',
-        processData: true
-        // contentType: false
-      })
-        .done(function (data) {
-          // cb(data);
-        })
-        .fail(function (a) {
-          // cb(a);
-        });
-
-    },
-
     contact: function (entry, data, cb) {
       var apiTypePaths = {"Orga": "orgas", "Event": 'events'};
       $.ajax({
@@ -707,12 +680,27 @@ export default qx.Class.define("DataManager", {
         processData: true
         // contentType: 'application/json; charset=UTF-8'
       })
-        .done(function (data) {
-          // cb(data);
-        })
-        .fail(function (a) {
-          // cb(a);
-        });
+      .always(function (response) {
+        if (response.status == 200 || response.status == 201) cb(true);
+        else cb(false);
+      });
+    },
+
+    entryFeedback: function (entry, data, cb) {
+      var apiTypePaths = {"Orga": "orgas", "Event": 'events'};
+      $.ajax({
+        url: APP.getConfig().apiUrl + "api/" + apiTypePaths[entry.entryType] + '/' + entry.id + '/feedback',
+        type: 'POST',
+        data: data,
+        cache: false,
+        dataType: 'json',
+        processData: true
+        // contentType: 'application/json; charset=UTF-8'
+      })
+      .always(function (response) {
+        if (response.status == 200 || response.status == 201) cb(true);
+        else cb(false);
+      });
     },
 
     feedback: function (data, cb) {
@@ -725,12 +713,10 @@ export default qx.Class.define("DataManager", {
         processData: true
         // contentType: 'application/json; charset=UTF-8'
       })
-        .done(function (data) {
-          // cb(data);
-        })
-        .fail(function (a) {
-          // cb(a);
-        });
+      .always(function (response) {
+        if (response.status == 200 || response.status == 201) cb(true);
+        else cb(false);
+      });
     }
   }
 });

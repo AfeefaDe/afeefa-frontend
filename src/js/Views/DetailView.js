@@ -181,6 +181,16 @@ export default qx.Class.define("DetailView", {
 				});
 			that.scrollContainer.append(that.timestampContainer);
 
+			//////////////////
+			// feedback btn //
+			//////////////////
+			that.feedbackBtn = $("<div />")
+				.addClass('feedback-btn')
+				.on('click', function(e){
+					APP.getFormView().load( 'entryFeedback', { entry: that.record, mustaches: { recipient: 'Redaktionsteam Afeefa ' + APP.getArea().label, suspect: that.record.name } } );
+				});
+			that.scrollContainer.append(that.feedbackBtn);
+
 			$('#main-container').append(that.view);
 
 			this.base(arguments);
@@ -419,6 +429,8 @@ export default qx.Class.define("DetailView", {
 				that.timestampContainer.show();
 			}
 
+			that.feedbackBtn.append(that.getWording('entry.button.feedback'));
+
 			// that.shareButton.append('<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdev.afeefa.de%2F'+record.entryType+'%2F'+record.id+'&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
 			// that.shareButton.append('<div class="btn fb-share-button" data-href="' +window.location.origin+ '/' +that.currentEntryType+ '/' +record.id+ '" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F' +window.location.hostname+ '%2F' +that.currentEntryType+ '%2F' +record.id+ '&amp;src=sdkpreparse">Teilen</a></div>');
 
@@ -484,6 +496,8 @@ export default qx.Class.define("DetailView", {
 
 			// timestamp
 			that.timestampContainer.empty().hide();
+			
+			that.feedbackBtn.empty();
 			
 			// linked entries
 			that.linkedEntriesContainer.empty().hide();

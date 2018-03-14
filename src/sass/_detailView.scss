@@ -78,6 +78,14 @@
 		background-image: url("../img/icon_202.svg");
 	}
 
+	.feedback-btn {
+		margin: 1em 0;
+		text-transform: uppercase;
+		font-size: .8em;
+		color: $gray50;
+		text-align: center;
+	}
+
 	/* IMAGE PROPERTY */
 	.image-container {
 		max-height: 10em;
