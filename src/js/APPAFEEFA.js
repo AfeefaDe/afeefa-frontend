@@ -141,7 +141,7 @@ export default qx.Class.define("APPAFEEFA", {
 		detectArea: function(){
 			var that = this;
 
-			if( document.location.hostname.indexOf('leipzig.afeefa') > -1 && prompt() === 'raum-410' ){
+			if( document.location.hostname.indexOf('leipzig.afeefa') > -1 ){
 				that.setArea(that.getData().areas.leipzig);
 			}
 			else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 ){

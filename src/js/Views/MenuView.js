@@ -92,20 +92,30 @@ export default qx.Class.define("MenuView", {
       that.imprintBtn.append(that.imprintBtnLabel);
       that.menu.append(that.imprintBtn);
 
-      // logo
-      var a = $('<a />').attr({
-        'id': 'dfa-logo',
-        'href': 'http://dresdenfueralle.de',
-        'target': '_blank'
-      });
-      that.dfaLogo  = $('<img />').attr({
-        'src': '/' + APP.getConfig().imgPath + 'icon_37.svg',
-        alt: 'Dresden für Alle Logo',
-        title: 'Dresden für Alle Logo'
-      });
-      a.append(that.dfaLogo);
-      that.menu.append(a);
+      // team of charge
+      var teamOfCharge = $('<div />')
+        .addClass('teamOfCharge');
+      that.teamOfCharge_text = $('<p />');
+      teamOfCharge.append(that.teamOfCharge_text);
+      
+      that.teamOfCharge_link = $('<a />').attr('target', '_blank');
+      teamOfCharge.append(that.teamOfCharge_link);
+      that.teamOfCharge_img = $('<img />');
+      that.teamOfCharge_link.append(that.teamOfCharge_img);
+      
+      var contact = $('<a />')
+        .addClass('teamOfCharge-contact')
+        .attr('href', '/feedback')
+        .append('Kontaktieren')
+        .click(function(e){
+          e.preventDefault();
+          that.close();
+          APP.route('/feedback', that.getWording('form.heading.feedback'), null);
+        });
+      teamOfCharge.append(contact);
 
+      that.menu.append(teamOfCharge);
+      
       var fundingNote = $('<p />')
         .addClass('fundingNote')
         .append('Gefördert durch den Freistaat Sachsen im Rahmen des Landesprogramms Integrative Maßnahmen');
@@ -169,7 +179,13 @@ export default qx.Class.define("MenuView", {
       that.pressBtnLabel.append( that.getWording('menu.press') );
       that.imprintBtnLabel.append( that.getWording('menu.imprint') );
       that.facebookBtnLabel.append( that.getWording('menu.facebook') );
-
+      that.teamOfCharge_text
+        .append( that.getWording('menu.teamOfCharge') + ':')
+        .append('<br>')
+        .append($('<span />').append(APP.getArea().teamOfCharge.name));
+      that.teamOfCharge_link.attr('href', APP.getArea().teamOfCharge.url);
+      // that.teamOfCharge_img.attr('src', '/' + APP.getConfig().imgPath + 'icon_37.svg');
+      that.teamOfCharge_img.attr('src', APP.getArea().teamOfCharge.img);
     },
 
     reset: function(){
@@ -180,6 +196,7 @@ export default qx.Class.define("MenuView", {
       that.pressBtnLabel.empty();
       that.imprintBtnLabel.empty();
       that.facebookBtnLabel.empty();
+      that.teamOfCharge_text.empty();
 
     },
 
