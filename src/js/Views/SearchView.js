@@ -126,14 +126,15 @@ export default qx.Class.define("SearchView", {
           }
         );
       }
-
+      
+      // WISDOM
       if (APP.getArea().wisdomRootId !== undefined) {
         that.createSectionHeader( '' );
-
+        
         var action = function(){
           APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
         };
-
+        
         that.createListResult(
           {
             iconClass: 'wisdom',
@@ -145,7 +146,33 @@ export default qx.Class.define("SearchView", {
         );
       }
 
-      // if (APP.getData().dataKey == 'dresden') {
+      // THEMEN
+      if (APP.getArea().dataKey == 'leipzig') {
+        // that.createSectionHeader( that.getWording('search.label.eventstoday') );
+        that.createSectionHeader( that.getWording('category') );
+
+        var categories = _.filter(APP.getData().categories, function(cat){
+          return cat.name != 'hotspots';
+        });
+        _.each(categories, function(cat) {
+          var action = function(){
+            APP.getLegendView().setFilter( {category: cat.name} );
+            // APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
+          };
+          
+          that.createListResult(
+            {
+              cssClass: 'result-category ' + 'cat-' + cat.name,
+              iconClass: 'cat-' + cat.name,
+              label: that.getWording('cat.' + cat.name),
+              // subLabel: that.getWording('cat.' + cat.name + '.description'),
+              action: action,
+              targetContainertEl: that.scrollContainer
+            }
+          );
+        });
+      }
+
       if (APP.getDataManager().getAllEvents().length > 0) {
         // today's events
         var eventsToday = APP.getDataManager().getAllEvents( {timeSpan: 'onlyAtDayX', atDate: moment()} );
@@ -321,7 +348,7 @@ export default qx.Class.define("SearchView", {
 
       const entries = APP.getData().entries;
 
-      var entriesFiltered, blockSyncWithMap = false;
+      var entriesFiltered, chapters = [], blockSyncWithMap = false;
 
       // search type for individual result formatting
       that.currentSearchType = null;
@@ -354,6 +381,10 @@ export default qx.Class.define("SearchView", {
           entriesFiltered = _.filter( entries, function(entry){
               return (entry.category && entry.category.name == operationQuery);
           });
+
+          if (APP.getArea().chapterCategoryMapping !== undefined) {
+            chapters = APP.getArea().chapterCategoryMapping[operationQuery];
+          }
 
           that.setSearchTag("cat-" + operationQuery, that.getWording('cat.' + operationQuery));
           APP.setPageTitle( that.getWording('cat.' + operationQuery) ); // overwrite page title set in APP.route()
@@ -472,6 +503,27 @@ export default qx.Class.define("SearchView", {
 
           return false;
         });
+      }
+
+      if (chapters.length > 0) {
+        _.each(chapters, function(chapter) {
+          var action = function(){
+            APP.route('/chapter/' + chapter.id, null, null, true);
+          };
+  
+          that.createListResult(
+            {
+              cssClass: 'result-chapter',
+              iconClass: 'wisdom',
+              label: chapter.name,
+              // subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Flüchtlingshilfe',
+              action: action,
+              targetContainertEl: that.scrollContainer
+            }
+          );
+        });
+  
+        that.createSectionHeader('');
       }
 
       _.each(entriesFiltered, function(entry) {

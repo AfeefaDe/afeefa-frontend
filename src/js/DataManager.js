@@ -121,12 +121,33 @@ export default qx.Class.define("DataManager", {
             label: 'Leipzig',
             redirect: 'https://leipzig.afeefa.de',
             initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
-            wisdomRootId: 1,
             inMainMenu: true,
             teamOfCharge: {
               name: 'Interaction Leipzig e.V.',
               url: 'http://www.interaction-leipzig.de',
               img: 'interaction-logo.jpg'
+            },
+            wisdomRootId: 1,
+            chapterCategoryMapping: {
+              "advice-and-support": [
+                { id: 27, name: "Patenschaften machen den Unterschied" },
+                { id: 28, name: "Rechts- und Sozialberatung" },
+                { id: 12, name: "Lebenslagen: Familien, Frauen, Männer, LSBTI*, Kinder" }
+              ],
+              "living-in-leipzig": [
+                { id: 14, name: "Gesundheit" },
+                { id: 15, name: "Wohnen" },
+                { id: 16, name: "Religion" },
+                { id: 17, name: "Mobil sein" },
+                { id: 18, name: "Alltag" },
+                { id: 19, name: "Freizeit" },
+                { id: 20, name: "Mitwirken und sich einmischen" }
+              ],
+              "work-and-education": [
+                { id: 22, name: "Deutsch lernen und Deutsch sprechen" },
+                { id: 23, name: "Kindergarten und Schule" },
+                { id: 24, name: "Arbeit, Ausbildung, Studium" }
+              ]
             }
           },
           bautzen: {

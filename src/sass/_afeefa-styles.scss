@@ -99,7 +99,7 @@ button {
     &:first-child, &.first-child {
       margin-top: 1rem;
     }
-    
+
     .icon {
       @include entityShapes;
       @include categoryColors;
@@ -141,21 +141,35 @@ button {
         background-size: 100%;
       }
     }
-
+    
     .labels {
       flex: 1;
       display: flex;
       flex-direction: column;
+      justify-content: center;
 
       span {
         line-height: 1.5em;
         cursor: pointer;
       }
-
+      
       .sub-label {
         color: $gray50;
         font-size: .8em;
       }
+    }
+
+    &.result-category {
+      @include categoryColors($alpha_background: .4);
+      margin-bottom: 1em;
+      
+      .icon {
+        background-color: initial;
+      }
+    }
+    
+    &.result-chapter {
+      margin-bottom: 1em;
     }
   }
 
@@ -168,7 +182,7 @@ button {
   .section-header {
     text-transform: uppercase;
     color: $gray50;
-    margin: 2em 0.8em 1em;
+    margin: 2em 0 1em;
     
     &:first-child {
       margin: 0 1em 1em;

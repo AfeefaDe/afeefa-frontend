@@ -63,40 +63,15 @@ export default qx.Class.define("AreaView", {
 			
 			that.load();
 		},
-
+		
 		load: function(){
 			var that = this;
-
+			
 			that.area.empty().append( APP.getArea().label );
 			that.language.empty().append( that.getWording('lan.'+APP.getLM().getCurrentLang()) );
-
-			// that.view.empty();
-
-			// _.each( APP.getData().areas, function(value, key){
-				
-			// 	var item = $("<div />")
-			// 		.addClass('area-btn')
-			// 		.append(value.label)
-			// 		.click(function(){
-			// 			that.close();
-
-			// 			// change area if different from currently selected one
-			// 			if( value != APP.getArea() ){
-			// 				if( value.redirect ){
-			// 					window.open(value.redirect, "_self");
-			// 				} else {
-			// 					APP.setArea(value);
-			// 					that.say('areaChanged', APP.getArea());
-			// 					that.say('languageChanged', APP.getLM().getCurrentLang());
-			// 					that.load();
-			// 				}
-			// 			}
-			// 		});
-				
-			// 	if( value == APP.getArea() ) item.addClass('active');
-
-			// 	that.view.append(item);
-			// });
+			
+			// just hiding
+			if (APP.getArea().dataKey == 'leipzig') that.language.hide();
 		},
 
 		open: function( cb ){
