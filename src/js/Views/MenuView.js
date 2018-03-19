@@ -180,12 +180,11 @@ export default qx.Class.define("MenuView", {
       that.imprintBtnLabel.append( that.getWording('menu.imprint') );
       that.facebookBtnLabel.append( that.getWording('menu.facebook') );
       that.teamOfCharge_text
-        .append( that.getWording('menu.teamOfCharge') + ':')
+        .append($('<span />').append('Afeefa ' + APP.getArea().label + ' ' + that.getWording('menu.teamOfCharge') + ':'))
         .append('<br>')
-        .append($('<span />').append(APP.getArea().teamOfCharge.name));
+        .append(APP.getArea().teamOfCharge.name);
       that.teamOfCharge_link.attr('href', APP.getArea().teamOfCharge.url);
-      // that.teamOfCharge_img.attr('src', '/' + APP.getConfig().imgPath + 'icon_37.svg');
-      that.teamOfCharge_img.attr('src', APP.getArea().teamOfCharge.img);
+      that.teamOfCharge_img.attr('src', '/' + APP.getConfig().imgPath + APP.getArea().teamOfCharge.img);
     },
 
     reset: function(){

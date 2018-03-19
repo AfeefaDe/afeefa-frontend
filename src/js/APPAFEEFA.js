@@ -141,12 +141,12 @@ export default qx.Class.define("APPAFEEFA", {
 		detectArea: function(){
 			var that = this;
 
-			if( document.location.hostname.indexOf('leipzig.afeefa') > -1 ){
+			if ( document.location.hostname.indexOf('leipzig.afeefa') > -1 ) {
 				that.setArea(that.getData().areas.leipzig);
 			}
-			else if( document.location.hostname.indexOf('bautzen.afeefa') > -1 ){
+			else if ( document.location.hostname.indexOf('bautzen.afeefa') > -1 ) {
 				that.setArea(that.getData().areas.bautzen);
-					}
+			}
 			else {
 				that.setArea(that.getData().areas.dresden);
 			}

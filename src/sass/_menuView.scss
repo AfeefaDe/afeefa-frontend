@@ -5,12 +5,13 @@
 	opacity: 0;
 	
 	color: $white;
+	font-weight: 100;
 	box-sizing: border-box;
 	width: 20em;
 	left: -20em;
 	transition: left 150ms;
 	height: 100%;
-	padding: 2em 0;
+	padding: 2rem;
 	background-color: $gray95;
 	box-shadow: 1px 0px 2px #111;
 	overflow-y: scroll;
@@ -31,12 +32,12 @@
 	}
 
 	.teamOfCharge {
-		margin: 3em auto 0 auto;
-		padding: 1rem;
-		font-size: 0.8rem;
+		margin-top: 3em;
 		
 		span {
-			font-size: 1rem;
+			font-size: 0.8rem;
+			font-weight: normal;
+			color: $gray80;
 		}
 
 		img {
@@ -45,32 +46,40 @@
 
 		.teamOfCharge-contact {
 			display: block;
-			padding: 1em 0;
-			font-size: 1rem;
+			margin-top: 1em;
+			
+			&:hover { 
+				transition: text-indent 150ms;
+				text-indent: .5em;
+			}
 		}
 	}
 
 	.item {
 		box-sizing: border-box;
 		width: 100%;
-		padding: 0 5em 0 1em;
-		background-color: rgba(0,0,0,0.5);
-		margin-bottom: 1em;
+		padding: 0 5em 0 0;
+		margin: 1em 0;
 		cursor: pointer;
 		text-align: left;
-
-		&:hover { background-color: rgba(0,0,0,0.6); }
+		border-bottom: 1px solid $gray80;
+		
+		&:hover { 
+			transition: text-indent 150ms;
+			text-indent: .5em;
+		}
 
 		a, span {
 			line-height: 2em;
-			font-weight: 100;
 			text-decoration: none;
 		}
 	}
 
 	.fundingNote {
-		padding: 1rem;
+		margin-top: 3em;
 		font-size: 0.8rem;
+			color: $gray80;
+		font-weight: normal;
 	}
 
 }

@@ -113,7 +113,7 @@ export default qx.Class.define("DataManager", {
             teamOfCharge: {
               name: 'Afeefa - Digitaler Zusammenhalt e.V.',
               url: 'https://about.afeefa.de',
-              img: null
+              img: 'afeefa-verein-logo.svg'
             }
           },
           leipzig: {
@@ -126,7 +126,7 @@ export default qx.Class.define("DataManager", {
             teamOfCharge: {
               name: 'Interaction Leipzig e.V.',
               url: 'http://www.interaction-leipzig.de',
-              img: 'https://interaction-leipzig.de/interaction-wp/wp-content/uploads/2015/10/logo2.png'
+              img: 'interaction-logo.jpg'
             }
           },
           bautzen: {
@@ -138,7 +138,7 @@ export default qx.Class.define("DataManager", {
             teamOfCharge: {
               name: 'House of Resources Bautzen',
               url: 'http://www.hor-bautzen.de',
-              img: 'http://www.hor-bautzen.de/wp-content/uploads/2017/07/hor_bautzen_pur.fw_.png'
+              img: 'horbz-logo.jpg'
             }
           },
           pirna: {
