@@ -148,7 +148,7 @@ export default qx.Class.define("APPAFEEFA", {
 				that.setArea(that.getData().areas.bautzen);
 			}
 			else {
-				that.setArea(that.getData().areas.leipzig);
+				that.setArea(that.getData().areas.dresden);
 			}
 		},
 
