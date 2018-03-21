@@ -82,24 +82,6 @@ export default qx.Class.define("DetailView", {
 				);
 			that.scrollContainer.append(that.certificateBadge);
 
-			// message button
-			that.messageBtn = $("<div />")
-				.addClass('message-btn')
-				.click(function(){
-			 		APP.getFormView().load( 'contact', { entry: that.record, mustaches: { recipient: that.record.name } } );
-				});
-			that.view.append(that.messageBtn);
-
-			that.bookmarkBtn = $("<div />")
-				.addClass('bookmark-btn')
-				.click(function(){
-			 		if( APP.getUser().bookmark(that.record) )
-			 			$(this).addClass('active');
-			 		else
-			 			$(this).removeClass('active');
-				});
-			that.view.append(that.bookmarkBtn);
-
 			////////////////////
 			// image property //
 			////////////////////
@@ -170,7 +152,47 @@ export default qx.Class.define("DetailView", {
 			//////////////////
 			that.shareButton = $("<div />").addClass('fb-share');
 			that.scrollContainer.append(that.shareButton);					
-
+			
+			////////////////
+			// action bar //
+			////////////////
+			that.actionBar = $("<div />")
+				.addClass('action-bar');
+			that.scrollContainer.append(that.actionBar);
+			
+			// message button
+			that.messageBtn = $("<div />")
+				.addClass('action message-btn')
+				.click(function(){
+					APP.getFormView().load( 'contact', { entry: that.record, mustaches: { recipient: that.record.name } } );
+				});
+				that.actionBar.append(that.messageBtn);
+			// symbol
+			that.messageBtnIcon = $("<div />").addClass('action-icon');
+			that.messageBtn.append(that.messageBtnIcon);
+			// label
+			that.messageBtnLabel = $("<span />")
+				.append('Kontaktieren');
+			that.messageBtn.append(that.messageBtnLabel);
+			
+			// bookmark button
+			that.bookmarkBtn = $("<div />")
+				.addClass('action bookmark-btn')
+				.click(function(){
+					if( APP.getUser().bookmark(that.record) )
+						$(this).addClass('active');
+					else
+						$(this).removeClass('active');
+				});
+			// symbol
+			that.bookmarkBtnIcon = $("<div />").addClass('action-icon');
+			that.bookmarkBtn.append(that.bookmarkBtnIcon);
+			// label
+			that.bookmarkBtnLabel = $("<span />")
+				.append('Merken');
+			that.bookmarkBtn.append(that.bookmarkBtnLabel);
+			that.actionBar.append(that.bookmarkBtn);
+			
 			////////////////
 			// timestamps //
 			////////////////
@@ -186,6 +208,7 @@ export default qx.Class.define("DetailView", {
 			//////////////////
 			that.feedbackBtn = $("<div />")
 				.addClass('feedback-btn')
+				.append('<strong>Weißt du mehr zu diesem Eintrag?</strong><br>Schreibe uns eine Nachricht.')
 				.on('click', function(e){
 					APP.getFormView().load( 'entryFeedback', { entry: that.record, mustaches: { recipient: 'Redaktionsteam Afeefa ' + APP.getArea().label, suspect: that.record.name } } );
 				});
@@ -429,8 +452,6 @@ export default qx.Class.define("DetailView", {
 				that.timestampContainer.show();
 			}
 
-			that.feedbackBtn.append(that.getWording('entry.button.feedback'));
-
 			// that.shareButton.append('<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdev.afeefa.de%2F'+record.entryType+'%2F'+record.id+'&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>');
 			// that.shareButton.append('<div class="btn fb-share-button" data-href="' +window.location.origin+ '/' +that.currentEntryType+ '/' +record.id+ '" data-layout="button" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F' +window.location.hostname+ '%2F' +that.currentEntryType+ '%2F' +record.id+ '&amp;src=sdkpreparse">Teilen</a></div>');
 
@@ -496,8 +517,6 @@ export default qx.Class.define("DetailView", {
 
 			// timestamp
 			that.timestampContainer.empty().hide();
-			
-			that.feedbackBtn.empty();
 			
 			// linked entries
 			that.linkedEntriesContainer.empty().hide();
