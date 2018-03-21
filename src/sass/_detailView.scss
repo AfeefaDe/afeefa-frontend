@@ -17,7 +17,7 @@
 		cursor: pointer;
 
 		h1 {
-			padding: 1.5rem 5rem 1.4rem 1.5rem;;
+			padding: 1.5rem 1.5rem 1.4rem;
 		}
 	}
 
@@ -262,7 +262,7 @@
 			overflow: inherit;
 			text-overflow: inherit;
 			white-space: inherit;
-			padding: 1.5rem 5rem 1.4rem 4rem;
+			padding: 1.5rem 1.5rem 1.4rem 4rem;
 		}
 		
 		&.active {
@@ -277,7 +277,7 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
-				padding: 1.5rem 5rem 1.4rem 1.5rem;;
+				padding: 1.5rem 1.5rem 1.4rem 1.5rem;
 			}
 
 			.back-btn, badge-certificate {
