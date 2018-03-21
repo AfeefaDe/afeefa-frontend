@@ -198,28 +198,6 @@ export default qx.Class.define("SearchView", {
         );
       }
 
-      that.createSectionHeader( that.getWording('search.label.newentries') );
-      var newProjects = APP.getDataManager().getNewestProjects(5);
-      _.each(newProjects, function(entry) {
-        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
-      });
-
-      that.createSectionHeader( that.getWording('search.label.lists') );
-
-      // support wanted
-      var action = function(){
-        that.inputField.val('prop:supportwanted').trigger( "input" );
-      };
-      that.createListResult(
-        {
-          iconClass: 'support-wanted',
-          label: that.getWording('search.label.supportwanted'),
-          subLabel: that.getWording('search.sublabel.supportwanted'),
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
-
       that.createSectionHeader( that.getWording('search.label.activity') );
      
       // add new entry
@@ -244,6 +222,29 @@ export default qx.Class.define("SearchView", {
           iconClass: 'feedback',
           label: that.getWording('form.heading.feedback'),
           subLabel: that.getWording('search.sublabel.feedback'),
+          action: action,
+          targetContainertEl: that.scrollContainer
+        }
+      );
+
+
+      that.createSectionHeader( that.getWording('search.label.newentries') );
+      var newProjects = APP.getDataManager().getNewestProjects(5);
+      _.each(newProjects, function(entry) {
+        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+      });
+
+      that.createSectionHeader( that.getWording('search.label.lists') );
+
+      // support wanted
+      var action = function(){
+        that.inputField.val('prop:supportwanted').trigger( "input" );
+      };
+      that.createListResult(
+        {
+          iconClass: 'support-wanted',
+          label: that.getWording('search.label.supportwanted'),
+          subLabel: that.getWording('search.sublabel.supportwanted'),
           action: action,
           targetContainertEl: that.scrollContainer
         }
