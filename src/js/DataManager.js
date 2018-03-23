@@ -750,8 +750,9 @@ export default qx.Class.define("DataManager", {
         // contentType: 'application/json; charset=UTF-8'
       })
       .always(function (response) {
-        if (response.status == 200 || response.status == 201) cb(true);
-        else cb(false);
+        cb(true);
+        // if (response.status == 200 || response.status == 201) cb(true);
+        // else cb(false);
       });
     }
   }
