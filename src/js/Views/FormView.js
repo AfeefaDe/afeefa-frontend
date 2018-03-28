@@ -257,33 +257,6 @@ export default qx.Class.define("FormView", {
           cb(success);
         }
       );
-
-      // send outgoing message
-      var entryTypes = {0: 'Orga', 1: 'Börse', 2: 'Event'};
-
-      // to slack
-      APP.getDataManager().createSlackMessage({
-          heading: function () {
-              var entryTypeString = entryTypes[data.entry.type];
-              var marketTypeString = (data.entry.offer) ? 'Angebot' : 'Gesuch';
-              if (data.entry.type == 1) entryTypeString += ' (' + marketTypeString + ')'
-              return 'Neuer Eintrag: ' + entryTypeString + ' "' + data.entry.name + '"'
-          }(),
-          message: '```\n' + data.entry.descriptionShort + '\n```\n'
-          + 'für Kinder: `' + (data.entry.forChildren ? 'ja' : '-') + '`\n'
-          + 'Unterstützer gesucht: `' + (data.entry.supportWanted ? 'ja' : 'nein') + '`\n'
-          + 'Unterstützung Details: `' + data.additional.internalComment + '`\n'
-          + 'Kontaktperson: `' + data.entry.speakerPublic + '`\n'
-          + 'Sprachen: `' + data.entry.spokenLanguages + '`\n'
-          + 'mail: `' + data.entry.mail + '` '
-          + 'web: `' + data.entry.web + '` '
-          + 'facebook: `' + data.entry.facebook + '` '
-          + 'phone: `' + data.entry.phone + '`\n'
-          + 'Ort: `' + data.location.placename + ', ' + data.location.street + ', ' + data.location.zip + ' ' + data.location.city + '`\n'
-          + 'von: `' + data.entry.dateFrom + ' (' + data.entry.timeFrom + ')' + '`\n'
-          + 'bis: `' + data.entry.dateTo + ' (' + data.entry.timeTo + ')' + '`\n'
-          + 'Anmerkung: `' + data.additional.comment + '`\n'
-      }, null, APP.getArea().dataKey);
     },
 
     createFeedback: function (data, options, cb) {
@@ -309,12 +282,6 @@ export default qx.Class.define("FormView", {
     createEntryFeedback: function (data, options, cb) {
       var that = this;
 
-      // to slack
-      APP.getDataManager().createSlackMessage({
-        heading: 'Feedback zum Eintrag _' + options.entry.name + '_ von _' + data.feedback.author + '_ (' + data.feedback.mail + ')',
-        message: '```\n' + data.feedback.message + '\n```'
-      });
-
       APP.getDataManager().entryFeedback(
         options.entry,
         {
@@ -330,13 +297,6 @@ export default qx.Class.define("FormView", {
 
     createContact: function (data, options, cb) {
       var that = this;
-
-      // to slack
-      APP.getDataManager().createSlackMessage({
-        heading: 'Kontaktanfrage von _' + data.contact.author + ' (' + data.contact.mail + ')_ an ' + options.entry.name + ' (' + APP.getRouter().getFrontendUrlForEntry(options.entry, {absolute: true}) + ')',
-        message: '```\n' + data.contact.message + '\n```'
-        // message: '```Nachricht wurde anonymisiert```'
-      });
 
       APP.getDataManager().contact(
         options.entry,
