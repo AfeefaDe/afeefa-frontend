@@ -125,7 +125,7 @@ export default qx.Class.define("DataManager", {
             teamOfCharge: {
               name: 'Interaction Leipzig e.V.',
               url: 'http://www.interaction-leipzig.de',
-              img: 'interaction-logo.jpg'
+              img: 'interaction-logo.png'
             },
             wisdomRootId: 1,
             chapterCategoryMapping: {
