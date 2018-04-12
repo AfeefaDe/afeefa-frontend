@@ -73,15 +73,6 @@
 	<div id="main-container">
 	</div>
 
-	<div id="footer">
-		<div class="opt1">
-			<p class="donate">Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://about.afeefa.de/spenden/"><strong>Spende</strong></a>
-			</p>
-		</div>
-		<div class="opt2">
-			<p class="donate">Was meinen Sie zu Afeefa.de? Für eine Beantwortung unserer kurzen <a target="_blank" href="https://afeefade.typeform.com/to/csN7YQ"><strong>Umfrage</strong></a> wären wir sehr dankbar!
-			</p>
-		</div>
-	</div>
+	<div id="footer"></div>
 </body>
 </html>

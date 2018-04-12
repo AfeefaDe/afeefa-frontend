@@ -1,5 +1,5 @@
 import qx from 'qooxdoo';
- 
+
 
 import Daddy from './Daddy.js';
 import DataManager from './DataManager.js';
@@ -13,12 +13,12 @@ import Utility from './Utility.js';
 //import restive from './restive.min.js';
 
 export default qx.Class.define("APPAFEEFA", {
-	extend : Daddy,
+	extend: Daddy,
 	type: "singleton",
 
 	// extend: "Daddy",
 
-	construct: function(){
+	construct: function () {
 		var that = this;
 		that.setDataManager(new DataManager());
 		that.setRouter(new Router());
@@ -76,7 +76,7 @@ export default qx.Class.define("APPAFEEFA", {
 		that.setActiveFilter(null);
 	},
 
-	properties : {
+	properties: {
 		title: {},
 		area: {},
 		DataManager: {},
@@ -105,13 +105,13 @@ export default qx.Class.define("APPAFEEFA", {
 		activeFilter: {}
 	},
 
-	members : {
+	members: {
 
 
-		init: function( cb ){
+		init: function (cb) {
 			var that = this;
 
-      		moment.locale('de');
+			moment.locale('de');
 
 			// analyse user device
 			that.getUser().load();
@@ -126,11 +126,12 @@ export default qx.Class.define("APPAFEEFA", {
 			that.loadIndependantUI();
 
 			// fetch only necessary data for app startup
-			that.getDataManager().fetchInitialData(function(){
-        
+			that.getDataManager().fetchInitialData(function () {
+
 				cb();
-      			that.loading(true);
-				
+				if (APP.getUserDevice() == 'desktop') that.buildFooter();
+				that.loading(true);
+
 				// fetch other data (e.g. entries, that takes a long time loading)
 				that.getDataManager().fetchAllData();
 			});
@@ -138,13 +139,13 @@ export default qx.Class.define("APPAFEEFA", {
 			that.addEvents();
 		},
 
-		detectArea: function(){
+		detectArea: function () {
 			var that = this;
 
-			if ( document.location.hostname.indexOf('leipzig.afeefa') > -1 ) {
+			if (document.location.hostname.indexOf('leipzig.afeefa') > -1) {
 				that.setArea(that.getData().areas.leipzig);
 			}
-			else if ( document.location.hostname.indexOf('bautzen.afeefa') > -1 ) {
+			else if (document.location.hostname.indexOf('bautzen.afeefa') > -1) {
 				that.setArea(that.getData().areas.bautzen);
 			}
 			else {
@@ -152,130 +153,151 @@ export default qx.Class.define("APPAFEEFA", {
 			}
 		},
 
-		route: function(route, name, data, keyState) {
+		route: function (route, name, data, keyState) {
 			var that = this;
-			that.getRouter().setUrl( {route: route, name: name, data: data, keyState: keyState} );
+			that.getRouter().setUrl({ route: route, name: name, data: data, keyState: keyState });
 			APP.setPageTitle(name);
 		},
 
-		addEvents: function(){
-		var that = this;
+		addEvents: function () {
+			var that = this;
 
-			that.listen('languageChanged', function(){
+			that.listen('languageChanged', function () {
 				that.loading(true);
 			});
 
-			that.listen('fetchedNewData', function(){
+			that.listen('fetchedNewData', function () {
 				that.loading(false);
 			});
 		},
 
-		loading: function( bool ){
-        var that = this;
-
-        if (bool) {
-            $('body').addClass('loading');
-        }
-        else {
-            $('body').removeClass('loading');
-        }
-    },
-
-		detectUserDevice: function(){
+		loading: function (bool) {
 			var that = this;
 
-			var isMobile = { 
-				Android: function() { return navigator.userAgent.match(/Android/i); }, 
-				BlackBerry: function() { return navigator.userAgent.match(/BlackBerry/i); }, 
-				iOS: function() { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, 
-				Opera: function() { return navigator.userAgent.match(/Opera Mini/i); }, 
-				Windows: function() { return navigator.userAgent.match(/IEMobile/i); }, 
-				any: function() { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); }
+			if (bool) {
+				$('body').addClass('loading');
+			}
+			else {
+				$('body').removeClass('loading');
+			}
+		},
+
+		detectUserDevice: function () {
+			var that = this;
+
+			var isMobile = {
+				Android: function () { return navigator.userAgent.match(/Android/i); },
+				BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); },
+				iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); },
+				Opera: function () { return navigator.userAgent.match(/Opera Mini/i); },
+				Windows: function () { return navigator.userAgent.match(/IEMobile/i); },
+				any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); }
 			};
 
 			that.setUserDevice('desktop');
-			if ( isMobile.any() ) that.setUserDevice('mobile');
-			
+			if (isMobile.any()) that.setUserDevice('mobile');
+
 			// TODO detect tablets, because there is special behavior for tablets already implemented in the afeefa app
 			// if( $('body').hasClass('tablet') ) that.setUserDevice('tablet');
 
-			$('html').addClass( that.getUserDevice() );
+			$('html').addClass(that.getUserDevice());
 		},
 
-		loadIndependantUI: function(){
+		loadIndependantUI: function () {
 			var that = this;
 
 			// curtain
 			var curtain = $("<div />")
 				.attr('id', 'curtain')
-				.on('click', function(e) {
+				.on('click', function (e) {
 					that.say('curtainclicked');
 				});
-      		$('#main-container').append(curtain);
+			$('#main-container').append(curtain);
 			that.setCurtain(curtain);
 
-			// switch footer content
-			function togglFooter(i){
-				if(i%2){
-					$('#footer div.opt1').hide();
-					$('#footer div.opt2').fadeIn(500);
-				} else {
-					$('#footer div.opt2').hide();
-					$('#footer div.opt1').fadeIn(500);
-				}
-			}
-			var i=0;
-			togglFooter(i);
-			setInterval(function(){
-				i++;
-				togglFooter(i);
-			}, 30000);
-
 			// reload on footer click
-			$('div#footer').on('contextmenu', function(e){
+			$('div#footer').on('contextmenu', function (e) {
 				e.preventDefault();
-				// APP.loading(true);
 				that.say('languageChanged', that.getLM().getCurrentLang());
 			});
 		},
 
-		getMainCategory: function(subCategory){
+		buildFooter: function () {
+			// # create content
+			var donation = $("<div />");
+			$('#footer').append(donation);
+
+			var contentConfig = {
+				default: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://about.afeefa.de/spenden/"><strong>Spende</strong></a></p>',
+				leipzig: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://interaction-leipzig.de/spende/"><strong>Spende für das Projekt in Leipzig</strong></a> oder einer <a target="_blank" href="https://about.afeefa.de/spenden/"><strong>Spende für den technischen Betrieb</strong></a> und die Weiterentwicklung der Afeefa Software.</p>'
+			}
+			var content = (contentConfig[APP.getArea().dataKey] !== undefined) ? contentConfig[APP.getArea().dataKey] : contentConfig.default;
+			donation.append(content);
+
+			// # create content
+			var survey = $("<div />");
+			$('#footer').append(survey);
+
+			var contentConfig = {
+				default: '<p>Was meinen Sie zu Afeefa.de? Für eine Beantwortung unserer kurzen <a target="_blank" href="https://afeefade.typeform.com/to/csN7YQ"><strong>Umfrage</strong></a> wären wir sehr dankbar!</p>',
+			}
+			var content = (contentConfig[APP.getArea().dataKey] !== undefined) ? contentConfig[APP.getArea().dataKey] : contentConfig.default;
+			survey.append(content);
+
+			// # swap content
+			function togglFooter(i) {
+				if (i % 2) {
+					donation.hide();
+					survey.fadeIn(500);
+				} else {
+					survey.hide();
+					donation.fadeIn(500);
+				}
+			}
+			var i = 0;
+			togglFooter(i);
+			setInterval(function () {
+				i++;
+				togglFooter(i);
+			}, 30000);
+		},
+		getMainCategory: function (subCategory) {
 			var that = this;
 			var category;
 
-			category = _.find(that.getData().categories, function(cat){
-				var found = _.find(cat.sub, function(subCat){
+			category = _.find(that.getData().categories, function (cat) {
+				var found = _.find(cat.sub, function (subCat) {
 					return subCat.name == subCategory;
 				});
-				if(found) return true;
+				if (found) return true;
 			});
 
 			return category;
 		},
 
-		setPageTitle: function(title) {
+		setPageTitle: function (title) {
 			var that = this;
-			var pageTitle = title? 'Afeefa ' + APP.getArea().label + ' | ' + title : 'Afeefa ' + APP.getArea().label + ' | Knallbunter Stadtplan';
-			
+			var pageTitle = title ? 'Afeefa ' + APP.getArea().label + ' | ' + title : 'Afeefa ' + APP.getArea().label + ' | Knallbunter Stadtplan';
+
 			$('head title').empty().append(pageTitle);
 		},
 
-		setOpenGraphMetaProperties: function(properties){
+		setOpenGraphMetaProperties: function (properties) {
 			var that = this;
 
-			_.each(properties, function(value, key){
-				var selector = 'head meta[property="og:'+key+'"]'
+			_.each(properties, function (value, key) {
+				var selector = 'head meta[property="og:' + key + '"]'
 				$(selector).attr('content', value);
 			});
 		},
 
-		isOrga: function(record){
+		isOrga: function (record) {
 			var that = this;
 
 			return record.entryType == 'Orga';
 		},
 
-		isEvent: function(record){
+		isEvent: function (record) {
 			var that = this;
 
 			return record.entryType == 'Event';
