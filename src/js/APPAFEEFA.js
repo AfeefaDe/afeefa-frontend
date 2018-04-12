@@ -234,7 +234,7 @@ export default qx.Class.define("APPAFEEFA", {
 			$('#footer').append(survey);
 
 			var contentConfig = {
-				default: '<p>Was meinen Sie zu Afeefa.de? Für eine Beantwortung unserer kurzen <a target="_blank" href="https://afeefade.typeform.com/to/csN7YQ"><strong>Umfrage</strong></a> wären wir sehr dankbar!</p>',
+				default: '<p>Was meinen Sie zu Afeefa.de? Für eine Beantwortung unserer kurzen <a target="_blank" href="https://afeefade.typeform.com/to/csN7YQ">Umfrage</a> wären wir sehr dankbar!</p>',
 			}
 			var content = (contentConfig[APP.getArea().dataKey] !== undefined) ? contentConfig[APP.getArea().dataKey] : contentConfig.default;
 			survey.append(content);

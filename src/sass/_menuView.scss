@@ -23,7 +23,11 @@
 		opacity: 1;
 	}
 
-	#logo, a#dfa-logo {
+	p a {
+		border-bottom: 1px dotted $white;
+	}
+
+	#logo {
 		width: 80%;
 		display: block;
 		margin: 0 auto 3em auto;
@@ -42,11 +46,6 @@
 
 		img {
 			width: 90%;
-		}
-
-		.teamOfCharge-contact {
-			display: block;
-			margin-top: 1em;
 		}
 	}
 
@@ -73,10 +72,9 @@
 	.fundingNote {
 		margin-top: 3em;
 		font-size: 0.8rem;
-			color: $gray80;
+		color: $gray80;
 		font-weight: normal;
 	}
-
 }
 
 body.phone {
@@ -92,11 +90,5 @@ body.phone {
 		.menu-btn {
 			right: -5em;
 		}
-
-		/*.item.refugee-guide, .item.supporter-guide, .item.help, .item.about {*/
-			/*display: none;*/
-		/*}*/
-
 	}
-
 }

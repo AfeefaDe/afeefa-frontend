@@ -104,10 +104,9 @@ export default qx.Class.define("MenuView", {
       that.teamOfCharge_text = $('<p />');
       teamOfCharge.append(that.teamOfCharge_text);
 
-      var contact = $('<a />')
+      var contact = $('<p />')
         .addClass('teamOfCharge-contact')
-        .attr('href', '/feedback')
-        .append('<strong>Kontaktieren</strong>')
+        .append('<a href="/feedback">Kontaktieren</a>')
         .click(function (e) {
           e.preventDefault();
           that.close();
