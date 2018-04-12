@@ -227,12 +227,7 @@ export default qx.Class.define("APPAFEEFA", {
 			var donation = $("<div />");
 			$('#footer').append(donation);
 
-			var contentConfig = {
-				default: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://about.afeefa.de/spenden/"><strong>Spende</strong></a></p>',
-				leipzig: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://interaction-leipzig.de/spende/"><strong>Spende für das Projekt in Leipzig</strong></a> oder einer <a target="_blank" href="https://about.afeefa.de/spenden/"><strong>Spende für den technischen Betrieb</strong></a> und die Weiterentwicklung der Afeefa Software.</p>'
-			}
-			var content = (contentConfig[APP.getArea().dataKey] !== undefined) ? contentConfig[APP.getArea().dataKey] : contentConfig.default;
-			donation.append(content);
+			donation.append(APP.getArea().donationText);
 
 			// # create content
 			var survey = $("<div />");
