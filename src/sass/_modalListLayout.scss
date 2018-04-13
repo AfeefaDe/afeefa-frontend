@@ -1,0 +1,61 @@
+.modal-list {
+	position: absolute;
+	width: 30%;
+	max-height: 70%;
+	top: 25%;
+	left: 35%;
+	background-color: $white;
+	border-radius: .2em;
+	box-shadow: 0px 0px 2px #000;
+
+	header {
+		padding: 0 2em;
+		h3 {
+			font-weight: 100;
+		}
+	}
+	
+	.list-item {
+		padding: 2em;
+		display: flex;
+		border-bottom: 1px solid $gray20;
+		cursor: pointer;
+	
+		&:hover {
+			background-color: $gray20;
+		}
+	
+		&.active {
+			background-color: $gray80;
+			color: $white;
+		}
+	
+		.list-item-label {
+			font-size: 1.5em;
+	
+			span {
+				display: block;
+				font-size: 0.6em;
+			}
+		}
+	}
+}
+
+
+.mobile {
+	.modal-list {
+		width: 70%;
+		top: 15%;
+		left: 15%;
+		overflow-y: scroll;
+	}
+}
+
+.rtl {
+	.modal-list {
+		.list-item-label {
+			padding-left: 0 !important;
+			padding-right: 1em !important;
+		}
+	}
+}

@@ -111,6 +111,7 @@ export default qx.Class.define("DataManager", {
             initialView: { lat: 51.051, lon: 13.74, zoom: 14 },
             boundingBox: { topleft: { lat: 51.381457, lon: 12.983771 }, bottomright: {lat: 50.811596, lon: 14.116620} },
             inMainMenu: true,
+            languageMenu: true,
             teamOfCharge: {
               name: 'Afeefa - Digitaler Zusammenhalt e.V.',
               url: 'https://about.afeefa.de',
@@ -125,6 +126,7 @@ export default qx.Class.define("DataManager", {
             initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
             boundingBox: { topleft: { lat: 51.455225, lon: 12.174588}, bottomright: {lat: 51.169806, lon: 12.659360} },
             inMainMenu: true,
+            languageMenu: false,
             teamOfCharge: {
               name: 'Interaction Leipzig e.V.',
               url: 'http://www.interaction-leipzig.de',
@@ -161,17 +163,13 @@ export default qx.Class.define("DataManager", {
             initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
             boundingBox: { topleft: { lat: 51.593835, lon: 13.710340}, bottomright: {lat: 51.001001, lon: 14.650444} },
             inMainMenu: true,
+            languageMenu: true,
             teamOfCharge: {
               name: 'House of Resources Bautzen',
               url: 'http://www.hor-bautzen.de',
               img: 'horbz-logo.jpg'
             },
             donationText: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://about.afeefa.de/spenden/">Spende</a></p>'
-          },
-          pirna: {
-            dataKey: 'dresden',
-            label: 'Pirna',
-            initialView: { lat: 50.957456, lon: 13.937007, zoom: 14 }
           }
         }
       };

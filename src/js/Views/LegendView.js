@@ -281,7 +281,7 @@ export default qx.Class.define("LegendView", {
 	  show: function(silent){
 	  	var that = this;
 
-		  if(!silent) that.showCurtain(true);
+		  // if(!silent) that.showCurtain(true);
 		  that.view.addClass('active');
 	  },
 
@@ -348,10 +348,6 @@ export default qx.Class.define("LegendView", {
 
 		  });
 
-			that.listen('curtainclicked', function(){
-        	if( that.view.hasClass('active') ) that.close();
-			});
-			
 			that.listen('listResultsLoaded', function(){
 				if( that.view.hasClass('active') ) that.close();
 			});
@@ -385,7 +381,7 @@ export default qx.Class.define("LegendView", {
 	  close: function(){
 		  var that = this;
 
-		  that.showCurtain(false);
+		  // that.showCurtain(false);
 		  that.view.removeClass('active');
 		  
 		  // TODO: only do in mobile version

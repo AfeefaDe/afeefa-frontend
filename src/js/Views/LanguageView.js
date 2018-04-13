@@ -43,17 +43,16 @@ export default qx.Class.define("LanguageView", {
 
 			// list container
 			that.listContainer = $("<div />")
-				.attr('id', 'list-container');
+				.addClass('modal-list');
 			
 	  	if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.listContainer[0])
 			that.view.append(that.listContainer);
 
-			// all the languages as list items
 			that.listItems = [];
 
 			_.each( APP.getConfig().languages, function(lang){
-				var langItem = $("<div />")
-					.addClass('lang-item ' + lang)
+				var listItem = $("<div />")
+					.addClass('list-item ' + lang)
 					.click(function(){
 						that.close();
 
@@ -68,18 +67,14 @@ export default qx.Class.define("LanguageView", {
 						});
 					});
 				
-				var flag = $("<div />")
-					.addClass('lang-item-flag ' + lang);
-					
 				var label = $("<div />")
-					.addClass('lang-item-label');
+					.addClass('list-item-label');
 
-				langItem.append(flag);
-				langItem.append(label);
+				listItem.append(label);
 
-				that.listItems.push( {el: langItem, label: label, lang: lang} );
+				that.listItems.push( {el: listItem, label: label, lang: lang} );
 
-				that.listContainer.append(langItem);
+				that.listContainer.append(listItem);
 			});
 			
 			$('#main-container').append(that.view);

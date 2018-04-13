@@ -100,6 +100,7 @@ export default qx.Class.define("APPAFEEFA", {
 		messageView: {},
 		introView: {},
 		printView: {},
+		areaSelectionView: {},
 		userDevice: {},
 		config: {},
 		activeFilter: {}
