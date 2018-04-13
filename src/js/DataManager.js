@@ -65,14 +65,14 @@ export default qx.Class.define("DataManager", {
         that.say('fetchedAllData');
 
         if (APP.getArea().dataKey == 'dresden') {
-          that.fetchExternalData('freifunk', function () {
-            if (!cb) that.say('fetchedNewData');
+          // that.fetchExternalData('freifunk', function () {
+            // if (!cb) that.say('fetchedNewData');
 
             that.fetchExternalData('facebookEvents', function () {
               that.say('fetchedNewData');
               if (cb) cb();  // finished, so callback
             });
-          });
+          // });
         } else {
           if (cb) that.say('fetchedNewData');
           if (cb) cb();  // finished, so callback
