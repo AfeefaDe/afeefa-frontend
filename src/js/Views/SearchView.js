@@ -139,7 +139,7 @@ export default qx.Class.define("SearchView", {
           {
             iconClass: 'wisdom',
             label: 'Wegweiser',
-            subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Flüchtlingshilfe',
+            subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Integrationsarbeit',
             action: action,
             targetContainertEl: that.scrollContainer
           }
