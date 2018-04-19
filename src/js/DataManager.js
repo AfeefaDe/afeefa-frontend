@@ -137,7 +137,7 @@ export default qx.Class.define("DataManager", {
             chapterCategoryMapping: {
               "advice-and-support": [
                 { id: 27, name: "Patenschaften machen den Unterschied" },
-                { id: 28, name: "Rechts- und Sozialberatung" },
+                { id: 28, name: "Beratung für Migrant*innen" },
                 { id: 12, name: "Lebenslagen: Familien, Frauen, Männer, LSBTI*, Kinder" }
               ],
               "living-in-leipzig": [
