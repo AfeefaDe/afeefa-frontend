@@ -121,7 +121,7 @@ export default qx.Class.define("MenuView", {
 
       var fundingNote = $('<p />')
         .addClass('fundingNote')
-        .append('Gefördert durch den Freistaat Sachsen im Rahmen des Landesprogramms Integrative Maßnahmen');
+        .append('Diese Maßnahme wird mitfinanziert mit Steuermitteln auf Grundlage des von den Abgeordneten des Sächsischen Landtags beschlossenen Haushalts.');
       that.menu.append(fundingNote);
 
       // fb like btn
