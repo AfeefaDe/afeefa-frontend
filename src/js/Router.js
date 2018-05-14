@@ -187,6 +187,15 @@ export default qx.Class.define("Router", {
         url: window.location.origin + options.route
       });
 
+      // tell google analytics
+      // set new url and title
+			// ga('set', {
+			// 	page: options.route,
+			// 	title: options.name
+			// });
+			// send it for tracking
+			ga('send', 'pageview', options.route);
+
       // fire a popstate event to trigger detection of URL change
       var popStateEvent = new PopStateEvent('popstate', { state: options.data });
       dispatchEvent(popStateEvent);
