@@ -1,11 +1,11 @@
 import qx from 'qooxdoo/qx-oo.js';
 import PerfectScrollbar from 'perfect-scrollbar';
-import Hammer from 'hammerjs'
+import Hammer from 'hammerjs';
 
-export default qx.Class.define("MenuView", {
+export default qx.Class.define('MenuView', {
 
   extend: View,
-  type: "singleton",
+  type: 'singleton',
 
   construct: function () {
     var that = this;
@@ -18,7 +18,7 @@ export default qx.Class.define("MenuView", {
       var that = this;
 
       // view container
-      that.view = $("<div />");
+      that.view = $('<div />');
       that.view.attr('id', that.getViewId());
       $('#main-container').append(that.view);
 
@@ -26,7 +26,7 @@ export default qx.Class.define("MenuView", {
       if (APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.view[0]);
 
       // menu
-      that.menu = $("<div />");
+      that.menu = $('<div />');
       that.menu.attr('id', 'main-menu');
       that.view.append(that.menu);
 
@@ -68,8 +68,8 @@ export default qx.Class.define("MenuView", {
       _.each(APP.getData().areas, function (area) {
         if (!area.inMainMenu) return;
         var areaBtn = $('<div />').addClass('item');
-        areaBtnLabel = $('<a />')
-          .append("Afeefa " + area.label)
+        var areaBtnLabel = $('<a />')
+          .append('Afeefa ' + area.label)
           .attr('href', area.redirect)
           .attr('target', '_blank');
         areaBtn.append(areaBtnLabel);
@@ -91,6 +91,14 @@ export default qx.Class.define("MenuView", {
         .attr('target', '_blank');
       that.imprintBtn.append(that.imprintBtnLabel);
       that.menu.append(that.imprintBtn);
+
+      // btn datenschutz
+      that.policyBtn = $('<div />').addClass('item policy');
+      that.policyBtnLabel = $('<a />')
+        .attr('href', 'https://about.afeefa.de/datenschutzerklaerung')
+        .attr('target', '_blank');
+      that.policyBtn.append(that.policyBtnLabel);
+      that.menu.append(that.policyBtn);
 
       // team of charge
       var teamOfCharge = $('<div />')
@@ -163,7 +171,7 @@ export default qx.Class.define("MenuView", {
       // swipe gestures //
       ////////////////////
       var hammer = new Hammer(that.view[0]);
-      hammer.on('swipeleft', function (ev) {
+      hammer.on('swipeleft', function () {
         that.close();
       });
 
@@ -181,6 +189,7 @@ export default qx.Class.define("MenuView", {
       that.aboutBtnLabel.append(that.getWording('menu.about'));
       that.pressBtnLabel.append(that.getWording('menu.press'));
       that.imprintBtnLabel.append(that.getWording('menu.imprint'));
+      that.policyBtnLabel.append(that.getWording('menu.policy'));
       that.facebookBtnLabel.append(that.getWording('menu.facebook'));
       that.teamOfCharge_text
         .append($('<span />').append('Afeefa ' + APP.getArea().label + ' ' + that.getWording('menu.teamOfCharge') + ':'))
@@ -198,6 +207,7 @@ export default qx.Class.define("MenuView", {
       that.aboutBtnLabel.empty();
       that.pressBtnLabel.empty();
       that.imprintBtnLabel.empty();
+      that.policyBtnLabel.empty();
       that.facebookBtnLabel.empty();
       that.teamOfCharge_text.empty();
       that.donationNote.empty();
@@ -212,7 +222,6 @@ export default qx.Class.define("MenuView", {
     },
 
     changeLanguage: function () {
-      var that = this;
     }
   }
 
