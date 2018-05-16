@@ -19,10 +19,10 @@ import PrintView from './Views/PrintView';
 import SearchView from './Views/SearchView';
 import AreaSelectionView from './Views/AreaSelectionView';
 
-export default qx.Class.define("Router", {
+export default qx.Class.define('Router', {
 
   extend: Daddy,
-  type: "singleton",
+  type: 'singleton',
 
   properties: {
   },
@@ -117,7 +117,7 @@ export default qx.Class.define("Router", {
            */
           if (APP.getArea().dataKey == 'dresden') {
             // user requested main URL afeefa.de
-            var remindArea = localStorage.getItem("areaFrozen");
+            var remindArea = localStorage.getItem('areaFrozen');
             if ( !remindArea || remindArea != 'dresden' ) {
               // ask for area
               APP.getAreaSelectionView().open(function () {
@@ -188,13 +188,11 @@ export default qx.Class.define("Router", {
       });
 
       // tell google analytics
-      // set new url and title
-			// ga('set', {
-			// 	page: options.route,
-			// 	title: options.name
-			// });
-			// send it for tracking
-			ga('send', 'pageview', options.route);
+      ga('set', {
+        page: options.route,
+        title: options.name
+      });
+      ga('send', 'pageview');
 
       // fire a popstate event to trigger detection of URL change
       var popStateEvent = new PopStateEvent('popstate', { state: options.data });
@@ -224,7 +222,7 @@ export default qx.Class.define("Router", {
       var that = this;
 
       var entryType = (APP.isOrga(entry)) ? 'project' : entry.entryType;
-      var path = '/' + entryType + '/' + entry.id + '-' + APP.getRouter().slugify(entry.name)
+      var path = '/' + entryType + '/' + entry.id + '-' + APP.getRouter().slugify(entry.name);
 
       return (options && options.absolute) ? window.location.origin + path : path;
     },
@@ -259,20 +257,20 @@ export default qx.Class.define("Router", {
       if (url === null || url !== undefined) urlParams = that.detectUrlParameter(url);
 
       switch (urlParams[0]) {
-        case 'project':
-          var orga = APP.getDataManager().getOrgaById(that.unslugify(urlParams[1]));
-          if (orga) APP.getMapView().loadEntry(orga);
-          if (orga) APP.getDetailView().load(orga);
-          if (cb) cb();
-          if (orga) APP.setPageTitle(orga.name); // overwrite page title set in APP.route()
-          break;
-        case 'event':
-          var event = APP.getDataManager().getEventById(that.unslugify(urlParams[1]));
-          if (event) APP.getMapView().loadEntry(event);
-          if (event) APP.getDetailView().load(event);
-          if (cb) cb();
-          if (event) APP.setPageTitle(event.name); // overwrite page title set in APP.route()
-          break;
+      case 'project':
+        var orga = APP.getDataManager().getOrgaById(that.unslugify(urlParams[1]));
+        if (orga) APP.getMapView().loadEntry(orga);
+        if (orga) APP.getDetailView().load(orga);
+        if (cb) cb();
+        if (orga) APP.setPageTitle(orga.name); // overwrite page title set in APP.route()
+        break;
+      case 'event':
+        var event = APP.getDataManager().getEventById(that.unslugify(urlParams[1]));
+        if (event) APP.getMapView().loadEntry(event);
+        if (event) APP.getDetailView().load(event);
+        if (cb) cb();
+        if (event) APP.setPageTitle(event.name); // overwrite page title set in APP.route()
+        break;
         // case 'cat':
         //   APP.getLegendView().setFilter( {category: param.value} );
         //   if(cb) cb();
@@ -285,39 +283,39 @@ export default qx.Class.define("Router", {
         //   APP.getLegendView().setFilter( {tags: urlParams[1]} );
         //   if(cb) cb();
         //   break;
-        case 'search':
-          APP.getSearchView().inputField.val(decodeURI(urlParams[1]));
-          APP.getSearchView().load(decodeURI(urlParams[1]));
-          if (cb) cb();
-          break;
-        case 'chapter':
-          var iv = APP.getIncludeView();
-          if (urlParams[1]) {
-            iv.load(urlParams[1], function () {
-              if (cb) cb();
-            });
-          }
-          break;
-        case 'add':
-          APP.getFormView().load('newEntry');
-          if (cb) cb();
-          break;
-        case 'feedback':
-          APP.getFormView().load('feedback');
-          if (cb) cb();
-          break;
-        case 'events':
-          APP.getEventView().load();
-          if (cb) cb();
-          break;
-        case 'iwgr':
-          APP.getLegendView().setFilter({ tags: 'iwgr' });
-          if (cb) cb();
-          break;
-        default:
-          APP.getSearchView().load();
-          APP.getMapView().loadNewData();
-          if (cb) cb();
+      case 'search':
+        APP.getSearchView().inputField.val(decodeURI(urlParams[1]));
+        APP.getSearchView().load(decodeURI(urlParams[1]));
+        if (cb) cb();
+        break;
+      case 'chapter':
+        var iv = APP.getIncludeView();
+        if (urlParams[1]) {
+          iv.load(urlParams[1], function () {
+            if (cb) cb();
+          });
+        }
+        break;
+      case 'add':
+        APP.getFormView().load('newEntry');
+        if (cb) cb();
+        break;
+      case 'feedback':
+        APP.getFormView().load('feedback');
+        if (cb) cb();
+        break;
+      case 'events':
+        APP.getEventView().load();
+        if (cb) cb();
+        break;
+      case 'iwgr':
+        APP.getLegendView().setFilter({ tags: 'iwgr' });
+        if (cb) cb();
+        break;
+      default:
+        APP.getSearchView().load();
+        APP.getMapView().loadNewData();
+        if (cb) cb();
       }
 
       // that.urlParams = null;
