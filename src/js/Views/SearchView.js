@@ -506,7 +506,7 @@ export default qx.Class.define("SearchView", {
         });
       }
 
-      if (chapters.length > 0) {
+      if (chapters && chapters.length > 0) {
         _.each(chapters, function(chapter) {
           var action = function(){
             APP.route('/chapter/' + chapter.id, null, null, true);
