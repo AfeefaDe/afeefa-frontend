@@ -32,12 +32,15 @@ export default qx.Class.define('Router', {
 
     that.urlParams = that.detectUrlParameter();
 
-    window.onpopstate = function (event) {
-      // that.currentUrlWasPopped = true;
+    window.onpopstate = function () {
       that.loadFromUrl(document.location.href, function () {
-        // that.currentUrlWasPopped = false;
       });
     };
+
+    $( document ).on('customPopState', function () {
+      that.loadFromUrl(document.location.href, function () {
+      });
+    });
   },
 
   members: {
@@ -195,8 +198,10 @@ export default qx.Class.define('Router', {
       ga('send', 'pageview');
 
       // fire a popstate event to trigger detection of URL change
-      var popStateEvent = new PopStateEvent('popstate', { state: options.data });
-      dispatchEvent(popStateEvent);
+      $( document ).trigger( 'customPopState' );
+
+      // var popStateEvent = new PopStateEvent('popstate', { state: options.data });
+      // dispatchEvent(popStateEvent);
     },
 
     back: function () {
