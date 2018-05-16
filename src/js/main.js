@@ -1,4 +1,4 @@
-import jQuery from "jquery";
+import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
 
 import * as _ from 'underscore';
@@ -7,7 +7,7 @@ window._ = _;
 import Hammer from 'hammerjs';
 window.Hammer = Hammer;
 
-import 'materialize-css/dist/js/materialize'
+import 'materialize-css/dist/js/materialize';
 
 import moment from 'moment/min/moment-with-locales';
 window.moment = moment;
@@ -18,8 +18,8 @@ var APP = new APPAFEEFA();
 window.APP = APP;
 
 $( document ).ready(function() {
-	APP.init(function () {
-		APP.getRouter().initializeViews();
-		APP.say('appInitialized');
-	});
+  APP.init(function () {
+    APP.getRouter().initializeViews();
+    APP.say('appInitialized');
+  });
 });

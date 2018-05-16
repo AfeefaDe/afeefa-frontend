@@ -5,10 +5,10 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
  
 
-export default qx.Class.define("FormView", {
+export default qx.Class.define('FormView', {
 
   extend: View,
-  type: "singleton",
+  type: 'singleton',
 
   properties: {
     baseUrl: {},
@@ -55,14 +55,14 @@ export default qx.Class.define("FormView", {
       var that = this;
 
       // view container
-      that.view = $("<div />");
+      that.view = $('<div />');
       that.view.attr('id', that.getViewId());
 
       $('#main-container').append(that.view);
 
       // heading
-      var headingContainer = $("<div />").addClass('heading');
-      that.heading = $("<h1 />");
+      var headingContainer = $('<div />').addClass('heading');
+      that.heading = $('<h1 />');
       headingContainer.append(that.heading);
       that.view.append(headingContainer);
 
@@ -73,7 +73,7 @@ export default qx.Class.define("FormView", {
       });
 
       // form container
-      that.scrollContainer = $("<div />")
+      that.scrollContainer = $('<div />')
         .addClass('scroll-container');
       if (APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0]);
       that.view.append(that.scrollContainer);
@@ -85,8 +85,8 @@ export default qx.Class.define("FormView", {
       var that = this;
 
       // load form from html and insert
-      that.scrollContainer.load(that.getBaseUrl() + that.getFormTypes()[type].templateFile, function( response, status, xhr ){
-        if(status == "error" ){}
+      that.scrollContainer.load(that.getBaseUrl() + that.getFormTypes()[type].templateFile, function(){
+        // if(status == 'error' ){}
 
         // fill mustaches with values
         var filledHtml = that.fillMustaches(that.scrollContainer.html(), (options && options.mustaches)? options.mustaches : null);
@@ -116,7 +116,7 @@ export default qx.Class.define("FormView", {
       that.isActive(true);
     },
 
-    loadUIVocab: function(type, options){
+    loadUIVocab: function(type){
       var that = this;
       that.heading.empty().append(that.getWording('form.heading.' + type));
     },
@@ -153,7 +153,7 @@ export default qx.Class.define("FormView", {
         form.fields[$el.attr('id')] = {
           modelAttr: $el.attr('id'),
           el: $el
-        }
+        };
       });
 
       // conditional things
@@ -192,7 +192,7 @@ export default qx.Class.define("FormView", {
       
       // extract all model names
       var attributes = [];
-      _.each(that.getCurrentForm().fields, function(value, key){
+      _.each(that.getCurrentForm().fields, function(value){
         attributes.push(value.modelAttr.split('.')[0]);
       });
       
@@ -201,7 +201,7 @@ export default qx.Class.define("FormView", {
       });
 
       // extract attribute values and combine
-      _.each(that.getCurrentForm().fields, function(value, key){
+      _.each(that.getCurrentForm().fields, function(value){
         var realValue;
 
         if( value.el.attr('type') == 'checkbox' ){
@@ -222,14 +222,14 @@ export default qx.Class.define("FormView", {
       APP.loading(true);
 
       var data = that.readForm();
-      console.debug(data);
+      // console.debug(data);
 
       // call specific send method and give callback
       that.getCurrentForm().formType.sendMethod(data, options, function(success){
         that.createModal({
           content: success? $('<h5>'+that.getWording('form.message.'+that.getCurrentForm().formType.name+'.success')+'</5>') : $('<h5>' +that.getWording('form.fail')+ '</5>'),
           dismissible: true,
-          buttonLabel: success? "Schön" : 'Hm!',
+          buttonLabel: success? 'Schön' : 'Hm!',
           actions: {
             ready: function(){},
             close: function(){ 
@@ -242,8 +242,6 @@ export default qx.Class.define("FormView", {
     },
 
     createEntry: function (data, options, cb) {
-      var that = this;
-
       data.entry.area = APP.getArea().dataKey;
       
       var data_converted = {
@@ -260,8 +258,6 @@ export default qx.Class.define("FormView", {
     },
 
     createFeedback: function (data, options, cb) {
-      var that = this;
-
       // to slack
       APP.getDataManager().createSlackMessage({
         heading: 'Feedback von _' + data.feedback.author + '_ (' + data.feedback.mail + ')',
@@ -280,8 +276,6 @@ export default qx.Class.define("FormView", {
     },
 
     createEntryFeedback: function (data, options, cb) {
-      var that = this;
-
       APP.getDataManager().entryFeedback(
         options.entry,
         {
@@ -296,8 +290,6 @@ export default qx.Class.define("FormView", {
     },
 
     createContact: function (data, options, cb) {
-      var that = this;
-
       APP.getDataManager().contact(
         options.entry,
         {

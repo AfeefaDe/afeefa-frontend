@@ -5,10 +5,10 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
  
 
-export default qx.Class.define("EventView", {
+export default qx.Class.define('EventView', {
     
   extend : View,
-  type: "singleton",
+  type: 'singleton',
 
   properties: {
     currentOptions: {}
@@ -26,14 +26,14 @@ export default qx.Class.define("EventView", {
       var that = this;
 
       // view container
-      that.view = $("<div />");
+      that.view = $('<div />');
       that.view.attr('id', that.getViewId());
 
       $('#main-container').append(that.view);
 
       // heading
-      var headingContainer = $("<div />").addClass('heading');
-      that.heading = $("<h1 />");
+      var headingContainer = $('<div />').addClass('heading');
+      that.heading = $('<h1 />');
       headingContainer.append(that.heading);
       that.view.append(headingContainer);
 
@@ -49,22 +49,22 @@ export default qx.Class.define("EventView", {
       that.createFilters();
 
       // form container
-      that.scrollContainer = $("<div />")
-          .addClass('scroll-container list-results');
-      if (APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0])
+      that.scrollContainer = $('<div />')
+        .addClass('scroll-container list-results');
+      if (APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0]);
       that.view.append(that.scrollContainer);
 
       this.base(arguments);
     },
 
-    createFilters: function(query){
+    createFilters: function(){
       var that = this;
 
-      that.filters = $("<div />")
+      that.filters = $('<div />')
         .addClass('filters');
       that.view.append(that.filters);
 
-      that.eventFilter = $("<div />")
+      that.eventFilter = $('<div />')
         .addClass('event-filter');
       that.filters.append(that.eventFilter);
 
@@ -72,7 +72,7 @@ export default qx.Class.define("EventView", {
       
       _.each(that.filterOptions, function(optionValue){
         
-        var optionEl = $("<div />")
+        var optionEl = $('<div />')
           .addClass('option-value')
           .click(function(){
             that.load( {filter: optionValue} );
@@ -164,45 +164,45 @@ export default qx.Class.define("EventView", {
     },
 
     load: function( options ){
-        var that = this;
+      var that = this;
         
-        that.reset();
-        that.loadUIVocab();
+      that.reset();
+      that.loadUIVocab();
 
-        if(options === undefined) options = { filter: 'today' };
-        that.setCurrentOptions(options);
+      if(options === undefined) options = { filter: 'today' };
+      that.setCurrentOptions(options);
 
-        var eventSets = that.setFilter( options.filter );
+      var eventSets = that.setFilter( options.filter );
 
-        _.each(eventSets, function(set, i) {
-          if(set.heading) that.createSectionHeader(set.heading, (i==0)? 'no-top-margin' : null);
+      _.each(eventSets, function(set, i) {
+        if(set.heading) that.createSectionHeader(set.heading, (i==0)? 'no-top-margin' : null);
           
-          _.each(set.events, function(entry) {
-            that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
-          });
+        _.each(set.events, function(entry) {
+          that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
         });
+      });
 
-        that.say('listResultsLoaded', {records: _.flatten( _.pluck(eventSets, 'events'), true)} );
+      that.say('listResultsLoaded', {records: _.flatten( _.pluck(eventSets, 'events'), true)} );
 
-        that.view.addClass('active');
-        that.isActive(true);
-        that.say('eventViewOpened');
+      that.view.addClass('active');
+      that.isActive(true);
+      that.say('eventViewOpened');
     },
 
     // generic function to create a section header
     createSectionHeader: function( label, cssClass ) {
       var that = this;
       
-      const sectionHeader = $("<div />")
+      const sectionHeader = $('<div />')
         .addClass('section-header');
 
       if(cssClass) sectionHeader.addClass(cssClass);
       
-      const line  = $("<span />")
+      const line  = $('<span />')
         .addClass('section-header-line');
       sectionHeader.append(line);
       
-      const labelEl  = $("<div />")
+      const labelEl  = $('<div />')
         .addClass('section-header-label')
         .append(label);
       sectionHeader.append(labelEl);
@@ -225,7 +225,7 @@ export default qx.Class.define("EventView", {
       });
 
       // that.listen('filterSet', function(){
-        // that.close();
+      // that.close();
       // });
 
       that.listen('fetchedNewData', function(){
@@ -270,43 +270,43 @@ export default qx.Class.define("EventView", {
     },
 
     reset: function(){
-        var that = this;
+      var that = this;
 
-        _.each(that.filterOptions, function(optionValue){
-          that['optionEl-'+optionValue].removeClass('active');
-        });
+      _.each(that.filterOptions, function(optionValue){
+        that['optionEl-'+optionValue].removeClass('active');
+      });
 
-        that.setCurrentOptions(null);
+      that.setCurrentOptions(null);
 
-        // that.show();
-        // that.maximize();
+      // that.show();
+      // that.maximize();
 
-        // that.scrollContainer.scrollTop(0);
+      // that.scrollContainer.scrollTop(0);
 
-        // that.inputField
-        //   .val(null)
-        //   .show();
+      // that.inputField
+      //   .val(null)
+      //   .show();
 
-        // that.searchTag
-        //   .removeClass("active")
-        //   .removeClass (function (index, css) {
-        //     return (css.match (/(^|\s)cat-\S+/g) || []).join(' ');
-        //   })
-        //   .empty();
+      // that.searchTag
+      //   .removeClass("active")
+      //   .removeClass (function (index, css) {
+      //     return (css.match (/(^|\s)cat-\S+/g) || []).join(' ');
+      //   })
+      //   .empty();
 
-        that.scrollContainer.empty();
+      that.scrollContainer.empty();
         
-        if( APP.getUserDevice() == 'desktop') that.ps.update();
+      if( APP.getUserDevice() == 'desktop') that.ps.update();
     },
 
     close: function(){
-        var that = this;
+      var that = this;
 
-        that.reset();
-        that.view.removeClass('active');
-        that.isActive(false);
+      that.reset();
+      that.view.removeClass('active');
+      that.isActive(false);
 
-        that.say('eventViewClosed');
+      that.say('eventViewClosed');
     },
 
     loadUIVocab: function(){

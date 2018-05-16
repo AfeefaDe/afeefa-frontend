@@ -6,10 +6,10 @@ import MarkerClusterGroup from 'leaflet.markercluster';
 
  
 
-export default qx.Class.define("MapView", {
+export default qx.Class.define('MapView', {
   
   extend : View,
-  type: "singleton",
+  type: 'singleton',
   
   properties : {
     userLocation: {},
@@ -37,7 +37,7 @@ export default qx.Class.define("MapView", {
       var that = this;
 
       // view container
-      that.view = $("<div />");
+      that.view = $('<div />');
       that.view.attr('id', that.getViewId());
 
       $('#main-container').append(that.view);
@@ -49,8 +49,8 @@ export default qx.Class.define("MapView", {
       that.map = L.mapbox.map(that.getViewId(), 'felixkamille.4128d9e7', {
         zoomControl: false,
         // maxBounds: [
-            // L.latLng(50.115749, 11.804513), // south-west corner
-            // L.latLng(51.757315, 15.118189)  // north-east corner
+        // L.latLng(50.115749, 11.804513), // south-west corner
+        // L.latLng(51.757315, 15.118189)  // north-east corner
         // ],
         // attributionControl: true,
         tileLayer: {format: 'jpg70'},  // valid values are png, jpg, png32, png64, png128, png256, jpg70, jpg80, jpg90
@@ -61,17 +61,17 @@ export default qx.Class.define("MapView", {
       // Layer group for main markers (with clustering)
       that.layerForMainMarkers = new L.MarkerClusterGroup({
         iconCreateFunction: function(cluster) {
-              return new L.DivIcon({
-                className: 'location marker-cluster',
-                iconSize: [30, 30],
-                iconAnchor: [15, 15],
-                html: cluster.getChildCount()
-              });
-            },
-            maxClusterRadius: 3,
-            spiderfyOnMaxZoom: true,
-            spiderfyDistanceMultiplier: 2,
-            spiderLegPolylineOptions: { weight: 1.5, color: '#000' }
+          return new L.DivIcon({
+            className: 'location marker-cluster',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            html: cluster.getChildCount()
+          });
+        },
+        maxClusterRadius: 3,
+        spiderfyOnMaxZoom: true,
+        spiderfyDistanceMultiplier: 2,
+        spiderLegPolylineOptions: { weight: 1.5, color: '#000' }
       });
 
       // Layers for content-specific data (e.g. wifi networks) to handle them seperately (e.g. zoom-dependent visibility)
@@ -97,7 +97,7 @@ export default qx.Class.define("MapView", {
 
       var that = this;
       
-        this.base(arguments);
+      this.base(arguments);
       
       that.listen('fetchedNewData', function(){
         that.loadNewData();
@@ -113,7 +113,7 @@ export default qx.Class.define("MapView", {
       });
 
       // that.listen('filterSet', function(){
-        // that.loadNewData();
+      // that.loadNewData();
       // });
 
       that.listen('listResultsLoaded', function(e){
@@ -144,7 +144,7 @@ export default qx.Class.define("MapView", {
       });
 
       if( APP.getUserDevice() == 'phone' ){
-        $('#main-container').on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(e){
+        $('#main-container').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e){
           if( e.target != e.currentTarget ) return;
           if( !$(this).hasClass('shifted') && !$(this).hasClass('shifted-small') ){
             that.say('shiftMenuClosed');
@@ -179,7 +179,7 @@ export default qx.Class.define("MapView", {
         }).addTo(that.map);
       });
 
-			if (APP.getUserDevice() == 'desktop') {
+      if (APP.getUserDevice() == 'desktop') {
         that.listen('detailViewOpened', function(){
           that.view.addClass('small');
           that.map.invalidateSize();
@@ -356,10 +356,10 @@ export default qx.Class.define("MapView", {
           })
           .setLatLng([entry.location[0].lat, entry.location[0].lon])
           .setContent(function(){
-            var container = $("<div />"),
-                titleLabel = $("<span />").addClass('title'),
-                categoryLabel = $("<span />").addClass('category');
-                dateLabel = $("<span />").addClass('date');
+            var container = $('<div />'),
+              titleLabel = $('<span />').addClass('title'),
+              categoryLabel = $('<span />').addClass('category');
+            dateLabel = $('<span />').addClass('date');
             
             container.append(titleLabel);
             container.append(categoryLabel);
@@ -386,14 +386,14 @@ export default qx.Class.define("MapView", {
             return container[0];
           }());
 
-          marker.bindPopup(popup);
+        marker.bindPopup(popup);
 
-          marker.on('mouseover', function (e) {
-            that.map.openPopup(popup);
-          });
-          marker.on('mouseout', function (e) {
-            that.map.closePopup();
-          });
+        marker.on('mouseover', function (e) {
+          that.map.openPopup(popup);
+        });
+        marker.on('mouseout', function (e) {
+          that.map.closePopup();
+        });
         
 
         // TODO load detail view
@@ -490,8 +490,8 @@ export default qx.Class.define("MapView", {
       var lookup = that.lookupEntry( entry );
         
       if(lookup && lookup.marker){
-          options.setView = true;
-          APP.getMapView().selectMarker(lookup.marker, lookup.entry, options);
+        options.setView = true;
+        APP.getMapView().selectMarker(lookup.marker, lookup.entry, options);
       }
 
     },
@@ -514,30 +514,30 @@ export default qx.Class.define("MapView", {
 
     addPOIs: function(markers, color) {
     
-    var that = this;
+      var that = this;
 
       if(color === undefined) color = '#333';
     
-    var newLayer = new L.LayerGroup();
+      var newLayer = new L.LayerGroup();
 
       _.each(markers, function(marker){
       // var leafMarker = L.marker(marker.geo).addTo(that.map);
-      var leafMarker = L.marker(marker.geo, {
-        riseOnHover: true,
-        zIndexOffset: -1000,
-        icon: L.divIcon({
-                  className: 'marker-station',
-                  html: '<p><span class="fa fa-subway"></span> '+ marker.name + '</p>',
-                  // html: '<p>' + marker.name + '</p>',
-                  // iconSize: [100,20],
-                  iconSize: [100,20],
-                  iconAnchor: [50,25]
-              })
-      // }).addTo(that.map);
-      });
+        var leafMarker = L.marker(marker.geo, {
+          riseOnHover: true,
+          zIndexOffset: -1000,
+          icon: L.divIcon({
+            className: 'marker-station',
+            html: '<p><span class="fa fa-subway"></span> '+ marker.name + '</p>',
+            // html: '<p>' + marker.name + '</p>',
+            // iconSize: [100,20],
+            iconSize: [100,20],
+            iconAnchor: [50,25]
+          })
+          // }).addTo(that.map);
+        });
 
-      newLayer.addLayer(leafMarker);
-    });
+        newLayer.addLayer(leafMarker);
+      });
 
       return newLayer;
     },
@@ -571,14 +571,14 @@ export default qx.Class.define("MapView", {
       geocoder.query('Chester, NJ', showMap);
 
       function showMap(err, data) {
-          // The geocoder can return an area, like a city, or a
-          // point, like an address. Here we handle both cases,
-          // by fitting the map bounds to an area or zooming to a point.
-          if (data.lbounds) {
-              that.map.fitBounds(data.lbounds);
-          } else if (data.latlng) {
-              that.map.setView([data.latlng[0], data.latlng[1]], 13);
-          }
+        // The geocoder can return an area, like a city, or a
+        // point, like an address. Here we handle both cases,
+        // by fitting the map bounds to an area or zooming to a point.
+        if (data.lbounds) {
+          that.map.fitBounds(data.lbounds);
+        } else if (data.latlng) {
+          that.map.setView([data.latlng[0], data.latlng[1]], 13);
+        }
       }
     },
 
