@@ -102,12 +102,21 @@ export default qx.Class.define("DataManager", {
     getAllAreas: function (cb) {
       var that = this;
 
+      // afeefa.de
+      // dev.afeefa.de
+      // leipzig.afeefa.de
+      // dev.leipzig.afeefa.de
+      var url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+      var leUrl = url.replace(/(leipzig\.|bautzen\.)?afeefa/, 'leipzig.afeefa');
+      var bzUrl = url.replace(/(leipzig\.|bautzen\.)?afeefa/, 'bautzen.afeefa');
+      var ddUrl = url.replace(/(leipzig\.|bautzen\.)?afeefa/, 'afeefa');
+
       var areas = {
         areas: {
           dresden: {
             dataKey: 'dresden',
             label: 'Dresden',
-            redirect: 'https://afeefa.de',
+            redirect: ddUrl,
             initialView: { lat: 51.051, lon: 13.74, zoom: 14 },
             boundingBox: { topleft: { lat: 51.381457, lon: 12.983771 }, bottomright: {lat: 50.811596, lon: 14.116620} },
             inMainMenu: true,
@@ -122,7 +131,7 @@ export default qx.Class.define("DataManager", {
           leipzig: {
             dataKey: 'leipzig',
             label: 'Leipzig',
-            redirect: 'https://leipzig.afeefa.de',
+            redirect: leUrl,
             initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
             boundingBox: { topleft: { lat: 51.455225, lon: 12.174588}, bottomright: {lat: 51.169806, lon: 12.659360} },
             inMainMenu: true,
@@ -159,7 +168,7 @@ export default qx.Class.define("DataManager", {
           bautzen: {
             dataKey: 'bautzen',
             label: 'Bautzen',
-            redirect: 'https://bautzen.afeefa.de',
+            redirect: bzUrl,
             initialView: { lat: 51.1803977, lon: 14.4242263, zoom: 14 },
             boundingBox: { topleft: { lat: 51.593835, lon: 13.710340}, bottomright: {lat: 51.001001, lon: 14.650444} },
             inMainMenu: true,
