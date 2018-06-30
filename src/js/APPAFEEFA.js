@@ -262,7 +262,7 @@ export default qx.Class.define("APPAFEEFA", {
 			var category;
 
 			category = _.find(that.getData().categories, function (cat) {
-				var found = _.find(cat.sub, function (subCat) {
+				var found = _.find(cat.sub_items, function (subCat) {
 					return subCat.name == subCategory;
 				});
 				if (found) return true;

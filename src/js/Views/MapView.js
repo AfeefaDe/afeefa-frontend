@@ -1,23 +1,23 @@
 import qx from 'qooxdoo/qx-oo.js';
- 
+
 import L from 'mapbox.js';
 import MarkerClusterGroup from 'leaflet.markercluster';
- 
 
- 
+
+
 
 export default qx.Class.define('MapView', {
-  
+
   extend : View,
   type: 'singleton',
-  
+
   properties : {
     userLocation: {},
     entryMarkerLookup: {},
     loadedEntry: {},
     selectedMarker: {}
   },
-  
+
   construct: function(){
     var that = this;
 
@@ -31,9 +31,9 @@ export default qx.Class.define('MapView', {
   },
 
   members : {
-    
+
     render : function() {
-        
+
       var that = this;
 
       // view container
@@ -57,7 +57,7 @@ export default qx.Class.define('MapView', {
         tapTolerance: 30,
         maxZoom: 20
       }).setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
-    
+
       // Layer group for main markers (with clustering)
       that.layerForMainMarkers = new L.MarkerClusterGroup({
         iconCreateFunction: function(cluster) {
@@ -88,7 +88,7 @@ export default qx.Class.define('MapView', {
 
       // call View.render() --> calls MapView.addEvents() --> calls View.addEvents()
       this.base(arguments);
-      
+
       // initial actions
       // that.locate( APP.getUserDevice() == 'mobile' );
     },
@@ -96,9 +96,9 @@ export default qx.Class.define('MapView', {
     addEvents: function() {
 
       var that = this;
-      
+
       this.base(arguments);
-      
+
       that.listen('fetchedNewData', function(){
         that.loadNewData();
         APP.getRouter().loadFromUrl();
@@ -202,7 +202,7 @@ export default qx.Class.define('MapView', {
           that.map.invalidateSize();
         });
       }
-      
+
       if (APP.getUserDevice() == 'mobile') {
         that.listen('detailViewMinimized', function(){
           that.view.addClass('active');
@@ -232,12 +232,12 @@ export default qx.Class.define('MapView', {
 
       // aplly filters
       var data = (options.records !== undefined )? options.records : APP.getData().entries;
-      
+
       // var filter = APP.getActiveFilter();
       var entries = _.filter(data, function(entry){
         // only entries with location data
         if( entry.location.length < 1) return false;
-        
+
         // legend filter active?
         // if( filter ) {
         //   if( filter.category !== undefined )
@@ -258,10 +258,10 @@ export default qx.Class.define('MapView', {
         //   if( filter.supportWanted !== undefined )
         //     if( !(entry.supportWanted === filter.supportWanted) ) return false;
         // };
-        
+
         return true;
       });
-      
+
       if (entries.length) {
         that.addMarkers(entries);
         if (that.layerForMainMarkers.getLayers().length) {
@@ -273,10 +273,12 @@ export default qx.Class.define('MapView', {
     },
 
     addMarkers: function(entries) {
-    
+
       var that = this;
 
       // var newLayer = new L.LayerGroup();
+
+      var categoriesById = APP.getData().categoriesById;
 
       _.each(entries, function(entry){
 
@@ -303,14 +305,18 @@ export default qx.Class.define('MapView', {
           iconSize = [23,23];
           iconAnchor = [12,12];
         }
-        
+
         // TODO: quickfix: skip locations without coodinates
         if( !entry.location[0].lat || !entry.location[0].lon ) return false;
 
         var className = 'location';
         className += ' type-' + entry.type;
-        if( entry.category ) className += ' cat-' + entry.category.name;
-        if( entry.subCategory ) className += ' subcat-' + entry.subCategory;
+
+        var category = categoriesById[entry.navigationId];
+        if( category) className += ' cat-' + category.icon;
+        var subCategory = categoriesById[entry.subNavigationId];
+        if( subCategory ) className += ' subcat-' + subCategory.icon;
+
         if( entry.supportNeeded ) className += ' support-needed';
 
         ////////////
@@ -326,8 +332,8 @@ export default qx.Class.define('MapView', {
               var html = '';
               if(entry.type == 2){
                 var classString = 'type-' + entry.type;
-                if( entry.category ) classString += ' cat-' + entry.category.name;
-                if( entry.subCategory ) classString += ' subcat-' + entry.subCategory;
+                if( category ) classString += ' cat-' + category.icon;
+                if( subCategory ) classString += ' subcat-' + subCategory.icon;
                 // the diamond
                 html = '<span class="' + classString + ' event-shape"></span>';
                 // the icon
@@ -347,7 +353,7 @@ export default qx.Class.define('MapView', {
         // 	else if( location.type === 1 ) locationName = location.marketEntry.name;
         // 	else if( location.type === 2 ) locationName = location.event.name;
         // }
-        
+
         var popup = L.popup(
           {
             className: 'afeefa-popup',
@@ -360,7 +366,7 @@ export default qx.Class.define('MapView', {
               titleLabel = $('<span />').addClass('title'),
               categoryLabel = $('<span />').addClass('category');
             dateLabel = $('<span />').addClass('date');
-            
+
             container.append(titleLabel);
             container.append(categoryLabel);
             container.append(dateLabel);
@@ -394,7 +400,7 @@ export default qx.Class.define('MapView', {
         marker.on('mouseout', function (e) {
           that.map.closePopup();
         });
-        
+
 
         // TODO load detail view
         marker.on('click', function(){
@@ -409,14 +415,24 @@ export default qx.Class.define('MapView', {
           that.layerForMainMarkers.addLayer(marker);
         }
 
+        // set category color styles on the marker
+        var dom = marker.getElement();
+        if (dom) {
+          if (subCategory) {
+            marker.getElement().style.backgroundColor = subCategory.color;
+          } else if (category) {
+            marker.getElement().style.backgroundColor = category.color;
+          }
+        }
+
         var currentLookup = that.getEntryMarkerLookup();
         currentLookup.push( {entry: entry, marker: marker} );
         that.setEntryMarkerLookup( currentLookup );
 
         // newLayer.addLayer(marker);
-        
+
       });
-      
+
       that.say('markersCreated');
 
       // return newLayer;
@@ -428,7 +444,7 @@ export default qx.Class.define('MapView', {
 
       that.layerForMainMarkers.clearLayers();
       that.layerForWifiMarkers.clearLayers();
-    
+
       that.setEntryMarkerLookup([]);
 
     },
@@ -447,20 +463,20 @@ export default qx.Class.define('MapView', {
 
       if (that.loadedByMarkerClick) options.setView = false;
       that.loadedByMarkerClick = false;
-      
+
       if(lookup && lookup.marker) that.selectMarker(lookup.marker, lookup.entry, options);
     },
-    
+
     // look if the entry has a marker on the map
     lookupEntry: function( entry ){
       var that = this;
 
       var hit = null;
-      
+
       hit = _.find( that.getEntryMarkerLookup(), function(pair){
         return pair.entry.entryType == entry.entryType && pair.entry.id == entry.id;
       });
-      
+
       if(!hit) hit = entry;
 
       return hit;
@@ -488,7 +504,7 @@ export default qx.Class.define('MapView', {
       if(options === undefined) options = {};
 
       var lookup = that.lookupEntry( entry );
-        
+
       if(lookup && lookup.marker){
         options.setView = true;
         APP.getMapView().selectMarker(lookup.marker, lookup.entry, options);
@@ -513,11 +529,11 @@ export default qx.Class.define('MapView', {
     },
 
     addPOIs: function(markers, color) {
-    
+
       var that = this;
 
       if(color === undefined) color = '#333';
-    
+
       var newLayer = new L.LayerGroup();
 
       _.each(markers, function(marker){
@@ -567,7 +583,7 @@ export default qx.Class.define('MapView', {
     find: function() {
 
       var that = this;
-      
+
       geocoder.query('Chester, NJ', showMap);
 
       function showMap(err, data) {

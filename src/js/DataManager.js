@@ -32,15 +32,16 @@ export default qx.Class.define("DataManager", {
 
           APP.detectArea();
 
-          // fetch categories
-          that.getAllCategories(function (data) {
-            var currentData = APP.getData();
-            currentData.categories = data.categories;
-            APP.setData(currentData);
+          // fetch translations
+          that.getTranslations(function() {
+            // fetch navigation categories
+            that.getAllCategories(function () {
+              that.initNavigationTranslations()
+              cb();
+            });
 
-            // that.say('fetchedInitialData');
-            cb();  // finished, so callback
           });
+
         });
       });
     },
@@ -53,12 +54,12 @@ export default qx.Class.define("DataManager", {
       that.getAllEntries(function (data) {
 
         // set empty if fetching failed
-        if (data === undefined) data = { marketentries: [] };
+        if (data === undefined) data = { orgas: [], offers: [], events: [] };
 
         // store entries in APP
-        currentAppData.entries = data.marketentries;
-
+        currentAppData.entries = data.orgas.concat(data.offers, data.events);
         currentAppData.entries = _.sortBy(currentAppData.entries, 'updated_at').reverse();
+        that.initEntryTranslations();
 
         APP.setData(currentAppData);
         if (!cb) that.say('fetchedNewData');
@@ -81,15 +82,90 @@ export default qx.Class.define("DataManager", {
       });
     },
 
+    initEntryTranslations: function () {
+      var currentAppData = APP.getData();
+      var translations = currentAppData.translations;
+      var entries = currentAppData.entries;
+      _.each(entries, function(entry) {
+        var entryTranslation = translations[entry.entryType.toLowerCase() + '.' + entry.id]
+        if (entryTranslation) {
+          entry.name = entryTranslation.title;
+          entry.descriptionShort = entryTranslation.short_description;
+          entry.description = entryTranslation.description;
+        }
+      });
+    },
+
+    initNavigationTranslations: function () {
+      var currentData = APP.getData();
+      var translations = currentData.translations;
+      var categories = currentData.categories;
+      console.log('categories', categories)
+
+      _.each(categories, function(navigation_item) {
+        var entryTranslation = translations['navigation_item.' + navigation_item.id];
+        if (entryTranslation) {
+          navigation_item.name = entryTranslation.title;
+          console.log('entryTranslation.title', entryTranslation.title)
+        }
+        _.each(navigation_item.sub_items, function(sub_item) {
+          var entryTranslation = translations['navigation_item.' + sub_item.id];
+          if (entryTranslation) {
+            sub_item.name = entryTranslation.title;
+          }
+        });
+      });
+    },
+
     getAllCategories: function (cb) {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/categories" + "?area=" + APP.getArea().dataKey,
+        url: APP.getConfig().apiUrl + "api/navigation" + "?area=" + APP.getArea().dataKey,
         type: 'GET',
         dataType: 'json'
       })
         .done(function (data) {
+          var categoriesById = {}
+          _.each(data, function(navigation_item) {
+            categoriesById[navigation_item.id] = navigation_item;
+            _.each(navigation_item.sub_items, function(sub_item) {
+              categoriesById[sub_item.id] = sub_item;
+              sub_item.color = navigation_item.color;
+            });
+          });
+
+          var currentData = APP.getData();
+          currentData.categories = data;
+          currentData.categoriesById = categoriesById;
+
+          cb(data);
+        })
+        .fail(function (a) {
+          console.debug(a);
+          cb(a);
+        });
+
+    },
+
+    getTranslations: function (cb) {
+      var that = this;
+
+      $.ajax({
+        url: APP.getConfig().apiUrl + "api/translations" + "?locale=" + APP.getLM().getCurrentLang() + "&area=" + APP.getArea().dataKey,
+        type: 'GET',
+        dataType: 'json'
+      })
+        .done(function (data) {
+          var translations = {}
+          _.each(['orga', 'offer', 'event', 'facet_item', 'navigation_item'], function(type) {
+            _.each(data[type + 's'], function(item) {
+              translations[type + '.' + item.id] = item;
+            });
+          });
+          var currentData = APP.getData();
+          currentData.translations = translations;
+
           cb(data);
         })
         .fail(function (a) {
@@ -259,7 +335,7 @@ export default qx.Class.define("DataManager", {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/marketentries?locale=" + APP.getLM().getCurrentLang() + "&area=" + APP.getArea().dataKey,
+        url: APP.getConfig().apiUrl + "api/entries?area=" + APP.getArea().dataKey,
         type: 'GET',
         dataType: 'json'
       })

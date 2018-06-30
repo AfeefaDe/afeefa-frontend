@@ -1,12 +1,12 @@
 import qx from 'qooxdoo/qx-oo.js';
- 
-import PerfectScrollbar from 'perfect-scrollbar';
- 
 
- 
+import PerfectScrollbar from 'perfect-scrollbar';
+
+
+
 
 export default qx.Class.define('LegendView', {
-  
+
   extend : View,
   type: 'singleton',
 
@@ -23,7 +23,7 @@ export default qx.Class.define('LegendView', {
   },
 
   members : {
-    
+
     render: function(){
       var that = this;
 
@@ -46,7 +46,7 @@ export default qx.Class.define('LegendView', {
       that.filterModuleReset  = $('<div />');
       that.filterModuleReset.attr('class', 'filter-module reset-module');
       that.view.append(that.filterModuleReset);
-    
+
       ///////////////////
       // Entity filter //
       ///////////////////
@@ -61,7 +61,7 @@ export default qx.Class.define('LegendView', {
       // entities
       var rowContainer = $('<div />')
         .addClass('row-container');
-    
+
       _.each( {0: 'orga', 2: 'event', 1: 'market'}, function(value, key){
         var entityContainer = $('<div />')
           .addClass('entity-container')
@@ -72,12 +72,12 @@ export default qx.Class.define('LegendView', {
           .addClass('entity type-' + key);
         var entityLabel = $('<span />')
           .addClass('label');
-        that['label-entity-' + value] = entityLabel; 
+        that['label-entity-' + value] = entityLabel;
         entityContainer.append(entity);
         entityContainer.append(entityLabel);
         rowContainer.append(entityContainer);
       });
-    
+
       that.filterModuleEntity.append(rowContainer);
 
       //////////////////////
@@ -101,17 +101,19 @@ export default qx.Class.define('LegendView', {
         var catContainer = $('<div />');
         catContainer.addClass('cat-container');
         catContainer.addClass('cat-' + cat.name);
-    
+        catContainer.css({ 'border-color': cat.color});
+        catContainer.css({ 'background-color': cat.color + '66'});
+
         // icon
         var icon = $('<div />')
-          .addClass('icon ' + 'cat-' + cat.name)
+          .addClass('icon ' + 'cat-' + cat.icon)
           .click(function() {
             that.setFilter( {category: cat.name} );
             that.reset();
             container.addClass('extended');
           });
         catContainer.append(icon);
-      
+
         // label
         that['label-' + cat.id] = $('<p />')
           .click(function() {
@@ -120,7 +122,7 @@ export default qx.Class.define('LegendView', {
             container.addClass('extended');
           });
         catContainer.append(that['label-' + cat.id]);
-      
+
         // nippus
         var nippus = $('<div />');
         nippus.addClass('nippus');
@@ -133,23 +135,26 @@ export default qx.Class.define('LegendView', {
         catContainer.append(nippus);
 
         container.append(catContainer);
-      
+
         // sub cat container
         var subContainer = $('<div />');
         subContainer.addClass('sub-container');
         subContainer.addClass('cat-' + cat.name);
+        subContainer.css({ 'border-color': cat.color});
+        subContainer.css({ 'background-color': cat.color + '16' });
         catContainer.append(subContainer);
 
         // sub categories
         // TODO replace dummy data
-        _.each( cat.sub, function(subcat){
+        _.each( cat.sub_items, function(subcat){
           var subCatContainer = $('<div />');
           subCatContainer.addClass('subcat-container');
           subCatContainer.addClass('cat-' + cat.name + ' subcat-' + subcat.name);
+          subCatContainer.css({ 'border-color': cat.color});
 
           // icon
           var subIcon = $('<div />');
-          subIcon.addClass('icon ' + 'subcat-' + subcat.name);
+          subIcon.addClass('icon ' + 'subcat-' + subcat.icon);
           subIcon.click(function(){
             that.setFilter( {subCategory: subcat.name} );
           });
@@ -161,12 +166,12 @@ export default qx.Class.define('LegendView', {
             that.setFilter( {subCategory: subcat.name} );
           });
           subCatContainer.append(that['label-' + subcat.id]);
-        
+
           subContainer.append(subCatContainer);
         });
-      
+
         container.append(subContainer);
-      
+
         that.filterModuleCat.append(container);
       });
 
@@ -185,20 +190,20 @@ export default qx.Class.define('LegendView', {
 
       // attributes
       _.each( {'forChildren': 'bool', 'supportWanted': 'bool'}, function(value, key){
-      
+
         function setAttrFilter(value) {
           if( value ) {
             const filter = {};
             filter[key] = value;
             that.setFilter(filter);
           } else {
-            that.resetFilter();	
+            that.resetFilter();
           }
         }
-      
+
         var attributeContainer = $('<div />')
           .addClass('attribute-container');
-      
+
         var attrFormElement = $('<input />')
           .attr('type', 'checkbox')
           .click(function() {
@@ -229,8 +234,8 @@ export default qx.Class.define('LegendView', {
       var that = this;
 
       _.each( that.getCategories(), function(cat){
-        
-        that['label-' + cat.id].append( that.getWording('cat.' + cat.name) );
+
+        that['label-' + cat.id].append( cat.name );
 
         var condition = function(){
           return (that.view.css('right') == '0px');
@@ -249,8 +254,8 @@ export default qx.Class.define('LegendView', {
           condition
         );
 
-        _.each( cat.sub, function(subcat){
-          that['label-' + subcat.id].append( that.getWording('cat.' + subcat.name) );
+        _.each( cat.sub_items, function(subcat){
+          that['label-' + subcat.id].append( subcat.name );
 
           that.createTooltip(
             that['label-' + subcat.id].parent(),
@@ -291,7 +296,7 @@ export default qx.Class.define('LegendView', {
       // consequences
       // TODO close detailView if location gets unavailable
       // TODO if an unavailable location is selected inside the guides, the filter has to be disabled
-      
+
       APP.setActiveFilter(filterOptions);
       that.say('filterSet', APP.getActiveFilter());
       that.close();
@@ -320,27 +325,31 @@ export default qx.Class.define('LegendView', {
 
       // call superclass
       this.base(arguments);
-      
+
+      that.listen('fetchedNewData', function(){
+        that.changeLanguage()
+      })
+
       that.listen('filterSet', function(){
 
         var filter = APP.getActiveFilter();
 
         if( filter ) {
-          
-          that.view.addClass('filter-active');  
-          
+
+          that.view.addClass('filter-active');
+
           that.view.find('.cat-container, .subcat-container').addClass('inactive');
-          
+
           const currentCatContainers = that.view.find('.cat-container.cat-' + filter.category);
           currentCatContainers.removeClass('inactive');
           currentCatContainers.parent().find('.subcat-container').removeClass('inactive');
-          
+
           const currentSubcatContainers = that.view.find('.subcat-container.subcat-' + filter.subCategory);
           currentSubcatContainers.removeClass('inactive');
           currentSubcatContainers.parents('.std-container').find('.cat-container').removeClass('inactive');
-        
+
         } else {
-        
+
           that.view.removeClass('filter-active');
           that.filterModuleCat.find('.cat-container, .subcat-container').removeClass('inactive');
           that.filterModuleCat.find('.std-container').removeClass('extended');
@@ -383,7 +392,7 @@ export default qx.Class.define('LegendView', {
 
       // that.showCurtain(false);
       that.view.removeClass('active');
-      
+
       // TODO: only do in mobile version
       // that.addRequestBtn.css('display', 'none');
       // that.addOfferBtn.css('display', 'none');
@@ -396,7 +405,7 @@ export default qx.Class.define('LegendView', {
       _.each( that.getCategories(), function(cat){
         that['label-' + cat.id].empty();
 
-        _.each( cat.sub, function(subcat){
+        _.each( cat.sub_items, function(subcat){
           that['label-' + subcat.id].empty();
         });
       });

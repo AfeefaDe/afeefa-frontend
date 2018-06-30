@@ -4,7 +4,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import View from './View.js';
 
 export default qx.Class.define('DetailView', {
-	
+
   extend : View,
   type: 'singleton',
 
@@ -21,7 +21,7 @@ export default qx.Class.define('DetailView', {
   },
 
   members : {
-		
+
     render: function(){
       var that = this;
 
@@ -87,27 +87,27 @@ export default qx.Class.define('DetailView', {
       ////////////////////
       that.imageContainer = $('<div />').addClass('image-container');
       that.scrollContainer.append(that.imageContainer);
-			
+
       //////////////////////
       // other properties //
       //////////////////////
-			
+
       // generic
       var properties = ['category', 'times', 'descriptionShort', 'supportWantedDetail', 'description', 'speakerPublic', 'spokenLanguages', 'location', 'arrival', 'openingHours', 'phone', 'mail', 'web', 'facebook'];
       _.each(properties, function(prop){
 
         that['propertyContainer'+prop] = $('<div />').addClass('property ' + prop);
-				
+
         that['propertyIcon'+prop] = $('<div />').addClass('property-icon');
         that['propertyContainer'+prop].append(that['propertyIcon'+prop]);
-				
+
         var catText = $('<div />').addClass('property-text');
         that['propertyName'+prop] = $('<p />').addClass('property-name');
         that['propertyValue'+prop] = $('<p />').addClass('property-value');
         catText.append(that['propertyName'+prop]);
         catText.append(that['propertyValue'+prop]);
         that['propertyContainer'+prop].append(catText);
-				
+
         // navigation hook
         if(prop == 'location'){
           var $link = $('<a />').css('display', 'none').attr('target', '_blank');
@@ -151,15 +151,15 @@ export default qx.Class.define('DetailView', {
       // share button //
       //////////////////
       that.shareButton = $('<div />').addClass('fb-share');
-      that.scrollContainer.append(that.shareButton);					
-			
+      that.scrollContainer.append(that.shareButton);
+
       ////////////////
       // action bar //
       ////////////////
       that.actionBar = $('<div />')
         .addClass('action-bar');
       that.scrollContainer.append(that.actionBar);
-			
+
       // message button
       that.messageBtn = $('<div />')
         .addClass('action message-btn')
@@ -174,7 +174,7 @@ export default qx.Class.define('DetailView', {
       that.messageBtnLabel = $('<span />')
         .append('Kontaktieren');
       that.messageBtn.append(that.messageBtnLabel);
-			
+
       // bookmark button
       that.bookmarkBtn = $('<div />')
         .addClass('action bookmark-btn')
@@ -192,7 +192,7 @@ export default qx.Class.define('DetailView', {
         .append('Merken');
       that.bookmarkBtn.append(that.bookmarkBtnLabel);
       that.actionBar.append(that.bookmarkBtn);
-			
+
       ////////////////
       // timestamps //
       ////////////////
@@ -233,12 +233,12 @@ export default qx.Class.define('DetailView', {
         short.addClass('read-more');
       }
 
-			
+
     },
 
     load: function( record ){
       var that = this;
-			
+
       // get parent orga
       that.parent = null;
       if(record.parentOrgaId) that.parent = APP.getDataManager().getOrgaById(record.parentOrgaId);
@@ -280,7 +280,7 @@ export default qx.Class.define('DetailView', {
       ////////////////////
       var imageType = record.imageType? record.imageType : 'image';
       if( imageType && record.image ) {
-				
+
         switch(imageType){
         case 'youtube':
           // supposed, yt link is as 'https://www.youtube.com/watch?v=RURToWXI6QM'
@@ -303,22 +303,31 @@ export default qx.Class.define('DetailView', {
       //////////////////////
       // other properties //
       //////////////////////
-			
+
       // category
+      var categoriesById = APP.getData().categoriesById;
+      var category = categoriesById[record.navigationId];
+      if( category) {
+        that['propertyIconcategory'].addClass('cat-' + category.icon);
+        that['propertyIconcategory'].css({'background-color': category.color});
+      }
+      var subCategory = categoriesById[record.subNavigationId];
+      if( subCategory ) {
+        that['propertyIconcategory'].addClass('subcat-' + subCategory.icon);
+        that['propertyIconcategory'].css({'background-color': subCategory.color});
+      }
+
       var prop = 'category';
-      var propName = record[prop] ? record[prop].name : null;
-      that['propertyIcon'+prop].addClass('cat-' + propName);
       // TODO dirty code for subcategory, but hey ;)
-      that['propertyIcon'+prop].addClass('subcat-' + record.subCategory);
       that['propertyIcon'+prop].addClass('type-' + record.type);
-      that['propertyName'+prop].append( record.subCategory ? that.getWording('cat.' + record.subCategory) : that.getWording('cat.' + propName) );
+      that['propertyName'+prop].append( subCategory ? subCategory.name : (category ? category.name : '') );
 
       // var createEntityLabel = { 0: that.getWording('entity_orga'), 1: that.getWording('entity_market'), 2: that.getWording('entity_event') };
       function createEntityLabel( record ){
         switch( record.type ){
         case 0:
           return that.getWording('entity.orga');
-        case 1: 
+        case 1:
           return record.offer ? that.getWording('entity.market.offer') : that.getWording('entity.market.request');
         case 2:
           return that.getWording('entity.event');
@@ -334,7 +343,7 @@ export default qx.Class.define('DetailView', {
       var prop = 'location';
       that['propertyIcon'+prop].addClass('icon-' + prop);
       that['propertyName'+prop].append( that.getWording( 'prop.' + prop ) );
-			
+
       var value = (record.location.length > 0) ? buildLocation(record) : that.getWording( 'prop.location.none' );
       function buildLocation(record){
         var location = '';
@@ -353,7 +362,7 @@ export default qx.Class.define('DetailView', {
       var prop = 'times';
       that['propertyIcon'+prop].addClass('icon-' + prop);
       that['propertyName'+prop].append( that.getWording( 'prop.' + prop ) );
-			
+
       var value = APP.getUtility().buildTimeString(record);
 
       if( value.length > 0 ) {
@@ -371,10 +380,10 @@ export default qx.Class.define('DetailView', {
 
         // only render property if available
         if( propValue ) {
-					
+
           that['propertyIcon'+prop].addClass('icon-' + prop);
           that['propertyName'+prop].append( that.getWording( 'prop.' + prop ) );
-					
+
           // may create link
           if( _.contains( ['web', 'facebook'], prop) ){
             that['propertyValue'+prop].append('<a target="_blank" href="' + propValue + '">' + propValue + '</a>');
@@ -402,30 +411,30 @@ export default qx.Class.define('DetailView', {
           that['propertyContainer'+prop].show();
         }
         else if( record.location[0] && record.location[0][prop] ) {
-					
+
           that['propertyIcon'+prop].addClass('icon-' + prop);
           that['propertyName'+prop].append( that.getWording( 'prop.' + prop ) );
 
           if( _.contains( ['arrival'], prop) ){
             that['propertyValue'+prop].append(record.location[0][prop].replace(/(?:\r\n|\r|\n)/g, '<br />'));
-          } 
+          }
           else if( _.contains( ['openingHours'], prop) ){
             that['propertyValue'+prop].append(record.location[0][prop].replace(/(?:\r\n|\r|\n)/g, '<br />'));
           }
           else {
             that['propertyValue'+prop].append(record.location[0][prop]);
           }
-					
+
           that['propertyContainer'+prop].show();
         }
 
       });
 
       if(that.parent){
-				
+
         var propertyText = $('<div />').addClass('property-text');
         that.linkedEntriesContainer.append(propertyText);
-				
+
         // property name
         var name = $('<p />')
           .addClass('property-name')
@@ -433,7 +442,7 @@ export default qx.Class.define('DetailView', {
             return APP.isOrga(record)? that.getWording('term.parent.orga') : that.getWording('term.parent.organiser');
           }());
         propertyText.append(name);
-				
+
         // property value
         var value = $('<p />')
           .addClass('property-value')
@@ -443,7 +452,7 @@ export default qx.Class.define('DetailView', {
             APP.route(APP.getRouter().getFrontendUrlForEntry(that.parent), that.parent.name);
           });
         propertyText.append(value);
-				
+
         that.linkedEntriesContainer.show();
       }
 
@@ -498,14 +507,14 @@ export default qx.Class.define('DetailView', {
       that['propertyIconcategory'].removeClass (function (index, css) {
         return (css.match (/(^|\s)subcat-\S+/g) || []).join(' ');
       });
-			
+
       // description toggling
       that['propertyContainer'+'descriptionShort'].addClass('read-more');
       that['propertyContainer'+'description'].removeClass('hidden');
 
       // generic
       var properties = _.union( ['category', 'location', 'times'], APP.getConfig().simpleProperties );
-			
+
       _.each(properties, function(prop){
         that['propertyIcon'+prop].removeClass (function (index, css) {
           return (css.match (/(^|\s)icon-\S+/g) || []).join(' ');
@@ -517,19 +526,19 @@ export default qx.Class.define('DetailView', {
 
       // timestamp
       that.timestampContainer.empty().hide();
-			
+
       // linked entries
       that.linkedEntriesContainer.empty().hide();
 
       that.shareButton.empty();
-			
+
       // delete current record
       that.record = null;
     },
 
     close: function() {
       var that = this;
-			
+
       // only close if active
       if(!that.getViewState()) return;
 

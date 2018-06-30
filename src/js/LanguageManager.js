@@ -1,11 +1,11 @@
 import qx from '../../node_modules/qooxdoo/qx-oo.js';
 import Daddy from './Daddy.js';
- 
 
- 
- 
 
- 
+
+
+
+
 
 export default qx.Class.define("LanguageManager", {
     extend : Daddy,
@@ -28,14 +28,14 @@ export default qx.Class.define("LanguageManager", {
             var that = this;
 
             var lang = 'de';
-            
+
             var browserLang = navigator.language.split('-')[0];
             if( _.contains( APP.getConfig().languages, browserLang) )
                 lang = browserLang;
-            
+
             if( localStorage.getItem("languageFrozen") )
                 lang = localStorage.getItem("languageFrozen");
-            
+
             that.setLanguage( lang );
 
             that.addEvents();
@@ -75,10 +75,11 @@ export default qx.Class.define("LanguageManager", {
             var that = this;
 
             that.listen('languageChanged', function(e){
-
                 that.setLanguage( e.customData );
 
-                APP.getDataManager().fetchAllData(function( data ){
+                APP.getDataManager().getTranslations(function( data ){
+                  APP.getDataManager().initEntryTranslations();
+                  APP.getDataManager().initNavigationTranslations();
                   that.say('fetchedNewData');
                 });
             });
