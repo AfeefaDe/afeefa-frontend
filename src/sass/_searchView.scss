@@ -93,7 +93,6 @@
 			display: none;
 			background-color: $gray5;
 			text-align: center;
-			@include categoryColors();
 			&.active { display: inline-block; }
     	overflow: hidden;
     	text-overflow: ellipsis;

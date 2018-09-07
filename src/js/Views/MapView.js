@@ -278,7 +278,7 @@ export default qx.Class.define('MapView', {
 
       // var newLayer = new L.LayerGroup();
 
-      var categoriesById = APP.getData().categoriesById;
+      var navigationById = APP.getData().navigationById;
 
       _.each(entries, function(entry){
 
@@ -312,9 +312,9 @@ export default qx.Class.define('MapView', {
         var className = 'location';
         className += ' type-' + entry.type;
 
-        var category = categoriesById[entry.navigationId];
+        var category = navigationById[entry.navigationId];
         if( category) className += ' cat-' + category.icon;
-        var subCategory = categoriesById[entry.subNavigationId];
+        var subCategory = navigationById[entry.subNavigationId];
         if( subCategory ) className += ' subcat-' + subCategory.icon;
 
         if( entry.supportNeeded ) className += ' support-needed';
@@ -330,6 +330,7 @@ export default qx.Class.define('MapView', {
             iconAnchor: iconAnchor,
             html: function(){
               var html = '';
+              // TODO still needed for entry of type 2? it's all for the event's diamond shape.
               if(entry.type == 2){
                 var classString = 'type-' + entry.type;
                 if( category ) classString += ' cat-' + category.icon;
@@ -365,7 +366,7 @@ export default qx.Class.define('MapView', {
             var container = $('<div />'),
               titleLabel = $('<span />').addClass('title'),
               categoryLabel = $('<span />').addClass('category');
-            dateLabel = $('<span />').addClass('date');
+            var dateLabel = $('<span />').addClass('date');
 
             container.append(titleLabel);
             container.append(categoryLabel);
@@ -373,12 +374,15 @@ export default qx.Class.define('MapView', {
 
             titleLabel.append(locationName);
 
-            if(entry.subCategory){
-              categoryLabel.append( that.getWording('cat.' + entry.subCategory) );
-              categoryLabel.append( ' (' + (entry.category ? that.getWording('cat.' + entry.category.name) : '[category missing]') + ')' );
+            var category = entry.navigationId ? APP.getData().navigationById[entry.navigationId] : null;
+            var subCategory = entry.subNavigationId ? APP.getData().navigationById[entry.subNavigationId] : null;
+
+            if(subCategory){
+              categoryLabel.append( subCategory.name );
+              categoryLabel.append( ' (' + category.name + ')' );
             }
             else {
-              categoryLabel.append( entry.category ? that.getWording('cat.' + entry.category.name) : '[category missing]' );
+              categoryLabel.append( category.name );
             }
 
             if(entry.type == 2) {
@@ -418,12 +422,11 @@ export default qx.Class.define('MapView', {
         // set category color styles on the marker
         var dom = marker.getElement();
         if (dom) {
-          if (subCategory) {
-            marker.getElement().style.backgroundColor = subCategory.color;
-          } else if (category) {
-            marker.getElement().style.backgroundColor = category.color;
-          }
+          marker.getElement().style.backgroundColor = category.color;
         }
+        marker.on('add', function(){
+          marker.getElement().style.backgroundColor = category.color;
+        });
 
         var currentLookup = that.getEntryMarkerLookup();
         currentLookup.push( {entry: entry, marker: marker} );

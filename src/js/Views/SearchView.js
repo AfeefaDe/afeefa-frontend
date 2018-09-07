@@ -6,10 +6,10 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
  
 
-export default qx.Class.define("SearchView", {
+export default qx.Class.define('SearchView', {
     
   extend : View,
-  type: "singleton",
+  type: 'singleton',
 
   properties: {
   },
@@ -26,18 +26,18 @@ export default qx.Class.define("SearchView", {
       var that = this;
 
       // view container
-      that.view = $("<div />");
+      that.view = $('<div />');
       that.view.attr('id', that.getViewId());
 
       $('#main-container').append(that.view);
 
       // search bar
-      that.searchBar = $("<div />")
+      that.searchBar = $('<div />')
         .attr('id', 'search-bar');
       that.view.append(that.searchBar);
 
       // add button
-      that.addBtn = $("<div />")
+      that.addBtn = $('<div />')
         .addClass('button add-btn')
         .click(function(){
           APP.route('/add', that.getWording('search.label.addentry'), null);
@@ -45,7 +45,7 @@ export default qx.Class.define("SearchView", {
       that.searchBar.append(that.addBtn);
 
       // cancel button
-      that.cancelBtn = $("<div />")
+      that.cancelBtn = $('<div />')
         .addClass('button cancel-btn')
         .click(function(){
           // if mobile: might be good to go back to last key state
@@ -56,18 +56,18 @@ export default qx.Class.define("SearchView", {
       that.searchBar.append(that.cancelBtn);
 
       // input field
-      that.inputField = $("<input />")
+      that.inputField = $('<input />')
         .attr('type', 'text');
       that.searchBar.append(that.inputField);
 
       // search tags
-      that.searchTag = $("<span />");
+      that.searchTag = $('<span />');
       that.searchBar.append(that.searchTag);      
 
       // results area
-      that.scrollContainer = $("<div />")
+      that.scrollContainer = $('<div />')
         .addClass('scroll-container list-results');
-      if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0])
+      if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0]);
 
       that.view.append(that.scrollContainer);
 
@@ -75,30 +75,30 @@ export default qx.Class.define("SearchView", {
     },
 
     load: function(query){
-        var that = this;
+      var that = this;
 
-        if( query === undefined ) query = '';
-        query = query.toLowerCase();
+      if( query === undefined ) query = '';
+      query = query.toLowerCase();
         
-        if(query){
-          that.scrollContainer.empty();
-          that.loadResults(query);
-        } else {
-          that.reset();
-          that.loadDashboard();
-        }
+      if(query){
+        that.scrollContainer.empty();
+        that.loadResults(query);
+      } else {
+        that.reset();
+        that.loadDashboard();
+      }
 
-        that.inputField
-          .attr('placeholder', that.getWording('search.placeholder'))
-          .show();
+      that.inputField
+        .attr('placeholder', that.getWording('search.placeholder'))
+        .show();
 
-        that.isActive(true);
-        that.view.addClass('active');
-        that.say('searchViewLoaded');
+      that.isActive(true);
+      that.view.addClass('active');
+      that.say('searchViewLoaded');
         
-        that.scrollContainer.scrollTop(0);
+      that.scrollContainer.scrollTop(0);
 
-        return that;
+      return that;
     },
 
     loadDashboard: function(){
@@ -192,7 +192,7 @@ export default qx.Class.define("SearchView", {
             label: that.getWording('search.button.events'),
             iconName: 'today',
             action: function(){
-             APP.route('/events', that.getWording('search.button.events'), null, true);
+              APP.route('/events', that.getWording('search.button.events'), null, true);
             }
           }
         );
@@ -202,7 +202,7 @@ export default qx.Class.define("SearchView", {
      
       // add new entry
       var action = function(){
-          APP.route('/add', that.getWording('search.label.addentry'), null);
+        APP.route('/add', that.getWording('search.label.addentry'), null);
       };
       that.createListResult(
         {
@@ -215,7 +215,7 @@ export default qx.Class.define("SearchView", {
       );
 
       var action = function(){
-          APP.route('/feedback', that.getWording('form.heading.feedback'), null);
+        APP.route('/feedback', that.getWording('form.heading.feedback'), null);
       };
       that.createListResult(
         {
@@ -238,7 +238,7 @@ export default qx.Class.define("SearchView", {
 
       // support wanted
       var action = function(){
-        that.inputField.val('prop:supportwanted').trigger( "input" );
+        that.inputField.val('prop:supportwanted').trigger( 'input' );
       };
       that.createListResult(
         {
@@ -287,14 +287,14 @@ export default qx.Class.define("SearchView", {
       };
       
       // SEARCHING
-      if(query.length > 5){
-        APP.getDataManager().findAddress(query, function(geo){
-          if(geo.latitude && geo.longitude){
-            suggestions.addresses = [geo];
-            suggestAddress();
-          }
-        });
-      }
+      // if(query.length > 5){
+      //   APP.getDataManager().findAddress(query, function(geo){
+      //     if(geo.latitude && geo.longitude){
+      //       suggestions.addresses = [geo];
+      //       suggestAddress();
+      //     }
+      //   });
+      // }
 
       suggestions.tags = _.filter(tags, function(tag){
         return ( that.getWording('tag.' + tag).toLowerCase().indexOf(query) >= 0 );
@@ -303,7 +303,7 @@ export default qx.Class.define("SearchView", {
       // DISPLAYING
       function createEntry(options){
         that.scrollContainer.prepend(
-          $("<a />")
+          $('<a />')
             .append(options.label)
             .addClass('suggestion ' + options.cssClass)
             .attr('href', options.url)
@@ -320,7 +320,7 @@ export default qx.Class.define("SearchView", {
           cssClass: 'tag',
           url: '/search/tag:' + s,
           action: function(){
-            that.inputField.val('tag:' + s).trigger( "input" );
+            that.inputField.val('tag:' + s).trigger( 'input' );
           }
         });
       });
@@ -369,25 +369,25 @@ export default qx.Class.define("SearchView", {
           }
           else {
             entriesFiltered = _.filter( entries, function(entry){
-                return (entry.type == operationQuery);
+              return (entry.type == operationQuery);
             });
           }
 
-          that.setSearchTag("type-" + operationQuery, that.getWording('search.label.type.' + operationQuery));
+          that.setSearchTag('type-' + operationQuery, that.getWording('search.label.type.' + operationQuery));
           APP.setPageTitle( that.getWording('search.label.type.' + operationQuery) ); // overwrite page title set in APP.route()
         }
 
         // category listing
         if(operator == 'cat' ) {
           entriesFiltered = _.filter( entries, function(entry){
-              return (entry.category && entry.category.name == operationQuery);
+            return (entry.navigationId && entry.navigationId == operationQuery);
           });
 
           if (APP.getArea().chapterCategoryMapping !== undefined) {
             chapters = APP.getArea().chapterCategoryMapping[operationQuery];
           }
 
-          that.setSearchTag("cat-" + operationQuery, that.getWording('cat.' + operationQuery));
+          that.setSearchTag('cat-' + operationQuery, APP.getData().navigationById[operationQuery].name, APP.getData().navigationById[operationQuery].color);
           APP.setPageTitle( that.getWording('cat.' + operationQuery) ); // overwrite page title set in APP.route()
         }
 
@@ -395,24 +395,23 @@ export default qx.Class.define("SearchView", {
         else if(operator == 'subcat' ) {
           entriesFiltered = _.filter( entries, function(entry){
             
-            if( entry.subCategory && entry.subCategory == operationQuery ) {
+            if( entry.subNavigationId && entry.subNavigationId == operationQuery ) {
               return true;
             }
           });
           
-          var searchTagCssClass = APP.getMainCategory(operationQuery).name;
-          that.setSearchTag("cat-" + searchTagCssClass, that.getWording('cat.' + operationQuery));
+          that.setSearchTag('cat-' + operationQuery, APP.getData().navigationById[operationQuery].name, APP.getData().navigationById[operationQuery].color);
           APP.setPageTitle( that.getWording('cat.' + operationQuery) ); // overwrite page title set in APP.route()
         }
 
         // tag listing
         else if(operator == 'tag' ) {
           entriesFiltered = _.filter( entries, function(entry){
-              return ( entry.tags && (entry.tags.indexOf(operationQuery) > -1) );
+            return ( entry.tags && (entry.tags.indexOf(operationQuery) > -1) );
           });
           
           var tagLabel = that.getWording('tag.' + operationQuery) ? that.getWording('tag.' + operationQuery) : operationQuery;
-          that.setSearchTag("tag-" + operationQuery, tagLabel);
+          that.setSearchTag('tag-' + operationQuery, tagLabel);
         }
         
         // user bookmarks
@@ -425,29 +424,29 @@ export default qx.Class.define("SearchView", {
 
         else if(operator == 'prop'){
           switch(operationQuery){
-            case 'supportwanted':
-              entriesFiltered = _.filter( entries, function(entry){
-                return entry.supportWanted;
-              });
-              that.setSearchTag(null, that.getWording('search.tag.supportwanted'));
-              APP.setPageTitle( that.getWording('search.tag.supportwanted') ); // overwrite page title set in APP.route()
-              that.currentSearchType = 'support-search';
-              break;
-            case 'forchildren':
-              entriesFiltered = _.filter( entries, function(entry){
-                return entry.forChildren;
-              });
-              that.setSearchTag(null, that.getWording('prop.forChildren'));
-              APP.setPageTitle( that.getWording('prop.forChildren') ); // overwrite page title set in APP.route()
-              break;
-            case 'certified':
-              entriesFiltered = _.filter( entries, function(entry){
-                return entry.certified;
-              });
-              that.setSearchTag(null, that.getWording('search.tag.certified'));
-              APP.setPageTitle( that.getWording('search.tag.certified') ); // overwrite page title set in APP.route()
-              break;
-          };
+          case 'supportwanted':
+            entriesFiltered = _.filter( entries, function(entry){
+              return entry.supportWanted;
+            });
+            that.setSearchTag(null, that.getWording('search.tag.supportwanted'));
+            APP.setPageTitle( that.getWording('search.tag.supportwanted') ); // overwrite page title set in APP.route()
+            that.currentSearchType = 'support-search';
+            break;
+          case 'forchildren':
+            entriesFiltered = _.filter( entries, function(entry){
+              return entry.forChildren;
+            });
+            that.setSearchTag(null, that.getWording('prop.forChildren'));
+            APP.setPageTitle( that.getWording('prop.forChildren') ); // overwrite page title set in APP.route()
+            break;
+          case 'certified':
+            entriesFiltered = _.filter( entries, function(entry){
+              return entry.certified;
+            });
+            that.setSearchTag(null, that.getWording('search.tag.certified'));
+            APP.setPageTitle( that.getWording('search.tag.certified') ); // overwrite page title set in APP.route()
+            break;
+          }
 
         }
       }
@@ -456,7 +455,7 @@ export default qx.Class.define("SearchView", {
 
         // blockSyncWithMap = true;
 
-        if(that.inputField.is(":focus")) that.loadSuggestions(query);
+        if(that.inputField.is(':focus')) that.loadSuggestions(query);
 
         that.currentSearchType = 'free-search';
         
@@ -575,7 +574,7 @@ export default qx.Class.define("SearchView", {
     createSectionHeader: function( label, action ) {
       var that = this;
       
-      const sectionHeader = $("<div />")
+      const sectionHeader = $('<div />')
         .addClass('section-header')
         .append(label);
       
@@ -590,16 +589,16 @@ export default qx.Class.define("SearchView", {
     createButton: function( options ) {
       var that = this;
       
-      const btn = $("<button />")
+      const btn = $('<button />')
         .addClass('btn btn-center grey darken-3')
         .append(options.label);
 
       if(options.iconName) {
-        const icon = $("<i />")
+        const icon = $('<i />')
           .addClass('material-icons ' + (options.iconPosition? options.iconPosition : 'left') )
           .append(options.iconName);
         btn.append(icon);
-      };
+      }
       
       if(options.action) btn
         .addClass('with-action')
@@ -608,14 +607,16 @@ export default qx.Class.define("SearchView", {
       that.scrollContainer.append(btn);
     },
 
-    setSearchTag: function(cssClass, wording){
+    setSearchTag: function(cssClass, wording, color){
       var that = this;
 
       that.searchTag
         .empty()
         .removeClass()        
-        .addClass("search-tag active " + cssClass)
+        .addClass('search-tag active ' + cssClass)
         .append(wording);
+        
+      if (color) that.searchTag.css('background-color', color);
 
       that.inputField.hide();
     },
@@ -654,47 +655,47 @@ export default qx.Class.define("SearchView", {
       });
 
       // that.listen('detailViewOpened', function(){
-        // that.hide();
+      // that.hide();
       // });
       
       // that.listen('detailViewClosed', function(){
-        // if( that.isActive() ) that.show();
-        // else if(
-        //   !APP.getEventView().isActive()
-        //   && !APP.getIncludeView().isActive()
-        // ) that.load();
+      // if( that.isActive() ) that.show();
+      // else if(
+      //   !APP.getEventView().isActive()
+      //   && !APP.getIncludeView().isActive()
+      // ) that.load();
       // });
 
       // that.listen('eventViewOpened', function(){
-        // that.close();
+      // that.close();
       // });
 
       // that.listen('eventViewClosed', function(){
-        // if( that.isActive() ) that.show();
-        // else if(
-        //   !APP.getDetailView().isActive()
-        //   && !APP.getIncludeView().isActive()
-        // ) that.load();
+      // if( that.isActive() ) that.show();
+      // else if(
+      //   !APP.getDetailView().isActive()
+      //   && !APP.getIncludeView().isActive()
+      // ) that.load();
       // });
 
       // that.listen('includeViewOpened', function(){
-        // that.close();
+      // that.close();
       // });
       
       // that.listen('includeViewClosed', function(){
-        // if( that.isActive() ) that.show();
-        // else if(
-        //   !APP.getDetailView().isActive()
-        //   && !APP.getEventView().isActive()
-        // ) that.load();
+      // if( that.isActive() ) that.show();
+      // else if(
+      //   !APP.getDetailView().isActive()
+      //   && !APP.getEventView().isActive()
+      // ) that.load();
       // });
 
       // that.listen('searchViewClosed', function(){
-        // if(
-        //   !APP.getDetailView().isActive()
-        //   && !APP.getEventView().isActive()
-        //   && !APP.getIncludeView().isActive()
-        // ) that.load();
+      // if(
+      //   !APP.getDetailView().isActive()
+      //   && !APP.getEventView().isActive()
+      //   && !APP.getIncludeView().isActive()
+      // ) that.load();
       // });
 
       that.listen('fetchedNewData', function(){
@@ -709,23 +710,23 @@ export default qx.Class.define("SearchView", {
           that.close();
         }
         else if( filter.type ) {
-          that.inputField.val( 'type:' + filter.type ).trigger( "input" );
+          that.inputField.val( 'type:' + filter.type ).trigger( 'input' );
         }
-        else if( filter.category ) {
-          that.inputField.val( 'cat:' + filter.category ).trigger( "input" );
+        else if( filter.navigation ) {
+          that.inputField.val( 'cat:' + filter.navigation ).trigger( 'input' );
         }
-        else if( filter.subCategory ) {
-          that.inputField.val( 'subcat:' + filter.subCategory ).trigger( "input" );
+        else if( filter.subNavigation ) {
+          that.inputField.val( 'subcat:' + filter.subNavigation ).trigger( 'input' );
         }
         else if( filter.tags ) {
-          that.inputField.val( 'tag:' + filter.tags ).trigger( "input" );
+          that.inputField.val( 'tag:' + filter.tags ).trigger( 'input' );
         }
       });
 
       that.listen('bookmarksChanged', function(){
         // react only in dashboard and bookmark mode
         var mode = that.inputField.val();
-        if (mode ==  "" || mode == "user:bookmarks") {
+        if (mode ==  '' || mode == 'user:bookmarks') {
           that.load(mode);
         }
       });
@@ -733,46 +734,46 @@ export default qx.Class.define("SearchView", {
     },
 
     reset: function(){
-        var that = this;
+      var that = this;
 
-        that.show();
+      that.show();
 
-        that.scrollContainer.scrollTop(0);
+      that.scrollContainer.scrollTop(0);
 
-        that.inputField
-          .val(null)
-          .show();
+      that.inputField
+        .val(null)
+        .show();
 
-        that.searchTag
-          .removeClass("active")
-          .removeClass (function (index, css) {
-            return (css.match (/(^|\s)cat-\S+/g) || []).join(' ');
-          })
-          .empty();
+      that.searchTag
+        .removeClass('active')
+        .removeClass (function (index, css) {
+          return (css.match (/(^|\s)cat-\S+/g) || []).join(' ');
+        })
+        .empty();
 
-        that.scrollContainer.empty();
+      that.scrollContainer.empty();
         
-        that.view.removeClass('active-search');
-        APP.getLegendView().close();
+      that.view.removeClass('active-search');
+      APP.getLegendView().close();
         
-        if( APP.getUserDevice() == 'desktop') that.ps.update();
+      if( APP.getUserDevice() == 'desktop') that.ps.update();
     },
 
     close: function(){
-        var that = this;
+      var that = this;
 
-        that.reset();
-        that.view.removeClass('active');
-        that.isActive(false);
+      that.reset();
+      that.view.removeClass('active');
+      that.isActive(false);
 
-        that.say('searchViewClosed');
+      that.say('searchViewClosed');
     },
 
     changeLanguage: function(){
-        var that = this;
+      var that = this;
 
-        // if( APP.getDetailView().isActive() ) return;
-        // if(that.isActive()) that.load( that.inputField.val() );
+      // if( APP.getDetailView().isActive() ) return;
+      // if(that.isActive()) that.load( that.inputField.val() );
     }
   }
 

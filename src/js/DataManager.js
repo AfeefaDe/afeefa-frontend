@@ -1,10 +1,10 @@
 import qx from '../../node_modules/qooxdoo/qx-oo.js';
 import Daddy from './Daddy.js';
 
-export default qx.Class.define("DataManager", {
+export default qx.Class.define('DataManager', {
 
   extend: Daddy,
-  type: "singleton",
+  type: 'singleton',
 
   construct: function () {
     var that = this;
@@ -24,7 +24,7 @@ export default qx.Class.define("DataManager", {
         APP.getLM().setBib(data);
 
         // fetch areas
-        that.getAllAreas(function (data) {  // categories
+        that.getAllAreas(function (data) {  // navigation
           // store in APP
           var currentData = APP.getData();
           currentData.areas = data.areas;
@@ -34,9 +34,9 @@ export default qx.Class.define("DataManager", {
 
           // fetch translations
           that.getTranslations(function() {
-            // fetch navigation categories
-            that.getAllCategories(function () {
-              that.initNavigationTranslations()
+            // fetch navigation navigation
+            that.getNavigation(function () {
+              that.initNavigationTranslations();
               cb();
             });
 
@@ -67,12 +67,12 @@ export default qx.Class.define("DataManager", {
 
         if (APP.getArea().dataKey == 'dresden') {
           // that.fetchExternalData('freifunk', function () {
-            // if (!cb) that.say('fetchedNewData');
+          // if (!cb) that.say('fetchedNewData');
 
-            that.fetchExternalData('facebookEvents', function () {
-              that.say('fetchedNewData');
-              if (cb) cb();  // finished, so callback
-            });
+          // that.fetchExternalData('facebookEvents', function () {
+          // that.say('fetchedNewData');
+          // });
+          if (cb) cb();  // finished, so callback
           // });
         } else {
           if (cb) that.say('fetchedNewData');
@@ -87,7 +87,7 @@ export default qx.Class.define("DataManager", {
       var translations = currentAppData.translations;
       var entries = currentAppData.entries;
       _.each(entries, function(entry) {
-        var entryTranslation = translations[entry.entryType.toLowerCase() + '.' + entry.id]
+        var entryTranslation = translations[entry.entryType.toLowerCase() + '.' + entry.id];
         if (entryTranslation) {
           entry.name = entryTranslation.title;
           entry.descriptionShort = entryTranslation.short_description;
@@ -99,14 +99,14 @@ export default qx.Class.define("DataManager", {
     initNavigationTranslations: function () {
       var currentData = APP.getData();
       var translations = currentData.translations;
-      var categories = currentData.categories;
-      console.log('categories', categories)
+      var navigation = currentData.navigation;
+      console.log('navigation', navigation);
 
-      _.each(categories, function(navigation_item) {
+      _.each(navigation, function(navigation_item) {
         var entryTranslation = translations['navigation_item.' + navigation_item.id];
         if (entryTranslation) {
           navigation_item.name = entryTranslation.title;
-          console.log('entryTranslation.title', entryTranslation.title)
+          console.log('entryTranslation.title', entryTranslation.title);
         }
         _.each(navigation_item.sub_items, function(sub_item) {
           var entryTranslation = translations['navigation_item.' + sub_item.id];
@@ -117,27 +117,27 @@ export default qx.Class.define("DataManager", {
       });
     },
 
-    getAllCategories: function (cb) {
+    getNavigation: function (cb) {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/navigation" + "?area=" + APP.getArea().dataKey,
+        url: APP.getConfig().apiUrl + 'api/navigation' + '?area=' + APP.getArea().dataKey,
         type: 'GET',
         dataType: 'json'
       })
         .done(function (data) {
-          var categoriesById = {}
+          var navigationById = {};
           _.each(data, function(navigation_item) {
-            categoriesById[navigation_item.id] = navigation_item;
+            navigationById[navigation_item.id] = navigation_item;
             _.each(navigation_item.sub_items, function(sub_item) {
-              categoriesById[sub_item.id] = sub_item;
+              navigationById[sub_item.id] = sub_item;
               sub_item.color = navigation_item.color;
             });
           });
 
           var currentData = APP.getData();
-          currentData.categories = data;
-          currentData.categoriesById = categoriesById;
+          currentData.navigation = data;
+          currentData.navigationById = navigationById;
 
           cb(data);
         })
@@ -152,12 +152,12 @@ export default qx.Class.define("DataManager", {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/translations" + "?locale=" + APP.getLM().getCurrentLang() + "&area=" + APP.getArea().dataKey,
+        url: APP.getConfig().apiUrl + 'api/translations' + '?locale=' + APP.getLM().getCurrentLang() + '&area=' + APP.getArea().dataKey,
         type: 'GET',
         dataType: 'json'
       })
         .done(function (data) {
-          var translations = {}
+          var translations = {};
           _.each(['orga', 'offer', 'event', 'facet_item', 'navigation_item'], function(type) {
             _.each(data[type + 's'], function(item) {
               translations[type + '.' + item.id] = item;
@@ -220,24 +220,24 @@ export default qx.Class.define("DataManager", {
             donationText: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://interaction-leipzig.de/spende/">Spende für das Projekt in Leipzig</a> oder einer <a target="_blank" href="https://about.afeefa.de/spenden/">Spende für den technischen Betrieb</a> und die Weiterentwicklung der Afeefa Software.</p>',
             wisdomRootId: 1,
             chapterCategoryMapping: {
-              "advice-and-support": [
-                { id: 27, name: "Patenschaften machen den Unterschied" },
-                { id: 28, name: "Beratung für Migrant*innen" },
-                { id: 12, name: "Lebenslagen: Familien, Frauen, Männer, LSBTI*, Kinder" }
+              'advice-and-support': [
+                { id: 27, name: 'Patenschaften machen den Unterschied' },
+                { id: 28, name: 'Beratung für Migrant*innen' },
+                { id: 12, name: 'Lebenslagen: Familien, Frauen, Männer, LSBTI*, Kinder' }
               ],
-              "living-in-leipzig": [
-                { id: 14, name: "Gesundheit" },
-                { id: 15, name: "Wohnen" },
-                { id: 16, name: "Religion" },
-                { id: 17, name: "Mobil sein" },
-                { id: 18, name: "Alltag" },
-                { id: 19, name: "Freizeit" },
-                { id: 20, name: "Mitwirken und sich einmischen" }
+              'living-in-leipzig': [
+                { id: 14, name: 'Gesundheit' },
+                { id: 15, name: 'Wohnen' },
+                { id: 16, name: 'Religion' },
+                { id: 17, name: 'Mobil sein' },
+                { id: 18, name: 'Alltag' },
+                { id: 19, name: 'Freizeit' },
+                { id: 20, name: 'Mitwirken und sich einmischen' }
               ],
-              "work-and-education": [
-                { id: 22, name: "Deutsch lernen und Deutsch sprechen" },
-                { id: 23, name: "Kindergarten und Schule" },
-                { id: 24, name: "Arbeit, Ausbildung, Studium" }
+              'work-and-education': [
+                { id: 22, name: 'Deutsch lernen und Deutsch sprechen' },
+                { id: 23, name: 'Kindergarten und Schule' },
+                { id: 24, name: 'Arbeit, Ausbildung, Studium' }
               ]
             }
           },
@@ -266,7 +266,7 @@ export default qx.Class.define("DataManager", {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/chapters",
+        url: APP.getConfig().apiUrl + 'api/chapters',
         type: 'GET',
         dataType: 'json'
       })
@@ -283,7 +283,7 @@ export default qx.Class.define("DataManager", {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/chapters/" + chapterID,
+        url: APP.getConfig().apiUrl + 'api/chapters/' + chapterID,
         type: 'GET',
         dataType: 'json'
       })
@@ -335,7 +335,7 @@ export default qx.Class.define("DataManager", {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/entries?area=" + APP.getArea().dataKey,
+        url: APP.getConfig().apiUrl + 'api/entries?area=' + APP.getArea().dataKey,
         type: 'GET',
         dataType: 'json'
       })
@@ -354,27 +354,31 @@ export default qx.Class.define("DataManager", {
 
       var entry = _.find(APP.getData().entries, function (entry) {
         return entryId == entry.entryId;
-      })
+      });
 
       return entry;
     },
 
-    getOrgaById: function (id) {
-      var that = this;
+    getOfferById: function (id) {
+      var offer = _.find(APP.getData().entries, function (entry) {
+        return (APP.isOffer(entry) && id == entry.id);
+      });
 
+      return offer;
+    },
+
+    getOrgaById: function (id) {
       var orga = _.find(APP.getData().entries, function (entry) {
         return (APP.isOrga(entry) && id == entry.id);
-      })
-      console.log('getOrgaById');
+      });
+
       return orga;
     },
 
     getEventById: function (id) {
-      var that = this;
-
       var event = _.find(APP.getData().entries, function (entry) {
         return (APP.isEvent(entry) && id == entry.id);
-      })
+      });
 
       return event;
     },
@@ -475,7 +479,7 @@ export default qx.Class.define("DataManager", {
     getAllLocations: function (cb) {
 
       $.ajax({
-        url: "api/locations?locale=" + APP.getLM().getCurrentLang(),
+        url: 'api/locations?locale=' + APP.getLM().getCurrentLang(),
         type: 'GET',
         dataType: 'json'
       })
@@ -495,7 +499,7 @@ export default qx.Class.define("DataManager", {
           sourceUrl: '/externalDataFiles/freifunk-nodes.json',
           mapping: {
             name: function (record) {
-              return "Wifi Hotspot (Freifunk)";
+              return 'Wifi Hotspot (Freifunk)';
             },
             type: function (record) {
               return 0;
@@ -508,7 +512,7 @@ export default qx.Class.define("DataManager", {
             },
             category: function (record) {
               return {
-                "name": "general"
+                'name': 'general'
               };
             },
             subCategory: function (record) {
@@ -518,26 +522,26 @@ export default qx.Class.define("DataManager", {
               return false;
             },
             descriptionShort: function (record) {
-              return APP.getLM().resolve("freifunk.descriptionShort");
+              return APP.getLM().resolve('freifunk.descriptionShort');
             },
             image: function (record) {
-              return "https://freifunk.net/wp-content/uploads/2013/07/spenden.png";
+              return 'https://freifunk.net/wp-content/uploads/2013/07/spenden.png';
             },
             imageType: function (record) {
               return 'image';
             },
             web: function (record) {
-              return "http://www.freifunk-dresden.de/topology/google-maps.html";
+              return 'http://www.freifunk-dresden.de/topology/google-maps.html';
             },
             facebook: function (record) {
-              return "https://www.facebook.com/FreifunkDresden";
+              return 'https://www.facebook.com/FreifunkDresden';
             },
             location: function (record) {
               return [{
-                "arrival": "",
-                "city": "Dresden",
-                "lat": record.position.lat,
-                "lon": record.position.long,
+                'arrival': '',
+                'city': 'Dresden',
+                'lat': record.position.lat,
+                'lon': record.position.long,
                 // "placename":"...",
                 // "street":"...",
                 // "zip":"..."
@@ -562,7 +566,7 @@ export default qx.Class.define("DataManager", {
             },
             category: function (record) {
               return {
-                "name": "external-event"
+                'name': 'external-event'
               };
             },
             subCategory: function (record) {
@@ -594,13 +598,13 @@ export default qx.Class.define("DataManager", {
             },
             location: function (record) {
               return [{
-                "arrival": null,
-                "city": (record.place && record.place.location) ? record.place.location.city : null,
-                "lat": (record.place && record.place.location) ? record.place.location.latitude : null,
-                "lon": (record.place && record.place.location) ? record.place.location.longitude : null,
-                "placename": (record.place && record.place.name) ? record.place.name : null,
-                "street": (record.place && record.place.location) ? record.place.location.street : null,
-                "zip": (record.place && record.place.location) ? record.place.location.zip : null
+                'arrival': null,
+                'city': (record.place && record.place.location) ? record.place.location.city : null,
+                'lat': (record.place && record.place.location) ? record.place.location.latitude : null,
+                'lon': (record.place && record.place.location) ? record.place.location.longitude : null,
+                'placename': (record.place && record.place.name) ? record.place.name : null,
+                'street': (record.place && record.place.location) ? record.place.location.street : null,
+                'zip': (record.place && record.place.location) ? record.place.location.zip : null
               }];
             },
             dateFrom: function (record) {
@@ -612,7 +616,7 @@ export default qx.Class.define("DataManager", {
               if (record.start_time === undefined) return null;
 
               function n(n) {
-                return n > 9 ? "" + n : "0" + n;
+                return n > 9 ? '' + n : '0' + n;
               }
 
               date = new Date(record.start_time);
@@ -627,7 +631,7 @@ export default qx.Class.define("DataManager", {
               if (record.end_time === undefined) return null;
 
               function n(n) {
-                return n > 9 ? "" + n : "0" + n;
+                return n > 9 ? '' + n : '0' + n;
               }
 
               date = new Date(record.end_time);
@@ -687,7 +691,7 @@ export default qx.Class.define("DataManager", {
           type: mapping.type ? mapping.type(record) : 0,
           entryType: mapping.entryType ? mapping.entryType(record) : 0,
           category: mapping.category ? mapping.category(record) : {
-            "name": "general",
+            'name': 'general',
           },
           subCategory: mapping.subCategory ? mapping.subCategory(record) : null,
           tags: mapping.tags ? mapping.tags(record) : null,
@@ -713,7 +717,7 @@ export default qx.Class.define("DataManager", {
       });
 
       // store data in APP
-      var newData = _.union(currentAppData.entries, rows)
+      var newData = _.union(currentAppData.entries, rows);
       currentAppData.entries = newData;
 
       APP.setData(currentAppData);
@@ -723,7 +727,7 @@ export default qx.Class.define("DataManager", {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/marketentries",
+        url: APP.getConfig().apiUrl + 'api/marketentries',
         type: 'POST',
         data: JSON.stringify(data),
         cache: false,
@@ -743,7 +747,7 @@ export default qx.Class.define("DataManager", {
       // console.debug('POST ' + APP.getConfig().apiUrl + 'api/locations', data);
 
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/locations",
+        url: APP.getConfig().apiUrl + 'api/locations',
         type: 'POST',
         data: data,
         cache: false,
@@ -770,9 +774,9 @@ export default qx.Class.define("DataManager", {
 
       var hook;
       if (area == 'leipzig') {
-        hook = "https://hooks.slack.com/services/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";
+        hook = 'https://hooks.slack.com/services/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';
       } else {
-        hook = "https://hooks.slack.com/services/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";
+        hook = 'https://hooks.slack.com/services/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';
       }
       var slackMessage = '*' + data.heading + '*' + ':\n' + data.message;
 
@@ -791,13 +795,12 @@ export default qx.Class.define("DataManager", {
         .fail(function (a) {
           // cb(a);
         });
-
     },
 
     contact: function (entry, data, cb) {
-      var apiTypePaths = { "Orga": "orgas", "Event": 'events' };
+      var apiTypePaths = { 'Orga': 'orgas', 'Offer': 'offers', 'Event': 'events' };
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/" + apiTypePaths[entry.entryType] + '/' + entry.id + '/contact',
+        url: APP.getConfig().apiUrl + 'api/' + apiTypePaths[entry.entryType] + '/' + entry.id + '/contact',
         type: 'POST',
         data: data,
         cache: false,
@@ -812,9 +815,9 @@ export default qx.Class.define("DataManager", {
     },
 
     entryFeedback: function (entry, data, cb) {
-      var apiTypePaths = { "Orga": "orgas", "Event": 'events' };
+      var apiTypePaths = { 'Orga': 'orgas', 'Offer': 'offers', 'Event': 'events' };
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/" + apiTypePaths[entry.entryType] + '/' + entry.id + '/feedback',
+        url: APP.getConfig().apiUrl + 'api/' + apiTypePaths[entry.entryType] + '/' + entry.id + '/feedback',
         type: 'POST',
         data: data,
         cache: false,
@@ -830,7 +833,7 @@ export default qx.Class.define("DataManager", {
 
     feedback: function (data, cb) {
       $.ajax({
-        url: APP.getConfig().apiUrl + "api/feedbacks",
+        url: APP.getConfig().apiUrl + 'api/feedbacks',
         type: 'POST',
         data: data,
         cache: false,

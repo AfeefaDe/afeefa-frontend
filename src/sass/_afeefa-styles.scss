@@ -102,7 +102,6 @@ button {
 
     .icon {
       @include entityShapes;
-      @include categoryColors;
       @include categorySymbols;
       width: 2rem;
       height: 2rem;
@@ -160,7 +159,6 @@ button {
     }
 
     &.result-category {
-      @include categoryColors($alpha_background: .4);
       margin-bottom: 1em;
       
       .icon {

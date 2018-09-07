@@ -264,7 +264,7 @@ export default qx.Class.define('DetailView', {
 
       // heading
       that.heading.append(record.name ? record.name : '');
-      if(record.category) that.headingContainer.addClass('cat-' + record.category.name);
+      if (record.navigationId) that.headingContainer.css('background-color', APP.getData().navigationById[record.navigationId].color);
 
       // certificate badge
       if(record.certified) that.certificateBadge.show();
@@ -305,16 +305,16 @@ export default qx.Class.define('DetailView', {
       //////////////////////
 
       // category
-      var categoriesById = APP.getData().categoriesById;
-      var category = categoriesById[record.navigationId];
+      var navigationById = APP.getData().navigationById;
+      var category = navigationById[record.navigationId];
       if( category) {
         that['propertyIconcategory'].addClass('cat-' + category.icon);
         that['propertyIconcategory'].css({'background-color': category.color});
       }
-      var subCategory = categoriesById[record.subNavigationId];
+      var subCategory = navigationById[record.subNavigationId];
       if( subCategory ) {
         that['propertyIconcategory'].addClass('subcat-' + subCategory.icon);
-        that['propertyIconcategory'].css({'background-color': subCategory.color});
+        that['propertyIconcategory'].css({'background-color': category.color});
       }
 
       var prop = 'category';
@@ -328,7 +328,7 @@ export default qx.Class.define('DetailView', {
         case 0:
           return that.getWording('entity.orga');
         case 1:
-          return record.offer ? that.getWording('entity.market.offer') : that.getWording('entity.market.request');
+          return that.getWording('entity.offer');
         case 2:
           return that.getWording('entity.event');
         }
@@ -557,13 +557,6 @@ export default qx.Class.define('DetailView', {
 
       this.base(arguments);
 
-      // that.listen('searchFieldFocused', function(){
-      // if( APP.getUserDevice() === 'mobile' )
-      // that.close();
-      // else
-      // 	that.view.addClass('right');
-      // });
-
       if (APP.getUserDevice() == 'mobile') {
         that.listen('searchViewLoaded', function(){
           that.close();
@@ -581,16 +574,14 @@ export default qx.Class.define('DetailView', {
       that.listen('fetchedNewData', function(){
         if( that.record !== null) {
           // reload record
-          var newRecord = APP.getDataManager().getEntryByEntryId(that.record.entryId);
-          newRecord = APP.isEvent(that.record)? APP.getDataManager().getEventById(that.record.id) : APP.getDataManager().getOrgaById(that.record.id);
+          var newRecord;
+          if (APP.isOffer(that.record)) newRecord = APP.getDataManager().getOfferById(that.record.id);
+          if (APP.isOrga(that.record)) newRecord = APP.getDataManager().getOrgaById(that.record.id);
+          if (APP.isEvent(that.record)) newRecord = APP.getDataManager().getEventById(that.record.id);
           that.reset();
           that.load(newRecord);
         }
       });
-
-      // that.listen('filterSet', function(){
-      // that.close();
-      // });
 
       that.listen('mapclicked', function(){
         that.close();

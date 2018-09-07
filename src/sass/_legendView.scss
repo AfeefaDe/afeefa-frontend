@@ -104,7 +104,6 @@
 		line-height: 2.5em;
 		cursor: pointer;
 		
-		@include categoryColors($alpha_background: .4);
 		border-left: .5rem solid;
 
 		&.cat-general {
@@ -172,7 +171,6 @@
 
 	.sub-container {
 		transition: max-height 250ms;
-		@include categoryColors($alpha_background: .1);
 		
 		&.cat-general {
 			background-color: rgba($white, .1);
@@ -183,7 +181,6 @@
 		overflow: hidden;
 
 		.subcat-container {
-			@include categoryColors();
 
 			&.cat-general {
 				background-color: rgba($white, 1);
@@ -312,5 +309,11 @@
 		&.active {
 			@include activeState;
 		}
+	}
+}
+
+.rtl {
+	#legendView {
+		left: 0;
 	}
 }

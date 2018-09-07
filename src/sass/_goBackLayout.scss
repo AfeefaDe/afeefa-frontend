@@ -29,11 +29,6 @@
 		background-color: $gray95;
 		position: relative;
 
-		@include categoryColors;
-		&.cat-general {
-			background-color: $gray50 !important;
-		}
-
 		h1 {
 			box-sizing: border-box;
 			margin: 0;

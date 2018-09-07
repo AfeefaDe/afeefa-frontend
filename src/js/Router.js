@@ -262,6 +262,13 @@ export default qx.Class.define('Router', {
       if (url === null || url !== undefined) urlParams = that.detectUrlParameter(url);
 
       switch (urlParams[0]) {
+      case 'offer':
+        var offer = APP.getDataManager().getOfferById(that.unslugify(urlParams[1]));
+        if (offer) APP.getMapView().loadEntry(offer);
+        if (offer) APP.getDetailView().load(offer);
+        if (cb) cb();
+        if (offer) APP.setPageTitle(offer.name); // overwrite page title set in APP.route()
+        break;
       case 'project':
         var orga = APP.getDataManager().getOrgaById(that.unslugify(urlParams[1]));
         if (orga) APP.getMapView().loadEntry(orga);

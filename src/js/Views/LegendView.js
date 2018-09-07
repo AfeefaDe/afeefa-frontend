@@ -11,15 +11,14 @@ export default qx.Class.define('LegendView', {
   type: 'singleton',
 
   properties: {
-    categories: {}
+    navigation: {}
   },
 
   construct: function(){
     var that = this;
 
     that.setViewId('legendView');
-    that.setCategories( APP.getData().categories);
-    // that.setCategories( _.union( APP.getConfig().categoriesIni, APP.getConfig().categoriesMarket ) );
+    that.setNavigation( APP.getData().navigation);
   },
 
   members : {
@@ -91,8 +90,8 @@ export default qx.Class.define('LegendView', {
       that.moduleHeadingCategory = $('<h3 />');
       that.filterModuleCat.append(that.moduleHeadingCategory);
 
-      // categories
-      _.each( that.getCategories(), function(cat){
+      // navigation
+      _.each( that.getNavigation(), function(cat){
         // container
         var container = $('<div />');
         container.addClass('std-container');
@@ -108,7 +107,7 @@ export default qx.Class.define('LegendView', {
         var icon = $('<div />')
           .addClass('icon ' + 'cat-' + cat.icon)
           .click(function() {
-            that.setFilter( {category: cat.name} );
+            that.setFilter( {navigation: cat.id} );
             that.reset();
             container.addClass('extended');
           });
@@ -117,7 +116,7 @@ export default qx.Class.define('LegendView', {
         // label
         that['label-' + cat.id] = $('<p />')
           .click(function() {
-            that.setFilter( {category: cat.name} );
+            that.setFilter( {navigation: cat.id} );
             that.reset();
             container.addClass('extended');
           });
@@ -144,7 +143,7 @@ export default qx.Class.define('LegendView', {
         subContainer.css({ 'background-color': cat.color + '16' });
         catContainer.append(subContainer);
 
-        // sub categories
+        // sub navigation
         // TODO replace dummy data
         _.each( cat.sub_items, function(subcat){
           var subCatContainer = $('<div />');
@@ -156,14 +155,14 @@ export default qx.Class.define('LegendView', {
           var subIcon = $('<div />');
           subIcon.addClass('icon ' + 'subcat-' + subcat.icon);
           subIcon.click(function(){
-            that.setFilter( {subCategory: subcat.name} );
+            that.setFilter( {subNavigation: subcat.id} );
           });
           subCatContainer.append(subIcon);
 
           // label
           that['label-' + subcat.id] = $('<p />');
           that['label-' + subcat.id].click(function() {
-            that.setFilter( {subCategory: subcat.name} );
+            that.setFilter( {subNavigation: subcat.id} );
           });
           subCatContainer.append(that['label-' + subcat.id]);
 
@@ -233,7 +232,7 @@ export default qx.Class.define('LegendView', {
     load: function(){
       var that = this;
 
-      _.each( that.getCategories(), function(cat){
+      _.each( that.getNavigation(), function(cat){
 
         that['label-' + cat.id].append( cat.name );
 
@@ -402,7 +401,7 @@ export default qx.Class.define('LegendView', {
       var that = this;
 
       // clear labels
-      _.each( that.getCategories(), function(cat){
+      _.each( that.getNavigation(), function(cat){
         that['label-' + cat.id].empty();
 
         _.each( cat.sub_items, function(subcat){

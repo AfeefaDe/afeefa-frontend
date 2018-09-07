@@ -128,7 +128,6 @@
 		&.category {
 			.property-icon {
 				@include entityShapes;
-				@include categoryColors;
 				@include categorySymbols;
 			}
 			.property-value {

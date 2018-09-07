@@ -5,14 +5,14 @@
   <div class="row">
 		<div class="input-field col s12">
 	    <select id="entry.type">
-	      <option value="0">{{translation:entity.orga}}</option>
+	      <option value="1">{{translation:entity.offer}}</option>
 	      <option value="2">{{translation:entity.event}}</option>
 	    </select>
 	  </div>
   </div>
 
-	<p class="conditional" data-condition="entry.type" data-condition-value="0">
-		<small>{{translation:form.info.newEntry.orga}}</small>
+	<p class="conditional" data-condition="entry.type" data-condition-value="1">
+		<small>{{translation:form.info.newEntry.offer}}</small>
 	</p>
 	<p class="conditional" data-condition="entry.type" data-condition-value="2">
 		<small>{{translation:form.info.newEntry.event}}</small>
