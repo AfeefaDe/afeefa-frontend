@@ -58,6 +58,8 @@ export default qx.Class.define('MapView', {
         maxZoom: 20
       }).setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
 
+      new L.Control.Zoom({ position: 'bottomright' }).addTo(that.map);
+
       // Layer group for main markers (with clustering)
       that.layerForMainMarkers = new L.MarkerClusterGroup({
         iconCreateFunction: function(cluster) {

@@ -26,6 +26,18 @@
 	/*background-color: $black;*/
 	background: none !important;
 
+	a.leaflet-control-zoom-in, a.leaflet-control-zoom-out {
+		font-size: 2em !important;
+		text-indent: 0 !important;
+		text-align: center;
+	}
+	a.leaflet-control-zoom-in {
+		line-height: 0.9em;
+	}
+	a.leaflet-control-zoom-out {
+		line-height: 0.9em;
+	}
+
 	div.location {
 
 		box-shadow: 1px 1px 2px #333;
