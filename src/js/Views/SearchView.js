@@ -61,7 +61,14 @@ export default qx.Class.define('SearchView', {
       that.searchBar.append(that.inputField);
 
       // search tags
-      that.searchTag = $('<span />');
+      that.searchTag = $('<span />')
+        .click(function(){
+          that.reset();
+          that.loadDashboard();
+          APP.getLegendView().resetFilter();
+          that.inputField.focus();
+          that.inputField.trigger( 'click' );
+        });
       that.searchBar.append(that.searchTag);      
 
       // results area
@@ -229,7 +236,7 @@ export default qx.Class.define('SearchView', {
 
 
       that.createSectionHeader( that.getWording('search.label.newentries') );
-      var newProjects = APP.getDataManager().getNewestProjects(5);
+      var newProjects = APP.getDataManager().getNewestOffers(5);
       _.each(newProjects, function(entry) {
         that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
       });
@@ -349,7 +356,7 @@ export default qx.Class.define('SearchView', {
 
       const entries = APP.getData().entries;
 
-      var entriesFiltered, chapters = [], blockSyncWithMap = false;
+      var entriesFiltered, blockSyncWithMap = false;
 
       // search type for individual result formatting
       that.currentSearchType = null;
@@ -611,7 +618,7 @@ export default qx.Class.define('SearchView', {
       that.inputField.on('input', function(e){
         var val = that.inputField.val();
         
-        if (val.length < 1) APP.getLegendView().show(true);
+        if (val === undefined || val.length < 1) APP.getLegendView().show(true);
 
         // stop timer that may exist from previous input
         if(that.timeout) clearTimeout(that.timeout);

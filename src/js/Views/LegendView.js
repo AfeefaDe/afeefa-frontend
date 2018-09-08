@@ -99,7 +99,7 @@ export default qx.Class.define('LegendView', {
         // cat container
         var catContainer = $('<div />');
         catContainer.addClass('cat-container');
-        catContainer.addClass('cat-' + cat.name);
+        catContainer.addClass('cat-' + cat.id);
         catContainer.css({ 'border-color': cat.color});
         catContainer.css({ 'background-color': cat.color + '66'});
 
@@ -146,7 +146,7 @@ export default qx.Class.define('LegendView', {
         // sub cat container
         var subContainer = $('<div />');
         subContainer.addClass('sub-container');
-        subContainer.addClass('cat-' + cat.name);
+        subContainer.addClass('cat-' + cat.id);
         subContainer.css({ 'border-color': cat.color});
         subContainer.css({ 'background-color': cat.color + '16' });
         catContainer.append(subContainer);
@@ -156,7 +156,7 @@ export default qx.Class.define('LegendView', {
         _.each( cat.sub_items, function(subcat){
           var subCatContainer = $('<div />');
           subCatContainer.addClass('subcat-container');
-          subCatContainer.addClass('cat-' + cat.name + ' subcat-' + subcat.name);
+          subCatContainer.addClass('cat-' + cat.id + ' subcat-' + subcat.id);
           subCatContainer.css({ 'border-color': cat.color});
 
           // icon
@@ -347,11 +347,11 @@ export default qx.Class.define('LegendView', {
 
           that.view.find('.cat-container, .subcat-container').addClass('inactive');
 
-          const currentCatContainers = that.view.find('.cat-container.cat-' + filter.category);
+          const currentCatContainers = that.view.find('.cat-container.cat-' + filter.navigationId);
           currentCatContainers.removeClass('inactive');
           currentCatContainers.parent().find('.subcat-container').removeClass('inactive');
 
-          const currentSubcatContainers = that.view.find('.subcat-container.subcat-' + filter.subCategory);
+          const currentSubcatContainers = that.view.find('.subcat-container.subcat-' + filter.subNavigationId);
           currentSubcatContainers.removeClass('inactive');
           currentSubcatContainers.parents('.std-container').find('.cat-container').removeClass('inactive');
 

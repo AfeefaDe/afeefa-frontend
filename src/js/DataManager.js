@@ -362,13 +362,13 @@ export default qx.Class.define('DataManager', {
       return event;
     },
 
-    getNewestProjects: function (count) {
+    getNewestOffers: function (count) {
       var that = this;
 
       if (count === undefined) count = 5;
 
       var projects = APP.getData().entries.filter(function (entry) {
-        return (APP.isOrga(entry) && entry.created_at != undefined);
+        return (APP.isOffer(entry) && entry.created_at != undefined);
       });
 
       var sortedProjects = _.sortBy(projects, function (o) {
