@@ -383,10 +383,6 @@ export default qx.Class.define('SearchView', {
             return (entry.navigationId && entry.navigationId == operationQuery);
           });
 
-          if (APP.getArea().chapterCategoryMapping !== undefined) {
-            chapters = APP.getArea().chapterCategoryMapping[operationQuery];
-          }
-
           that.setSearchTag('cat-' + operationQuery, APP.getData().navigationById[operationQuery].name, APP.getData().navigationById[operationQuery].color);
           APP.setPageTitle( that.getWording('cat.' + operationQuery) ); // overwrite page title set in APP.route()
         }
@@ -503,27 +499,6 @@ export default qx.Class.define('SearchView', {
 
           return false;
         });
-      }
-
-      if (chapters && chapters.length > 0) {
-        _.each(chapters, function(chapter) {
-          var action = function(){
-            APP.route('/chapter/' + chapter.id, null, null, true);
-          };
-  
-          that.createListResult(
-            {
-              cssClass: 'result-chapter',
-              iconClass: 'wisdom',
-              label: chapter.name,
-              // subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Flüchtlingshilfe',
-              action: action,
-              targetContainertEl: that.scrollContainer
-            }
-          );
-        });
-  
-        that.createSectionHeader('');
       }
 
       _.each(entriesFiltered, function(entry) {

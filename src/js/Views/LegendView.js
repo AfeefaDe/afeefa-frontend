@@ -116,22 +116,30 @@ export default qx.Class.define('LegendView', {
         // label
         that['label-' + cat.id] = $('<p />')
           .click(function() {
-            that.setFilter( {navigation: cat.id} );
-            that.reset();
-            container.addClass('extended');
+            var wasExtended = container.hasClass('extended');
+            if (!wasExtended) {
+              // reset all containers (this one and all others)
+              that.reset();
+              container.toggleClass('extended', !wasExtended);
+            }
+            else {
+              that.setFilter( {navigation: cat.id} );
+              that.reset();
+              container.addClass('extended');
+            }
           });
         catContainer.append(that['label-' + cat.id]);
 
         // nippus
-        var nippus = $('<div />');
-        nippus.addClass('nippus');
-        nippus.click(function() {
-          var wasExtended = container.hasClass('extended');
-          // reset all containers (this one and all others)
-          that.reset();
-          container.toggleClass('extended', !wasExtended);
-        });
-        catContainer.append(nippus);
+        // var nippus = $('<div />');
+        // nippus.addClass('nippus');
+        // nippus.click(function() {
+        //   var wasExtended = container.hasClass('extended');
+        //   // reset all containers (this one and all others)
+        //   that.reset();
+        //   container.toggleClass('extended', !wasExtended);
+        // });
+        // catContainer.append(nippus);
 
         container.append(catContainer);
 

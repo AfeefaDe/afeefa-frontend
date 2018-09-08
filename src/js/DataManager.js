@@ -218,28 +218,7 @@ export default qx.Class.define('DataManager', {
               img: 'interaction-logo.png'
             },
             donationText: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://interaction-leipzig.de/spende/">Spende für das Projekt in Leipzig</a> oder einer <a target="_blank" href="https://about.afeefa.de/spenden/">Spende für den technischen Betrieb</a> und die Weiterentwicklung der Afeefa Software.</p>',
-            wisdomRootId: 1,
-            chapterCategoryMapping: {
-              'advice-and-support': [
-                { id: 27, name: 'Patenschaften machen den Unterschied' },
-                { id: 28, name: 'Beratung für Migrant*innen' },
-                { id: 12, name: 'Lebenslagen: Familien, Frauen, Männer, LSBTI*, Kinder' }
-              ],
-              'living-in-leipzig': [
-                { id: 14, name: 'Gesundheit' },
-                { id: 15, name: 'Wohnen' },
-                { id: 16, name: 'Religion' },
-                { id: 17, name: 'Mobil sein' },
-                { id: 18, name: 'Alltag' },
-                { id: 19, name: 'Freizeit' },
-                { id: 20, name: 'Mitwirken und sich einmischen' }
-              ],
-              'work-and-education': [
-                { id: 22, name: 'Deutsch lernen und Deutsch sprechen' },
-                { id: 23, name: 'Kindergarten und Schule' },
-                { id: 24, name: 'Arbeit, Ausbildung, Studium' }
-              ]
-            }
+            wisdomRootId: 1
           },
           bautzen: {
             dataKey: 'bautzen',

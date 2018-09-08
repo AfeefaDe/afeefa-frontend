@@ -377,11 +377,11 @@ export default qx.Class.define('MapView', {
             var category = entry.navigationId ? APP.getData().navigationById[entry.navigationId] : null;
             var subCategory = entry.subNavigationId ? APP.getData().navigationById[entry.subNavigationId] : null;
 
-            if(subCategory){
+            if (subCategory) {
               categoryLabel.append( subCategory.name );
               categoryLabel.append( ' (' + category.name + ')' );
             }
-            else {
+            else if (category) {
               categoryLabel.append( category.name );
             }
 
@@ -420,17 +420,19 @@ export default qx.Class.define('MapView', {
         }
 
         // set category color styles on the marker
-        var dom = marker.getElement();
-        if (dom) {
-          marker.getElement().style.backgroundColor = category.color;
-        }
-        marker.on('add', function(){
-          marker.getElement().style.backgroundColor = category.color;
-        });
+        if (category) {
+          var dom = marker.getElement();
+          if (dom) {
+            marker.getElement().style.backgroundColor = category.color;
+          }
+          marker.on('add', function(){
+            marker.getElement().style.backgroundColor = category.color;
+          });
 
-        var currentLookup = that.getEntryMarkerLookup();
-        currentLookup.push( {entry: entry, marker: marker} );
-        that.setEntryMarkerLookup( currentLookup );
+          var currentLookup = that.getEntryMarkerLookup();
+          currentLookup.push( {entry: entry, marker: marker} );
+          that.setEntryMarkerLookup( currentLookup );
+        }
 
         // newLayer.addLayer(marker);
 
