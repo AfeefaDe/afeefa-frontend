@@ -12,13 +12,13 @@
 	}
 
 	&.small-2 {
-		width: calc(100% - 50vw);
-		left: 50vw;
+		width: calc(100% - 40vw);
+		left: 40vw;
 	}
 
 	&.small.small-2 {
-		width: calc(100% - 50vw - 30em);
-		left: 50vw;
+		width: calc(100% - 40vw - 30em);
+		left: 40vw;
 	}
 
 	font-size: $font-size !important;
