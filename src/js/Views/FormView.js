@@ -246,7 +246,8 @@ export default qx.Class.define('FormView', {
       
       var data_converted = {
         marketentry: data.entry,
-        location: data.location
+        location: data.location,
+        additional: data.additional
       };
 
       APP.getDataManager().addMarketEntry(
