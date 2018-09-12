@@ -706,7 +706,7 @@ export default qx.Class.define('DataManager', {
       var that = this;
 
       $.ajax({
-        url: APP.getConfig().apiUrl + 'api/marketentries',
+        url: APP.getConfig().apiUrl + 'api/entries',
         type: 'POST',
         data: JSON.stringify(data),
         cache: false,
@@ -718,29 +718,6 @@ export default qx.Class.define('DataManager', {
           if (response.status == 200 || response.status == 201) cb(true);
           else cb(false);
         });
-    },
-
-    addLocation: function (data, cb) {
-      var that = this;
-
-      // console.debug('POST ' + APP.getConfig().apiUrl + 'api/locations', data);
-
-      $.ajax({
-        url: APP.getConfig().apiUrl + 'api/locations',
-        type: 'POST',
-        data: data,
-        cache: false,
-        dataType: 'json',
-        processData: true,
-        contentType: false
-      })
-        .done(function (data) {
-          cb(data);
-        })
-        .fail(function (a) {
-          cb(a);
-        });
-
     },
 
     ///////////////////////
