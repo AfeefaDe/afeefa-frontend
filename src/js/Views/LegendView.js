@@ -161,7 +161,7 @@ export default qx.Class.define('LegendView', {
 
           // icon
           var subIcon = $('<div />');
-          subIcon.addClass('icon ' + 'subcat-' + subcat.icon);
+          subIcon.addClass('icon ' + 'cat-' + subcat.icon);
           subIcon.click(function(){
             that.setFilter( {subNavigation: subcat.id} );
           });
@@ -334,8 +334,8 @@ export default qx.Class.define('LegendView', {
       this.base(arguments);
 
       that.listen('fetchedNewData', function(){
-        that.changeLanguage()
-      })
+        that.changeLanguage();
+      });
 
       that.listen('filterSet', function(){
 
