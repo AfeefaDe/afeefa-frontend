@@ -475,7 +475,7 @@ export default qx.Class.define('SearchView', {
             var subcat = that.getWording('cat.' + entry.subCategory);
             if( subcat.toLowerCase().indexOf(query) >= 0 ) return true;
           }
-          // in description?
+          // in short description?
           if( entry.descriptionShort ) {
             var needlePos = entry.descriptionShort.toLowerCase().indexOf(query);
             if( needlePos >= 0 ){
@@ -502,6 +502,12 @@ export default qx.Class.define('SearchView', {
           // in speakerPublic?
           if( entry.speakerPublic ) {
             if( entry.speakerPublic.toLowerCase().indexOf(query) >= 0 ) return true;
+          }
+          // in parent's title?
+          if( entry.parentOrgaId ) {
+            var parent = APP.getDataManager().getOrgaById(entry.parentOrgaId);
+            console.log(parent);
+            if( parent && parent.name && parent.name.toLowerCase().indexOf(query) >= 0 ) return true;
           }
 
           return false;
