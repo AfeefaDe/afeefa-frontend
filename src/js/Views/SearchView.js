@@ -464,7 +464,7 @@ export default qx.Class.define('SearchView', {
         
         entriesFiltered = _.filter( entries, function(entry){
           // in name?
-          if( entry.name.toLowerCase().indexOf(query) >= 0 ) return true;
+          if( entry.name && entry.name.toLowerCase().indexOf(query) >= 0 ) return true;
           // in category?
           if( entry.category ) {
             var cat = that.getWording('cat.' + entry.category.name);
