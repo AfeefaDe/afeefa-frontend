@@ -71,7 +71,7 @@ export default qx.Class.define('AreaView', {
       that.language.empty().append( that.getWording('lan.'+APP.getLM().getCurrentLang()) );
 			
       // just hiding
-      if (APP.getArea().dataKey == 'leipzig') that.language.hide();
+      // if (APP.getArea().dataKey == 'leipzig') that.language.hide();
     },
 
     open: function(){

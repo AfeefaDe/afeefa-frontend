@@ -37,14 +37,14 @@ export default qx.Class.define('APPAFEEFA', {
           'ar',
           'fa',
           'fr',
-          'ru',
+          // 'ru',
           // 'ps',
-          'ku',
-          // 'es',
+          // 'ku',
+          'es',
           // 'sq',
           // 'sr',
-          'ti'
-          // 'tr',
+          // 'ti'
+          'tr'
           // 'ur'
         ],
         phraseapp: {
@@ -284,9 +284,9 @@ export default qx.Class.define('APPAFEEFA', {
 
     isOrga: function (record) {
       return record.entryType == 'Orga';
-		},
+    },
 		
-		isOffer: function (record) {
+    isOffer: function (record) {
       return record.entryType == 'Offer';
     },
 
