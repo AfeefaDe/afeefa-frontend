@@ -138,8 +138,9 @@ export default qx.Class.define('View', {
         }
 
         if( inner.indexOf('custom:categoryDropdown') > -1 ) {
-          var html = '<select id="entry.category">';
-                    
+          var html = '<select id="entry.category" class="browser-default" required>';
+            
+          html += '<option value="" disabled selected>Kategorie wählen</option>';
           _.each( APP.getData().navigation, function(nav){
             html += '<option value="' + nav.id + '">' + nav.name + '</option>';
           });
@@ -226,7 +227,7 @@ export default qx.Class.define('View', {
           
       // general formatting
       
-    //   color
+      //   color
       var color = category ? category.color : null;
 
       // icon

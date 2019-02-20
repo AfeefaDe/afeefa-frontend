@@ -103,8 +103,10 @@ export default qx.Class.define('FormView', {
 
         // init select dropdowns
         that.view.find('select').each(function(i, el){
-          $(el).material_select();
-          $(el).addClass('hidden');
+          if( !$(el).hasClass('browser-default')) {
+            $(el).material_select();
+            $(el).addClass('hidden');
+          }
         });
 
         that.parseForm(type, options);

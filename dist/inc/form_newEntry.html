@@ -3,8 +3,9 @@
 	<h3>{{translation:form.field.entryType}}</h3>	
 	
   <div class="row">
-		<div class="input-field col s12">
-	    <select id="entry.type">
+		<div class="col s12">
+	    <select id="entry.type" class="browser-default" required>
+	      <option value="" disabled selected>{{translation:form.info.select}}</option>
 	      <option value="1">{{translation:entity.offer}}</option>
 	      <option value="2">{{translation:entity.event}}</option>
 	    </select>
@@ -28,9 +29,9 @@
 	</div>
 
   <div class="row">
-	  <div class="input-field col s12">
+	  <div class="col s12">
 	    {{custom:categoryDropdown}}
-			<label>{{translation:form.field.category}}</label>
+			<!-- <label>{{translation:form.field.category}}</label> -->
 	  </div>
   </div>
 
