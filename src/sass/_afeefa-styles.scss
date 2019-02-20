@@ -80,9 +80,10 @@ button {
 }
 
 .list-results {
-  position: absolute;
-  left: 2rem;
-  width: calc(100% - 4rem);
+  // position: absolute;
+  padding: 0 2rem;
+  // left: 2rem;
+  // width: calc(100% - 4rem);
 
   .result {
     margin-bottom: 2rem;

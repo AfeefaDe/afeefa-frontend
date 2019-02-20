@@ -63,18 +63,30 @@ export default qx.Class.define('SearchView', {
       // search tags
       that.searchTag = $('<span />')
         .click(function(){
-          that.reset();
-          that.loadDashboard();
-          APP.getLegendView().resetFilter();
-          that.inputField.focus();
-          that.inputField.trigger( 'click' );
+          // that.reset();
+          // that.loadDashboard();
+          // APP.getLegendView().resetFilter();
+          // that.inputField.focus();
+          // that.inputField.trigger( 'click' );
+          that.view.toggleClass('showLegend');
         });
       that.searchBar.append(that.searchTag);      
 
-      // results area
+      // scrolling area
       that.scrollContainer = $('<div />')
-        .addClass('scroll-container list-results');
+        .addClass('scroll-container');
       if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.scrollContainer[0]);
+      
+      // render legend view into search view
+      APP.getLegendView().render(that.scrollContainer);
+      
+      // results area
+      // put dynamic elements like search results into an extra container, which is emptied and reloaded regularly
+      // and keep a static area inside the view for fixed elements like legendView
+      that.resultsContainer = $('<div />')
+        .addClass('list-results');
+      
+      that.scrollContainer.append(that.resultsContainer);
 
       that.view.append(that.scrollContainer);
 
@@ -88,7 +100,7 @@ export default qx.Class.define('SearchView', {
       query = query.toLowerCase();
         
       if(query){
-        that.scrollContainer.empty();
+        that.resultsContainer.empty();
         that.loadResults(query);
       } else {
         that.reset();
@@ -129,56 +141,29 @@ export default qx.Class.define('SearchView', {
             label: that.getWording('search.tag.bookmarks'),
             subLabel: APP.getUser().getBookmarks().length,
             action: action,
-            targetContainertEl: that.scrollContainer
+            targetContainertEl: that.resultsContainer
           }
         );
       }
       
       // WISDOM
-      if (APP.getArea().wisdomRootId !== undefined) {
-        that.createSectionHeader( '' );
+      // if (APP.getArea().wisdomRootId !== undefined) {
+      //   that.createSectionHeader( '' );
         
-        var action = function(){
-          APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
-        };
+      //   var action = function(){
+      //     APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
+      //   };
         
-        that.createListResult(
-          {
-            iconClass: 'wisdom',
-            label: 'Wegweiser',
-            subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Integrationsarbeit',
-            action: action,
-            targetContainertEl: that.scrollContainer
-          }
-        );
-      }
-
-      // THEMEN
-      if (APP.getArea().dataKey == 'leipzig') {
-        // that.createSectionHeader( that.getWording('search.label.eventstoday') );
-        that.createSectionHeader( that.getWording('category') );
-
-        var categories = _.filter(APP.getData().categories, function(cat){
-          return cat.name != 'hotspots';
-        });
-        _.each(categories, function(cat) {
-          var action = function(){
-            APP.getLegendView().setFilter( {category: cat.name} );
-            // APP.route('/chapter/' + APP.getArea().wisdomRootId, null, null, true);
-          };
-          
-          that.createListResult(
-            {
-              cssClass: 'result-category ' + 'cat-' + cat.name,
-              iconClass: 'cat-' + cat.name,
-              label: that.getWording('cat.' + cat.name),
-              // subLabel: that.getWording('cat.' + cat.name + '.description'),
-              action: action,
-              targetContainertEl: that.scrollContainer
-            }
-          );
-        });
-      }
+      //   that.createListResult(
+      //     {
+      //       iconClass: 'wisdom',
+      //       label: 'Wegweiser',
+      //       subLabel: 'Praktisches Hintergrundwissen für Ehrenamtliche in der Integrationsarbeit',
+      //       action: action,
+      //       targetContainertEl: that.resultsContainer
+      //     }
+      //   );
+      // }
 
       if (APP.getDataManager().getAllEvents().length > 0) {
         // today's events
@@ -188,7 +173,7 @@ export default qx.Class.define('SearchView', {
         if (eventsToday.length > 0) {
           that.createSectionHeader( that.getWording('search.label.eventstoday') );
           _.each(eventsToday.slice(0, 3), function(entry) {
-            that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
+            that.createEntryResult( {entry: entry, targetContainertEl: that.resultsContainer} );
           });
         } else {
           that.createSectionHeader( '' );
@@ -217,7 +202,7 @@ export default qx.Class.define('SearchView', {
           label: that.getWording('search.label.addentry'),
           subLabel: that.getWording('search.sublabel.addentry'),
           action: action,
-          targetContainertEl: that.scrollContainer
+          targetContainertEl: that.resultsContainer
         }
       );
 
@@ -230,32 +215,32 @@ export default qx.Class.define('SearchView', {
           label: that.getWording('form.heading.feedback'),
           subLabel: that.getWording('search.sublabel.feedback'),
           action: action,
-          targetContainertEl: that.scrollContainer
+          targetContainertEl: that.resultsContainer
         }
       );
 
 
-      that.createSectionHeader( that.getWording('search.label.newentries') );
-      var newProjects = APP.getDataManager().getNewestOffers(5);
-      _.each(newProjects, function(entry) {
-        that.createEntryResult( {entry: entry, targetContainertEl: that.scrollContainer} );
-      });
+      // that.createSectionHeader( that.getWording('search.label.newentries') );
+      // var newProjects = APP.getDataManager().getNewestOffers(5);
+      // _.each(newProjects, function(entry) {
+      //   that.createEntryResult( {entry: entry, targetContainertEl: that.resultsContainer} );
+      // });
 
-      that.createSectionHeader( that.getWording('search.label.lists') );
+      // that.createSectionHeader( that.getWording('search.label.lists') );
 
       // support wanted
-      var action = function(){
-        that.inputField.val('prop:supportwanted').trigger( 'input' );
-      };
-      that.createListResult(
-        {
-          iconClass: 'support-wanted',
-          label: that.getWording('search.label.supportwanted'),
-          subLabel: that.getWording('search.sublabel.supportwanted'),
-          action: action,
-          targetContainertEl: that.scrollContainer
-        }
-      );
+      // var action = function(){
+      //   that.inputField.val('prop:supportwanted').trigger( 'input' );
+      // };
+      // that.createListResult(
+      //   {
+      //     iconClass: 'support-wanted',
+      //     label: that.getWording('search.label.supportwanted'),
+      //     subLabel: that.getWording('search.sublabel.supportwanted'),
+      //     action: action,
+      //     targetContainertEl: that.resultsContainer
+      //   }
+      // );
 
       that.createSectionHeader( that.getWording('search.label.help') );
       
@@ -269,7 +254,7 @@ export default qx.Class.define('SearchView', {
           label: that.getWording('search.label.intro'),
           subLabel: that.getWording('search.sublabel.intro'),
           action: action,
-          targetContainertEl: that.scrollContainer
+          targetContainertEl: that.resultsContainer
         }
       );
 
@@ -353,6 +338,7 @@ export default qx.Class.define('SearchView', {
       var that = this;
 
       that.view.addClass('active-search');
+      that.view.removeClass('showLegend');
 
       const entries = APP.getData().entries;
 
@@ -517,7 +503,7 @@ export default qx.Class.define('SearchView', {
       _.each(entriesFiltered, function(entry) {
         that.createEntryResult({
           entry: entry,
-          targetContainertEl: that.scrollContainer,
+          targetContainertEl: that.resultsContainer,
           type: that.currentSearchType,
           foundCriteria: foundCriteria[entry.id]
         });
@@ -550,7 +536,7 @@ export default qx.Class.define('SearchView', {
             label: that.getWording('search.label.nothingfound'),
             subLabel: that.getWording('search.sublabel.nothingfound'),
             action: action,
-            targetContainertEl: that.scrollContainer
+            targetContainertEl: that.resultsContainer
           }
         );
       }
@@ -570,7 +556,7 @@ export default qx.Class.define('SearchView', {
         .addClass('with-action')
         .click(function(){ action(); });
       
-      that.scrollContainer.append(sectionHeader);
+      that.resultsContainer.append(sectionHeader);
     },
 
     // generic function to create a section header
@@ -592,7 +578,7 @@ export default qx.Class.define('SearchView', {
         .addClass('with-action')
         .click(function(){ options.action(); });
       
-      that.scrollContainer.append(btn);
+      that.resultsContainer.append(btn);
     },
 
     setSearchTag: function(cssClass, wording, color){
@@ -615,11 +601,11 @@ export default qx.Class.define('SearchView', {
       // call superclass
       this.base(arguments);
       
-      that.inputField.on('click', function(e){
-        var val = that.inputField.val();
-        if (val.length < 1) APP.getLegendView().show(true);
-        that.view.addClass('active-search');
-      });
+      // that.inputField.on('click', function(e){
+      //   var val = that.inputField.val();
+      //   if (val.length < 1) APP.getLegendView().show(true);
+      //   that.view.addClass('active-search');
+      // });
 
       that.inputField.on('input', function(e){
         var val = that.inputField.val();
@@ -739,10 +725,10 @@ export default qx.Class.define('SearchView', {
         })
         .empty();
 
-      that.scrollContainer.empty();
+      that.resultsContainer.empty();
         
       that.view.removeClass('active-search');
-      APP.getLegendView().close();
+      // APP.getLegendView().close();
         
       if( APP.getUserDevice() == 'desktop') that.ps.update();
     },

@@ -77,7 +77,7 @@ export default qx.Class.define('Router', {
       APP.getLanguageView().render();
       APP.getAreaView().render();
       APP.getMenuView().render();
-      APP.getLegendView().render();
+      // APP.getLegendView().render();
       APP.getFormView().render();
       APP.getIncludeView().render();
       APP.getMessageView().render();

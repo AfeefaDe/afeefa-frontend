@@ -2,15 +2,12 @@
 	
 	// transition: opacity 150ms;
 
-	position: absolute;
-	display: none;
-	top: 8rem;
+	// position: absolute;
+	// display: none;
 	z-index: 10;
 	
 	box-sizing: border-box;
-	width: 30em;
-	height: calc(100% - 8rem);
-	padding: 2em 0;
+	width: 100%;
 
 	background-color: $gray95;
 	color: $gray50;

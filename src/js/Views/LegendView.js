@@ -2,9 +2,6 @@ import qx from 'qooxdoo/qx-oo.js';
 
 import PerfectScrollbar from 'perfect-scrollbar';
 
-
-
-
 export default qx.Class.define('LegendView', {
 
   extend : View,
@@ -23,14 +20,14 @@ export default qx.Class.define('LegendView', {
 
   members : {
 
-    render: function(){
+    render: function( targetContainer ){
       var that = this;
 
       // view container
       that.view = $('<div />');
       that.view.attr('id', that.getViewId());
 
-      if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.view[0]);
+      // if( APP.getUserDevice() == 'desktop') that.ps = new PerfectScrollbar(that.view[0]);
 
       /////////////
       // Heading //
@@ -39,23 +36,12 @@ export default qx.Class.define('LegendView', {
       // that.heading = $("<h2 />");
       // that.headingContainer.append(that.heading);
 
-      //////////////////
-      // Filter Reset //
-      //////////////////
-      that.filterModuleReset  = $('<div />');
-      that.filterModuleReset.attr('class', 'filter-module reset-module');
-      that.view.append(that.filterModuleReset);
-
       ///////////////////
       // Entity filter //
       ///////////////////
       that.filterModuleEntity  = $('<div />');
       that.filterModuleEntity.attr('class', 'filter-module entity-module');
       that.view.append(that.filterModuleEntity);
-
-      // module heading
-      that.moduleHeadingEntity = $('<h3 />');
-      that.filterModuleEntity.append(that.moduleHeadingEntity);
 
       // entities
       var rowContainer = $('<div />')
@@ -87,8 +73,8 @@ export default qx.Class.define('LegendView', {
       that.view.append(that.filterModuleCat);
 
       // module heading
-      that.moduleHeadingCategory = $('<h3 />');
-      that.filterModuleCat.append(that.moduleHeadingCategory);
+      // that.moduleHeadingCategory = $('<h3 />');
+      // that.filterModuleCat.append(that.moduleHeadingCategory);
 
       // navigation
       _.each( that.getNavigation(), function(cat){
@@ -191,9 +177,9 @@ export default qx.Class.define('LegendView', {
       that.view.append(that.filterModuleAttribute);
 
       // module heading
-      that.moduleHeadingAttribute = $('<h3 />');
-      that.moduleHeadingAttribute.append('Details');
-      that.filterModuleAttribute.append(that.moduleHeadingAttribute);
+      // that.moduleHeadingAttribute = $('<h3 />');
+      // that.moduleHeadingAttribute.append('Details');
+      // that.filterModuleAttribute.append(that.moduleHeadingAttribute);
 
       // attributes
       _.each( {'forChildren': 'bool', 'supportWanted': 'bool'}, function(value, key){
@@ -230,7 +216,10 @@ export default qx.Class.define('LegendView', {
         that.filterModuleAttribute.append(attributeContainer);
       });
 
-      $('#main-container').append(that.view);
+      // $('#main-container').append(that.view);
+      // $('#searchView').append(that.view);
+      // APP.getSearchView().scrollContainer.append(that.view);
+      targetContainer.append(that.view);
 
       this.base(arguments);
 
@@ -284,9 +273,9 @@ export default qx.Class.define('LegendView', {
         that['label-entity-' + value].append(that.getWording('entity.' + value));
       });
 
-      that.moduleHeadingEntity.append(that.getWording('entry.type'));
-      that.moduleHeadingCategory.append(that.getWording('category'));
-      that.moduleHeadingAttribute.append(that.getWording('label.attribute.filter'));
+      // that.moduleHeadingEntity.append(that.getWording('entry.type'));
+      // that.moduleHeadingCategory.append(that.getWording('category'));
+      // that.moduleHeadingAttribute.append(that.getWording('label.attribute.filter'));
     },
 
     // used for mobile instead of mouse hover
@@ -317,7 +306,7 @@ export default qx.Class.define('LegendView', {
         APP.setActiveFilter(null);
         that.say('filterSet');
         that.view.scrollTop(0);
-        if( APP.getUserDevice() == 'desktop') that.ps.update();
+        // if( APP.getUserDevice() == 'desktop') that.ps.update();
       }
     },
 
@@ -346,12 +335,12 @@ export default qx.Class.define('LegendView', {
           that.view.addClass('filter-active');
 
           that.view.find('.cat-container, .subcat-container').addClass('inactive');
-
-          const currentCatContainers = that.view.find('.cat-container.cat-' + filter.navigationId);
+          
+          const currentCatContainers = that.view.find('.cat-container.cat-' + filter.navigation);
           currentCatContainers.removeClass('inactive');
           currentCatContainers.parent().find('.subcat-container').removeClass('inactive');
 
-          const currentSubcatContainers = that.view.find('.subcat-container.subcat-' + filter.subNavigationId);
+          const currentSubcatContainers = that.view.find('.subcat-container.subcat-' + filter.subNavigation);
           currentSubcatContainers.removeClass('inactive');
           currentSubcatContainers.parents('.std-container').find('.cat-container').removeClass('inactive');
 
@@ -421,9 +410,9 @@ export default qx.Class.define('LegendView', {
         that['label-entity-' + value].empty();
       });
 
-      that.moduleHeadingEntity.empty();
-      that.moduleHeadingCategory.empty();
-      that.moduleHeadingAttribute.empty();
+      // that.moduleHeadingEntity.empty();
+      // that.moduleHeadingCategory.empty();
+      // that.moduleHeadingAttribute.empty();
 
       that.load();
     }
