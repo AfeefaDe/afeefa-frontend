@@ -350,8 +350,11 @@ export default qx.Class.define('SearchView', {
       // info about why entry was found; for individual result formatting (e.g. needle highlighting)
       var foundCriteria = {};
 
-      // predefined queries: 
-      if( query.indexOf(':') >= 0 ){
+      // predefined queries:
+      if( query.indexOf('allentries') >= 0 ){
+        entriesFiltered = entries;
+      }
+      else if( query.indexOf(':') >= 0 ){
         var operator = query.substring(0, query.indexOf(':'));
         var operationQuery = query.substring(operator.length+1);
 
