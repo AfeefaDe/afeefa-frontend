@@ -272,6 +272,20 @@ export default qx.Class.define('SearchView', {
         }
       );
 
+      // kolle
+      var action = function(){
+        window.open('https://kollektiv.afeefa.de', '_blank');
+      };
+      that.createListResult(
+        {
+          label: 'Dein Projekt braucht digitale Power?',
+          subLabel: 'Das Afeefa Kollektiv könnte dabei unterstützen.',
+          action: action,
+          targetContainertEl: that.resultsContainer,
+          href: 'https://kollektiv.afeefa.de'
+        }
+      );
+
       that.say('dashboardLoaded');
     },
 
