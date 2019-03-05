@@ -258,6 +258,20 @@ export default qx.Class.define('SearchView', {
         }
       );
 
+      // all entries
+      var action = function(){
+        APP.route('/search/allentries', 'Gesamter Datenbestand', null, true);
+      };
+      that.createListResult(
+        {
+          label: 'Alle Einträge',
+          subLabel: 'Gesamten Datenbestand laden',
+          action: action,
+          targetContainertEl: that.resultsContainer,
+          href: '/search/allentries'
+        }
+      );
+
       that.say('dashboardLoaded');
     },
 
@@ -511,7 +525,7 @@ export default qx.Class.define('SearchView', {
           foundCriteria: foundCriteria[entry.id]
         });
       });
-      
+
       // print list button
       if(entriesFiltered.length > 0){
         that.createButton(
