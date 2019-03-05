@@ -80,10 +80,7 @@ button {
 }
 
 .list-results {
-  // position: absolute;
-  padding: 0 2rem;
-  // left: 2rem;
-  // width: calc(100% - 4rem);
+  padding: 1rem 1.5rem;
 
   .result {
     margin-bottom: 2rem;
@@ -95,10 +92,6 @@ button {
 
     &:hover {
       background-color: $black;
-    }
-
-    &:first-child, &.first-child {
-      margin-top: 1rem;
     }
 
     .icon {

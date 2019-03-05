@@ -1,3 +1,6 @@
+$sb_height: 2.5rem;
+$sb_margin_y: 1.5rem;
+
 #searchView {
   
   $viewWidth: 30em;
@@ -12,15 +15,12 @@
   
   width: $viewWidth;
   height: calc(100% - 4rem);
-  
-  $height_sb: 2.5rem;
 
   #search-bar {
     position: relative;
     width: calc(100% - 4rem);
-    left: 2rem;
-    top: 1.5rem;
-    height: $height_sb;
+    margin: 1.5rem 2rem;
+    height: $sb_height;
     z-index: 20;
     background-color: $gray90;
     box-shadow: 0px 2px 5px #000;
@@ -29,7 +29,7 @@
     .button {
       position: absolute;
       width: 3rem;
-      height: $height_sb;
+      height: $sb_height;
       background-size: 50%;
       background-repeat: no-repeat;
       background-position: center center;
@@ -66,8 +66,8 @@
       top: 0;
       left: 1rem;
       width: calc(100% - 4rem);
-      height: $height_sb;
-      line-height: $height_sb;
+      height: $sb_height;
+      line-height: $sb_height;
       background: none;
       border: none;
       color: $white;
@@ -116,8 +116,7 @@
   }
 
   .scroll-container {
-    height: calc(100% - 6rem);
-    margin-top: 3rem;
+    height: calc(100% - (#{$sb_height} + 2 * #{$sb_margin_y}));
     position: relative;
   }
 
@@ -160,16 +159,16 @@
     width: 100%;
     box-shadow: none;
     
+    $sb_margin_y: 0.8rem;
     #search-bar {
       width: calc(100% - 2rem);
-      left: 1rem;
-      top: 0.8rem;
+      margin: $sb_margin_y 1rem;
     }
 
-    .list-results {
+    .scroll-container {
       left: 0;
       right: 0;
-      padding: 1rem 1rem 2rem;
+      height: calc(100% - (#{$sb_height} + 2 * #{$sb_margin_y}));
       width: 100%;
       overflow: scroll;
     }
