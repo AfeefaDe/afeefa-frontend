@@ -120,16 +120,17 @@ export default qx.Class.define('Router', {
            */
           if (APP.getArea().dataKey == 'dresden') {
             // user requested main URL afeefa.de
-            var remindArea = localStorage.getItem('areaFrozen');
-            if ( !remindArea || remindArea != 'dresden' ) {
-              // ask for area
-              APP.getAreaSelectionView().open(function () {
-                // if (!localStorage.getItem("introIsKnown")) {
-                //## intro not seen > show intro
-                // if (!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
-                // }
-              });
-            }
+            // var remindArea = localStorage.getItem('areaFrozen');
+
+            // if ( !remindArea || remindArea != 'dresden' ) {
+            // ask for area
+            APP.getAreaSelectionView().open(function () {
+              // if (!localStorage.getItem("introIsKnown")) {
+              //## intro not seen > show intro
+              // if (!isIE() && APP.getUserDevice() != 'mobile') APP.getIntroView().start();
+              // }
+            });
+            // }
           }
         }
       });
