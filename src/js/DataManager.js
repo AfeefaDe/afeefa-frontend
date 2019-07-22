@@ -183,9 +183,10 @@ export default qx.Class.define('DataManager', {
       // leipzig.afeefa.de
       // dev.leipzig.afeefa.de
       var url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-      var leUrl = url.replace(/(leipzig\.|bautzen\.)?afeefa/, 'leipzig.afeefa');
-      var bzUrl = url.replace(/(leipzig\.|bautzen\.)?afeefa/, 'bautzen.afeefa');
-      var ddUrl = url.replace(/(leipzig\.|bautzen\.)?afeefa/, 'afeefa');
+      var leUrl = url.replace(/(leipzig\.|bautzen\.|lkleipzig\.)?afeefa/, 'leipzig.afeefa');
+      var lkleUrl = url.replace(/(leipzig\.|bautzen\.|lkleipzig\.)?afeefa/, 'lkleipzig.afeefa');
+      var bzUrl = url.replace(/(leipzig\.|bautzen\.|lkleipzig\.)?afeefa/, 'bautzen.afeefa');
+      var ddUrl = url.replace(/(leipzig\.|bautzen\.|lkleipzig\.)?afeefa/, 'afeefa');
 
       var areas = {
         areas: {
@@ -211,7 +212,7 @@ export default qx.Class.define('DataManager', {
             initialView: { lat: 51.336143, lon: 12.362952, zoom: 14 },
             boundingBox: { topleft: { lat: 51.455225, lon: 12.174588}, bottomright: {lat: 51.169806, lon: 12.659360} },
             inMainMenu: true,
-            languageMenu: false,
+            languageMenu: true,
             teamOfCharge: {
               name: 'Interaction Leipzig e.V.',
               url: 'http://www.interaction-leipzig.de',
@@ -234,6 +235,21 @@ export default qx.Class.define('DataManager', {
               img: 'horbz-logo.jpg'
             },
             donationText: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://about.afeefa.de/spenden/">Spende</a></p>'
+          },
+          lkleipzig: {
+            dataKey: 'leipzig-landkreis',
+            label: 'Landkreis Leipzig',
+            redirect: lkleUrl,
+            initialView: { lat: 51.253760, lon: 12.720006, zoom: 12 },
+            boundingBox: { topleft: { lat: 51.455225, lon: 12.174588}, bottomright: {lat: 51.169806, lon: 12.659360} },
+            inMainMenu: true,
+            languageMenu: true,
+            teamOfCharge: {
+              name: 'Interaction Leipzig e.V.',
+              url: 'http://www.interaction-leipzig.de',
+              img: 'interaction-logo.png'
+            },
+            donationText: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://interaction-leipzig.de/spende/">Spende für das Projekt in Leipzig</a> oder einer <a target="_blank" href="https://about.afeefa.de/spenden/">Spende für den technischen Betrieb</a> und die Weiterentwicklung der Afeefa Software.</p>'
           }
         }
       };
