@@ -237,7 +237,7 @@ export default qx.Class.define('DataManager', {
             donationText: '<p>Sie finden Afeefa.de wichtig? Unterstützen Sie unsere Arbeit mit einer <a target="_blank" href="https://about.afeefa.de/spenden/">Spende</a></p>'
           },
           lkleipzig: {
-            dataKey: 'leipzig-landkreis',
+            dataKey: 'lkleipzig',
             label: 'Landkreis Leipzig',
             redirect: lkleUrl,
             initialView: { lat: 51.253760, lon: 12.720006, zoom: 12 },
