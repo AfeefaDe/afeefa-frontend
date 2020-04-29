@@ -33,7 +33,7 @@
   "dependencies": {
     "qooxdoo": "4.1.0",
     "hammerjs": "^2.0.4",
-    "jquery": "^2.2.2",
+    "jquery": "^3.5.0",
     "moment": "^2.0.0",
     "popper.js": "^0.6.4",
     "underscore": "^1.8.2",
