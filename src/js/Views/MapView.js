@@ -8,17 +8,17 @@ import MarkerClusterGroup from 'leaflet.markercluster';
 
 export default qx.Class.define('MapView', {
 
-  extend : View,
+  extend: View,
   type: 'singleton',
 
-  properties : {
+  properties: {
     userLocation: {},
     entryMarkerLookup: {},
     loadedEntry: {},
     selectedMarker: {}
   },
 
-  construct: function(){
+  construct: function () {
     var that = this;
 
     that.setViewId('mapView');
@@ -30,9 +30,9 @@ export default qx.Class.define('MapView', {
     that.setEntryMarkerLookup([]);
   },
 
-  members : {
+  members: {
 
-    render : function() {
+    render: function () {
 
       var that = this;
 
@@ -46,23 +46,26 @@ export default qx.Class.define('MapView', {
       // MAPBOX INIT //
       /////////////////
       L.mapbox.accessToken = 'pk.eyJ1IjoiZmVsaXhrYW1pbGxlIiwiYSI6Ilo1SHFOX0EifQ.pfAzun90Lj1UlVapKI3LiA';
-      that.map = L.mapbox.map(that.getViewId(), 'felixkamille.4128d9e7', {
+      // that.map = L.mapbox.map(that.getViewId(), 'felixkamille.4128d9e7', {
+      that.map = L.mapbox.map(that.getViewId(), {
         zoomControl: false,
         // maxBounds: [
         // L.latLng(50.115749, 11.804513), // south-west corner
         // L.latLng(51.757315, 15.118189)  // north-east corner
         // ],
         // attributionControl: true,
-        tileLayer: {format: 'jpg70'},  // valid values are png, jpg, png32, png64, png128, png256, jpg70, jpg80, jpg90
+        tileLayer: { format: 'jpg70' },  // valid values are png, jpg, png32, png64, png128, png256, jpg70, jpg80, jpg90
         tapTolerance: 30,
         maxZoom: 20
-      }).setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
+      })
+        .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'))
+        .setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
 
       new L.Control.Zoom({ position: 'bottomright' }).addTo(that.map);
 
       // Layer group for main markers (with clustering)
       that.layerForMainMarkers = new L.MarkerClusterGroup({
-        iconCreateFunction: function(cluster) {
+        iconCreateFunction: function (cluster) {
           return new L.DivIcon({
             className: 'location marker-cluster',
             iconSize: [30, 30],
@@ -95,22 +98,22 @@ export default qx.Class.define('MapView', {
       // that.locate( APP.getUserDevice() == 'mobile' );
     },
 
-    addEvents: function() {
+    addEvents: function () {
 
       var that = this;
 
       this.base(arguments);
 
-      that.listen('fetchedNewData', function(){
+      that.listen('fetchedNewData', function () {
         that.loadNewData();
         APP.getRouter().loadFromUrl();
       });
 
-      that.map.on('load', function(e){
+      that.map.on('load', function (e) {
         that.applyInteractiveFilters();
       });
 
-      that.map.on('viewreset', function(e){
+      that.map.on('viewreset', function (e) {
         that.applyInteractiveFilters();
       });
 
@@ -118,11 +121,11 @@ export default qx.Class.define('MapView', {
       // that.loadNewData();
       // });
 
-      that.listen('listResultsLoaded', function(e){
-      	if(
-      		!e.customData.blockSyncWithMap
-      		&& e.customData.records.length > 0
-      	) that.loadNewData( {records: e.customData.records, fitBounds: true} );
+      that.listen('listResultsLoaded', function (e) {
+        if (
+          !e.customData.blockSyncWithMap
+          && e.customData.records.length > 0
+        ) that.loadNewData({ records: e.customData.records, fitBounds: true });
       });
 
       // that.listen('dashboardLoaded', function(e){
@@ -132,36 +135,36 @@ export default qx.Class.define('MapView', {
       // 	APP.loading(false);
       // });
 
-      that.listen('areaChanged', function(e){
+      that.listen('areaChanged', function (e) {
         that.map.setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
       });
 
-      that.listen('markersCreated', function(){
+      that.listen('markersCreated', function () {
         that.applyInteractiveFilters();
       });
 
       // map click (not fired on drag or marker click or sth, pure map click!)
-      that.map.on('click', function(e) {
+      that.map.on('click', function (e) {
         that.say('mapclicked');
       });
 
-      if( APP.getUserDevice() == 'phone' ){
-        $('#main-container').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e){
-          if( e.target != e.currentTarget ) return;
-          if( !$(this).hasClass('shifted') && !$(this).hasClass('shifted-small') ){
+      if (APP.getUserDevice() == 'phone') {
+        $('#main-container').on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function (e) {
+          if (e.target != e.currentTarget) return;
+          if (!$(this).hasClass('shifted') && !$(this).hasClass('shifted-small')) {
             that.say('shiftMenuClosed');
           }
         });
       }
 
-      that.listen('mapclicked', function(){
+      that.listen('mapclicked', function () {
         that.deselectMarker();
       });
 
       // update view if location found
-      that.map.on('locationfound', function(e) {
+      that.map.on('locationfound', function (e) {
         // alert(e.latlng);
-        that.map.setView( e.latlng , 15);
+        that.map.setView(e.latlng, 15);
         that.setUserLocation = e.latlng;
 
         var myIcon = L.icon({
@@ -175,30 +178,30 @@ export default qx.Class.define('MapView', {
           icon: L.divIcon({
             className: 'marker-user-location',
             html: null,
-            iconSize: [16,16],
-            iconAnchor: [8,8]
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
           })
         }).addTo(that.map);
       });
 
       if (APP.getUserDevice() == 'desktop') {
-        that.listen('detailViewOpened', function(){
+        that.listen('detailViewOpened', function () {
           that.view.addClass('small');
           that.map.invalidateSize();
         });
 
-        that.listen('detailViewClosed', function(){
+        that.listen('detailViewClosed', function () {
           // that.deselectMarker();
           that.view.removeClass('small');
           that.map.invalidateSize();
         });
 
-        that.listen('includeViewOpened', function(){
+        that.listen('includeViewOpened', function () {
           that.view.addClass('small-2');
           that.map.invalidateSize();
         });
 
-        that.listen('includeViewClosed', function(){
+        that.listen('includeViewClosed', function () {
           // that.deselectMarker();
           that.view.removeClass('small-2');
           that.map.invalidateSize();
@@ -206,39 +209,39 @@ export default qx.Class.define('MapView', {
       }
 
       if (APP.getUserDevice() == 'mobile') {
-        that.listen('detailViewMinimized', function(){
+        that.listen('detailViewMinimized', function () {
           that.view.addClass('active');
           that.map.invalidateSize();
         });
 
-        that.listen('detailViewOpened', function(){
+        that.listen('detailViewOpened', function () {
           that.view.removeClass('active');
         });
 
-        that.listen('searchViewLoaded', function(){
+        that.listen('searchViewLoaded', function () {
           that.view.removeClass('active');
         });
       }
     },
 
-    removeEvents: function() {
+    removeEvents: function () {
     },
 
-    loadNewData: function( options ) {
+    loadNewData: function (options) {
       var that = this;
 
-      options = (typeof options !== 'undefined') ?  options : {};
+      options = (typeof options !== 'undefined') ? options : {};
 
       // reset things
       that.removeMarkers();
 
       // aplly filters
-      var data = (options.records !== undefined )? options.records : APP.getData().entries;
+      var data = (options.records !== undefined) ? options.records : APP.getData().entries;
 
       // var filter = APP.getActiveFilter();
-      var entries = _.filter(data, function(entry){
+      var entries = _.filter(data, function (entry) {
         // only entries with location data
-        if( entry.location.length < 1) return false;
+        if (entry.location.length < 1) return false;
 
         // legend filter active?
         // if( filter ) {
@@ -274,7 +277,7 @@ export default qx.Class.define('MapView', {
       }
     },
 
-    addMarkers: function(entries) {
+    addMarkers: function (entries) {
 
       var that = this;
 
@@ -282,61 +285,61 @@ export default qx.Class.define('MapView', {
 
       var navigationById = APP.getData().navigationById;
 
-      _.each(entries, function(entry){
+      _.each(entries, function (entry) {
 
         // type specific adjustment
         var iconSize, iconAnchor;
 
         // IniLocation
-        if( entry.type === 0 ) {
-          iconSize = [24,24];
-          iconAnchor = [12,12];
+        if (entry.type === 0) {
+          iconSize = [24, 24];
+          iconAnchor = [12, 12];
         }
         // MarketLocation
-        else if( entry.type === 1 ) {
-          iconSize = [23,23];
-          iconAnchor = [12,12];
+        else if (entry.type === 1) {
+          iconSize = [23, 23];
+          iconAnchor = [12, 12];
         }
         // EventLocation
-        else if( entry.type === 2 ) {
-          iconSize = [23,23];
-          iconAnchor = [15,15];
+        else if (entry.type === 2) {
+          iconSize = [23, 23];
+          iconAnchor = [15, 15];
         }
         // BasicLocation
-        else if( entry.type === 3 ) {
-          iconSize = [23,23];
-          iconAnchor = [12,12];
+        else if (entry.type === 3) {
+          iconSize = [23, 23];
+          iconAnchor = [12, 12];
         }
 
         // TODO: quickfix: skip locations without coodinates
-        if( !entry.location[0].lat || !entry.location[0].lon ) return false;
+        if (!entry.location[0].lat || !entry.location[0].lon) return false;
 
         var className = 'location';
         className += ' type-' + entry.type;
 
         var category = navigationById[entry.navigationId];
-        if( category) className += ' cat-' + category.icon;
+        if (category) className += ' cat-' + category.icon;
         var subCategory = navigationById[entry.subNavigationId];
-        if( subCategory ) className += ' subcat-' + subCategory.icon;
+        if (subCategory) className += ' subcat-' + subCategory.icon;
 
-        if( entry.supportNeeded ) className += ' support-needed';
+        if (entry.supportNeeded) className += ' support-needed';
 
         ////////////
         // MARKER //
         ////////////
-        var marker = L.marker( [entry.location[0].lat, entry.location[0].lon] , {
+        var marker = L.marker([entry.location[0].lat, entry.location[0].lon], {
           riseOnHover: true,
           icon: L.divIcon({
             className: className,
             iconSize: iconSize,
             iconAnchor: iconAnchor,
-            html: function(){
+            html: function () {
               var html = '';
               // TODO still needed for entry of type 2? it's all for the event's diamond shape.
-              if(entry.type == 2){
+              if (entry.type == 2) {
                 var classString = 'type-' + entry.type;
-                if( category ) classString += ' cat-' + category.icon;
-                if( subCategory ) classString += ' subcat-' + subCategory.icon;
+                if (category) classString += ' cat-' + category.icon;
+                if (subCategory) classString += ' subcat-' + subCategory.icon;
                 // the diamond
                 html = '<span class="' + classString + ' event-shape"></span>';
                 // the icon
@@ -364,7 +367,7 @@ export default qx.Class.define('MapView', {
             offset: [0, 0]
           })
           .setLatLng([entry.location[0].lat, entry.location[0].lon])
-          .setContent(function(){
+          .setContent(function () {
             var container = $('<div />'),
               titleLabel = $('<span />').addClass('title'),
               categoryLabel = $('<span />').addClass('category');
@@ -380,18 +383,18 @@ export default qx.Class.define('MapView', {
             var subCategory = entry.subNavigationId ? APP.getData().navigationById[entry.subNavigationId] : null;
 
             if (subCategory) {
-              categoryLabel.append( subCategory.name );
-              categoryLabel.append( ' (' + category.name + ')' );
+              categoryLabel.append(subCategory.name);
+              categoryLabel.append(' (' + category.name + ')');
             }
             else if (category) {
-              categoryLabel.append( category.name );
+              categoryLabel.append(category.name);
             }
 
-            if(entry.type == 2) {
+            if (entry.type == 2) {
               dateLabel.append(APP.getUtility().buildTimeString(entry));
             }
 
-            container.on('click', function(e){
+            container.on('click', function (e) {
               APP.route(APP.getRouter().getFrontendUrlForEntry(entry), entry.name);
             });
 
@@ -409,7 +412,7 @@ export default qx.Class.define('MapView', {
 
 
         // TODO load detail view
-        marker.on('click', function(){
+        marker.on('click', function () {
           that.loadedByMarkerClick = true;
           APP.route(APP.getRouter().getFrontendUrlForEntry(entry), entry.name);
         });
@@ -427,13 +430,13 @@ export default qx.Class.define('MapView', {
           if (dom) {
             marker.getElement().style.backgroundColor = category.color;
           }
-          marker.on('add', function(){
+          marker.on('add', function () {
             marker.getElement().style.backgroundColor = category.color;
           });
 
           var currentLookup = that.getEntryMarkerLookup();
-          currentLookup.push( {entry: entry, marker: marker} );
-          that.setEntryMarkerLookup( currentLookup );
+          currentLookup.push({ entry: entry, marker: marker });
+          that.setEntryMarkerLookup(currentLookup);
         }
 
         // newLayer.addLayer(marker);
@@ -445,7 +448,7 @@ export default qx.Class.define('MapView', {
       // return newLayer;
     },
 
-    removeMarkers: function() {
+    removeMarkers: function () {
 
       var that = this;
 
@@ -457,7 +460,7 @@ export default qx.Class.define('MapView', {
     },
 
     // load an entry on the map if possible; no matter if you know which marker belongs to it
-    loadEntry: function(entry, options){
+    loadEntry: function (entry, options) {
       var that = this;
 
       var lookup = that.lookupEntry(entry);
@@ -471,59 +474,59 @@ export default qx.Class.define('MapView', {
       if (that.loadedByMarkerClick) options.setView = false;
       that.loadedByMarkerClick = false;
 
-      if(lookup && lookup.marker) that.selectMarker(lookup.marker, lookup.entry, options);
+      if (lookup && lookup.marker) that.selectMarker(lookup.marker, lookup.entry, options);
     },
 
     // look if the entry has a marker on the map
-    lookupEntry: function( entry ){
+    lookupEntry: function (entry) {
       var that = this;
 
       var hit = null;
 
-      hit = _.find( that.getEntryMarkerLookup(), function(pair){
+      hit = _.find(that.getEntryMarkerLookup(), function (pair) {
         return pair.entry.entryType == entry.entryType && pair.entry.id == entry.id;
       });
 
-      if(!hit) hit = entry;
+      if (!hit) hit = entry;
 
       return hit;
     },
 
     // visually select a marker on the map
-    selectMarker: function( marker, entry, options ){
+    selectMarker: function (marker, entry, options) {
       var that = this;
 
       // that.deselectMarker();
       that.setLoadedEntry(entry);
       that.setSelectedMarker(marker);
 
-      if(marker){
-        if(options && options.setView) that.map.setView( [entry.location[0].lat, entry.location[0].lon], 14);
-        try{ that.layerForMainMarkers.getVisibleParent(marker).spiderfy(); } catch(e){}
+      if (marker) {
+        if (options && options.setView) that.map.setView([entry.location[0].lat, entry.location[0].lon], 14);
+        try { that.layerForMainMarkers.getVisibleParent(marker).spiderfy(); } catch (e) { }
         marker.openPopup();
         $(marker._icon).addClass('active');
       }
     },
 
-    selectMarkerFromLink: function( entry, options ) {
+    selectMarkerFromLink: function (entry, options) {
       var that = this;
 
-      if(options === undefined) options = {};
+      if (options === undefined) options = {};
 
-      var lookup = that.lookupEntry( entry );
+      var lookup = that.lookupEntry(entry);
 
-      if(lookup && lookup.marker){
+      if (lookup && lookup.marker) {
         options.setView = true;
         APP.getMapView().selectMarker(lookup.marker, lookup.entry, options);
       }
 
     },
 
-    deselectMarker: function(){
+    deselectMarker: function () {
       var that = this;
 
-      if( that.getSelectedMarker() ) {
-        $( that.getSelectedMarker()._icon ).removeClass('active');
+      if (that.getSelectedMarker()) {
+        $(that.getSelectedMarker()._icon).removeClass('active');
       }
 
       that.say('mapMarkerDeselected');
@@ -531,30 +534,30 @@ export default qx.Class.define('MapView', {
       that.setSelectedMarker(null);
     },
 
-    changeLanguage: function() {
+    changeLanguage: function () {
       var that = this;
     },
 
-    addPOIs: function(markers, color) {
+    addPOIs: function (markers, color) {
 
       var that = this;
 
-      if(color === undefined) color = '#333';
+      if (color === undefined) color = '#333';
 
       var newLayer = new L.LayerGroup();
 
-      _.each(markers, function(marker){
-      // var leafMarker = L.marker(marker.geo).addTo(that.map);
+      _.each(markers, function (marker) {
+        // var leafMarker = L.marker(marker.geo).addTo(that.map);
         var leafMarker = L.marker(marker.geo, {
           riseOnHover: true,
           zIndexOffset: -1000,
           icon: L.divIcon({
             className: 'marker-station',
-            html: '<p><span class="fa fa-subway"></span> '+ marker.name + '</p>',
+            html: '<p><span class="fa fa-subway"></span> ' + marker.name + '</p>',
             // html: '<p>' + marker.name + '</p>',
             // iconSize: [100,20],
-            iconSize: [100,20],
-            iconAnchor: [50,25]
+            iconSize: [100, 20],
+            iconAnchor: [50, 25]
           })
           // }).addTo(that.map);
         });
@@ -565,21 +568,21 @@ export default qx.Class.define('MapView', {
       return newLayer;
     },
 
-    applyInteractiveFilters: function(){
+    applyInteractiveFilters: function () {
       var that = this;
 
-      if( that.map.getZoom() >= 16){
+      if (that.map.getZoom() >= 16) {
         // show wifi networks on high zoom levels only
-        if( !that.map.hasLayer(that.layerForWifiMarkers) )
+        if (!that.map.hasLayer(that.layerForWifiMarkers))
           that.map.addLayer(that.layerForWifiMarkers);
       } else {
-        if( that.map.hasLayer(that.layerForWifiMarkers) )
+        if (that.map.hasLayer(that.layerForWifiMarkers))
           that.map.removeLayer(that.layerForWifiMarkers);
       }
 
       var filter = APP.getActiveFilter();
-      if( filter && filter.subCategory && filter.subCategory == 'wifi' ){
-        if( !that.map.hasLayer(that.layerForWifiMarkers) )
+      if (filter && filter.subCategory && filter.subCategory == 'wifi') {
+        if (!that.map.hasLayer(that.layerForWifiMarkers))
           that.map.addLayer(that.layerForWifiMarkers);
       }
 
@@ -587,13 +590,13 @@ export default qx.Class.define('MapView', {
 
     // sample code for geocoding (finding coords by location names)
     // see https://www.mapbox.com/mapbox.js/api/v2.1.5/l-mapbox-geocoder/
-    find: function() {
+    find: function () {
 
       var that = this;
 
       geocoder.query('Chester, NJ', showMap);
 
-      function showMap(err, data) {
+      function showMap (err, data) {
         // The geocoder can return an area, like a city, or a
         // point, like an address. Here we handle both cases,
         // by fitting the map bounds to an area or zooming to a point.
@@ -606,25 +609,25 @@ export default qx.Class.define('MapView', {
     },
 
     // locate the user on startup and set view to his position
-    locate: function() {
+    locate: function () {
 
       var that = this;
 
       // trigger mapbox locating
-      that.map.locate( {
+      that.map.locate({
         watch: false,
         setView: false,
         enableHighAccuracy: true
       });
     },
 
-    beShy: function(bool){
+    beShy: function (bool) {
       var that = this;
 
       console.warn('map is being shy');
       // that.showCurtain(true);
 
-      if(bool) that.view.addClass('shy');
+      if (bool) that.view.addClass('shy');
       else that.view.removeClass('shy');
     }
 
