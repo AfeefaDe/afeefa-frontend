@@ -46,8 +46,8 @@ export default qx.Class.define('MapView', {
       // MAPBOX INIT //
       /////////////////
       L.mapbox.accessToken = 'pk.eyJ1IjoiYWZlZWZha29sbGVrdGl2IiwiYSI6ImNrZzB5dmY1eDJtaTcycXM4cnI2eTlsaHAifQ.-GRPcpkuE4upkJDqnYDMxg';
-      // that.map = L.mapbox.map(that.getViewId(), 'felixkamille.4128d9e7', {
-      that.map = L.mapbox.map(that.getViewId(), {
+      that.map = L.mapbox.map(that.getViewId(), 'felixkamille.4128d9e7', {
+        // that.map = L.mapbox.map(that.getViewId(), {
         zoomControl: false,
         // maxBounds: [
         // L.latLng(50.115749, 11.804513), // south-west corner
@@ -58,8 +58,8 @@ export default qx.Class.define('MapView', {
         tapTolerance: 30,
         maxZoom: 20
       })
-        .setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom)
-        .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+        .setView([APP.getArea().initialView.lat, APP.getArea().initialView.lon], APP.getArea().initialView.zoom);
+      // .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
 
       new L.Control.Zoom({ position: 'bottomright' }).addTo(that.map);
 
